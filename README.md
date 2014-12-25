@@ -803,7 +803,7 @@ SDK以动态库的形式呈现。请将*KS3iOSSDK.framework*添加到项目工�
 ````
 
 ##其它
->完整示例，请见 [KS3-iOS-SDK-Demo](http://www.ksyun.com/doc/4358412.html) 
+>完整示例，请见 [KS3-iOS-SDK-Demo](https://github.com/ks3sdk/ks3-ios-sdk/tree/master/Demo) 
 
 ####  版权所有 （C）金山云科技有限公司  
 ####  Copyright (C) Kingsoft Cloud All rights reserved.
