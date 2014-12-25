@@ -405,6 +405,11 @@ static NSTimeInterval const KingSoftYun_RequestTimeout = 60;
         NSLog(@"bucket 或 key 不能为空");
         return nil;
     }
+    if (!_credentials && !_credentials.accessKey && !_credentials.secretKey) {
+        NSLog(@"请设置 accessKey 或 secretKey！！");
+        return nil;
+    }
+    
     NSString *strHost = [NSString stringWithFormat:@"http://%@.kss.ksyun.com/%@", bucketName, key];
     KS3DownLoad *downLoad = [[KS3DownLoad alloc] initWithUrl:strHost credentials:_credentials];
     downLoad.bucketName = bucketName;

@@ -92,6 +92,10 @@
 		<data>
 		4E0gFq3GdVqJQJqWYdvM7mTKCYc=
 		</data>
+		<key>Headers/KS3FileUploader.h</key>
+		<data>
+		lPacr3Ie/BOsBmyOXdpk3kAbIEk=
+		</data>
 		<key>Headers/KS3GetACLRequest.h</key>
 		<data>
 		qaKMSuSx5de/kGL4K5xwowlCWlY=
@@ -746,6 +750,10 @@
 		<key>Headers/KS3DownLoad.h</key>
 		<data>
 		4E0gFq3GdVqJQJqWYdvM7mTKCYc=
+		</data>
+		<key>Headers/KS3FileUploader.h</key>
+		<data>
+		lPacr3Ie/BOsBmyOXdpk3kAbIEk=
 		</data>
 		<key>Headers/KS3GetACLRequest.h</key>
 		<data>

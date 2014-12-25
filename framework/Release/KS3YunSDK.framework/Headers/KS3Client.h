@@ -64,6 +64,7 @@ typedef void(^kSS3DownloadFileCompleteionBlock)(KS3DownLoad *aDownload, NSString
 @class KS3SetGrantACLRequest;
 @class KS3SetObjectGrantACLResponse;
 @class KS3SetObjectGrantACLRequest;
+@class KS3SetBucketLoggingRequest;
 @interface KS3Client : KS3WebServiceClient
 /**
  *  初始化
@@ -181,14 +182,6 @@ typedef void(^kSS3DownloadFileCompleteionBlock)(KS3DownLoad *aDownload, NSString
  *  @return 返回resonse对象（里边有服务返回的数据（具体的参照demo））
  */
 - (KS3GetBucketLoggingResponse *)getBucketLoggingWithName:(NSString *)bucketName;
-/**
- *  设置Bucket的日志信息
- *
- *  @param bucketName
- *
- *  @return 返回resonse对象（里边有服务返回的数据（具体的参照demo））
- */
-- (KS3SetBucketLoggingResponse *)setBucketLoggingWithName:(NSString *)bucketName;
 /**
  *  下载Object数据
  *
