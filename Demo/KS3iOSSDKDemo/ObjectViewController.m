@@ -12,6 +12,7 @@
 
 #import "ObjectViewController.h"
 #import <KS3YunSDK/KS3YunSDK.h>
+#import <KS3YunSDK/KS3FileUploader.h>
 
 @interface ObjectViewController () <KingSoftServiceRequestDelegate>
 @property (nonatomic, strong) NSArray *arrItems;
@@ -19,6 +20,7 @@
 @property (nonatomic) NSInteger partInter;
 @property (strong, nonatomic)  KS3MultipartUpload *muilt;
 @property (nonatomic) NSInteger upLoadCount;
+@property (nonatomic, strong) KS3FileUploader *uploader;
 
 @end
 
@@ -67,7 +69,6 @@
                     /**
              *  如果是暂停下载，就需要把_downloadConnection的file做为参数传到download方法里面
              */
-            NSString *str = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"];
             _downloader = [[KS3Client initialize] downloadObjectWithBucketName:kBucketName key:kObjectName downloadBeginBlock:^(KS3DownLoad *aDownload, NSURLResponse *responseHeaders) {
                 NSLog(@"1212221");
                 
@@ -188,31 +189,42 @@
             /**
              *  大于100M的文件可以使用文件分块上传 如果需要使用文件分块上传则必须实现代理方法 在委托方法里完成块的拼装（本demo为了测试，则上传了小文件，方便开发者下载demo）
              */
-            _upLoadCount = 0;
-            NSFileHandle *fileHandle = [NSFileHandle fileHandleForReadingAtPath:[[NSBundle mainBundle] pathForResource:@"bugDownload" ofType:@"txt"]];
-            long long fileLength = [[fileHandle availableData] length];
-            long long partLength = 5*1024.0*1024.0;
-            _partInter = (ceilf((float)fileLength / (float)partLength));
-            NSLog(@"%lld",fileLength);
-            NSLog(@"%lld",partLength);
-            NSLog(@"%ld",_partInter);
-            [fileHandle seekToFileOffset:0];
-            _muilt = [[KS3Client initialize] initiateMultipartUploadWithKey:@"10000.txt" withBucket:kBucketName];
-            for (NSInteger i = 0; i < _partInter; i ++) {
-                NSData *data = nil;
-                if (i == _partInter - 1) {
-                    data = [fileHandle readDataToEndOfFile];
-                }else {
-                    data = [fileHandle readDataOfLength:partLength];
-                    [fileHandle seekToFileOffset:partLength*(i+1)];
-                }
-                KS3UploadPartRequest *req = [[KS3UploadPartRequest alloc] initWithMultipartUpload:_muilt];
-                req.delegate = self;
-                req.data = data;
-                req.partNumber = (int32_t)i+1;
-                req.contentLength = data.length;
-                [[KS3Client initialize] uploadPart:req];
-            }
+//            _upLoadCount = 0;
+//            NSFileHandle *fileHandle = [NSFileHandle fileHandleForReadingAtPath:[[NSBundle mainBundle] pathForResource:@"bugDownload" ofType:@"txt"]];
+//            long long fileLength = [[fileHandle availableData] length];
+//            long long partLength = 5*1024.0*1024.0;
+//            _partInter = (ceilf((float)fileLength / (float)partLength));
+//            NSLog(@"%lld",fileLength);
+//            NSLog(@"%lld",partLength);
+//            NSLog(@"%ld",_partInter);
+//            [fileHandle seekToFileOffset:0];
+//            _muilt = [[KS3Client initialize] initiateMultipartUploadWithKey:@"10000.txt" withBucket:kBucketName];
+//            for (NSInteger i = 0; i < _partInter; i ++) {
+//                NSData *data = nil;
+//                if (i == _partInter - 1) {
+//                    data = [fileHandle readDataToEndOfFile];
+//                }else {
+//                    data = [fileHandle readDataOfLength:partLength];
+//                    [fileHandle seekToFileOffset:partLength*(i+1)];
+//                }
+//                KS3UploadPartRequest *req = [[KS3UploadPartRequest alloc] initWithMultipartUpload:_muilt];
+//                req.delegate = self;
+//                req.data = data;
+//                req.partNumber = (int32_t)i+1;
+//                req.contentLength = data.length;
+//                [[KS3Client initialize] uploadPart:req];
+//            }
+            _uploader = [[KS3FileUploader alloc] initWithBucketName:@"acc"];
+            _uploader.strFilePath = [[NSBundle mainBundle] pathForResource:@"bugDownload" ofType:@"txt"];
+            _uploader.strKey = @"10000000.txt";
+            _uploader.partSize = 5; // **** unit: MB, must larger than 5
+            [_uploader startUploadWithProgressChangeBlock:^(KS3FileUploader *uploader, double progress) {
+                NSLog(@"progress: %f", progress);
+            } completeBlock:^(KS3FileUploader *uploader) {
+                NSLog(@"complete");
+            } failedBlock:^(KS3FileUploader *uploader, NSString *strUploadId, NSInteger partNumber, NSError *error) {
+                NSLog(@"failed!");
+            }];
         }
             break;
         case 9:
