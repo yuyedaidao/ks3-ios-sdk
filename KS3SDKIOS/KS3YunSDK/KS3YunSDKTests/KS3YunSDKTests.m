@@ -128,6 +128,16 @@ NSString *const strSecretKey = @"1+RBTrWaeT6LaixUV5SGPFpeTa/wZEeZlGzYaZfr";
     XCTAssertEqual(200, response.httpStatusCode);
 }
 
+- (void)testPutObjectCopy
+{
+    KS3PutObjectCopyRequest *req = [[KS3PutObjectCopyRequest alloc] initWithName:@"ggg"];
+    req.key = @"test_copy.txt";
+    req.strSourceBucket = @"acc";
+    req.strSourceObject = @"Count_1.txt";
+    KS3PutObjectCopyResponse *response = [[KS3Client initialize] putObjectCopy:req];
+    XCTAssertEqual(200, response.httpStatusCode);
+}
+
 - (void)testHeadObject
 {
     KS3HeadObjectRequest *req = [[KS3HeadObjectRequest alloc] initWithName:@"ggg"];
