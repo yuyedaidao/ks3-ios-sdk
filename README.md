@@ -132,12 +132,14 @@ SDK以动态库的形式呈现。请将*KS3iOSSDK.framework*添加到项目工�
 * [Put Object ACL](#put-object-acl) 上传object的acl
 * [List Objects](#list-objects) 列举Bucket内的Object
 * [Put Object](#put-object) 上传Object数据
+* [Put Object Copy](#put-object-copy) 拷贝源Bucket里面的Object到目的Bucket的Object
 * [Initiate Multipart Upload](#initiate-multipart-upload) 调用这个接口会初始化一个分块上传
 * [Upload Part](#upload-part) 上传分块
 * [List Parts](#list-parts) 罗列出已经上传的块
 * [Abort Multipart Upload](#abort-multipart-upload) 取消分块上传
 * [Complete Multipart Upload](#complete-multipart-upload) 组装所有分块上传的文件
-* [Multipart Upload Example Code](#multipart-upload-example-code) 分片上传代码示例
+* [Multipart Upload Example Code 1](#multipart-upload-example-code) 分片上传代码示例 1
+* [Multipart Upload Example Code 2](#multipart-upload-example-code) 分片上传代码示例 2
 
 ####Service操作
 
@@ -617,6 +619,36 @@ SDK以动态库的形式呈现。请将*KS3iOSSDK.framework*添加到项目工�
 
 ```
 
+#####Put Object Copy：
+
+*拷贝源Bucket里面的Object到目的Bucket的Object*
+
+**方法名：** 
+
+\- (KS3PutObjectCopyResponse \*)putObjectCopy:(KS3PutObjectCopyRequest \*)putObjectCopyRequest;
+
+
+**参数说明：**
+
+* putObjectCopyRequest：拷贝源Bucket里面的Object到目的Bucket的Object的KS3PutObjectCopyRequest对象。它需要设置指定的源Bucket的名称，源Object的名称，目的Bucket的名称和目的Object的名称
+
+**返回结果：**
+
+* 拷贝源Bucket里面的Object到目的Bucket的Object的HTTP请求响应
+
+**代码示例：**
+```
+
+	/* 一定要实现委托方法 (这种情况如果实现委托，返回的reponse一般返回为nil，具体获取返回对象需要到委托方法里面获取，如果不实现委托，reponse不会为nil*/
+		KS3PutObjectRequest *putObjRequest = [[KS3PutObjectRequest alloc] initWithName:@"your-bucket-name"];
+            putObjRequest.delegate = self;
+            NSString *fileName = [[NSBundle mainBundle] pathForResource:@"test" ofType:@"jpg"];
+            putObjRequest.data = [NSData dataWithContentsOfFile:fileName options:NSDataReadingMappedIfSafe error:nil];
+            putObjRequest.filename = [fileName lastPathComponent];
+            [[KS3Client initialize] putObject:putObjRequest];
+
+```
+
 #####Initiate Multipart Upload：
  
 *调用这个接口会初始化一个分块上传，KS3 Server会返回一个upload id, upload id 用来标识属于当前object的具体的块，并且用来标识完成分块上传或者取消分块上传*
@@ -752,7 +784,7 @@ SDK以动态库的形式呈现。请将*KS3iOSSDK.framework*添加到项目工�
 
 ```
 
-#####Multipart Upload Example Code:
+#####Multipart Upload Example Code 1:
 
 *分片上传代码示例*
 
@@ -799,6 +831,26 @@ SDK以动态库的形式呈现。请将*KS3iOSSDK.framework*添加到项目工�
 		- (void)request:(KingSoftServiceRequest *)request didFailWithError:(NSError *)error {
     		NSLog(@"error: %@", error.description);
      	}
+
+````
+
+#####Multipart Upload Example Code 2:
+
+*分片上传代码示例*
+
+````
+
+	_uploader = [[KS3FileUploader alloc] initWithBucketName:@"your-bucket-name"];
+    _uploader.strFilePath = [[NSBundle mainBundle] pathForResource:@"bugDownload" ofType:@"txt"];
+    _uploader.strKey = @"your-object-name";
+    _uploader.partSize = 5; // **** unit: MB, must larger than 5
+    [_uploader startUploadWithProgressChangeBlock:^(KS3FileUploader *uploader, double progress) {
+        NSLog(@"progress: %f", progress);
+    } completeBlock:^(KS3FileUploader *uploader) {
+        NSLog(@"complete");
+    } failedBlock:^(KS3FileUploader *uploader, NSString *strUploadId, NSInteger partNumber, NSError *error) {
+        NSLog(@"failed!");
+    }];
 
 ````
 
