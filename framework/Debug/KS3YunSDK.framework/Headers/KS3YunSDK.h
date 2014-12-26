@@ -95,3 +95,6 @@ FOUNDATION_EXPORT const unsigned char KS3YunSDKVersionString[];
 #import "KS3SetGrantACLResponse.h"
 #import "KS3SetObjectGrantACLRequest.h"
 #import "KS3SetObjectGrantACLResponse.h"
+#import "KS3FileUploader.h"
+#import "KS3PutObjectCopyRequest.h"
+#import "KS3PutObjectCopyResponse.h"

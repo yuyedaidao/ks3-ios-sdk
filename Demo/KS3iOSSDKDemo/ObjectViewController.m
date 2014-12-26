@@ -7,12 +7,13 @@
 //
 
 #warning Please set correct bucket and object name
-#define kBucketName @"alert1"//@"blues111"
-#define kObjectName @"bug.txt"//@"bug.txt"
+#define kBucketName @"alert1"
+#define kObjectName @"bug.txt"
+#define kDesBucketName @"blues111"
+#define kDesObjectName @"bug_copy.txt"
 
 #import "ObjectViewController.h"
 #import <KS3YunSDK/KS3YunSDK.h>
-#import <KS3YunSDK/KS3FileUploader.h>
 
 @interface ObjectViewController () <KingSoftServiceRequestDelegate>
 @property (nonatomic, strong) NSArray *arrItems;
@@ -30,7 +31,7 @@
     [super viewDidLoad];
     self.navigationItem.title = @"Object";
     _arrItems = [NSArray arrayWithObjects:
-                 @"Get Object",       @"Delete Object", @"Head Object", @"Put Object", @"Post Object",
+                 @"Get Object",       @"Delete Object", @"Head Object", @"Put Object", @"Put Object Copy", @"Post Object",
                  @"Get Object ACL",   @"Set Object ACL", @"Set Object Grant ACL",
                  @"Multipart Upload", @"Pause Download", @"Abort Upload", nil];
 }
@@ -123,10 +124,25 @@
             break;
         case 4:
         {
-            NSLog(@"暂不对移动端开放！");
+            KS3PutObjectCopyRequest *request = [[KS3PutObjectCopyRequest alloc] initWithName:kDesBucketName];
+            request.key = kDesObjectName;
+            request.strSourceBucket = kBucketName;
+            request.strSourceObject = kObjectName;
+            KS3PutObjectCopyResponse *response = [[KS3Client initialize] putObjectCopy:request];
+            if (response.httpStatusCode == 200) {
+                NSLog(@"Put object copy success!");
+            }
+            else {
+                NSLog(@"Put object copy error: %@", response.error.description);
+            }
         }
             break;
         case 5:
+        {
+            NSLog(@"暂不对移动端开放！");
+        }
+            break;
+        case 6:
         {
             KS3GetObjectACLRequest  *getObjectACLRequest = [[KS3GetObjectACLRequest alloc] initWithName:kBucketName];
             getObjectACLRequest.key = kObjectName;
@@ -149,7 +165,7 @@
             }
         }
             break;
-        case 6:
+        case 7:
         {
             KS3SetObjectACLRequest *setObjectACLRequest = [[KS3SetObjectACLRequest alloc] initWithName:kBucketName];
             setObjectACLRequest.key = kObjectName;
@@ -165,7 +181,7 @@
             }
         }
             break;
-        case 7:
+        case 8:
         {
             KS3SetObjectGrantACLRequest *setObjectGrantACLRequest = [[KS3SetObjectGrantACLRequest alloc] initWithName:kBucketName];
             setObjectGrantACLRequest.key = kObjectName;
@@ -183,7 +199,7 @@
             }
         }
             break;
-        case 8:
+        case 9:
         {
 #warning "blues111" is your the bucket you want to operate, "bugDownload.txt" is the object name you want to upload, "500.txt" is file name in cloud
             /**
@@ -227,12 +243,12 @@
             }];
         }
             break;
-        case 9:
+        case 10:
         {
             [_downloader stop];
         }
             break;
-        case 10:
+        case 11:
         {
             KS3AbortMultipartUploadRequest *request = [[KS3AbortMultipartUploadRequest alloc] initWithMultipartUpload:_muilt];
             KS3AbortMultipartUploadResponse *response = [[KS3Client initialize] abortMultipartUpload:request];

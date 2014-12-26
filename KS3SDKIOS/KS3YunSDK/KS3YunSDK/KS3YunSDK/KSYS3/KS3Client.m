@@ -61,6 +61,8 @@
 #import "KS3SetObjectGrantACLResponse.h"
 #import "KS3ErrorHandler.h"
 #import "KS3ClientException.h"
+#import "KS3PutObjectCopyResponse.h"
+#import "KS3PutObjectCopyRequest.h"
 
 static NSString * const KingSoftYun_Host_Name = @"http://kss.ksyun.com";
 static NSTimeInterval const KingSoftYun_RequestTimeout = 60;
@@ -252,6 +254,11 @@ static NSTimeInterval const KingSoftYun_RequestTimeout = 60;
 - (KS3PutObjectResponse *)putObject:(KS3PutObjectRequest *)putObjectRequest
 {
     return (KS3PutObjectResponse *)[self invoke:putObjectRequest];
+}
+
+- (KS3PutObjectCopyResponse *)putObjectCopy:(KS3PutObjectCopyRequest *)putObjectCopyRequest
+{
+    return (KS3PutObjectCopyResponse *)[self invoke:putObjectCopyRequest];
 }
 /*
 -(KSS3GetObjectACLResponse *)getObjectACLWithBucketName:(NSString *)bucketName
