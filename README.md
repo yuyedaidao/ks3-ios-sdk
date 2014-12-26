@@ -138,8 +138,8 @@ SDK以动态库的形式呈现。请将*KS3iOSSDK.framework*添加到项目工�
 * [List Parts](#list-parts) 罗列出已经上传的块
 * [Abort Multipart Upload](#abort-multipart-upload) 取消分块上传
 * [Complete Multipart Upload](#complete-multipart-upload) 组装所有分块上传的文件
-* [Multipart Upload Example Code 1](#multipart-upload-example-code) 分片上传代码示例 1
-* [Multipart Upload Example Code 2](#multipart-upload-example-code) 分片上传代码示例 2
+* [Multipart Upload Example Code 1](#multipart-upload-example-code-1) 分片上传代码示例1
+* [Multipart Upload Example Code 2](#multipart-upload-example-code-2) 分片上传代码示例2
 
 ####Service操作
 
@@ -784,7 +784,7 @@ SDK以动态库的形式呈现。请将*KS3iOSSDK.framework*添加到项目工�
 
 ```
 
-#####Multipart Upload Example Code 1:
+#####Multipart Upload Example Code 1：
 
 *分片上传代码示例*
 
@@ -834,7 +834,7 @@ SDK以动态库的形式呈现。请将*KS3iOSSDK.framework*添加到项目工�
 
 ````
 
-#####Multipart Upload Example Code 2:
+#####Multipart Upload Example Code 2：
 
 *分片上传代码示例*
 
