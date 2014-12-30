@@ -86,8 +86,11 @@
         case 1:
         {
             KS3DeleteObjectRequest *deleteObjRequest = [[KS3DeleteObjectRequest alloc] initWithName:kBucketName];
-            deleteObjRequest.key = @"test.jpg";
+            deleteObjRequest.key = @"photo_hor.jpeg";
             KS3DeleteObjectResponse *response = [[KS3Client initialize] deleteObject:deleteObjRequest];
+            NSLog(@"------%@",[[NSString alloc] initWithData:response.body encoding:NSUTF8StringEncoding]);
+            NSLog(@"%d",[response httpStatusCode]);
+            NSLog(@"%@",[response responseHeader]);
             if (response.httpStatusCode == 204) {
                 NSLog(@"Delete object success!");
             }
@@ -101,6 +104,10 @@
             KS3HeadObjectRequest *headObjRequest = [[KS3HeadObjectRequest alloc] initWithName:kBucketName];
             headObjRequest.key = kObjectName;
             KS3HeadObjectResponse *response = [[KS3Client initialize] headObject:headObjRequest];
+            
+            NSLog(@"------%@",[[NSString alloc] initWithData:response.body encoding:NSUTF8StringEncoding]);
+            NSLog(@"%d",[response httpStatusCode]);
+            NSLog(@"%@",[response responseHeader]);
             if (response.httpStatusCode == 200) {
                 NSLog(@"Head object success!");
             }
@@ -113,11 +120,15 @@
         {
             //一定要实现委托方法 (这种情况如果实现委托，返回的reponse一般返回为nil，具体获取返回对象需要到委托方法里面获取，如果不实现委托，reponse不会为nil
             KS3PutObjectRequest *putObjRequest = [[KS3PutObjectRequest alloc] initWithName:kBucketName];
-            putObjRequest.delegate = self;
+//            putObjRequest.delegate = self;
             NSString *fileName = [[NSBundle mainBundle] pathForResource:@"test" ofType:@"jpg"];
             putObjRequest.data = [NSData dataWithContentsOfFile:fileName options:NSDataReadingMappedIfSafe error:nil];
             putObjRequest.filename = [fileName lastPathComponent];
-            [[KS3Client initialize] putObject:putObjRequest];
+            KS3PutObjectResponse *response = [[KS3Client initialize] putObject:putObjRequest];
+            
+            NSLog(@"------%@",[[NSString alloc] initWithData:response.body encoding:NSUTF8StringEncoding]);
+            NSLog(@"%d",[response httpStatusCode]);
+            NSLog(@"%@",[response responseHeader]);
         }
             break;
         case 4:
@@ -131,6 +142,10 @@
             getObjectACLRequest.key = kObjectName;
             KS3GetObjectACLResponse *response = [[KS3Client initialize] getObjectACL:getObjectACLRequest];
             KS3BucketACLResult *result = response.listBucketsResult;
+            
+            NSLog(@"------%@",[[NSString alloc] initWithData:response.body encoding:NSUTF8StringEncoding]);
+            NSLog(@"%d",[response httpStatusCode]);
+            NSLog(@"%@",[response responseHeader]);
             if (response.httpStatusCode == 200) {
                 NSLog(@"Get object acl success!");
                 NSLog(@"Object owner ID:          %@",result.owner.ID);
@@ -156,6 +171,9 @@
             [acl setContronAccess:KingSoftYun_Permission_Public_Read_Write];
             setObjectACLRequest.acl = acl;
             KS3SetObjectACLResponse *response = [[KS3Client initialize] setObjectACL:setObjectACLRequest];
+            NSLog(@"------%@",[[NSString alloc] initWithData:response.body encoding:NSUTF8StringEncoding]);
+            NSLog(@"%d",[response httpStatusCode]);
+            NSLog(@"%@",[response responseHeader]);
             if (response.httpStatusCode == 200) {
                 NSLog(@"Set object acl success!");
             }
