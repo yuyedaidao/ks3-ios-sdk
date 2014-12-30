@@ -20,7 +20,6 @@
 
 @property (nonatomic, strong) NSData *data;
 
-@property (nonatomic, strong) NSInputStream *stream;
 
 - (id)initWithMultipartUpload:(KS3MultipartUpload *)multipartUpload;
 

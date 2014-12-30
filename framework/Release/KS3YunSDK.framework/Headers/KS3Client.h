@@ -64,6 +64,10 @@ typedef void(^kSS3DownloadFileCompleteionBlock)(KS3DownLoad *aDownload, NSString
 @class KS3SetGrantACLRequest;
 @class KS3SetObjectGrantACLResponse;
 @class KS3SetObjectGrantACLRequest;
+@class KS3SetBucketLoggingRequest;
+@class KS3PutObjectCopyRequest;
+@class KS3PutObjectCopyResponse;
+
 @interface KS3Client : KS3WebServiceClient
 /**
  *  初始化
@@ -182,14 +186,6 @@ typedef void(^kSS3DownloadFileCompleteionBlock)(KS3DownLoad *aDownload, NSString
  */
 - (KS3GetBucketLoggingResponse *)getBucketLoggingWithName:(NSString *)bucketName;
 /**
- *  设置Bucket的日志信息
- *
- *  @param bucketName
- *
- *  @return 返回resonse对象（里边有服务返回的数据（具体的参照demo））
- */
-- (KS3SetBucketLoggingResponse *)setBucketLoggingWithName:(NSString *)bucketName;
-/**
  *  下载Object数据
  *
  *  @param getObjectRequest 设置下载Object的request请求信息
@@ -222,6 +218,14 @@ typedef void(^kSS3DownloadFileCompleteionBlock)(KS3DownLoad *aDownload, NSString
  *  @return 返回resonse对象（里边有服务返回的数据（具体的参照demo））
  */
 - (KS3PutObjectResponse *)putObject:(KS3PutObjectRequest *)putObjectRequest;
+/**
+ *  把源Bucket里面的某个Object复制到目的Bucket里面一个指定的Object
+ *
+ *  @param putObjectCopyRequest 设置setObjectACLRequest的request信息
+ *
+ *  @return 返回response对象（里边有服务返回的数据（具体的参照demo）
+ */
+- (KS3PutObjectCopyResponse *)putObjectCopy:(KS3PutObjectCopyRequest *)putObjectCopyRequest;
 
 /**
  *  获得Object的acl

@@ -7,8 +7,10 @@
 //
 
 #warning Please set correct bucket and object name
-#define kBucketName @"alert1"//@"blues111"
-#define kObjectName @"bug.txt"//@"bug.txt"
+#define kBucketName @"alert1"
+#define kObjectName @"bug.txt"
+#define kDesBucketName @"blues111"
+#define kDesObjectName @"bug_copy.txt"
 
 #import "ObjectViewController.h"
 #import <KS3YunSDK/KS3YunSDK.h>
@@ -19,6 +21,7 @@
 @property (nonatomic) NSInteger partInter;
 @property (strong, nonatomic)  KS3MultipartUpload *muilt;
 @property (nonatomic) NSInteger upLoadCount;
+@property (nonatomic, strong) KS3FileUploader *uploader;
 
 @end
 
@@ -28,7 +31,7 @@
     [super viewDidLoad];
     self.navigationItem.title = @"Object";
     _arrItems = [NSArray arrayWithObjects:
-                 @"Get Object",       @"Delete Object", @"Head Object", @"Put Object", @"Post Object",
+                 @"Get Object",       @"Delete Object", @"Head Object", @"Put Object", @"Put Object Copy", @"Post Object",
                  @"Get Object ACL",   @"Set Object ACL", @"Set Object Grant ACL",
                  @"Multipart Upload", @"Pause Download", @"Abort Upload", nil];
 }
@@ -67,7 +70,6 @@
                     /**
              *  如果是暂停下载，就需要把_downloadConnection的file做为参数传到download方法里面
              */
-            NSString *str = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"];
             _downloader = [[KS3Client initialize] downloadObjectWithBucketName:kBucketName key:kObjectName downloadBeginBlock:^(KS3DownLoad *aDownload, NSURLResponse *responseHeaders) {
                 NSLog(@"1212221");
                 
@@ -133,10 +135,25 @@
             break;
         case 4:
         {
-            NSLog(@"暂不对移动端开放！");
+            KS3PutObjectCopyRequest *request = [[KS3PutObjectCopyRequest alloc] initWithName:kDesBucketName];
+            request.key = kDesObjectName;
+            request.strSourceBucket = kBucketName;
+            request.strSourceObject = kObjectName;
+            KS3PutObjectCopyResponse *response = [[KS3Client initialize] putObjectCopy:request];
+            if (response.httpStatusCode == 200) {
+                NSLog(@"Put object copy success!");
+            }
+            else {
+                NSLog(@"Put object copy error: %@", response.error.description);
+            }
         }
             break;
         case 5:
+        {
+            NSLog(@"暂不对移动端开放！");
+        }
+            break;
+        case 6:
         {
             KS3GetObjectACLRequest  *getObjectACLRequest = [[KS3GetObjectACLRequest alloc] initWithName:kBucketName];
             getObjectACLRequest.key = kObjectName;
@@ -163,7 +180,7 @@
             }
         }
             break;
-        case 6:
+        case 7:
         {
             KS3SetObjectACLRequest *setObjectACLRequest = [[KS3SetObjectACLRequest alloc] initWithName:kBucketName];
             setObjectACLRequest.key = kObjectName;
@@ -182,7 +199,7 @@
             }
         }
             break;
-        case 7:
+        case 8:
         {
             KS3SetObjectGrantACLRequest *setObjectGrantACLRequest = [[KS3SetObjectGrantACLRequest alloc] initWithName:kBucketName];
             setObjectGrantACLRequest.key = kObjectName;
@@ -200,45 +217,56 @@
             }
         }
             break;
-        case 8:
+        case 9:
         {
 #warning "blues111" is your the bucket you want to operate, "bugDownload.txt" is the object name you want to upload, "500.txt" is file name in cloud
             /**
              *  大于100M的文件可以使用文件分块上传 如果需要使用文件分块上传则必须实现代理方法 在委托方法里完成块的拼装（本demo为了测试，则上传了小文件，方便开发者下载demo）
              */
-            _upLoadCount = 0;
-            NSFileHandle *fileHandle = [NSFileHandle fileHandleForReadingAtPath:[[NSBundle mainBundle] pathForResource:@"bugDownload" ofType:@"txt"]];
-            long long fileLength = [[fileHandle availableData] length];
-            long long partLength = 5*1024.0*1024.0;
-            _partInter = (ceilf((float)fileLength / (float)partLength));
-            NSLog(@"%lld",fileLength);
-            NSLog(@"%lld",partLength);
-            NSLog(@"%ld",_partInter);
-            [fileHandle seekToFileOffset:0];
-            _muilt = [[KS3Client initialize] initiateMultipartUploadWithKey:@"10000.txt" withBucket:kBucketName];
-            for (NSInteger i = 0; i < _partInter; i ++) {
-                NSData *data = nil;
-                if (i == _partInter - 1) {
-                    data = [fileHandle readDataToEndOfFile];
-                }else {
-                    data = [fileHandle readDataOfLength:partLength];
-                    [fileHandle seekToFileOffset:partLength*(i+1)];
-                }
-                KS3UploadPartRequest *req = [[KS3UploadPartRequest alloc] initWithMultipartUpload:_muilt];
-                req.delegate = self;
-                req.data = data;
-                req.partNumber = (int32_t)i+1;
-                req.contentLength = data.length;
-                [[KS3Client initialize] uploadPart:req];
-            }
+//            _upLoadCount = 0;
+//            NSFileHandle *fileHandle = [NSFileHandle fileHandleForReadingAtPath:[[NSBundle mainBundle] pathForResource:@"bugDownload" ofType:@"txt"]];
+//            long long fileLength = [[fileHandle availableData] length];
+//            long long partLength = 5*1024.0*1024.0;
+//            _partInter = (ceilf((float)fileLength / (float)partLength));
+//            NSLog(@"%lld",fileLength);
+//            NSLog(@"%lld",partLength);
+//            NSLog(@"%ld",_partInter);
+//            [fileHandle seekToFileOffset:0];
+//            _muilt = [[KS3Client initialize] initiateMultipartUploadWithKey:@"10000.txt" withBucket:kBucketName];
+//            for (NSInteger i = 0; i < _partInter; i ++) {
+//                NSData *data = nil;
+//                if (i == _partInter - 1) {
+//                    data = [fileHandle readDataToEndOfFile];
+//                }else {
+//                    data = [fileHandle readDataOfLength:partLength];
+//                    [fileHandle seekToFileOffset:partLength*(i+1)];
+//                }
+//                KS3UploadPartRequest *req = [[KS3UploadPartRequest alloc] initWithMultipartUpload:_muilt];
+//                req.delegate = self;
+//                req.data = data;
+//                req.partNumber = (int32_t)i+1;
+//                req.contentLength = data.length;
+//                [[KS3Client initialize] uploadPart:req];
+//            }
+            _uploader = [[KS3FileUploader alloc] initWithBucketName:@"acc"];
+            _uploader.strFilePath = [[NSBundle mainBundle] pathForResource:@"bugDownload" ofType:@"txt"];
+            _uploader.strKey = @"10000000.txt";
+            _uploader.partSize = 5; // **** unit: MB, must larger than 5
+            [_uploader startUploadWithProgressChangeBlock:^(KS3FileUploader *uploader, double progress) {
+                NSLog(@"progress: %f", progress);
+            } completeBlock:^(KS3FileUploader *uploader) {
+                NSLog(@"complete");
+            } failedBlock:^(KS3FileUploader *uploader, NSString *strUploadId, NSInteger partNumber, NSError *error) {
+                NSLog(@"failed!");
+            }];
         }
             break;
-        case 9:
+        case 10:
         {
             [_downloader stop];
         }
             break;
-        case 10:
+        case 11:
         {
             KS3AbortMultipartUploadRequest *request = [[KS3AbortMultipartUploadRequest alloc] initWithMultipartUpload:_muilt];
             KS3AbortMultipartUploadResponse *response = [[KS3Client initialize] abortMultipartUpload:request];
