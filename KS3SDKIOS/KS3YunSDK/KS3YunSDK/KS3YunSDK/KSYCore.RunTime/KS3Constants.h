@@ -21,6 +21,7 @@
 #define kKS3QueryParamMarker                  @"marker"
 #define kKS3QueryParamDelimiter               @"delimiter"
 #define kKS3QueryParamMaxKeys                 @"max-keys"
+#define kKS3QueryParamEncodingType            @"encoding-type"
 
 #define kKS3HttpHdrContentMD5                 @"Content-MD5"
 

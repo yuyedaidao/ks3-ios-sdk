@@ -7,8 +7,8 @@
 //
 
 #warning Please set correct bucket and object name
-#define kBucketName @"alert1"
-#define kObjectName @"bug.txt"
+#define kBucketName @"acc"//@"alert1"
+#define kObjectName @"Count_1.txt"//@"bug.txt"
 #define kDesBucketName @"blues111"
 #define kDesObjectName @"bug_copy.txt"
 

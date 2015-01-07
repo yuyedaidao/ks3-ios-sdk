@@ -43,6 +43,12 @@
         }
         [queryString appendFormat:@"%@=%@", kKS3QueryParamDelimiter, [KS3SDKUtil urlEncode:self.delimiter]];
     }
+    if (nil != self.encodingType) {
+        if (queryString.length > 0) {
+            [queryString appendFormat:@"&"];
+        }
+        [queryString appendFormat:@"%@=%@", kKS3QueryParamEncodingType, [KS3SDKUtil urlEncode:self.encodingType]];
+    }
     if (self.maxKeys > 0) {
         if ( [queryString length] > 0) {
             [queryString appendFormat:@"&"];

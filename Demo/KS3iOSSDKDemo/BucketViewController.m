@@ -7,7 +7,8 @@
 //
 
 #warning Please set correct bucket name
-#define kBucketName @"alert1"
+#define kBucketName @"acc"
+//#define kBucketName @"alert1"
 
 #import "BucketViewController.h"
 #import <KS3YunSDK/KS3YunSDK.h>
