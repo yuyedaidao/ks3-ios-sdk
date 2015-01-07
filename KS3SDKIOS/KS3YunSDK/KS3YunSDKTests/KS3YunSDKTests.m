@@ -41,33 +41,25 @@ NSString *const strSecretKey = @"1+RBTrWaeT6LaixUV5SGPFpeTa/wZEeZlGzYaZfr";
         // Put the code you want to measure the time of here.
     }];
 }
+
 - (void)testAll
 {
     [self testLisetBuckets];
     [self testCreateBucket];
     [self testHeadObject];
 }
+
 - (void)testLisetBuckets
 {
-//    [[KS3Client initialize] listBuckets];
     NSArray *bucketArray = [[KS3Client initialize] listBuckets];
     for (KS3Bucket *bucket in bucketArray ) {
         NSLog(@"%@",bucket.creationDate);
         NSLog(@"%@",bucket.name);
     }
- 
-    /*
-     [[KS3Client initialize] listObjectsInBucket:@"alert1"];
-     */
 }
+
 - (void)testCreateBucket
 {
-    /*
-     [[KS3Client initialize] createBucketWithName:@"testCreateBucket-WF"];
-     KSS3CreateBucketResponse *response = [[KS3Client initialize] createBucketWithName:@""];
-     NSLog(@"%@",[response.error description]);
-     NSLog(@"%d",response.httpStatusCode);
-     */
     KS3CreateBucketRequest *req = [[KS3CreateBucketRequest alloc] initWithName:@"gggg"];
     KS3CreateBucketResponse *response = [[KS3Client initialize] createBucket:req];
     NSLog(@"%@",response.description);
@@ -75,11 +67,9 @@ NSString *const strSecretKey = @"1+RBTrWaeT6LaixUV5SGPFpeTa/wZEeZlGzYaZfr";
     NSLog(@"%d",response.httpStatusCode);
     XCTAssertEqual(200, response.httpStatusCode);
 }
--(void)testDeleteBucket
+
+- (void)testDeleteBucket
 {
-    /*
-     [[KS3Client initialize] deleteBucketWithName:@"test"];
-     */
     KS3DeleteBucketRequest *req = [[KS3DeleteBucketRequest alloc] initWithName:@"ggg"];
     KS3DeleteBucketResponse *response = [[KS3Client initialize] deleteBucket:req];
     XCTAssertEqual(204, response.httpStatusCode);
@@ -103,11 +93,11 @@ NSString *const strSecretKey = @"1+RBTrWaeT6LaixUV5SGPFpeTa/wZEeZlGzYaZfr";
     KS3AccessControlList *acl = [[KS3AccessControlList alloc] init];
     [acl setContronAccess:KingSoftYun_Permission_Private];
     setAclRequest.acl = acl;
-    //    [[KS3Client initialize] setACL:setAclRequest];
     KS3SetACLResponse *response = [[KS3Client initialize] setACL:setAclRequest];
     NSLog(@"%d",response.httpStatusCode);
     XCTAssertNotNil([[KS3Client initialize] setACL:setAclRequest]);
 }
+
 - (void)testGetBucketLogging
 {
     KS3GetBucketLoggingResponse *response = [[KS3Client initialize] getBucketLoggingWithName:@"testCreateBucket-WF1"];
@@ -119,8 +109,6 @@ NSString *const strSecretKey = @"1+RBTrWaeT6LaixUV5SGPFpeTa/wZEeZlGzYaZfr";
     KS3PutObjectRequest *req = [[KS3PutObjectRequest alloc] initWithName:@"ggg"];
     NSBundle *bundle = [NSBundle bundleForClass:[self class]];
     NSString *path = [bundle pathForResource:@"Test" ofType:@"jpg"];
-//    NSURL *fileName = [[NSBundle mainBundle] URLForResource:@"Test" withExtension:@".jpg"];
-//    NSLog(@"-------%@",fileName);
     req.data = [NSData dataWithContentsOfFile:path options:NSDataReadingMappedIfSafe error:nil];
     req.filename = [path lastPathComponent];
     KS3PutObjectResponse *response = [[KS3Client initialize] putObject:req];
@@ -200,7 +188,6 @@ NSString *const strSecretKey = @"1+RBTrWaeT6LaixUV5SGPFpeTa/wZEeZlGzYaZfr";
 //    KS3SetBucketLoggingRequest *req = [[KS3SetBucketLoggingRequest alloc] initWithName:@"acc"];
 //    KS3SetBucketLoggingResponse *response = [[KS3Client initialize] setBucketLogging:req];
 //    XCTAssertEqual(200, [response httpStatusCode]);
-    
 }
 
 - (void)testFKUpload
@@ -212,7 +199,7 @@ NSString *const strSecretKey = @"1+RBTrWaeT6LaixUV5SGPFpeTa/wZEeZlGzYaZfr";
     NSInteger partNumber = (ceilf((float)fileLength / (float)partLength));
     NSLog(@"%lld",fileLength);
     NSLog(@"%lld",partLength);
-    NSLog(@"%ld",partNumber);
+    NSLog(@"%ld",(long)partNumber);
     [fileHandle seekToFileOffset:0];
     KS3MultipartUpload *muilt = [[KS3Client initialize] initiateMultipartUploadWithKey:@"500.txt" withBucket:@"testCreateBucket-WF1"];
     for (NSInteger i = 0; i < partNumber; i ++) {
@@ -220,7 +207,7 @@ NSString *const strSecretKey = @"1+RBTrWaeT6LaixUV5SGPFpeTa/wZEeZlGzYaZfr";
         if (i == partNumber - 1) {
             data = [fileHandle readDataToEndOfFile];
         }else {
-            data = [fileHandle readDataOfLength:partLength];
+            data = [fileHandle readDataOfLength:(NSUInteger)partLength];
             [fileHandle seekToFileOffset:partLength*(i+1)];
         }
         KS3UploadPartRequest *req = [[KS3UploadPartRequest alloc] initWithMultipartUpload:muilt];
@@ -232,8 +219,8 @@ NSString *const strSecretKey = @"1+RBTrWaeT6LaixUV5SGPFpeTa/wZEeZlGzYaZfr";
         if (response11) {
             _upLoadCount++;
             if (partNumber == _upLoadCount) {
-                NSLog(@"%ld",partNumber);
-                NSLog(@"%ld",_upLoadCount);
+                NSLog(@"%ld",(long)partNumber);
+                NSLog(@"%ld",(long)_upLoadCount);
                 KS3ListPartsRequest *req2 = [[KS3ListPartsRequest alloc] initWithMultipartUpload:muilt];
                 KS3ListPartsResponse *response2 = [[KS3Client initialize] listParts:req2];
                 XCTAssertEqual(200, response2.httpStatusCode);
@@ -263,6 +250,5 @@ NSString *const strSecretKey = @"1+RBTrWaeT6LaixUV5SGPFpeTa/wZEeZlGzYaZfr";
         
     }];
 }
-
 
 @end

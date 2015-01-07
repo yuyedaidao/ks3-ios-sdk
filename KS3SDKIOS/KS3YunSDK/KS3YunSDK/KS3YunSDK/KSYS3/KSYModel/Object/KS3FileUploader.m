@@ -88,7 +88,7 @@
     if (_uploadNum == _totalNum) {
         data = [_fileHandle readDataToEndOfFile];
     }else {
-        data = [_fileHandle readDataOfLength:partLength];
+        data = [_fileHandle readDataOfLength:(NSUInteger)partLength];
         [_fileHandle seekToFileOffset:partLength*(_uploadNum)];
     }
     
