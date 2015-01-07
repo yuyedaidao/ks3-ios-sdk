@@ -56,7 +56,7 @@
         [queryString appendFormat:@"%@=%d", kKS3QueryParamMaxKeys, self.maxKeys];
     }
     if ([queryString length] > 0) {
-        self.host = [NSString stringWithFormat:@"%@?%@",self.host,queryString];
+        self.host = [NSString stringWithFormat:@"%@/?%@",self.host,queryString];
     }
     [super configureURLRequest];
     return self.urlRequest;

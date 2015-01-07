@@ -11,7 +11,7 @@
 
 @implementation KS3ListPartsRequest
 
--(id)initWithMultipartUpload:(KS3MultipartUpload *)multipartUpload
+- (id)initWithMultipartUpload:(KS3MultipartUpload *)multipartUpload
 {
     if(self = [self init])
     {
@@ -23,14 +23,11 @@
         self.httpMethod = kHttpMethodGet;
         self.kSYResource =  [NSString stringWithFormat:@"/%@", self.bucket];
     }
-    
     return self;
 }
 
--(NSMutableURLRequest *)configureURLRequest
+- (NSMutableURLRequest *)configureURLRequest
 {
-    
-//    self.host = [NSString stringWithFormat:@"http://%@.kss.ksyun.com/%@?uploadId=%@", self.bucket, self.key, self.uploadId];;
     self.host = [NSString stringWithFormat:@"http://%@.kss.ksyun.com/%@?uploadId=%@", self.bucket, self.key, self.uploadId];;
     self.kSYResource = [NSString stringWithFormat:@"%@/%@?uploadId=%@",self.kSYResource,self.key,self.uploadId];
     NSMutableString *subresource = [NSMutableString stringWithFormat:@"%@=%@", kKS3QueryParamUploadId, self.uploadId];
@@ -38,19 +35,21 @@
     if (self.maxParts != 1000) {
         [subresource appendFormat:@"&%@=%d", kKS3QueryParamMaxParts, self.maxParts];
     }
-    
     if (self.partNumberMarker != 0) {
         [subresource appendFormat:@"&%@=%d", kKS3QueryParamPartNumberMarker, self.partNumberMarker];
     }
-    
-//    self.kSYResource = [NSString stringWithString:subresource];
-    
+    if (nil != _encodingType) {
+        if (subresource.length > 0) {
+            [subresource appendString:@"&"];
+        }
+        [subresource appendFormat:@"%@=%@", kKS3QueryParamEncodingType, _encodingType];
+    }
+    if (subresource.length > 0) {
+        self.host = [NSString stringWithFormat:@"%@/?%@", self.host, subresource];
+    }
     [super configureURLRequest];
-    
     [self.urlRequest setHTTPMethod:kHttpMethodGet];
-    
     return self.urlRequest;
 }
-
 
 @end

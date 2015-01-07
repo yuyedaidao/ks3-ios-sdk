@@ -8,18 +8,16 @@
 
 #import "KS3Request.h"
 #import "KS3MultipartUpload.h"
+
 @interface KS3UploadPartRequest : KS3Request
 
-@property (nonatomic, strong) NSString *key;
+@property (nonatomic, strong) NSString *expect;
 
 @property (nonatomic, assign) int32_t partNumber;
-
 @property (nonatomic, assign) BOOL generateMD5;
-
 @property (nonatomic, strong) NSString *uploadId;
-
 @property (nonatomic, strong) NSData *data;
-
+@property (nonatomic, strong) NSString *key;
 
 - (id)initWithMultipartUpload:(KS3MultipartUpload *)multipartUpload;
 

@@ -9,7 +9,7 @@
 #warning Please set correct bucket and object name
 #define kBucketName @"acc"//@"alert1"
 #define kObjectName @"Count_1.txt"//@"bug.txt"
-#define kDesBucketName @"blues111"
+#define kDesBucketName @"ggg"//@"blues111"
 #define kDesObjectName @"bug_copy.txt"
 
 #import "ObjectViewController.h"

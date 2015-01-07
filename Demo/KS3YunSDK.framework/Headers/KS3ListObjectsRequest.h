@@ -16,6 +16,6 @@
 @property (nonatomic, retain) NSString *delimiter;
 @property (nonatomic, strong) NSString *encodingType;
 
-
 - (instancetype)initWithName:(NSString *)bucketName;
+
 @end

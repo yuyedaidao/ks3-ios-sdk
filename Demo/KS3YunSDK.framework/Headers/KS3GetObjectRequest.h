@@ -10,13 +10,19 @@
 
 @interface KS3GetObjectRequest : KS3Request
 
-@property (nonatomic, assign) int64_t  rangeStart;
-@property (nonatomic, assign) int64_t  rangeEnd;
-@property (nonatomic, strong) NSDate   *ifModifiedSince;
-@property (nonatomic, strong) NSDate   *ifUnmodifiedSince;
+@property (nonatomic, strong) NSString *responseContentType;
+@property (nonatomic, strong) NSString *responseContentLanguage;
+@property (nonatomic, strong) NSString *responseExpires;
+@property (nonatomic, strong) NSString *responseCacheControl;
+@property (nonatomic, strong) NSString *responseContentDisposition;
+@property (nonatomic, strong) NSString *responseContentEncoding;
+
+@property (nonatomic, strong) NSString *range;
+@property (nonatomic, strong) NSString *ifModifiedSince;
+@property (nonatomic, strong) NSString *ifUnmodifiedSince;
 @property (nonatomic, strong) NSString *ifMatch;
-@property (nonatomic, strong) NSString *versionId;
 @property (nonatomic, strong) NSString *ifNoneMatch;
+@property (nonatomic, strong) NSString *versionId;
 @property (nonatomic, strong) NSString *key;
 
 - (instancetype)initWithName:(NSString *)bucketName;
