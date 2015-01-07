@@ -94,6 +94,17 @@ static NSTimeInterval const KingSoftYun_RequestTimeout = 60;
     }
 }
 
+- (void)connectWithSecurityToken:(NSString *)theSecurityToken
+{
+    _credentials = [[KS3Credentials alloc] initWithSecurityToken:theSecurityToken];
+}
+
+// **** example token code
+- (NSString *)tokenWithHttpMethod:(NSString *)httpMethod contentMd5:(NSString *)contentMd5 contentType:(NSString *)contentType date:(NSString *)strDate header:(NSString *)header resource:(NSString *)resource
+{
+    return nil;
+}
+
 #pragma mark - Buckets
 
 - (NSArray *)listBuckets

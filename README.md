@@ -82,6 +82,25 @@ Authorization: KSS P3UPCMORAFON76Q6RTNQ:vU9XqPLcXd3nWdlfLWIhruZrLAM=
                
 ```
 
+######必要的说明
+对于使用token方式初始化SDK的用户，需要注意
+
+```
+- (NSString *)tokenWithHttpMethod:(NSString *)httpMethod contentMd5:(NSString *)contentMd5 contentType:(NSString *)contentType date:(NSString *)strDate header:(NSString *)header resource:(NSString *)resource;
+```
+服务器端应根据上述签名生成规则，利用AccessKeyID及AccessKeySecret计算出签并正确返回给SDK。
+
+上述方法中的contentMd5, contentType, header参数可为空。若为空，则SDK会使用空字符串("")替代, 但strDate和resource不能为空。
+
+为保证请求时间的一致性，需要App客户端及业务服务期保证各自的时间正确性，否则用错误的时间尝试请求，会返回403Forbidden错误。
+
+方法参数说明：
+
+contentMd5 表示请求内容数据的MD5值, 使用Base64编码
+contentType 表示请求内容的类型
+strDate 表示此次操作的时间,且必须为 HTTP1.1 中支持的 GMT 格式，客户端应务必保证本地时间正确性
+header 表示HTTP请求中的以x-kss开头的Header组合
+resource 表示用户访问的资源
 
 ###开发前准备
 ####SDK使用准备
@@ -101,7 +120,7 @@ SDK以动态库的形式呈现。请将*KS3iOSSDK.framework*添加到项目工�
 ![](http://androidsdktest21.kssws.ks-cdn.com/ks3-android-sdk-authlistener.png)
 
 ####KS3Client初始化
-- 利用AccessKeyID、AccessKeySecret初始化
+- 利用AccessKeyID、AccessKeySecret初始化（不安全，仅建议测试时使用）
 
 对应的初始化代码如下：
 
@@ -109,6 +128,13 @@ SDK以动态库的形式呈现。请将*KS3iOSSDK.framework*添加到项目工�
 
 	    [[KS3Client initialize] connectWithAccessKey:strAccessKey withSecretKey:strSecretKey];
 
+```
+
+－ 利用token初始化（推荐使用）
+对应的代码如下：
+
+```
+[[KS3Client initialize] connectWithSecurityToken:theSecurityToken];
 ```
 
 ###SDK介绍及使用

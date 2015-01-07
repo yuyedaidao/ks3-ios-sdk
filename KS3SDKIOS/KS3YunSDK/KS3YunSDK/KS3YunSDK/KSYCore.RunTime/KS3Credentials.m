@@ -21,14 +21,11 @@
     return self;
 }
 
-- (id)initWithAccessKey:(NSString *)theAccessKey withSecretKey:(NSString *)theSecretKey withSecurityToken:(NSString *)theSecurityToken
+- (id)initWithSecurityToken:(NSString *)theSecurityToken
 {
     self = [super init];
     if (self) {
-        _accessKey = theAccessKey;
-        _secretKey = theSecretKey;
         _securityToken = theSecurityToken;
-        
     }
     return self;
 }
