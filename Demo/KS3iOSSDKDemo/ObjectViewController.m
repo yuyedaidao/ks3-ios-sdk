@@ -65,6 +65,17 @@
     switch (indexPath.row) {
         case 0:
         {
+//            KS3GetObjectRequest *request = [[KS3GetObjectRequest alloc] initWithName:@"acc"];
+//            request.key = kObjectName;
+//            KS3GetObjectResponse *response = [[KS3Client initialize] getObject:request];
+//            NSString *str = [[NSString  alloc] initWithData:response.body encoding:NSUTF8StringEncoding];
+//            if (response.httpStatusCode == 200) {
+//                NSLog(@"success!");
+//            }
+//            else {
+//                NSLog(@"error");
+//            }
+            
             UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
             UIProgressView *progressView = (UIProgressView *)[cell.contentView viewWithTag:99];
                     /**
