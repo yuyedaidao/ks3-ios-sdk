@@ -16,8 +16,8 @@
     if (self) {
         _accessKey = accessKey;
         _secretKey = secretKey;
+        _securityToken = nil;
     }
-    
     return self;
 }
 
@@ -25,6 +25,8 @@
 {
     self = [super init];
     if (self) {
+        _accessKey = nil;
+        _secretKey = nil;
         _securityToken = theSecurityToken;
     }
     return self;

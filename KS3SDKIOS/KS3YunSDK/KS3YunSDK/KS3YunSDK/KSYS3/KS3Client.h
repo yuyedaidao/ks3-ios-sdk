@@ -80,9 +80,30 @@ typedef void(^kSS3DownloadFileCompleteionBlock)(KS3DownLoad *aDownload, NSString
  *
  *  @param accessKey
  *  @param secretKey 
- *  注释：这个接口必须实现（这个是使用下面API的（前提））建议在工程的delete里面实现
+ *  注释：这个接口必须实现（这个是使用下面API的（前提））建议在工程的delegate里面实现
  */
 - (void)connectWithAccessKey:(NSString *)accessKey withSecretKey:(NSString *)secretKey;
+
+/**
+ *  设置token
+ *
+ *  @param token
+ *  注释：这个接口必须实现，在使用所有API前需要调用设置最新的token
+ */
+- (void)connectWithSecurityToken:(NSString *)theSecurityToken;
+
+/**
+ *  获取token
+ *
+ *  @param httpMethod
+ *  @param contentMd5
+ *  @param contentType
+ *  @param strDate
+ *  @param header
+ *  @param resource
+ *  注释：向app自己的server请求token，然后在connectWithSecurityToken:中使用
+ */
+- (NSString *)tokenWithHttpMethod:(NSString *)httpMethod contentMd5:(NSString *)contentMd5 contentType:(NSString *)contentType date:(NSString *)strDate header:(NSString *)header resource:(NSString *)resource;
 /**
  *  列出客户所有的Bucket信息
  *

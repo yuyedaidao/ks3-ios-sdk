@@ -85,7 +85,7 @@ static NSTimeInterval const KingSoftYun_RequestTimeout = 60;
     return shareObj;
 }
 
-#pragma mark - ConnectWithAccessKey
+#pragma mark - Init credentials
 
 - (void)connectWithAccessKey:(NSString *)accessKey withSecretKey:(NSString *)secretKey
 {
@@ -99,10 +99,11 @@ static NSTimeInterval const KingSoftYun_RequestTimeout = 60;
     _credentials = [[KS3Credentials alloc] initWithSecurityToken:theSecurityToken];
 }
 
-// **** example token code
 - (NSString *)tokenWithHttpMethod:(NSString *)httpMethod contentMd5:(NSString *)contentMd5 contentType:(NSString *)contentType date:(NSString *)strDate header:(NSString *)header resource:(NSString *)resource
 {
-    return nil;
+    // **** 此处需要向app自己的服务器请求token
+    // **** 服务器需要根据这些参数和存储在服务器上的ak/sk计算出token（也就是签名），并返回
+    return @"YOUR-TOKEN";
 }
 
 #pragma mark - Buckets
@@ -314,12 +315,12 @@ static NSTimeInterval const KingSoftYun_RequestTimeout = 60;
 
 - (KS3Response *)invoke:(KS3Request *)request
 {
-    if (!_credentials && !_credentials.accessKey && !_credentials.secretKey) {
+    if (!_credentials && !_credentials.accessKey && !_credentials.secretKey && !_credentials.securityToken) {
         KS3Response *response = [KS3Response new];
-        response.error = [KS3ErrorHandler errorFromExceptionWithThrowsExceptionOption:[KS3ClientException exceptionWithMessage:@"配置的accessKey和secretKey有错误!"]];
+        response.error = [KS3ErrorHandler errorFromExceptionWithThrowsExceptionOption:[KS3ClientException exceptionWithMessage:@"配置的accessKey和secretKey或token有错误!"]];
         return response;
     }
-    if (!_credentials && !_credentials.accessKey && !_credentials.secretKey) {
+    if (!_credentials && !_credentials.accessKey && !_credentials.secretKey && !_credentials.securityToken) {
         
     }
     if (nil == request) {
@@ -335,6 +336,10 @@ static NSTimeInterval const KingSoftYun_RequestTimeout = 60;
     }
     NSMutableURLRequest *urlRequest = [self signKSS3Request:request];
     [urlRequest setTimeoutInterval:KingSoftYun_RequestTimeout];
+    if (!_credentials.accessKey && !_credentials.secretKey && _credentials.securityToken) {
+        [urlRequest setValue:_credentials.securityToken forHTTPHeaderField:@"Authorization"]; // **** 根据token设置签名
+    }
+    
     KS3Response *response = [KS3Client constructResponseFromRequest:request];
     [response setRequest:request];
     if ([request delegate] != nil) {

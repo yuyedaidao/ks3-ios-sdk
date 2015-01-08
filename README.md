@@ -83,12 +83,12 @@ Authorization: KSS P3UPCMORAFON76Q6RTNQ:vU9XqPLcXd3nWdlfLWIhruZrLAM=
 ```
 
 ######必要的说明
-对于使用token方式初始化SDK的用户，需要注意
+对于使用token方式初始化SDK的用户，需要注意，要使用方法
 
 ```
 - (NSString *)tokenWithHttpMethod:(NSString *)httpMethod contentMd5:(NSString *)contentMd5 contentType:(NSString *)contentType date:(NSString *)strDate header:(NSString *)header resource:(NSString *)resource;
 ```
-服务器端应根据上述签名生成规则，利用AccessKeyID及AccessKeySecret计算出签并正确返回给SDK。
+来向服务器请求token，服务器端应根据上述签名生成规则，利用AccessKeyID及AccessKeySecret计算出签名并正确返回给SDK。
 
 上述方法中的contentMd5, contentType, header参数可为空。若为空，则SDK会使用空字符串("")替代, 但strDate和resource不能为空。
 
@@ -130,13 +130,14 @@ SDK以动态库的形式呈现。请将*KS3iOSSDK.framework*添加到项目工�
 
 ```
 
-- 利用token初始化（推荐使用）
+- 利用token初始化，每次需要调用SDK的API时都需要使用请求一次token，然后用这个token初始化KS3Client（推荐使用）
 
 对应的代码如下：
 
 ```
 [[KS3Client initialize] connectWithSecurityToken:theSecurityToken];
 ```
+
 
 ###SDK介绍及使用
 ####核心类介绍
