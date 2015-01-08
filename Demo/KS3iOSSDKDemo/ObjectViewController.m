@@ -140,6 +140,9 @@
             request.strSourceBucket = kBucketName;
             request.strSourceObject = kObjectName;
             KS3PutObjectCopyResponse *response = [[KS3Client initialize] putObjectCopy:request];
+            NSLog(@"------%@",[[NSString alloc] initWithData:response.body encoding:NSUTF8StringEncoding]);
+            NSLog(@"%d",[response httpStatusCode]);
+            NSLog(@"%@",[response responseHeader]);
             if (response.httpStatusCode == 200) {
                 NSLog(@"Put object copy success!");
             }
@@ -311,12 +314,15 @@
 {
     NSLog(@"didReceive response");
 }
+
 - (void)request:(KS3ServiceRequest *)request didReceiveData:(NSData *)data
 {
     NSLog(@"didReceive data");
 }
+
 -(void)request:(KS3ServiceRequest *)request didSendData:(long long)bytesWritten totalBytesWritten:(long long)totalBytesWritten totalBytesExpectedToWrite:(long long)totalBytesExpectedToWrite
 {
     // progress
 }
+
 @end

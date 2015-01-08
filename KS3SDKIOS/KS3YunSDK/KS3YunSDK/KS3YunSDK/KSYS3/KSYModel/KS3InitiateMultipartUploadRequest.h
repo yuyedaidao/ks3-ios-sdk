@@ -16,14 +16,11 @@
 
 @property (nonatomic, strong) NSString *cacheControl;
 
-
 @property (nonatomic, strong) NSString *contentDisposition;
-
 
 @property (nonatomic, strong) NSString *contentEncoding;
 
 @property (nonatomic, strong) NSString *redirectLocation;
-
 
 @property (nonatomic, readonly) int32_t expires;
 
