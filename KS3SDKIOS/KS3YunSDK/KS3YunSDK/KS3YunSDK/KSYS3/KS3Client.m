@@ -99,13 +99,6 @@ static NSTimeInterval const KingSoftYun_RequestTimeout = 60;
     _credentials = [[KS3Credentials alloc] initWithSecurityToken:theSecurityToken];
 }
 
-- (NSString *)tokenWithHttpMethod:(NSString *)httpMethod contentMd5:(NSString *)contentMd5 contentType:(NSString *)contentType date:(NSString *)strDate header:(NSString *)header resource:(NSString *)resource
-{
-    // **** 此处需要向app自己的服务器请求token
-    // **** 服务器需要根据这些参数和存储在服务器上的ak/sk计算出token（也就是签名），并返回
-    return @"YOUR-TOKEN";
-}
-
 #pragma mark - Buckets
 
 - (NSArray *)listBuckets
@@ -319,9 +312,6 @@ static NSTimeInterval const KingSoftYun_RequestTimeout = 60;
         KS3Response *response = [KS3Response new];
         response.error = [KS3ErrorHandler errorFromExceptionWithThrowsExceptionOption:[KS3ClientException exceptionWithMessage:@"配置的accessKey和secretKey或token有错误!"]];
         return response;
-    }
-    if (!_credentials && !_credentials.accessKey && !_credentials.secretKey && !_credentials.securityToken) {
-        
     }
     if (nil == request) {
         KS3Response *response = [KS3Response new];

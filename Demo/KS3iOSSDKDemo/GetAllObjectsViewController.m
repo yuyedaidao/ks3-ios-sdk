@@ -31,9 +31,10 @@
     UIBarButtonItem *rightBtn = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(clickActionBtn:)];
     self.navigationItem.rightBarButtonItem = rightBtn;
     KS3ListObjectsRequest *listObjectRequest = [[KS3ListObjectsRequest alloc] initWithName:kBucketName];
-//    listObjectRequest.prefix = @"r32/tew3";
-//    listObjectRequest.delimiter = @"c";
+//    listObjectRequest.prefix = @"";
+//    listObjectRequest.delimiter = @"0";
 //    listObjectRequest.maxKeys = 5;
+//    listObjectRequest.encodingType = @"";
     KS3ListObjectsResponse *response = [[KS3Client initialize] listObjects:listObjectRequest];
     _result = response.listBucketsResult;
     _arrObjects = response.listBucketsResult.objectSummaries;

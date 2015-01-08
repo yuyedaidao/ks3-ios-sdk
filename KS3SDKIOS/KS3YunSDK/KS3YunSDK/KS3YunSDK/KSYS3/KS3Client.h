@@ -93,18 +93,6 @@ typedef void(^kSS3DownloadFileCompleteionBlock)(KS3DownLoad *aDownload, NSString
 - (void)connectWithSecurityToken:(NSString *)theSecurityToken;
 
 /**
- *  获取token
- *
- *  @param httpMethod
- *  @param contentMd5
- *  @param contentType
- *  @param strDate
- *  @param header
- *  @param resource
- *  注释：向app自己的server请求token，然后在connectWithSecurityToken:中使用
- */
-- (NSString *)tokenWithHttpMethod:(NSString *)httpMethod contentMd5:(NSString *)contentMd5 contentType:(NSString *)contentType date:(NSString *)strDate header:(NSString *)header resource:(NSString *)resource;
-/**
  *  列出客户所有的Bucket信息
  *
  *  @return 所有bucket的数组

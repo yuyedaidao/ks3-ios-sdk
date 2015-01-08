@@ -82,13 +82,8 @@ Authorization: KSS P3UPCMORAFON76Q6RTNQ:vU9XqPLcXd3nWdlfLWIhruZrLAM=
                
 ```
 
-######必要的说明
-对于使用token方式初始化SDK的用户，需要注意，要使用方法
-
-```
-- (NSString *)tokenWithHttpMethod:(NSString *)httpMethod contentMd5:(NSString *)contentMd5 contentType:(NSString *)contentType date:(NSString *)strDate header:(NSString *)header resource:(NSString *)resource;
-```
-来向服务器请求token，服务器端应根据上述签名生成规则，利用AccessKeyID及AccessKeySecret计算出签名并正确返回给SDK。
+#####必要的说明
+对于使用token方式初始化SDK的用户，需要注意调用任何SDK里面的方法之前都需要向服务器请求token，需要传给服务器的参数有httpMethod，contentMd5，contentType，strDate，header，resource，服务器端应根据上述签名生成规则，利用AccessKeyID及AccessKeySecret计算出签名并正确返回给SDK。
 
 上述方法中的contentMd5, contentType, header参数可为空。若为空，则SDK会使用空字符串("")替代, 但strDate和resource不能为空。
 

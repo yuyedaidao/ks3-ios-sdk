@@ -8,6 +8,7 @@
 
 #import "KS3GetObjectRequest.h"
 #import "KS3Constants.h"
+#import "KS3SDKUtil.h"
 
 @implementation KS3GetObjectRequest
 
@@ -29,43 +30,59 @@
 - (KS3URLRequest *)configureURLRequest
 {
     self.kSYResource = [self.kSYResource stringByAppendingFormat:@"/%@", _key];
+    self.host = [self.host stringByAppendingFormat:@"/%@", _key];
     
     // **** request params
     NSMutableString *queryPramaString = [NSMutableString stringWithCapacity:512];
+    NSMutableString *subResouceString = [NSMutableString stringWithCapacity:512];
     if (nil != _responseContentType) {
-        [queryPramaString appendFormat:@"%@=%@", kKS3QueryParamResponseContentType, _responseContentType];
+        [queryPramaString appendFormat:@"%@=%@", kKS3QueryParamResponseContentType, [KS3SDKUtil urlEncode:_responseContentType]];
+        [subResouceString appendFormat:@"%@=%@", kKS3QueryParamResponseContentType, _responseContentType];
     }
     if (nil != _responseContentLanguage) {
         if (queryPramaString.length > 0) {
             [queryPramaString appendString:@"&"];
+            [subResouceString appendString:@"&"];
         }
-        [queryPramaString appendFormat:@"%@=%@", kKS3QueryParamResponseContentLanguage, _responseContentLanguage];
+        [queryPramaString appendFormat:@"%@=%@", kKS3QueryParamResponseContentLanguage, [KS3SDKUtil urlEncode:_responseContentLanguage]];
+        [subResouceString appendFormat:@"%@=%@", kKS3QueryParamResponseContentLanguage, _responseContentLanguage];
     }
     if (nil != _responseExpires) {
         if (queryPramaString.length > 0) {
             [queryPramaString appendString:@"&"];
+            [subResouceString appendString:@"&"];
         }
-        [queryPramaString appendFormat:@"%@=%@", kKS3QueryParamResponseExpires, _responseExpires];
+        [queryPramaString appendFormat:@"%@=%@", kKS3QueryParamResponseExpires, [KS3SDKUtil urlEncode:_responseExpires]];
+        [subResouceString appendFormat:@"%@=%@", kKS3QueryParamResponseExpires, _responseExpires];
     }
     if (nil != _responseCacheControl) {
         if (queryPramaString.length > 0) {
             [queryPramaString appendString:@"&"];
+            [subResouceString appendString:@"&"];
         }
-        [queryPramaString appendFormat:@"%@=%@", kKS3QueryParamResponseCacheControl, _responseCacheControl];
+        [queryPramaString appendFormat:@"%@=%@", kKS3QueryParamResponseCacheControl, [KS3SDKUtil urlEncode:_responseCacheControl]];
+        [subResouceString appendFormat:@"%@=%@", kKS3QueryParamResponseCacheControl, _responseCacheControl];
     }
     if (nil != _responseContentDisposition) {
         if (queryPramaString.length > 0) {
             [queryPramaString appendString:@"&"];
+            [subResouceString appendString:@"&"];
         }
-        [queryPramaString appendFormat:@"%@=%@", kKS3QueryParamResponseContentDisposition, _responseContentDisposition];
+        [queryPramaString appendFormat:@"%@=%@", kKS3QueryParamResponseContentDisposition, [KS3SDKUtil urlEncode:_responseContentDisposition]];
+        [subResouceString appendFormat:@"%@=%@", kKS3QueryParamResponseContentDisposition, _responseContentDisposition];
     }
     if (nil != _responseContentEncoding) {
         if (queryPramaString.length > 0) {
             [queryPramaString appendString:@"&"];
+            [subResouceString appendString:@"&"];
         }
-        [queryPramaString appendFormat:@"%@=%@", kKS3QueryParamResponseContentEncoding, _responseContentEncoding];
+        [queryPramaString appendFormat:@"%@=%@", kKS3QueryParamResponseContentEncoding, [KS3SDKUtil urlEncode:_responseContentEncoding]];
+        [subResouceString appendFormat:@"%@=%@", kKS3QueryParamResponseContentEncoding, _responseContentEncoding];
     }
-    self.host = [self.host stringByAppendingFormat:@"/%@?%@", _key, queryPramaString];
+    if (queryPramaString.length > 0) {
+        self.host = [self.host stringByAppendingFormat:@"?%@", queryPramaString];
+        self.kSYResource = [self.kSYResource stringByAppendingFormat:@"?%@", subResouceString];
+    }
     [super configureURLRequest];
     
     // **** http header
