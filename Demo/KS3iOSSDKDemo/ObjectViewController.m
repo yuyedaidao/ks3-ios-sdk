@@ -7,7 +7,7 @@
 //
 
 #warning Please set correct bucket and object name
-#define kBucketName @"acc"//@"alert1"
+#define kBucketName @"acc"//@"bucketcors"//@"alert1"
 #define kObjectName @"Count_1.txt"//@"bug.txt"
 #define kDesBucketName @"ggg"//@"blues111"
 #define kDesObjectName @"bug_copy.txt"
@@ -127,11 +127,28 @@
         {
             //一定要实现委托方法 (这种情况如果实现委托，返回的reponse一般返回为nil，具体获取返回对象需要到委托方法里面获取，如果不实现委托，reponse不会为nil
             KS3PutObjectRequest *putObjRequest = [[KS3PutObjectRequest alloc] initWithName:kBucketName];
-            putObjRequest.delegate = self;
+//            putObjRequest.delegate = self;
             NSString *fileName = [[NSBundle mainBundle] pathForResource:@"test" ofType:@"jpg"];
             putObjRequest.data = [NSData dataWithContentsOfFile:fileName options:NSDataReadingMappedIfSafe error:nil];
             putObjRequest.filename = [fileName lastPathComponent];
-            [[KS3Client initialize] putObject:putObjRequest];
+            
+            putObjRequest.callbackBody = @"objectKey=${key}&etag=${etag}&location=${kss-location}&name=${kss-price}";
+            putObjRequest.callbackUrl = @"http://127.0.0.1:19090/";// success
+//            putObjRequest.callbackUrl = @"http://127.0.0.1:190910";// failed
+//            putObjRequest.callbackUrl = @"http://127.0.0.1:190910";// timeout
+            putObjRequest.callbackParams = [NSDictionary dictionaryWithObjectsAndKeys:
+                                            @"BeiJing", @"kss-location",
+                                            @"$Ten",    @"kss-price",
+                                            @"error",   @"kss", nil];
+//            [[KS3Client initialize] putObject:putObjRequest];
+            KS3PutObjectResponse *response = [[KS3Client initialize] putObject:putObjRequest];
+            NSString *str = [[NSString alloc] initWithData:response.body encoding:NSUTF8StringEncoding];
+            if (response.httpStatusCode == 200) {
+                NSLog(@"Put object success");
+            }
+            else {
+                NSLog(@"Put object failed");
+            }
         }
             break;
         case 4:
@@ -242,10 +259,20 @@
 //                req.contentLength = data.length;
 //                [[KS3Client initialize] uploadPart:req];
 //            }
-            _uploader = [[KS3FileUploader alloc] initWithBucketName:@"acc"];
+            _uploader = [[KS3FileUploader alloc] initWithBucketName:kBucketName];
             _uploader.strFilePath = [[NSBundle mainBundle] pathForResource:@"bugDownload" ofType:@"txt"];
             _uploader.strKey = @"10000000.txt";
             _uploader.partSize = 5; // **** unit: MB, must larger than 5
+            
+            _uploader.callbackBody = @"objectKey=${key}&etag=${etag}&location=${kss-location}&name=${kss-price}";
+            _uploader.callbackUrl = @"http://127.0.0.1:19090/";// success
+//            _uploader.callbackUrl = @"http://127.0.0.1:190910";// failed
+//            _uploader.callbackUrl = @"http://127.0.0.1:190910";// timeout
+            _uploader.callbackParams = [NSDictionary dictionaryWithObjectsAndKeys:
+                                        @"BeiJing", @"kss-location",
+                                        @"$Ten",    @"kss-price",
+                                        @"error",   @"kss", nil];
+            
             [_uploader startUploadWithProgressChangeBlock:^(KS3FileUploader *uploader, double progress) {
                 NSLog(@"progress: %f", progress);
             } completeBlock:^(KS3FileUploader *uploader) {

@@ -12,7 +12,12 @@
 @property (nonatomic, strong) NSString *key;
 @property (nonatomic, strong) NSString *uploadId;
 @property (nonatomic, strong) NSData *dataParts;
--(id)initWithMultipartUpload:(KS3MultipartUpload *)multipartUpload;
--(void)addPartWithPartNumber:(int)partNumber withETag:(NSString *)etag;
--(NSData *)requestBody;
+@property (nonatomic, strong) NSString *callbackUrl;
+@property (nonatomic, strong) NSString *callbackBody;
+@property (nonatomic, strong) NSDictionary *callbackParams;
+
+- (id)initWithMultipartUpload:(KS3MultipartUpload *)multipartUpload;
+- (void)addPartWithPartNumber:(int)partNumber withETag:(NSString *)etag;
+- (NSData *)requestBody;
+
 @end
