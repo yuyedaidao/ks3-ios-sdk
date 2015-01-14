@@ -112,6 +112,9 @@
         for (KS3Part *part in response2.listResult.parts) {
             [req addPartWithPartNumber:part.partNumber withETag:part.etag];
         }
+        req.callbackUrl = _callbackUrl;
+        req.callbackBody = _callbackBody;
+        req.callbackParams = _callbackParams;
         [[KS3Client initialize] completeMultipartUpload:req];
         
         // **** complete block call

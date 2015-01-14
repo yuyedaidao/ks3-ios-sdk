@@ -10,10 +10,13 @@
 #import "KS3Constants.h"
 
 @interface KS3CompleteMultipartUploadRequest ()
+
 @property (strong, nonatomic) NSMutableDictionary *parts;
+
 @end
 
 @implementation KS3CompleteMultipartUploadRequest
+
 -(id)initWithMultipartUpload:(KS3MultipartUpload *)multipartUpload
 {
     if(self = [super init])
@@ -31,6 +34,29 @@
 }
 -(NSURLRequest *)configureURLRequest
 {
+    // **** 一定要先设置callbackbody，再设置callbackurl才可以签名成功
+    if (nil != _callbackBody && nil != _callbackUrl) {
+        self.kSYHeader = [@"x-kss-callbackbody:" stringByAppendingString:_callbackBody];
+        self.kSYHeader = [self.kSYHeader stringByAppendingFormat:@"\n"];
+        [self.urlRequest setValue:_callbackBody forHTTPHeaderField:@"x-kss-callbackbody"];
+        
+        NSString *callbackUrl = [@"x-kss-callbackurl:" stringByAppendingString:_callbackUrl];
+        self.kSYHeader = [self.kSYHeader stringByAppendingFormat:@"%@\n", callbackUrl];
+        [self.urlRequest setValue:_callbackUrl forHTTPHeaderField:@"x-kss-callbackurl"];
+        
+        // **** 回调的自定义参数
+        if (nil != _callbackParams) {
+            for (NSString *strKey in _callbackParams.allKeys) {
+                if (strKey.length >= 4 && [[strKey substringToIndex:4] isEqualToString:@"kss-"] == YES) {
+                    [self.urlRequest setValue:_callbackParams[strKey] forHTTPHeaderField:strKey];
+                }
+                else {
+                    NSLog(@"The header with field: \"%@\" and value: \"%@\" is not cocrect, this header will be ingored", strKey, _callbackParams[strKey]);
+                }
+            }
+        }
+    }
+    
     [self setKSYResource:[NSString stringWithFormat:@"%@/%@?%@=%@", self.kSYResource,_key, kKS3QueryParamUploadId, self.uploadId]];
     self.host = [NSString stringWithFormat:@"http://%@.kss.ksyun.com/%@?uploadId=%@", self.bucket, self.key, self.uploadId];
     [super configureURLRequest];
@@ -40,6 +66,7 @@
     [self.urlRequest setValue:@"text/xml" forHTTPHeaderField:kKSHttpHdrContentType];
     return self.urlRequest;
 }
+
 - (void)addPartWithPartNumber:(int)partNumber withETag:(NSString *)etag
 {
     if (_parts == nil) {
@@ -47,7 +74,8 @@
     }
     [_parts setObject:etag forKey:[NSNumber numberWithInt:partNumber]];
 }
--(NSData *)requestBody
+
+- (NSData *)requestBody
 {
     NSMutableString *xml = [NSMutableString stringWithFormat:@"<CompleteMultipartUpload>"];
     NSComparator   comparePartNumbers = ^ (id part1, id part2) {
@@ -61,4 +89,5 @@
     [xml appendString:@"</CompleteMultipartUpload>"];
     return [xml dataUsingEncoding:NSUTF8StringEncoding];
 }
+
 @end

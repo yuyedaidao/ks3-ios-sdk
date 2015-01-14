@@ -19,6 +19,9 @@ typedef void(^KS3UploadFailedBloack)(KS3FileUploader *uploader, NSString *strUpl
 @property (nonatomic, strong) NSString *strFilePath;
 @property (nonatomic, strong) NSString *strKey;
 @property (nonatomic, assign) double  partSize; // **** unit: MB
+@property (nonatomic, strong) NSString *callbackUrl;
+@property (nonatomic, strong) NSString *callbackBody;
+@property (nonatomic, strong) NSDictionary *callbackParams;
 
 - (instancetype)initWithBucketName:(NSString *)strBucketName;
 - (void)startUploadWithProgressChangeBlock:(KS3UploadProgressChangedBlock)uploadProgressChangedBlock
