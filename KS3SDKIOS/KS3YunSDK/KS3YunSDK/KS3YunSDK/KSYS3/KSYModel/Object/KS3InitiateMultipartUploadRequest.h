@@ -13,15 +13,14 @@
 -(id)initWithKey:(NSString *)aKey inBucket:(NSString *)aBucket;
 
 @property (nonatomic, strong) NSString *key;
-
 @property (nonatomic, strong) NSString *cacheControl;
 
 @property (nonatomic, strong) NSString *contentDisposition;
-
 @property (nonatomic, strong) NSString *contentEncoding;
-
-@property (nonatomic, strong) NSString *redirectLocation;
-
-@property (nonatomic, readonly) int32_t expires;
+@property (nonatomic, strong) NSString *expires;
+@property (nonatomic, strong) NSString *xkssMeta;
+@property (nonatomic, strong) NSString *xkssStorageClass;
+@property (nonatomic, strong) NSString *xkssWebSiteRedirectLocation;
+@property (nonatomic, strong) NSString *xkssAcl;
 
 @end

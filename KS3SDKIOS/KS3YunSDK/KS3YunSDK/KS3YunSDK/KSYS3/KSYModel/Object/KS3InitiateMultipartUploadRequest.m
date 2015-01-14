@@ -12,7 +12,7 @@
 
 @interface KS3InitiateMultipartUploadRequest ()
 
-@property (nonatomic, assign) BOOL expiresSet;
+//@property (nonatomic, assign) BOOL expiresSet;
 @end
 
 
@@ -22,8 +22,8 @@
 {
     if (self = [super init])
     {
-        _expires = 0;
-        _expiresSet = NO;
+//        _expires = 0;
+//        _expiresSet = NO;
     }
     
     return self;
@@ -46,16 +46,14 @@
     return self;
 }
 
--(void)setExpires:(int32_t)exp
-{
-    _expires    = exp;
-    _expiresSet = YES;
-}
+//-(void)setExpires:(int32_t)exp
+//{
+//    _expires    = exp;
+//    _expiresSet = YES;
+//}
 
 -(NSMutableURLRequest *)configureURLRequest
 {
-//    [self setKSYResource:kKS3SubResourceUploads];
-//    self.host = [NSString stringWithFormat:@"http://%@.kss.ksyun.com/%@?uploads", self.bucket, self.key];
     self.kSYResource = [NSString stringWithFormat:@"%@/%@?uploads",self.kSYResource,_key];
     self.host = [NSString stringWithFormat:@"http://%@.kss.ksyun.com/%@?uploads", self.bucket, self.key];
     [super configureURLRequest];
@@ -74,17 +72,23 @@
         [self.urlRequest setValue:self.cacheControl
                forHTTPHeaderField:kKSHttpHdrCacheControl];
     }
-//    if (nil != self.redirectLocation) {
-//        [self.urlRequest setValue:self.redirectLocation
-//               forHTTPHeaderField:kHttpHdrAmzWebsiteRedirectLocation];
-//    }
-//    
-//    if (self.expiresSet) {
-//        [self.urlRequest setValue:[NSString stringWithFormat:@"%d", self.expires]
-//               forHTTPHeaderField:kHttpHdrExpires];
-//    }
+    if (nil != _expires) {
+        [self.urlRequest setValue:_expires forHTTPHeaderField:@"Expires"];
+    }
+    if (nil != _xkssMeta) {
+        [self.urlRequest setValue:_xkssMeta forHTTPHeaderField:@"x-kss-meta-"];
+    }
+    if (nil != _xkssStorageClass) {
+        [self.urlRequest setValue:_xkssStorageClass forHTTPHeaderField:@"x-kss-storage-class"];
+    }
+    if (nil != _xkssWebSiteRedirectLocation) {
+        [self.urlRequest setValue:_xkssWebSiteRedirectLocation forHTTPHeaderField:@"x-kss-website-redirect-location"];
+    }
     
-    
+    // **** acl header
+    if (nil != _xkssAcl) {
+        [self.urlRequest setValue:_xkssAcl forHTTPHeaderField:@"x-kss-acl"];
+    }
     return self.urlRequest;
 }
 

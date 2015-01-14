@@ -10,6 +10,7 @@
 #import "KS3Constants.h"
 
 @implementation KS3HeadObjectRequest
+
 - (instancetype)initWithName:(NSString *)bucketName
 {
     self = [super init];
@@ -24,11 +25,30 @@
     }
     return self;
 }
+
 - (KS3URLRequest *)configureURLRequest
 {
     self.host = [NSString stringWithFormat:@"%@/%@",self.host,_key];
     self.kSYResource = [NSString stringWithFormat:@"%@/%@",self.kSYResource,_key];
     [super configureURLRequest];
+    
+    // **** http header
+    if (nil != _range) {
+        [self.urlRequest setValue:_range forHTTPHeaderField:kKSHttpHdrRange];
+    }
+    if (nil != _ifModifiedSince) {
+        [self.urlRequest setValue:_ifModifiedSince forHTTPHeaderField:kKSHttpHdrIfModifiedSince];
+    }
+    if (nil != _ifUnmodifiedSince) {
+        [self.urlRequest setValue:_ifUnmodifiedSince forHTTPHeaderField:kKSHttpHdrIfUnmodifiedSince];
+    }
+    if (nil != _ifMatch) {
+        [self.urlRequest setValue:_ifMatch forHTTPHeaderField:kKSHttpHdrIfMatch];
+    }
+    if (nil != _ifNoneMatch) {
+        [self.urlRequest setValue:_ifNoneMatch forHTTPHeaderField:kKSHttpHdrIfNoneMatch];
+    }
     return self.urlRequest;
 }
+
 @end

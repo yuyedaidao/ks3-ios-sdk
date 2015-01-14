@@ -7,9 +7,9 @@
 //
 
 #warning Please set correct bucket and object name
-#define kBucketName @"alert1"
-#define kObjectName @"bug.txt"
-#define kDesBucketName @"blues111"
+#define kBucketName @"acc"//@"alert1"
+#define kObjectName @"Count_1.txt"//@"bug.txt"
+#define kDesBucketName @"ggg"//@"blues111"
 #define kDesObjectName @"bug_copy.txt"
 
 #import "ObjectViewController.h"
@@ -65,6 +65,17 @@
     switch (indexPath.row) {
         case 0:
         {
+//            KS3GetObjectRequest *request = [[KS3GetObjectRequest alloc] initWithName:@"acc"];
+//            request.key = kObjectName;
+//            KS3GetObjectResponse *response = [[KS3Client initialize] getObject:request];
+//            NSString *str = [[NSString  alloc] initWithData:response.body encoding:NSUTF8StringEncoding];
+//            if (response.httpStatusCode == 200) {
+//                NSLog(@"success!");
+//            }
+//            else {
+//                NSLog(@"error");
+//            }
+            
             UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
             UIProgressView *progressView = (UIProgressView *)[cell.contentView viewWithTag:99];
                     /**

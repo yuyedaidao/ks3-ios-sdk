@@ -64,10 +64,13 @@
 #import "KS3PutObjectCopyResponse.h"
 #import "KS3PutObjectCopyRequest.h"
 
-static NSString * const KingSoftYun_Host_Name = @"http://kss.ksyun.com";
+static NSString     * const KingSoftYun_Host_Name      = @"http://kss.ksyun.com";
 static NSTimeInterval const KingSoftYun_RequestTimeout = 60;
+
 @interface KS3Client ()
+
 @property (strong, nonatomic) KS3Credentials *credentials;
+
 @end
 
 @implementation KS3Client
@@ -81,16 +84,30 @@ static NSTimeInterval const KingSoftYun_RequestTimeout = 60;
     });
     return shareObj;
 }
-#pragma mark --
-#pragma mark -- ConnectWithAccessKey
+
+#pragma mark - Init credentials
+
 - (void)connectWithAccessKey:(NSString *)accessKey withSecretKey:(NSString *)secretKey
 {
     if (_credentials == nil) {
         _credentials = [[KS3Credentials alloc] initWithAccessKey:accessKey withSecretKey:secretKey];
     }
 }
-#pragma mark --
-#pragma mark -- Buckets
+
+- (void)connectWithSecurityToken:(NSString *)theSecurityToken
+{
+    _credentials = [[KS3Credentials alloc] initWithSecurityToken:theSecurityToken];
+}
+
+- (NSString *)tokenWithHttpMethod:(NSString *)httpMethod contentMd5:(NSString *)contentMd5 contentType:(NSString *)contentType date:(NSString *)strDate header:(NSString *)header resource:(NSString *)resource
+{
+    // **** 此处需要向app自己的服务器请求token
+    // **** 服务器需要根据这些参数和存储在服务器上的ak/sk计算出token（也就是签名），并返回
+    return @"YOUR-TOKEN";
+}
+
+#pragma mark - Buckets
+
 - (NSArray *)listBuckets
 {
     KS3ListBucketsRequest *req = [KS3ListBucketsRequest new];
@@ -98,7 +115,6 @@ static NSTimeInterval const KingSoftYun_RequestTimeout = 60;
     if (listResponse.error == nil && listResponse.listBucketsResult != nil && listResponse.listBucketsResult.buckets != nil) {
         return [NSArray arrayWithArray:listResponse.listBucketsResult.buckets];
     }
-    
     return nil;
 }
 
@@ -125,10 +141,12 @@ static NSTimeInterval const KingSoftYun_RequestTimeout = 60;
     KS3DeleteBucketResponse *deleteBucketResponse = [self deleteBucket:deleteBucketRequest];
     return deleteBucketResponse;
 }
+
 - (KS3DeleteBucketResponse *)deleteBucket:(KS3DeleteBucketRequest *)deleteBucketRequest
 {
     return (KS3DeleteBucketResponse *)[self invoke:deleteBucketRequest];
 }
+
 - (KS3HeadBucketResponse *)headBucket:(KS3HeadBucketRequest *)headBucketRequest;
 {
     return (KS3HeadBucketResponse *)[self invoke:headBucketRequest];
@@ -140,11 +158,11 @@ static NSTimeInterval const KingSoftYun_RequestTimeout = 60;
     KS3GetACLResponse *getBucketResponse = [self getACL:getBucketACLRequest];
     return getBucketResponse;
 }
+
 - (KS3GetACLResponse *)getACL:(KS3GetACLRequest *)getACLRequest
 {
     return (KS3GetACLResponse *)[self invoke:getACLRequest];
 }
-
 
 - (KS3SetACLResponse *)setBucketACL:(NSString *)bucketName
 {
@@ -155,6 +173,7 @@ static NSTimeInterval const KingSoftYun_RequestTimeout = 60;
     KS3SetACLResponse *setACLResponse = [self setACL:setACLRequest];
     return setACLResponse;
 }
+
 - (KS3SetACLResponse *)setACL:(KS3SetACLRequest *)getACLRequest
 {
     return (KS3SetACLResponse *)[self invoke:getACLRequest];
@@ -165,23 +184,24 @@ static NSTimeInterval const KingSoftYun_RequestTimeout = 60;
     KS3GetBucketLoggingRequest  *req = [[KS3GetBucketLoggingRequest alloc] initWithName:bucketName] ;
     return [self getBucketLogging:req];
 }
+
 - (KS3GetBucketLoggingResponse *)getBucketLogging:(KS3GetBucketLoggingRequest *)getBucketLoggingRequest
 {
     return (KS3GetBucketLoggingResponse *)[self invoke:getBucketLoggingRequest];
 }
-
-
 
 - (KS3SetBucketLoggingResponse *)setBucketLoggingWithName:(NSString *)bucketName
 {
     KS3SetBucketLoggingRequest  *req = [[KS3SetBucketLoggingRequest alloc] initWithName:bucketName] ;
     return [self setBucketLogging:req];
 }
+
 - (KS3SetBucketLoggingResponse *)setBucketLogging:(KS3SetBucketLoggingRequest *)setBucketTaggingRequest{
     return (KS3SetBucketLoggingResponse *)[self invoke:setBucketTaggingRequest];
 }
-#pragma mark --
-#pragma mark -- Objects
+
+#pragma mark - Objects
+
 - (NSArray *)listObjectsInBucket:(NSString *)bucketName
 {
     if (!bucketName) {
@@ -189,9 +209,9 @@ static NSTimeInterval const KingSoftYun_RequestTimeout = 60;
         return nil;
     }
     KS3ListObjectsRequest  *req = [[KS3ListObjectsRequest alloc] initWithName:bucketName] ;
-    //    req.prefix = @"r32/tew3";
-    //    req.delimiter = @"c";
-    //    req.maxKeys = 5;
+//    req.prefix = @"r32/tew3";
+//    req.delimiter = @"c";
+//    req.maxKeys = 5;
     KS3ListObjectsResponse *res = [self listObjects:req];
     return res.listBucketsResult.objectSummaries;
 }
@@ -201,56 +221,21 @@ static NSTimeInterval const KingSoftYun_RequestTimeout = 60;
     return (KS3ListObjectsResponse *)[self invoke:listObjectsRequest];
 }
 
-/*
-
--(KSS3GetObjectResponse *)getObjectWithName:(NSString *)bucketName
-{
-    KSS3GetObjectRequest *req = [[KSS3GetObjectRequest alloc] initWithName:bucketName];
-    return (KSS3GetObjectResponse *)[self getObject:req];
-}
-*/
 - (KS3GetObjectResponse *)getObject:(KS3GetObjectRequest *)getObjectRequest
 {
     return (KS3GetObjectResponse *)[self invoke:getObjectRequest];
 }
-/*
-- (KSS3DeleteObjectResponse *)deleteObjectWithBucketName:(NSString *)deleteBucketName
-{
-    KSS3DeleteObjectRequest *req = [[KSS3DeleteObjectRequest alloc] initWithName:deleteBucketName];
-    req.key = @"31231312312.png";
-    return [self deleteObject:req];
-
-}
- */
 
 - (KS3DeleteObjectResponse *)deleteObject:(KS3DeleteObjectRequest *)deleteObjectRequest
 {
     return (KS3DeleteObjectResponse *)[self invoke:deleteObjectRequest];
 }
 
-/*
-- (KSS3HeadObjectResponse *)headObjectWithBucketName:(NSString *)headBucketName
-{
-    KSS3HeadObjectRequest *req = [[KSS3HeadObjectRequest alloc] initWithName:headBucketName];
-    req.key = @"test_yun_1.jpg";
-    return [self headObject:req];
-}
-*/
-
 - (KS3HeadObjectResponse *)headObject:(KS3HeadObjectRequest *)headObjectRequest
 {
     return (KS3HeadObjectResponse *)[self invoke:headObjectRequest];
 }
-/*
--(KSS3PutObjectResponse *)putObjectWithBucketName:(NSString *)bucketName
-{
-    KSS3PutObjectRequest *req = [[KSS3PutObjectRequest alloc] initWithName:bucketName];
-    NSString *fileName = [[NSBundle mainBundle] pathForResource:@"test_yun_3" ofType:@"jpg"];
-    req.data = [NSData dataWithContentsOfFile:fileName options:NSDataReadingMappedIfSafe error:nil];
-    req.filename = [fileName lastPathComponent];
-    return (KSS3PutObjectResponse *)[self putObject:req];
-}
-*/
+
 - (KS3PutObjectResponse *)putObject:(KS3PutObjectRequest *)putObjectRequest
 {
     return (KS3PutObjectResponse *)[self invoke:putObjectRequest];
@@ -260,29 +245,12 @@ static NSTimeInterval const KingSoftYun_RequestTimeout = 60;
 {
     return (KS3PutObjectCopyResponse *)[self invoke:putObjectCopyRequest];
 }
-/*
--(KSS3GetObjectACLResponse *)getObjectACLWithBucketName:(NSString *)bucketName
-{
-    KSS3GetObjectACLRequest *req = [[KSS3GetObjectACLRequest alloc] initWithName:bucketName];
-    req.key = @"bcd";
-    return (KSS3GetObjectACLResponse *)[self getObjectACL:req];
-}
-*/
+
 - (KS3GetObjectACLResponse *)getObjectACL:(KS3GetObjectACLRequest *)getObjectACLRequest
 {
     return (KS3GetObjectACLResponse *)[self invoke:getObjectACLRequest];
 }
-/*
--(KSS3SetObjectACLResponse *)setObjectACLWithBucketName:(NSString *)bucketName
-{
-    KSS3SetObjectACLRequest *req = [[KSS3SetObjectACLRequest alloc] initWithName:bucketName];
-    req.key = @"bcd";
-    KSS3AccessControlList *accessControlList = [KSS3AccessControlList new];
-    [accessControlList setContronAccess:KingSoftYun_Permission_Public_Read_Write];
-    req.acl = accessControlList;
-    return (KSS3SetObjectACLResponse *)[self setObjectACL:req];
-}
- */
+
 - (KS3SetObjectACLResponse *)setObjectACL:(KS3SetObjectACLRequest *)setObjectACLRequest
 {
     return (KS3SetObjectACLResponse *)[self invoke:setObjectACLRequest];
@@ -298,8 +266,8 @@ static NSTimeInterval const KingSoftYun_RequestTimeout = 60;
     return (KS3SetGrantACLResponse *)[self invoke:setGrantACLRequest];
 }
 
-#pragma mark --
-#pragma mark -- MultipartUpload
+#pragma mark - MultipartUpload
+
 - (KS3MultipartUpload *)initiateMultipartUploadWithKey:(NSString *)theKey withBucket:(NSString *)bucketName
 {
     KS3InitiateMultipartUploadRequest *request = [[KS3InitiateMultipartUploadRequest alloc] initWithKey:theKey inBucket:bucketName];
@@ -337,20 +305,22 @@ static NSTimeInterval const KingSoftYun_RequestTimeout = 60;
     }
     return response;
 }
+
 - (NSMutableURLRequest *)signKSS3Request:(KS3Request *)request
 {
     request.credentials = _credentials;
     KS3URLRequest *urlRequest= [request configureURLRequest];
     return urlRequest;
 }
+
 - (KS3Response *)invoke:(KS3Request *)request
 {
-    if (!_credentials && !_credentials.accessKey && !_credentials.secretKey) {
+    if (!_credentials && !_credentials.accessKey && !_credentials.secretKey && !_credentials.securityToken) {
         KS3Response *response = [KS3Response new];
-        response.error = [KS3ErrorHandler errorFromExceptionWithThrowsExceptionOption:[KS3ClientException exceptionWithMessage:@"配置的accessKey和secretKey有错误!"]];
+        response.error = [KS3ErrorHandler errorFromExceptionWithThrowsExceptionOption:[KS3ClientException exceptionWithMessage:@"配置的accessKey和secretKey或token有错误!"]];
         return response;
     }
-    if (!_credentials && !_credentials.accessKey && !_credentials.secretKey) {
+    if (!_credentials && !_credentials.accessKey && !_credentials.secretKey && !_credentials.securityToken) {
         
     }
     if (nil == request) {
@@ -366,6 +336,10 @@ static NSTimeInterval const KingSoftYun_RequestTimeout = 60;
     }
     NSMutableURLRequest *urlRequest = [self signKSS3Request:request];
     [urlRequest setTimeoutInterval:KingSoftYun_RequestTimeout];
+    if (!_credentials.accessKey && !_credentials.secretKey && _credentials.securityToken) {
+        [urlRequest setValue:_credentials.securityToken forHTTPHeaderField:@"Authorization"]; // **** 根据token设置签名
+    }
+    
     KS3Response *response = [KS3Client constructResponseFromRequest:request];
     [response setRequest:request];
     if ([request delegate] != nil) {
@@ -398,9 +372,9 @@ static NSTimeInterval const KingSoftYun_RequestTimeout = 60;
     }
     return response;
 }
-//NSLog(@"%@",@"配置的accessKey和secretKey有错误");
-#pragma mark --
-#pragma mark -- Download
+
+#pragma mark - Download
+
 - (KS3DownLoad *)downloadObjectWithBucketName:(NSString *)bucketName
                                            key:(NSString *)key
                             downloadBeginBlock:(KSS3DownloadBeginBlock)downloadBeginBlock
@@ -433,4 +407,5 @@ static NSTimeInterval const KingSoftYun_RequestTimeout = 60;
 {
     return @"2014-12-17";
 }
+
 @end

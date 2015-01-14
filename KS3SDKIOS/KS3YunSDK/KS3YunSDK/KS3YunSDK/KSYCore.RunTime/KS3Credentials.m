@@ -16,19 +16,18 @@
     if (self) {
         _accessKey = accessKey;
         _secretKey = secretKey;
+        _securityToken = nil;
     }
-    
     return self;
 }
 
-- (id)initWithAccessKey:(NSString *)theAccessKey withSecretKey:(NSString *)theSecretKey withSecurityToken:(NSString *)theSecurityToken
+- (id)initWithSecurityToken:(NSString *)theSecurityToken
 {
     self = [super init];
     if (self) {
-        _accessKey = theAccessKey;
-        _secretKey = theSecretKey;
+        _accessKey = nil;
+        _secretKey = nil;
         _securityToken = theSecurityToken;
-        
     }
     return self;
 }

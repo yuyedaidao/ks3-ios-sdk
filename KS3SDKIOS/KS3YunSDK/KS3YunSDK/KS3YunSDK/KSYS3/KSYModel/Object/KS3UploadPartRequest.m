@@ -43,9 +43,8 @@
     if (nil == self.contentMd5 && YES == self.generateMD5 && self.data != nil) {
         self.contentMd5 = [KS3SDKUtil base64md5FromData:self.data];
     }
-    
-//    self.kSYResource = [NSString stringWithFormat:@"%@=%d&%@=%@", kKS3QueryParamPartNumber, self.partNumber, kKS3QueryParamUploadId, self.uploadId];
     self.kSYResource = [NSString stringWithFormat:@"/%@/%@?%@=%d&%@=%@", self.bucket,self.key, kKS3QueryParamPartNumber, self.partNumber, kKS3QueryParamUploadId, self.uploadId];
+    
     [super configureURLRequest];
     if (self.contentLength < 1) {
         self.contentLength = [self.data length];
@@ -56,6 +55,9 @@
     }
     if (nil != self.contentMd5) {
         [self.urlRequest setValue:self.contentMd5 forHTTPHeaderField:kKS3HttpHdrContentMD5];
+    }
+    if (nil != _expect) {
+        [self.urlRequest setValue:_expect forHTTPHeaderField:@"Expect"];
     }
     [self.urlRequest setValue:self.contentType forHTTPHeaderField:kKSHttpHdrContentType];
     return self.urlRequest;

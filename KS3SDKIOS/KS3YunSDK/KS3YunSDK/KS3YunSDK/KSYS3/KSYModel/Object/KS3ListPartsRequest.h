@@ -12,15 +12,10 @@
 @interface KS3ListPartsRequest : KS3Request
 
 @property (strong, nonatomic) NSString *key;
-
 @property (nonatomic, strong) NSString *uploadId;
-
-
 @property (nonatomic, assign) int32_t maxParts;
-
-
 @property (nonatomic, assign) int32_t partNumberMarker;
-
+@property (nonatomic, strong) NSString *encodingType;
 
 -(id)initWithMultipartUpload:(KS3MultipartUpload *)multipartUpload;
 @end
