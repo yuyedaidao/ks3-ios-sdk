@@ -67,9 +67,11 @@
 static NSString     * const KingSoftYun_Host_Name      = @"http://kss.ksyun.com";
 static NSTimeInterval const KingSoftYun_RequestTimeout = 60;
 
-@interface KS3Client ()
+@interface KS3Client () <NSURLConnectionDataDelegate>
 
 @property (strong, nonatomic) KS3Credentials *credentials;
+@property (strong, nonatomic) KSS3GetTokenSuccessBlock tokenBlock;
+@property (strong, nonatomic) NSMutableData *tokenData;
 
 @end
 
@@ -97,6 +99,39 @@ static NSTimeInterval const KingSoftYun_RequestTimeout = 60;
 - (void)connectWithSecurityToken:(NSString *)theSecurityToken
 {
     _credentials = [[KS3Credentials alloc] initWithSecurityToken:theSecurityToken];
+}
+
+- (void)tokenWithHttpMethod:(NSString *)httpMethod contentMd5:(NSString *)contentMd5 contentType:(NSString *)contentType date:(NSString *)strDate header:(NSString *)header resource:(NSString *)resource appServerUrl:(NSURL *)appServerUrl tokenCompleteBlock:(KSS3GetTokenSuccessBlock)tokenBlock
+{
+    NSDictionary *dicParams = [NSDictionary dictionaryWithObjectsAndKeys:
+                               httpMethod, @"http_method",
+                               contentMd5, @"content_md5",
+                               contentType, @"content_type",
+                               strDate, @"date",
+                               header, @"headers",
+                               resource, @"resource", nil];
+    NSData *dataParams = [NSJSONSerialization dataWithJSONObject:dicParams options:NSJSONWritingPrettyPrinted error:nil];
+    NSMutableURLRequest *tokenRequest = [[NSMutableURLRequest alloc] initWithURL:appServerUrl cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:10];
+    [tokenRequest setHTTPMethod:@"POST"];
+    [tokenRequest setHTTPBody:dataParams];
+    NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:tokenRequest delegate:self startImmediately:YES];
+    _tokenBlock = tokenBlock;
+}
+
+- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
+{
+    _tokenData = [NSMutableData data];
+}
+
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
+{
+    [_tokenData appendData:data];
+}
+
+- (void)connectionDidFinishLoading:(NSURLConnection *)connection
+{
+    NSString *strToken = [[NSString alloc] initWithData:_tokenData encoding:NSUTF8StringEncoding];
+    _tokenBlock(strToken);
 }
 
 #pragma mark - Buckets

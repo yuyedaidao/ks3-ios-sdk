@@ -17,6 +17,7 @@
         _accessKey = accessKey;
         _secretKey = secretKey;
         _securityToken = nil;
+        NSLog(@"##### 采用本地AK/SK签名的方式!#####");
     }
     return self;
 }
@@ -28,6 +29,7 @@
         _accessKey = nil;
         _secretKey = nil;
         _securityToken = theSecurityToken;
+        NSLog(@"##### 采用服务器端Token签名的方式!#####");
     }
     return self;
 }

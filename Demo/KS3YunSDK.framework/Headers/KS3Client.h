@@ -17,6 +17,7 @@
 
 #pragma mark - Download block
 
+typedef void(^KSS3GetTokenSuccessBlock)(NSString *strToken);
 typedef void(^KSS3DownloadBeginBlock)(KS3DownLoad *aDownload, NSURLResponse *responseHeaders);
 typedef void(^KSS3DownloadProgressChangeBlock)(KS3DownLoad *aDownload, double newProgress);
 typedef void(^KSS3DownloadFailedBlock)(KS3DownLoad *aDownload, NSError *error);
@@ -91,6 +92,19 @@ typedef void(^kSS3DownloadFileCompleteionBlock)(KS3DownLoad *aDownload, NSString
  *  注释：这个接口必须实现，在使用所有API前需要调用设置最新的token
  */
 - (void)connectWithSecurityToken:(NSString *)theSecurityToken;
+
+/**
+ *  获取token
+ *
+ *  @param httpMethod
+ *  @param contentMd5
+ *  @param contentType
+ *  @param strDate
+ *  @param header
+ *  @param resource
+ *  注释：向app自己的server请求token，然后在connectWithSecurityToken:中使用
+ */
+- (void)tokenWithHttpMethod:(NSString *)httpMethod contentMd5:(NSString *)contentMd5 contentType:(NSString *)contentType date:(NSString *)strDate header:(NSString *)header resource:(NSString *)resource appServerUrl:(NSURL *)appServerUrl tokenCompleteBlock:(KSS3GetTokenSuccessBlock)tokenBlock;
 
 /**
  *  列出客户所有的Bucket信息
