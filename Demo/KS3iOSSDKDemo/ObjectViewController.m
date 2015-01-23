@@ -138,13 +138,7 @@
             NSString *fileName = [[NSBundle mainBundle] pathForResource:@"test" ofType:@"jpg"];
             putObjRequest.data = [NSData dataWithContentsOfFile:fileName options:NSDataReadingMappedIfSafe error:nil];
             putObjRequest.filename = [fileName lastPathComponent];
-<<<<<<< HEAD
-            KS3PutObjectResponse *response = [[KS3Client initialize] putObject:putObjRequest];
-            
-            NSLog(@"------%@",[[NSString alloc] initWithData:response.body encoding:NSUTF8StringEncoding]);
-            NSLog(@"%d",[response httpStatusCode]);
-            NSLog(@"%@",[response responseHeader]);
-=======
+
             
             putObjRequest.callbackBody = @"objectKey=${key}&etag=${etag}&location=${kss-location}&name=${kss-price}";
             putObjRequest.callbackUrl = @"http://127.0.0.1:19090/";// success
@@ -163,7 +157,7 @@
             else {
                 NSLog(@"Put object failed");
             }
->>>>>>> 5bf61d6e39230b00c8c24035991faae08a3a60e1
+
         }
             break;
         case 4:

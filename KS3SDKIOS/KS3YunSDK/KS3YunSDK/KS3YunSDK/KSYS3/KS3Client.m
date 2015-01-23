@@ -96,7 +96,11 @@ static NSTimeInterval const KingSoftYun_RequestTimeout = 60;
 
 - (void)connectWithSecurityToken:(NSString *)theSecurityToken
 {
-    _credentials = [[KS3Credentials alloc] initWithSecurityToken:theSecurityToken];
+    if (_credentials == nil) {
+        _credentials = [[KS3Credentials alloc] initWithSecurityToken:theSecurityToken];
+    }else{
+        _credentials.securityToken = theSecurityToken;
+    }
 }
 
 #pragma mark - Buckets
