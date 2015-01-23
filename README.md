@@ -82,13 +82,8 @@ Authorization: KSS P3UPCMORAFON76Q6RTNQ:vU9XqPLcXd3nWdlfLWIhruZrLAM=
                
 ```
 
-######必要的说明
-对于使用token方式初始化SDK的用户，需要注意，要使用方法
-
-```
-- (NSString *)tokenWithHttpMethod:(NSString *)httpMethod contentMd5:(NSString *)contentMd5 contentType:(NSString *)contentType date:(NSString *)strDate header:(NSString *)header resource:(NSString *)resource;
-```
-来向服务器请求token，服务器端应根据上述签名生成规则，利用AccessKeyID及AccessKeySecret计算出签名并正确返回给SDK。
+#####必要的说明
+对于使用token方式初始化SDK的用户，需要注意调用任何SDK里面的方法之前都需要向服务器请求token，需要传给服务器的参数有httpMethod，contentMd5，contentType，strDate，header，resource，服务器端应根据上述签名生成规则，利用AccessKeyID及AccessKeySecret计算出签名并正确返回给SDK。
 
 上述方法中的contentMd5, contentType, header参数可为空。若为空，则SDK会使用空字符串("")替代, 但strDate和resource不能为空。
 
@@ -118,6 +113,79 @@ SDK以动态库的形式呈现。请将*KS3iOSSDK.framework*添加到项目工�
 由于在App端明文存储AccessKeyID、AccessKeySecret是极不安全的，因此推荐的使用场景如下图所示：
 
 ![](http://androidsdktest21.kssws.ks-cdn.com/ks3-android-sdk-authlistener.png)
+
+如开发者需要在SDK请求完成后，向特定的URL发起一个回调请求，请参考以下使用**Callback**的场景：
+
+![](http://990aa.kssws.ks-cdn.com/calllback.png)
+
+使用Callback回调功能，开发者必须在对应的request中传入**callBackUrl**以及**callBackBody**。 如需自定义参数，要以键值对形式将其传入，并且自定义参数的Key必须以前缀"kss-"开始。目前使用到回调请求的接口只有**putObject:**和**completeMultipartUpload:**
+
+**使用方式**
+设置对应接口所需的request中相应的**callbackUrl**，**callbackBody**和**callbackParams**即可。
+
+**参数说明**
+
+**callBackUrl**: 回调url地址
+
+**callBackBody**: 回调参数支持魔法变量、自定义参数以及常量
+
+**customParams**:自定义参数，必须以前缀kss-开头
+
+
+**魔法变量说明：**
+<table>
+  <tr>
+    <th>参数</th>
+    <th>说明</th>
+    <th>备注</th>
+  </tr>
+  <tr>
+    <td>bucket</td>
+    <td>文件上传的Bucket</td>
+    <td>Utf-8编码</td>
+  </tr>
+  <tr>
+    <td>key</td>
+    <td>文件的名称</td>
+    <td>Utf-8编码</td>
+  </tr>
+  <tr>
+    <td>etag</td>
+    <td>文件Md5值经过base64处理</td>
+  </tr>
+ <tr>
+    <td>objectSize</td>
+    <td>文件大小</td>
+    <td>以字节标识</td>
+  </tr>
+ <tr>
+    <td>mimeType</td>
+    <td>文件类型</td>
+  </tr>
+ <tr>
+    <td>createTime</td>
+    <td>文件创建时间</td>
+    <td>Unix时间戳表示，1420629372，精确到秒</td>
+  </tr>
+</table>
+
+**Callback使用范例**：
+
+```
+
+		KS3PutObjectRequest *putObjRequest = [[KS3PutObjectRequest alloc] initWithName:kBucketName];
+        NSString *fileName = [[NSBundle mainBundle] pathForResource:@"test" ofType:@"jpg"];
+        putObjRequest.data = [NSData dataWithContentsOfFile:fileName options:NSDataReadingMappedIfSafe error:nil];
+        putObjRequest.filename = [fileName lastPathComponent];
+        putObjRequest.callbackBody = @"objectKey=${key}&etag=${etag}&location=${kss-location}&name=${kss-price}";
+        putObjRequest.callbackUrl = @"http://127.0.0.1:19090/";// success
+        putObjRequest.callbackParams = [NSDictionary dictionaryWithObjectsAndKeys:
+                                        @"BeiJing", @"kss-location",
+                                        @"$Ten",    @"kss-price",
+                                        @"error",   @"kss", nil];// **** last key-value is test error
+        KS3PutObjectResponse *response = [[KS3Client initialize] putObject:putObjRequest];
+
+```
 
 ####KS3Client初始化
 - 利用AccessKeyID、AccessKeySecret初始化（不安全，仅建议测试时使用）

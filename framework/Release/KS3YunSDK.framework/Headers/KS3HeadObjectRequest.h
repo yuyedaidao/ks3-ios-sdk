@@ -10,6 +10,13 @@
 
 @interface KS3HeadObjectRequest : KS3Request
 
-@property (strong, nonatomic) NSString *key;
+@property (nonatomic, strong) NSString *range;
+@property (nonatomic, strong) NSString *ifModifiedSince;
+@property (nonatomic, strong) NSString *ifUnmodifiedSince;
+@property (nonatomic, strong) NSString *ifMatch;
+@property (nonatomic, strong) NSString *ifNoneMatch;
+@property (nonatomic, strong) NSString *key;
+
 - (instancetype)initWithName:(NSString *)bucketName;
+
 @end

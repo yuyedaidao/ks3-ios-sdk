@@ -11,26 +11,19 @@
 @interface KS3PutObjectRequest : KS3Request
 
 @property (nonatomic, strong) NSString *cacheControl;
-
 @property (nonatomic, strong) NSString *contentDisposition;
-
 @property (nonatomic, strong) NSString *contentEncoding;
-
 @property (nonatomic, strong) NSString *contentMD5;
-
 @property (nonatomic, assign) BOOL generateMD5;
-
 @property (nonatomic, strong) NSString *expect;
-
 @property (nonatomic, strong) NSData *data;
-
 @property (nonatomic, strong) NSInputStream *stream;
-
 @property (nonatomic, assign, readonly) int32_t expires;
-
 @property (nonatomic, strong) NSString *filename;
-
 @property (nonatomic, strong) NSString *redirectLocation;
+@property (nonatomic, strong) NSString *callbackUrl;
+@property (nonatomic, strong) NSString *callbackBody;
+@property (nonatomic, strong) NSDictionary *callbackParams;
 
 - (instancetype)initWithName:(NSString *)bucketName;
 

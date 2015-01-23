@@ -7,7 +7,7 @@
 //
 
 #warning Please set correct bucket and object name
-#define kBucketName @"acc"//@"alert1"
+#define kBucketName @"acc"//@"bucketcors"//@"alert1"
 #define kObjectName @"Count_1.txt"//@"bug.txt"
 #define kDesBucketName @"ggg"//@"blues111"
 #define kDesObjectName @"bug_copy.txt"
@@ -65,16 +65,17 @@
     switch (indexPath.row) {
         case 0:
         {
-//            KS3GetObjectRequest *request = [[KS3GetObjectRequest alloc] initWithName:@"acc"];
-//            request.key = kObjectName;
-//            KS3GetObjectResponse *response = [[KS3Client initialize] getObject:request];
-//            NSString *str = [[NSString  alloc] initWithData:response.body encoding:NSUTF8StringEncoding];
-//            if (response.httpStatusCode == 200) {
-//                NSLog(@"success!");
-//            }
-//            else {
-//                NSLog(@"error");
-//            }
+            KS3GetObjectRequest *request = [[KS3GetObjectRequest alloc] initWithName:@"acc"];
+            request.key = kObjectName;
+            request.responseContentLanguage = @"mi, zh";
+            KS3GetObjectResponse *response = [[KS3Client initialize] getObject:request];
+            NSString *str = [[NSString  alloc] initWithData:response.body encoding:NSUTF8StringEncoding];
+            if (response.httpStatusCode == 200) {
+                NSLog(@"success!");
+            }
+            else {
+                NSLog(@"error");
+            }
             
             UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
             UIProgressView *progressView = (UIProgressView *)[cell.contentView viewWithTag:99];
@@ -137,11 +138,32 @@
             NSString *fileName = [[NSBundle mainBundle] pathForResource:@"test" ofType:@"jpg"];
             putObjRequest.data = [NSData dataWithContentsOfFile:fileName options:NSDataReadingMappedIfSafe error:nil];
             putObjRequest.filename = [fileName lastPathComponent];
+<<<<<<< HEAD
             KS3PutObjectResponse *response = [[KS3Client initialize] putObject:putObjRequest];
             
             NSLog(@"------%@",[[NSString alloc] initWithData:response.body encoding:NSUTF8StringEncoding]);
             NSLog(@"%d",[response httpStatusCode]);
             NSLog(@"%@",[response responseHeader]);
+=======
+            
+            putObjRequest.callbackBody = @"objectKey=${key}&etag=${etag}&location=${kss-location}&name=${kss-price}";
+            putObjRequest.callbackUrl = @"http://127.0.0.1:19090/";// success
+//            putObjRequest.callbackUrl = @"http://127.0.0.1:190910";// failed
+//            putObjRequest.callbackUrl = @"http://127.0.0.1:190910";// timeout
+            putObjRequest.callbackParams = [NSDictionary dictionaryWithObjectsAndKeys:
+                                            @"BeiJing", @"kss-location",
+                                            @"$Ten",    @"kss-price",
+                                            @"error",   @"kss", nil];
+//            [[KS3Client initialize] putObject:putObjRequest];
+            KS3PutObjectResponse *response = [[KS3Client initialize] putObject:putObjRequest];
+            NSString *str = [[NSString alloc] initWithData:response.body encoding:NSUTF8StringEncoding];
+            if (response.httpStatusCode == 200) {
+                NSLog(@"Put object success");
+            }
+            else {
+                NSLog(@"Put object failed");
+            }
+>>>>>>> 5bf61d6e39230b00c8c24035991faae08a3a60e1
         }
             break;
         case 4:
@@ -262,10 +284,20 @@
 //                req.contentLength = data.length;
 //                [[KS3Client initialize] uploadPart:req];
 //            }
-            _uploader = [[KS3FileUploader alloc] initWithBucketName:@"acc"];
+            _uploader = [[KS3FileUploader alloc] initWithBucketName:kBucketName];
             _uploader.strFilePath = [[NSBundle mainBundle] pathForResource:@"bugDownload" ofType:@"txt"];
             _uploader.strKey = @"10000000.txt";
             _uploader.partSize = 5; // **** unit: MB, must larger than 5
+            
+            _uploader.callbackBody = @"objectKey=${key}&etag=${etag}&location=${kss-location}&name=${kss-price}";
+            _uploader.callbackUrl = @"http://127.0.0.1:19090/";// success
+//            _uploader.callbackUrl = @"http://127.0.0.1:190910";// failed
+//            _uploader.callbackUrl = @"http://127.0.0.1:190910";// timeout
+            _uploader.callbackParams = [NSDictionary dictionaryWithObjectsAndKeys:
+                                        @"BeiJing", @"kss-location",
+                                        @"$Ten",    @"kss-price",
+                                        @"error",   @"kss", nil];
+            
             [_uploader startUploadWithProgressChangeBlock:^(KS3FileUploader *uploader, double progress) {
                 NSLog(@"progress: %f", progress);
             } completeBlock:^(KS3FileUploader *uploader) {

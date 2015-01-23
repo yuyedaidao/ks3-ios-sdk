@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0AFB7FA41A42FB750060055F /* KS3YunSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AFB7FA21A42FB320060055F /* KS3YunSDK.framework */; };
-		0AFB7FA51A42FB750060055F /* KS3YunSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0AFB7FA21A42FB320060055F /* KS3YunSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		130B17021A5E3623006AB149 /* KS3YunSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 130B17001A5E3612006AB149 /* KS3YunSDK.framework */; };
+		130B17031A5E3623006AB149 /* KS3YunSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 130B17001A5E3612006AB149 /* KS3YunSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		13215E981A4123A800B4AC64 /* ObjectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13215E971A4123A800B4AC64 /* ObjectViewController.m */; };
 		13215EA01A416F7D00B4AC64 /* bugDownload.txt in Resources */ = {isa = PBXBuildFile; fileRef = 13215E9F1A416F7D00B4AC64 /* bugDownload.txt */; };
 		13215EA41A418A8B00B4AC64 /* test.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 13215EA31A418A8B00B4AC64 /* test.jpg */; };
@@ -43,7 +43,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				0AFB7FA51A42FB750060055F /* KS3YunSDK.framework in Embed Frameworks */,
+				130B17031A5E3623006AB149 /* KS3YunSDK.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -51,7 +51,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		0AFB7FA21A42FB320060055F /* KS3YunSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = KS3YunSDK.framework; sourceTree = "<group>"; };
+		130B17001A5E3612006AB149 /* KS3YunSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = KS3YunSDK.framework; sourceTree = "<group>"; };
 		13215E961A4123A800B4AC64 /* ObjectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjectViewController.h; sourceTree = "<group>"; };
 		13215E971A4123A800B4AC64 /* ObjectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ObjectViewController.m; sourceTree = "<group>"; };
 		13215E9F1A416F7D00B4AC64 /* bugDownload.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bugDownload.txt; sourceTree = SOURCE_ROOT; };
@@ -86,7 +86,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0AFB7FA41A42FB750060055F /* KS3YunSDK.framework in Frameworks */,
+				130B17021A5E3623006AB149 /* KS3YunSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -103,7 +103,7 @@
 		13EECBD61A402237004199BD = {
 			isa = PBXGroup;
 			children = (
-				0AFB7FA21A42FB320060055F /* KS3YunSDK.framework */,
+				130B17001A5E3612006AB149 /* KS3YunSDK.framework */,
 				13EECBE11A402237004199BD /* KS3iOSSDKDemo */,
 				13EECBFB1A402238004199BD /* KS3iOSSDKDemoTests */,
 				13EECBE01A402237004199BD /* Products */,
