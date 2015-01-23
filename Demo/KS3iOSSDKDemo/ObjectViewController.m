@@ -100,8 +100,11 @@
         case 1:
         {
             KS3DeleteObjectRequest *deleteObjRequest = [[KS3DeleteObjectRequest alloc] initWithName:kBucketName];
-            deleteObjRequest.key = @"test.jpg";
+            deleteObjRequest.key = @"photo_hor.jpeg";
             KS3DeleteObjectResponse *response = [[KS3Client initialize] deleteObject:deleteObjRequest];
+            NSLog(@"------%@",[[NSString alloc] initWithData:response.body encoding:NSUTF8StringEncoding]);
+            NSLog(@"%d",[response httpStatusCode]);
+            NSLog(@"%@",[response responseHeader]);
             if (response.httpStatusCode == 204) {
                 NSLog(@"Delete object success!");
             }
@@ -115,6 +118,10 @@
             KS3HeadObjectRequest *headObjRequest = [[KS3HeadObjectRequest alloc] initWithName:kBucketName];
             headObjRequest.key = kObjectName;
             KS3HeadObjectResponse *response = [[KS3Client initialize] headObject:headObjRequest];
+            
+            NSLog(@"------%@",[[NSString alloc] initWithData:response.body encoding:NSUTF8StringEncoding]);
+            NSLog(@"%d",[response httpStatusCode]);
+            NSLog(@"%@",[response responseHeader]);
             if (response.httpStatusCode == 200) {
                 NSLog(@"Head object success!");
             }
@@ -131,6 +138,7 @@
             NSString *fileName = [[NSBundle mainBundle] pathForResource:@"test" ofType:@"jpg"];
             putObjRequest.data = [NSData dataWithContentsOfFile:fileName options:NSDataReadingMappedIfSafe error:nil];
             putObjRequest.filename = [fileName lastPathComponent];
+
             
             putObjRequest.callbackBody = @"objectKey=${key}&etag=${etag}&location=${kss-location}&name=${kss-price}";
             putObjRequest.callbackUrl = @"http://127.0.0.1:19090/";// success
@@ -149,6 +157,7 @@
             else {
                 NSLog(@"Put object failed");
             }
+
         }
             break;
         case 4:
@@ -158,6 +167,9 @@
             request.strSourceBucket = kBucketName;
             request.strSourceObject = kObjectName;
             KS3PutObjectCopyResponse *response = [[KS3Client initialize] putObjectCopy:request];
+            NSLog(@"------%@",[[NSString alloc] initWithData:response.body encoding:NSUTF8StringEncoding]);
+            NSLog(@"%d",[response httpStatusCode]);
+            NSLog(@"%@",[response responseHeader]);
             if (response.httpStatusCode == 200) {
                 NSLog(@"Put object copy success!");
             }
@@ -177,6 +189,10 @@
             getObjectACLRequest.key = kObjectName;
             KS3GetObjectACLResponse *response = [[KS3Client initialize] getObjectACL:getObjectACLRequest];
             KS3BucketACLResult *result = response.listBucketsResult;
+            
+            NSLog(@"------%@",[[NSString alloc] initWithData:response.body encoding:NSUTF8StringEncoding]);
+            NSLog(@"%d",[response httpStatusCode]);
+            NSLog(@"%@",[response responseHeader]);
             if (response.httpStatusCode == 200) {
                 NSLog(@"Get object acl success!");
                 NSLog(@"Object owner ID:          %@",result.owner.ID);
@@ -202,6 +218,9 @@
             [acl setContronAccess:KingSoftYun_Permission_Public_Read_Write];
             setObjectACLRequest.acl = acl;
             KS3SetObjectACLResponse *response = [[KS3Client initialize] setObjectACL:setObjectACLRequest];
+            NSLog(@"------%@",[[NSString alloc] initWithData:response.body encoding:NSUTF8StringEncoding]);
+            NSLog(@"%d",[response httpStatusCode]);
+            NSLog(@"%@",[response responseHeader]);
             if (response.httpStatusCode == 200) {
                 NSLog(@"Set object acl success!");
             }
@@ -332,12 +351,15 @@
 {
     NSLog(@"didReceive response");
 }
+
 - (void)request:(KS3ServiceRequest *)request didReceiveData:(NSData *)data
 {
     NSLog(@"didReceive data");
 }
+
 -(void)request:(KS3ServiceRequest *)request didSendData:(long long)bytesWritten totalBytesWritten:(long long)totalBytesWritten totalBytesExpectedToWrite:(long long)totalBytesExpectedToWrite
 {
     // progress
 }
+
 @end
