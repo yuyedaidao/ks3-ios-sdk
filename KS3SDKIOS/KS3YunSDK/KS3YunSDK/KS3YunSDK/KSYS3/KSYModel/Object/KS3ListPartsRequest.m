@@ -31,14 +31,10 @@
 {
     self.host = [NSString stringWithFormat:@"http://%@.kss.ksyun.com/%@?uploadId=%@", self.bucket, self.key, self.uploadId];
     self.kSYResource = [NSString stringWithFormat:@"%@/%@?uploadId=%@",self.kSYResource,self.key,self.uploadId];
-<<<<<<< HEAD
-    NSMutableString *subresource = [NSMutableString stringWithFormat:@"%@=%@", kKS3QueryParamUploadId, self.uploadId];
-    if (self.maxParts != 1000) {
-=======
+
     
     NSMutableString *subresource = [NSMutableString stringWithCapacity:512];
     if (self.maxParts != 1000) { // **** default is 1000
->>>>>>> 5bf61d6e39230b00c8c24035991faae08a3a60e1
         [subresource appendFormat:@"&%@=%d", kKS3QueryParamMaxParts, self.maxParts];
     }
     if (self.partNumberMarker != 0) {

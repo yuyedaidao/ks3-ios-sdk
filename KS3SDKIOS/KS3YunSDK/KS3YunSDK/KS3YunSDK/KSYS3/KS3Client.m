@@ -308,11 +308,37 @@ static NSTimeInterval const KingSoftYun_RequestTimeout = 60;
 
 - (KS3Response *)invoke:(KS3Request *)request
 {
-    if (!_credentials && !_credentials.accessKey && !_credentials.secretKey && !_credentials.securityToken) {
+//    if (!_credentials && !_credentials.accessKey && !_credentials.secretKey) {
+//        KS3Response *response = [KS3Response new];
+//        response.error = [KS3ErrorHandler errorFromExceptionWithThrowsExceptionOption:[KS3ClientException exceptionWithMessage:@"配置的accessKey和secretKey或token有错误!"]];
+//        return response;
+//    }
+//    
+//    if (!_credentials && !_credentials.securityToken) {
+//        KS3Response *response = [KS3Response new];
+//        response.error = [KS3ErrorHandler errorFromExceptionWithThrowsExceptionOption:[KS3ClientException exceptionWithMessage:@"配置的accessKey和secretKey或token有错误!"]];
+//        return response;
+//    }
+    NSString *message = nil;
+    if (!_credentials) {
+        message = @"请配置签名信息 ！";
+    }else{
+        if (!_credentials.securityToken) {
+            if (!_credentials.secretKey || !_credentials.secretKey) {
+                message = @"请配置的accessKey和secretKey!";
+            }
+        }
+        if (!_credentials.securityToken && !_credentials.secretKey && !_credentials.accessKey) {
+            message = @"请配置accessKey和secretKey或token!";
+        }
+        
+    }
+    if (message) {
         KS3Response *response = [KS3Response new];
-        response.error = [KS3ErrorHandler errorFromExceptionWithThrowsExceptionOption:[KS3ClientException exceptionWithMessage:@"配置的accessKey和secretKey或token有错误!"]];
+        response.error = [KS3ErrorHandler errorFromExceptionWithThrowsExceptionOption:[KS3ClientException exceptionWithMessage:message]];
         return response;
     }
+    
     if (nil == request) {
         KS3Response *response = [KS3Response new];
         response.error = [KS3ErrorHandler errorFromExceptionWithThrowsExceptionOption:[KS3ClientException exceptionWithMessage:@"Request cannot be nil."]];
