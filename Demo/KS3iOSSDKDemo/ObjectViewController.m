@@ -9,7 +9,7 @@
 #warning Please set correct bucket and object name
 #define kBucketName @"alert1"//@"acc"//@"bucketcors"//@"alert1"
 #define kObjectName @"test_download.txt"//@"Count_1.txt"//@"bug.txt"
-#define kDesBucketName @"ggg"//@"blues111"
+#define kDesBucketName @"blues111"//@"ggg"//
 #define kDesObjectName @"bug_copy.txt"
 
 #import "ObjectViewController.h"
@@ -100,7 +100,7 @@
         case 1:
         {
             KS3DeleteObjectRequest *deleteObjRequest = [[KS3DeleteObjectRequest alloc] initWithName:kBucketName];
-            deleteObjRequest.key = @"photo_hor.jpeg";
+            deleteObjRequest.key = @"upload_release.txt";
             KS3DeleteObjectResponse *response = [[KS3Client initialize] deleteObject:deleteObjRequest];
             NSLog(@"------%@",[[NSString alloc] initWithData:response.body encoding:NSUTF8StringEncoding]);
             NSLog(@"%d",[response httpStatusCode]);
@@ -140,14 +140,14 @@
             putObjRequest.filename = [fileName lastPathComponent];
 
             
-            putObjRequest.callbackBody = @"objectKey=${key}&etag=${etag}&location=${kss-location}&name=${kss-price}";
-            putObjRequest.callbackUrl = @"http://127.0.0.1:19090/";// success
-//            putObjRequest.callbackUrl = @"http://127.0.0.1:190910";// failed
-//            putObjRequest.callbackUrl = @"http://127.0.0.1:190910";// timeout
-            putObjRequest.callbackParams = [NSDictionary dictionaryWithObjectsAndKeys:
-                                            @"BeiJing", @"kss-location",
-                                            @"$Ten",    @"kss-price",
-                                            @"error",   @"kss", nil];
+//            putObjRequest.callbackBody = @"objectKey=${key}&etag=${etag}&location=${kss-location}&name=${kss-price}";
+//            putObjRequest.callbackUrl = @"http://127.0.0.1:19090/";// success
+////            putObjRequest.callbackUrl = @"http://127.0.0.1:190910";// failed
+////            putObjRequest.callbackUrl = @"http://127.0.0.1:190910";// timeout
+//            putObjRequest.callbackParams = [NSDictionary dictionaryWithObjectsAndKeys:
+//                                            @"BeiJing", @"kss-location",
+//                                            @"$Ten",    @"kss-price",
+//                                            @"error",   @"kss", nil];
 //            [[KS3Client initialize] putObject:putObjRequest];
             KS3PutObjectResponse *response = [[KS3Client initialize] putObject:putObjRequest];
             NSString *str = [[NSString alloc] initWithData:response.body encoding:NSUTF8StringEncoding];
@@ -309,14 +309,15 @@
             break;
         case 11:
         {
-            KS3AbortMultipartUploadRequest *request = [[KS3AbortMultipartUploadRequest alloc] initWithMultipartUpload:_muilt];
-            KS3AbortMultipartUploadResponse *response = [[KS3Client initialize] abortMultipartUpload:request];
-            if (response.httpStatusCode == 204) {
-                NSLog(@"Abort multipart upload success!");
-            }
-            else {
-                NSLog(@"error: %@", response.error.description);
-            }
+            [_uploader abortUpload];
+//            KS3AbortMultipartUploadRequest *request = [[KS3AbortMultipartUploadRequest alloc] initWithMultipartUpload:_muilt];
+//            KS3AbortMultipartUploadResponse *response = [[KS3Client initialize] abortMultipartUpload:request];
+//            if (response.httpStatusCode == 204) {
+//                NSLog(@"Abort multipart upload success!");
+//            }
+//            else {
+//                NSLog(@"error: %@", response.error.description);
+//            }
         }
             break;
         default:

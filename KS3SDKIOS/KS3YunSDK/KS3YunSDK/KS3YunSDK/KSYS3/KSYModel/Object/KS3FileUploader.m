@@ -16,6 +16,8 @@
 #import "KS3CompleteMultipartUploadRequest.h"
 #import "KS3Part.h"
 #import "KS3MultipartUpload.h"
+#import "KS3AbortMultipartUploadRequest.h"
+#import "KS3AbortMultipartUploadResponse.h"
 
 @interface KS3FileUploader () <KingSoftServiceRequestDelegate>
 
@@ -45,6 +47,18 @@
         _bucketName = strBucketName;
     }
     return self;
+}
+
+- (void)abortUpload
+{
+    KS3AbortMultipartUploadRequest *request = [[KS3AbortMultipartUploadRequest alloc] initWithMultipartUpload:_muilt];
+    KS3AbortMultipartUploadResponse *response = [[KS3Client initialize] abortMultipartUpload:request];
+    if (response.httpStatusCode == 204) {
+        NSLog(@"Abort multipart upload success!");
+    }
+    else {
+        NSLog(@"error: %@", response.error.description);
+    }
 }
 
 - (void)startUploadWithProgressChangeBlock:(KS3UploadProgressChangedBlock)uploadProgressChangedBlock
