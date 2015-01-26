@@ -35,10 +35,10 @@ NSString *const strTokenHost = @"http://0.0.0.0:11911"; // **** token 的请求�
     // Override point for customization after application launch.
     
     // **** use ak/sk
-     [[KS3Client initialize] connectWithAccessKey:strAccessKey withSecretKey:strSecretKey];
+//     [[KS3Client initialize] connectWithAccessKey:strAccessKey withSecretKey:strSecretKey];
     
     // **** use token
-//    [[KS3Client initialize] connectWithTokenHost:strTokenHost];
+    [[KS3Client initialize] connectWithTokenHost:strTokenHost];
     return YES;
 }
 

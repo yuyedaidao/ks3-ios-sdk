@@ -11,6 +11,7 @@
 #import "KS3Credentials.h"
 #import "KS3AuthUtils.h"
 #import "KS3ServiceResponse.h"
+#import "KS3ClientException.h"
 
 @interface KS3DownLoad ()
 
@@ -142,10 +143,9 @@
     [request setValue:strTime forHTTPHeaderField:@"Date"];
     [request setValue:strAuthorization forHTTPHeaderField:@"Authorization"];
     [request addValue:range forHTTPHeaderField:@"Range"];
+    
     // **** 如果采用服务器计算token的方式，则设置token
     [self setTokenForURLRequest:request withResource:strCanonResource];
-    [connection cancel];
-    connection = [[NSURLConnection alloc] initWithRequest:request delegate:self startImmediately:YES];
 }
 
 - (void)setTokenForURLRequest:(NSMutableURLRequest *)urlRequest withResource:(NSString *)strResource
@@ -165,31 +165,23 @@
                                                                          cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
                                                                      timeoutInterval:10];
         NSData *dataParams = [NSJSONSerialization dataWithJSONObject:dicParams options:NSJSONWritingPrettyPrinted error:nil];
-        KS3ServiceResponse *response1 = [[KS3ServiceResponse alloc] init];
         [tokenRequest setURL:tokenUrl/*request.tokenRequestUrl*/];
         [tokenRequest setHTTPMethod:@"POST"];
         [tokenRequest setHTTPBody:dataParams];
-        NSURLConnection *tokenConnection = [[NSURLConnection alloc] initWithRequest:tokenRequest/*urlRequest*/ delegate:response1 startImmediately:NO];
-        [tokenConnection scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:KSYS3DefaultRunLoopMode];
-//        request.urlConnection = tokenConnection;
-        [tokenConnection start];
-        NSTimer *timeoutTimer = [NSTimer scheduledTimerWithTimeInterval:10
-                                                                 target:response1
-                                                               selector:@selector(timeout)
-                                                               userInfo:nil
-                                                                repeats:NO];
-        [[NSRunLoop currentRunLoop] addTimer:timeoutTimer forMode:KSYS3DefaultRunLoopMode];
-        while (!response1.isFinishedLoading) {
-            [[NSRunLoop currentRunLoop] runMode:KSYS3DefaultRunLoopMode beforeDate:[NSDate dateWithTimeIntervalSinceNow:0.1]];
-        }
-        if (response1.error == nil && response1.body != nil) {
-            NSString *strToken = [[NSString alloc] initWithData:response1.body encoding:NSUTF8StringEncoding];
-            NSLog(@"#### 获取token成功! #### token: %@", strToken);
-            [urlRequest setValue:strToken forHTTPHeaderField:@"Authorization"];
-        }
-        else {
-            NSLog(@"获取token失败");
-        }
+        
+        [NSURLConnection sendAsynchronousRequest:tokenRequest queue:[NSOperationQueue currentQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+            if (connectionError == nil) {
+                NSString *strToken = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+                NSLog(@"#### 获取token成功! #### token: %@", strToken);
+                [urlRequest setValue:strToken forHTTPHeaderField:@"Authorization"];
+                
+                [connection cancel];
+                connection = [[NSURLConnection alloc] initWithRequest:urlRequest delegate:self startImmediately:YES];
+            }
+            else {
+                NSLog(@"#### 获取token失败，error: %@", connectionError);
+            }
+        }];
     }
 }
 

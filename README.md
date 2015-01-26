@@ -85,7 +85,7 @@ Authorization: KSS P3UPCMORAFON76Q6RTNQ:vU9XqPLcXd3nWdlfLWIhruZrLAM=
 #####必要的说明
 对于使用token方式初始化SDK的用户，需要使用另外一种初始化KS3Client的方法
 
-- (void)connectWithTokenHost:(NSString *)tokenHost;
+\- (void)connectWithTokenHost:(NSString *)tokenHost;
 
 方法中的tokenHost就是用户自己的app server的token的url地址，SDK传递httpMethod，contentMd5，contentType，strDate，header，resource以POST的方式传递到app server中，app server需要根据上述签名规则，利用AccessKeyID及AccessKeySecret计算出签名并正确返回给SDK。上述方法中的contentMd5, contentType, header参数可为空。若为空，则SDK会使用空字符串("")替代, 但strDate和resource不能为空。
 
