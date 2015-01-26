@@ -56,14 +56,18 @@
         NSLog(@"bucket 或 key 不能为空");
         return ;
     }
-
     _fileHandle = [NSFileHandle fileHandleForReadingAtPath:_strFilePath];
     _fileSize = [_fileHandle availableData].length;
     if (_fileSize <= 0) {
         NSLog(@"####This file is not exist!####");
         return ;
     }
-    _partLength = _partSize * 1024.0 * 1024.0;
+    if (!(_partSize > 0 || _partSize != 0)) {
+        _partLength = _fileSize;
+    }else{
+       _partLength = _partSize * 1024.0 * 1024.0;
+    }
+    
     _totalNum = (ceilf((float)_fileSize / (float)_partLength));
     [_fileHandle seekToFileOffset:0];
     
@@ -72,11 +76,9 @@
         NSLog(@"####Init upload failed, please check access key, secret key and bucket name!####");
         return ;
     }
-    
     _uploadProgressChangedBlock = uploadProgressChangedBlock;
     _uploadCompleteBlock = uploadCompleteBlock;
     _uploadFailedBlock = uploadFailedBlock;
-    
     _uploadNum = 1;
     [self uploadWithPartNumber:_uploadNum];
 }
@@ -115,10 +117,11 @@
         req.callbackUrl = _callbackUrl;
         req.callbackBody = _callbackBody;
         req.callbackParams = _callbackParams;
-        [[KS3Client initialize] completeMultipartUpload:req];
-        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+             [[KS3Client initialize] completeMultipartUpload:req];
+            _uploadCompleteBlock(self);
+        });
         // **** complete block call
-        _uploadCompleteBlock(self);
     }
     else {
         [self uploadWithPartNumber:_uploadNum];

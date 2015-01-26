@@ -14,9 +14,7 @@
 @property (nonatomic, strong) NSString *marker;
 @property (nonatomic) int32_t maxKeys;
 @property (nonatomic, retain) NSString *delimiter;
-
 @property (nonatomic, strong) NSString *encodingType;
-
 
 - (instancetype)initWithName:(NSString *)bucketName;
 

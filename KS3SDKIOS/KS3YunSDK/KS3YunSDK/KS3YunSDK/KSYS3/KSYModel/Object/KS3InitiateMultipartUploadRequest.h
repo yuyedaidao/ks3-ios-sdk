@@ -14,7 +14,6 @@
 
 @property (nonatomic, strong) NSString *key;
 @property (nonatomic, strong) NSString *cacheControl;
-
 @property (nonatomic, strong) NSString *contentDisposition;
 @property (nonatomic, strong) NSString *contentEncoding;
 @property (nonatomic, strong) NSString *expires;

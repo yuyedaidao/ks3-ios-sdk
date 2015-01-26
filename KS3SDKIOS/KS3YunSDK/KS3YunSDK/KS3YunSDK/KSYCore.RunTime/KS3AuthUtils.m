@@ -160,14 +160,17 @@
     NSDate *date = [NSDate date];
     NSString *dateTime = [KS3AuthUtils strDateWithDate:date andType:@"GMT"];
     [urlRequest setValue:dateTime forHTTPHeaderField:@"Date"];
-    NSString *strAuthorization = [KS3AuthUtils KSYAuthorizationWithHTTPVerb:serviceRequest.credentials.accessKey
-                                                                  secretKey:serviceRequest.credentials.secretKey
-                                                                   httpVerb:serviceRequest.httpMethod
-                                                                 contentMd5:serviceRequest.contentMd5
-                                                                contentType:serviceRequest.contentType
-                                                                       date:date
-                                                     canonicalizedKssHeader:serviceRequest.kSYHeader
-                                                      canonicalizedResource:serviceRequest.kSYResource];
+    NSString *strAuthorization = @"";
+    if (credentials.accessKey != nil && credentials.secretKey != nil) {
+        NSString *strAuthorization = [KS3AuthUtils KSYAuthorizationWithHTTPVerb:serviceRequest.credentials.accessKey
+                                                                      secretKey:serviceRequest.credentials.secretKey
+                                                                       httpVerb:serviceRequest.httpMethod
+                                                                     contentMd5:serviceRequest.contentMd5
+                                                                    contentType:serviceRequest.contentType
+                                                                           date:date
+                                                         canonicalizedKssHeader:serviceRequest.kSYHeader
+                                                          canonicalizedResource:serviceRequest.kSYResource];
+    }
     [urlRequest setValue:strAuthorization forHTTPHeaderField:@"Authorization"];
     [urlRequest setURL:[NSURL URLWithString:serviceRequest.host]];
     [urlRequest setHTTPMethod:serviceRequest.httpMethod];
