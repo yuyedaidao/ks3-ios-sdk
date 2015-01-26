@@ -28,23 +28,7 @@
                                                                                 action:@selector(clickAddBucketBtn:)];
     self.navigationItem.rightBarButtonItem = addBtnItem;
     
-    /**
-     *  如果是使用token，每次调用的时候都需要获取token，然后初始化一次KS3Client
-     */
-    NSString *strDate = [KS3AuthUtils strDateWithDate:[NSDate date] andType:@"GMT"];
-//    NSString *strToken = [self tokenWithHttpMethod:@"GET" contentMd5:@"" contentType:@"" date:strDate header:@"" resource:@"/"];
-//    [[KS3Client initialize] connectWithSecurityToken:strToken];
-//    _arrBuckets = [[KS3Client initialize] listBuckets];
-    
-    // **** token 方式
-    NSString *str = @"http://192.168.231.77:11911";
-    NSURL *appServerUrl = [NSURL URLWithString:str];
-    [[KS3Client initialize] tokenWithHttpMethod:@"GET" contentMd5:@"" contentType:@"" date:strDate header:@"" resource:@"/" appServerUrl:appServerUrl tokenCompleteBlock:^(NSString *strToken) {
-        
-        [[KS3Client initialize] connectWithSecurityToken:strToken];
-        _arrBuckets = [[KS3Client initialize] listBuckets];
-        [_bucketListTable reloadData];
-    }];
+    _arrBuckets = [[KS3Client initialize] listBuckets];
 }
 
 #pragma mark - UITableView datasource

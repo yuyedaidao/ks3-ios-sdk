@@ -10,16 +10,19 @@
 #import <KS3YunSDK/KS3YunSDK.h>
 
 // **** 外网白名单测试
-//NSString *const strAccessKey = @"GENJ6O5PQFVE37MEEMZA";
-//NSString *const strSecretKey = @"9Z6VbeYUJ0BiKcuwYe5x/j76TZvYe9VRh2OdH15m";
+NSString *const strAccessKey = @"GENJ6O5PQFVE37MEEMZA";
+NSString *const strSecretKey = @"9Z6VbeYUJ0BiKcuwYe5x/j76TZvYe9VRh2OdH15m";
 
 // **** 用户的AK/SK
-NSString *const strAccessKey = @"IYh4GQWndtnQvmCJWFL4";
-NSString *const strSecretKey = @"1+RBTrWaeT6LaixUV5SGPFpeTa/wZEeZlGzYaZfr";
+//NSString *const strAccessKey = @"IYh4GQWndtnQvmCJWFL4";
+//NSString *const strSecretKey = @"1+RBTrWaeT6LaixUV5SGPFpeTa/wZEeZlGzYaZfr";
 
 // **** 测试callback
 //NSString *const strAccessKey = @"VSDNT6SHFNDWBXYZRS3A";
 //NSString *const strSecretKey = @"OxJr4PEt9xg2d0+zYo+ckkMLVBwHLuebYnzS5Ev1";
+
+// **** 测试token host
+NSString *const strTokenHost = @"http://0.0.0.0:11911"; // **** token 的请求地址
 
 @interface AppDelegate ()
 
@@ -30,7 +33,12 @@ NSString *const strSecretKey = @"1+RBTrWaeT6LaixUV5SGPFpeTa/wZEeZlGzYaZfr";
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-     [[KS3Client initialize] connectWithAccessKey:strAccessKey withSecretKey:strSecretKey];
+    
+    // **** use ak/sk
+//     [[KS3Client initialize] connectWithAccessKey:strAccessKey withSecretKey:strSecretKey];
+    
+    // **** use token
+//    [[KS3Client initialize] connectWithTokenHost:strTokenHost];
     return YES;
 }
 

@@ -121,7 +121,6 @@
              [[KS3Client initialize] completeMultipartUpload:req];
             _uploadCompleteBlock(self);
         });
-        // **** complete block call
     }
     else {
         [self uploadWithPartNumber:_uploadNum];

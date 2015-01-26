@@ -51,7 +51,7 @@
                     [self.urlRequest setValue:_callbackParams[strKey] forHTTPHeaderField:strKey];
                 }
                 else {
-                    NSLog(@"The header with field: \"%@\" and value: \"%@\" is not cocrect, this header will be ingored", strKey, _callbackParams[strKey]);
+                    NSLog(@"#### The header with field: \"%@\" and value: \"%@\" is not cocrect, this header will be ingored ####", strKey, _callbackParams[strKey]);
                 }
             }
         }
