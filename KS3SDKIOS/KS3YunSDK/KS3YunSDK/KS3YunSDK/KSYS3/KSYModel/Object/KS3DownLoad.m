@@ -151,7 +151,6 @@
 - (void)setTokenForURLRequest:(NSMutableURLRequest *)urlRequest withResource:(NSString *)strResource
 {
     if (_credentials.tokenHost != nil) {
-        NSLog(@"#### 请求token...... ####");
         NSString *strDate = [urlRequest valueForHTTPHeaderField:@"Date"];
         NSDictionary *dicParams = [NSDictionary dictionaryWithObjectsAndKeys:
                                    @"GET",      @"http_method",
@@ -165,7 +164,7 @@
                                                                          cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
                                                                      timeoutInterval:10];
         NSData *dataParams = [NSJSONSerialization dataWithJSONObject:dicParams options:NSJSONWritingPrettyPrinted error:nil];
-        [tokenRequest setURL:tokenUrl/*request.tokenRequestUrl*/];
+        [tokenRequest setURL:tokenUrl];
         [tokenRequest setHTTPMethod:@"POST"];
         [tokenRequest setHTTPBody:dataParams];
         
