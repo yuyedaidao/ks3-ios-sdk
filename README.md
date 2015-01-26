@@ -83,9 +83,11 @@ Authorization: KSS P3UPCMORAFON76Q6RTNQ:vU9XqPLcXd3nWdlfLWIhruZrLAM=
 ```
 
 #####必要的说明
-对于使用token方式初始化SDK的用户，需要注意调用任何SDK里面的方法之前都需要向服务器请求token，需要传给服务器的参数有httpMethod，contentMd5，contentType，strDate，header，resource，服务器端应根据上述签名生成规则，利用AccessKeyID及AccessKeySecret计算出签名并正确返回给SDK。
+对于使用token方式初始化SDK的用户，需要使用另外一种初始化KS3Client的方法
 
-上述方法中的contentMd5, contentType, header参数可为空。若为空，则SDK会使用空字符串("")替代, 但strDate和resource不能为空。
+- (void)connectWithTokenHost:(NSString *)tokenHost;
+
+方法中的tokenHost就是用户自己的app server的token的url地址，SDK传递httpMethod，contentMd5，contentType，strDate，header，resource以POST的方式传递到app server中，app server需要根据上述签名规则，利用AccessKeyID及AccessKeySecret计算出签名并正确返回给SDK。上述方法中的contentMd5, contentType, header参数可为空。若为空，则SDK会使用空字符串("")替代, 但strDate和resource不能为空。
 
 为保证请求时间的一致性，需要App客户端及业务服务期保证各自的时间正确性，否则用错误的时间尝试请求，会返回403Forbidden错误。
 
