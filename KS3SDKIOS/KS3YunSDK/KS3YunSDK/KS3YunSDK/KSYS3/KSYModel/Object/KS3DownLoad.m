@@ -10,6 +10,7 @@
 #import "KS3SDKUtil.h"
 #import "KS3Credentials.h"
 #import "KS3AuthUtils.h"
+#import "KS3ServiceResponse.h"
 
 @interface KS3DownLoad ()
 
@@ -120,14 +121,17 @@
     NSString *strHost = [NSString stringWithFormat:@"http://%@.kss.ksyun.com/%@", _bucketName, _key];
     NSDate *curDate = getCurrentDate();
     NSString *strCanonResource = [NSString stringWithFormat:@"/%@/%@", _bucketName,_key];
-    NSString *strAuthorization = [KS3AuthUtils strAuthorizationWithHTTPVerb:_credentials.accessKey
-                                                                       secretKey:_credentials.secretKey
-                                                                        httpVerb:KSS3_HTTPVerbGet
-                                                                      contentMd5:@""
-                                                                     contentType:@""
-                                                                            date:curDate
-                                                          canonicalizedKssHeader:@""
-                                                           canonicalizedResource:strCanonResource];
+    NSString *strAuthorization = @"";
+    if (_credentials.accessKey != nil && _credentials.secretKey != nil) {
+        strAuthorization = [KS3AuthUtils strAuthorizationWithHTTPVerb:_credentials.accessKey
+                                                            secretKey:_credentials.secretKey
+                                                             httpVerb:KSS3_HTTPVerbGet
+                                                           contentMd5:@""
+                                                          contentType:@""
+                                                                 date:curDate
+                                               canonicalizedKssHeader:@""
+                                                canonicalizedResource:strCanonResource];
+    }
     NSString *strTime = [KS3AuthUtils strDateWithDate:curDate andType:@"GMT"];
     
     NSURL *urlRequest = [NSURL URLWithString:strHost];
@@ -137,10 +141,56 @@
     [request setHTTPMethod:@"GET"];
     [request setValue:strTime forHTTPHeaderField:@"Date"];
     [request setValue:strAuthorization forHTTPHeaderField:@"Authorization"];
-
     [request addValue:range forHTTPHeaderField:@"Range"];
+    // **** 如果采用服务器计算token的方式，则设置token
+    [self setTokenForURLRequest:request withResource:strCanonResource];
     [connection cancel];
     connection = [[NSURLConnection alloc] initWithRequest:request delegate:self startImmediately:YES];
+}
+
+- (void)setTokenForURLRequest:(NSMutableURLRequest *)urlRequest withResource:(NSString *)strResource
+{
+    if (_credentials.tokenHost != nil) {
+        NSLog(@"#### 请求token...... ####");
+        NSString *strDate = [urlRequest valueForHTTPHeaderField:@"Date"];
+        NSDictionary *dicParams = [NSDictionary dictionaryWithObjectsAndKeys:
+                                   @"GET",      @"http_method",
+                                   @"",         @"content_md5",
+                                   @"",         @"content_type",
+                                   strDate,     @"date",
+                                   @"",         @"headers",
+                                   strResource, @"resource", nil];
+        NSURL *tokenUrl = [NSURL URLWithString:_credentials.tokenHost];
+        NSMutableURLRequest *tokenRequest = [[NSMutableURLRequest alloc] initWithURL:tokenUrl
+                                                                         cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
+                                                                     timeoutInterval:10];
+        NSData *dataParams = [NSJSONSerialization dataWithJSONObject:dicParams options:NSJSONWritingPrettyPrinted error:nil];
+        KS3ServiceResponse *response1 = [[KS3ServiceResponse alloc] init];
+        [tokenRequest setURL:tokenUrl/*request.tokenRequestUrl*/];
+        [tokenRequest setHTTPMethod:@"POST"];
+        [tokenRequest setHTTPBody:dataParams];
+        NSURLConnection *tokenConnection = [[NSURLConnection alloc] initWithRequest:tokenRequest/*urlRequest*/ delegate:response1 startImmediately:NO];
+        [tokenConnection scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:KSYS3DefaultRunLoopMode];
+//        request.urlConnection = tokenConnection;
+        [tokenConnection start];
+        NSTimer *timeoutTimer = [NSTimer scheduledTimerWithTimeInterval:10
+                                                                 target:response1
+                                                               selector:@selector(timeout)
+                                                               userInfo:nil
+                                                                repeats:NO];
+        [[NSRunLoop currentRunLoop] addTimer:timeoutTimer forMode:KSYS3DefaultRunLoopMode];
+        while (!response1.isFinishedLoading) {
+            [[NSRunLoop currentRunLoop] runMode:KSYS3DefaultRunLoopMode beforeDate:[NSDate dateWithTimeIntervalSinceNow:0.1]];
+        }
+        if (response1.error == nil && response1.body != nil) {
+            NSString *strToken = [[NSString alloc] initWithData:response1.body encoding:NSUTF8StringEncoding];
+            NSLog(@"#### 获取token成功! #### token: %@", strToken);
+            [urlRequest setValue:strToken forHTTPHeaderField:@"Authorization"];
+        }
+        else {
+            NSLog(@"获取token失败");
+        }
+    }
 }
 
 - (void)stop

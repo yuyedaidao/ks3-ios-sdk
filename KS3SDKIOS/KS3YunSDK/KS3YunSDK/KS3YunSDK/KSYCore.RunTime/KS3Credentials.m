@@ -16,19 +16,19 @@
     if (self) {
         _accessKey = accessKey;
         _secretKey = secretKey;
-        _securityToken = nil;
+        _tokenHost = nil;
         NSLog(@"##### 采用本地AK/SK签名的方式!#####");
     }
     return self;
 }
 
-- (id)initWithSecurityToken:(NSString *)theSecurityToken
+- (id)initWithTokenHost:(NSString *)tokenHost
 {
     self = [super init];
     if (self) {
         _accessKey = nil;
         _secretKey = nil;
-        _securityToken = theSecurityToken;
+        _tokenHost = tokenHost;
         NSLog(@"##### 采用服务器端Token签名的方式!#####");
     }
     return self;

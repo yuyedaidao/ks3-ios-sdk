@@ -7,8 +7,8 @@
 //
 
 #warning Please set correct bucket and object name
-#define kBucketName @"acc"//@"bucketcors"//@"alert1"
-#define kObjectName @"Count_1.txt"//@"bug.txt"
+#define kBucketName @"alert1"//@"acc"//@"bucketcors"//@"alert1"
+#define kObjectName @"test_download.txt"//@"Count_1.txt"//@"bug.txt"
 #define kDesBucketName @"ggg"//@"blues111"
 #define kDesObjectName @"bug_copy.txt"
 
@@ -65,17 +65,17 @@
     switch (indexPath.row) {
         case 0:
         {
-            KS3GetObjectRequest *request = [[KS3GetObjectRequest alloc] initWithName:@"acc"];
-            request.key = kObjectName;
-            request.responseContentLanguage = @"mi, zh";
-            KS3GetObjectResponse *response = [[KS3Client initialize] getObject:request];
-            NSString *str = [[NSString  alloc] initWithData:response.body encoding:NSUTF8StringEncoding];
-            if (response.httpStatusCode == 200) {
-                NSLog(@"success!");
-            }
-            else {
-                NSLog(@"error");
-            }
+//            KS3GetObjectRequest *request = [[KS3GetObjectRequest alloc] initWithName:@"acc"];
+//            request.key = kObjectName;
+//            request.responseContentLanguage = @"mi, zh";
+//            KS3GetObjectResponse *response = [[KS3Client initialize] getObject:request];
+//            NSString *str = [[NSString  alloc] initWithData:response.body encoding:NSUTF8StringEncoding];
+//            if (response.httpStatusCode == 200) {
+//                NSLog(@"success!");
+//            }
+//            else {
+//                NSLog(@"error");
+//            }
             
             UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
             UIProgressView *progressView = (UIProgressView *)[cell.contentView viewWithTag:99];
@@ -280,17 +280,18 @@
 //            }
             _uploader = [[KS3FileUploader alloc] initWithBucketName:kBucketName];
             _uploader.strFilePath = [[NSBundle mainBundle] pathForResource:@"bugDownload" ofType:@"txt"];
-            _uploader.strKey = @"10000000.txt";
+            _uploader.strKey = @"upload_release.txt";
             _uploader.partSize = 5; // **** unit: MB, must larger than 5
             
-            _uploader.callbackBody = @"objectKey=${key}&etag=${etag}&location=${kss-location}&name=${kss-price}";
-            _uploader.callbackUrl = @"http://127.0.0.1:19090/";// success
-//            _uploader.callbackUrl = @"http://127.0.0.1:190910";// failed
-//            _uploader.callbackUrl = @"http://127.0.0.1:190910";// timeout
-            _uploader.callbackParams = [NSDictionary dictionaryWithObjectsAndKeys:
-                                        @"BeiJing", @"kss-location",
-                                        @"$Ten",    @"kss-price",
-                                        @"error",   @"kss", nil];
+            // **** 如果没有回调，就不要设置callback，不然会导致complete upload方法失败而无法合成文件
+//            _uploader.callbackBody = @"objectKey=${key}&etag=${etag}&location=${kss-location}&name=${kss-price}";
+//            _uploader.callbackUrl = @"http://127.0.0.1:19090/";// success
+////            _uploader.callbackUrl = @"http://127.0.0.1:190910";// failed
+////            _uploader.callbackUrl = @"http://127.0.0.1:190910";// timeout
+//            _uploader.callbackParams = [NSDictionary dictionaryWithObjectsAndKeys:
+//                                        @"BeiJing", @"kss-location",
+//                                        @"$Ten",    @"kss-price",
+//                                        @"error",   @"kss", nil];
             
             [_uploader startUploadWithProgressChangeBlock:^(KS3FileUploader *uploader, double progress) {
                 NSLog(@"progress: %f", progress);
