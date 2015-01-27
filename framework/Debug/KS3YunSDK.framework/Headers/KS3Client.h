@@ -80,17 +80,17 @@ typedef void(^kSS3DownloadFileCompleteionBlock)(KS3DownLoad *aDownload, NSString
  *
  *  @param accessKey
  *  @param secretKey 
- *  注释：这个接口必须实现（这个是使用下面API的（前提））建议在工程的delegate里面实现
+ *  注释：这个接口必须实现（这个是使用下面API的（前提）），建议在工程的delegate里面实现
  */
 - (void)connectWithAccessKey:(NSString *)accessKey withSecretKey:(NSString *)secretKey;
 
 /**
- *  设置token
+ *  设置token host
  *
- *  @param token
- *  注释：这个接口必须实现，在使用所有API前需要调用设置最新的token
+ *  @param tokenHost
+ *  注释：这个接口必须实现（这个是把ak/sk保存在服务器上的方式），建议在工程的delegate里面实现
  */
-- (void)connectWithSecurityToken:(NSString *)theSecurityToken;
+- (void)connectWithTokenHost:(NSString *)tokenHost;
 
 /**
  *  列出客户所有的Bucket信息

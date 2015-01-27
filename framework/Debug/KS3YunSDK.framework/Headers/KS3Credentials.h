@@ -12,9 +12,9 @@
 
 @property (strong, readonly, nonatomic) NSString *accessKey;
 @property (strong, readonly, nonatomic) NSString *secretKey;
-@property (strong, readonly, nonatomic) NSString *securityToken;
+@property (strong, readonly, nonatomic) NSString *tokenHost;
 
 - (id)initWithAccessKey:(NSString *)accessKey withSecretKey:(NSString *)secretKey;
-- (id)initWithSecurityToken:(NSString *)theSecurityToken;
+- (id)initWithTokenHost:(NSString *)tokenHost;
 
 @end

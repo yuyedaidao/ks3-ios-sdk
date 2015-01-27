@@ -27,5 +27,6 @@ typedef void(^KS3UploadFailedBloack)(KS3FileUploader *uploader, NSString *strUpl
 - (void)startUploadWithProgressChangeBlock:(KS3UploadProgressChangedBlock)uploadProgressChangedBlock
                     completeBlock:(KS3UploadCompleteBlock)uploadCompleteBlock
                       failedBlock:(KS3UploadFailedBloack)uploadFailedBlock;
+- (void)abortUpload;
 
 @end
