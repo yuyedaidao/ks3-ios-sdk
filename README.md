@@ -37,7 +37,7 @@ Bucket是存放Object的容器，所有的Object都必须存放在特定的Bucke
 
 当使用更改指定资源访问权限的API时（如：setACL、setObjectACL），可以以下任意一种方式指明该资源的访问权限:
 
-**AccessControlList形式**：
+**AccessControlList形式:**
  ```
 
 		KS3SetGrantACLRequest *request = [[KS3SetGrantACLRequest alloc] initWithName:@"your-bucket-name"];
@@ -55,7 +55,7 @@ Bucket是存放Object的容器，所有的Object都必须存放在特定的Bucke
             }
  ```
 
-**CannedAccessControlList**：
+**CannedAccessControlList:**
  ```
 
 		KS3AccessControlList *acl = [[KS3AccessControlList alloc] init];
@@ -282,6 +282,16 @@ SDK以动态库的形式呈现。请将*KS3iOSSDK.framework*添加到项目工�
 
 * 创建Bucket的HTTP请求响应
 
+**KS3CreateBucketResponse响应包括以下内容**
+
+1. httpStatusCode：Http请求返回的状态码，200表示请求成功，403表示签名错误或本地日期时间错误
+
+2. responseHeader:Http请求响应报头
+
+3. error：错误信息
+
+4. body：响应正文
+
 **代码示例：**
 ```
 
@@ -304,6 +314,17 @@ SDK以动态库的形式呈现。请将*KS3iOSSDK.framework*添加到项目工�
 
 * 删除Bucket的HTTP请求响应
 
+
+**KS3DeleteBucketResponse响应包括以下内容**
+
+1. httpStatusCode：Http请求返回的状态码，204表示成功但是返回内容为空，400表示客户端请求错误，403表示签名错误或本地日期时间错误，404表示删除一个不存在的Bucket，409表示删除一个不为空的Bucket
+
+2. responseHeader:Http请求响应报头
+
+3. error：错误信息
+
+4. body：响应正文
+
 **代码示例：**
 ```
 
@@ -324,7 +345,17 @@ SDK以动态库的形式呈现。请将*KS3iOSSDK.framework*添加到项目工�
 
 **返回结果：**
 
-* 获取Bucket ACL的HTTP请求响应
+* 获取Bucket ACL的HTTP请求响应* 
+
+**KS3GetACLResponse响应包括以下内容**
+
+1. httpStatusCode：Http请求返回的状态码，200表示请求成功，400表示客户端请求错误，403表示签名错误或本地日期时间错误，404表示获取一个不存在Bucket的ACL
+
+2. responseHeader:Http请求响应报头
+
+3. error：错误信息
+
+4. body：响应正文
 
 **代码示例：**
 ```
@@ -366,6 +397,16 @@ SDK以动态库的形式呈现。请将*KS3iOSSDK.framework*添加到项目工�
 
 * 设置Bucket Grant ACL的HTTP请求响应
 
+**KS3SetGrantACLResponse响应包括以下内容**
+
+1. httpStatusCode：Http请求返回的状态码，200表示请求成功，但会清空原有ACL权限，只保留当前设置，400表示客户端请求错误，403表示签名错误或本地日期时间错误，404表示给一个不存在的Bucket设置ACL
+
+2. responseHeader:Http请求响应报头
+
+3. error：错误信息
+
+4. body：响应正文
+
 **代码示例：**
 ```
 
@@ -397,7 +438,17 @@ SDK以动态库的形式呈现。请将*KS3iOSSDK.framework*添加到项目工�
 
 **返回结果：**
 
-* 设置Bucket ACL的HTTP请求响应
+* 设置Bucket ACL的HTTP请求响应* 
+
+**KS3SetACLResponse响应包括以下内容**
+
+1. httpStatusCode：Http请求返回的状态码，200表示请求成功，但会清空原有ACL权限，只保留当前设置，400表示客户端请求错误，403表示签名错误或本地日期时间错误，404表示给一个不存在的Bucket设置ACL
+
+2. responseHeader:Http请求响应报头
+
+3. error：错误信息
+
+4. body：响应正文
 
 **代码示例：**
 ```
@@ -431,6 +482,16 @@ SDK以动态库的形式呈现。请将*KS3iOSSDK.framework*添加到项目工�
 **返回结果：**
 
 * 查询是否已存在指定的Bucket的HTTP请求响应
+
+**KS3HeadBucketResponse响应包括以下内容**
+
+1. httpStatusCode：Http请求返回的状态码，200表示请求成功，400表示客户端请求错误，403表示签名错误或本地日期时间错误，404表示请求一个不存在的Bucket
+
+2. responseHeader:Http请求响应报头
+
+3. error：错误信息
+
+4. body：响应正文
 
 **代码示例：**
 ```
@@ -501,6 +562,17 @@ SDK以动态库的形式呈现。请将*KS3iOSSDK.framework*添加到项目工�
 
 * 查询指定Object是否存在的HTTP请求响应
 
+**KS3HeadObjectResponse响应包括以下内容**
+
+1. httpStatusCode：Http请求返回的状态码，200表示请求成功，400表示客户端请求错误，403表示签名错误或本地日期时间错误，404表示指定的Bucket或者Object不存在
+
+2. responseHeader:Http请求响应报头
+
+3. error：错误信息
+
+4. body：响应正文
+
+
 **代码示例：**
 ```
 
@@ -531,6 +603,16 @@ SDK以动态库的形式呈现。请将*KS3iOSSDK.framework*添加到项目工�
 
 * 删除指定Object是否存在的HTTP请求响应
 
+**KS3DeleteObjectResponse响应包括以下内容**
+
+1. httpStatusCode：Http请求返回的状态码，204表示成功但返回内容为空,400表示客户端请求错误，403表示签名错误或本地日期时间错误，404表示删除一个不存在的Bucket或Object
+
+2. responseHeader:Http请求响应报头
+
+3. error：错误信息
+
+4. body：响应正文
+
 **代码示例：**
 ```
 
@@ -560,6 +642,16 @@ SDK以动态库的形式呈现。请将*KS3iOSSDK.framework*添加到项目工�
 **返回结果：**
 
 * 获取Object ACL的HTTP请求响应
+
+**KS3GetObjectACLResponse响应包括以下内容**
+
+1. httpStatusCode：Http请求返回的状态码，200表示请求成功，400表示客户端请求错误，403表示签名错误或本地日期时间错误，404表示获取一个不存在Object的ACL
+
+2. responseHeader:Http请求响应报头
+
+3. error：错误信息
+
+4. body：响应正文
 
 **代码示例：**
 ```
@@ -602,6 +694,16 @@ SDK以动态库的形式呈现。请将*KS3iOSSDK.framework*添加到项目工�
 
 * 获取Object ACL的HTTP请求响应
 
+**KS3SetObjectACLResponse响应包括以下内容**
+
+1. httpStatusCode：Http请求返回的状态码，200表示请求成功，400表示客户端请求错误，403表示签名错误或本地日期时间错误，404表示给一个不存在的Obejct设置ACL，
+
+2. responseHeader:Http请求响应报头
+
+3. error：错误信息
+
+4. body：响应正文
+
 **代码示例：**
 ```
 
@@ -632,6 +734,16 @@ SDK以动态库的形式呈现。请将*KS3iOSSDK.framework*添加到项目工�
 **返回结果：**
 
 * 获取Object Grant ACL的HTTP请求响应
+
+**KS3SetObjectGrantACLResponse响应包括以下内容**
+
+1. httpStatusCode：Http请求返回的状态码，200表示请求成功，400表示客户端请求错误，403表示签名错误或本地日期时间错误，404表示给一个不存在的Obejct设置ACL
+
+2. responseHeader:Http请求响应报头
+
+3. error：错误信息
+
+4. body：响应正文
 
 **代码示例：**
 ```
@@ -667,6 +779,18 @@ SDK以动态库的形式呈现。请将*KS3iOSSDK.framework*添加到项目工�
 **返回结果：**
 
 * 列举指定Bucket内所有Object的HTTP请求响应
+
+**KS3SetObjectGrantACLResponse响应包括以下内容**
+
+1. httpStatusCode：Http请求返回的状态码，200表示请求成功，400表示客户端请求错误，403表示签名错误或本地日期时间错误，404表示Bucket不存在
+
+2. responseHeader:Http请求响应报头
+
+3. error：错误信息
+
+4. body：响应正文
+
+5. listBucketsResult：成功时返回的指定Bucket下所有的Object ummary信息实体类，包含一个Ks3ObjectSummary的容器及其他信息
 
 **代码示例：**
 ````
@@ -704,6 +828,16 @@ SDK以动态库的形式呈现。请将*KS3iOSSDK.framework*添加到项目工�
 
 * 上传指定的Object的HTTP请求响应
 
+**KS3PutObjectResponse响应包括以下内容**
+
+1. httpStatusCode：Http请求返回的状态码，200表示请求成功，400表示客户端请求错误，403表示签名错误或本地日期时间错误
+
+2. responseHeader:Http请求响应报头
+
+3. error：错误信息
+
+4. body：响应正文
+
 **代码示例：**
 ```
 
@@ -734,6 +868,16 @@ SDK以动态库的形式呈现。请将*KS3iOSSDK.framework*添加到项目工�
 
 * 拷贝源Bucket里面的Object到目的Bucket的Object的HTTP请求响应
 
+KS3PutObjectResponse响应包括以下内容
+
+1. httpStatusCode：Http请求返回的状态码，200表示请求成功，400表示客户端请求错误，403表示签名错误或本地日期时间错误
+
+2. responseHeader:Http请求响应报头
+
+3. error：错误信息
+
+4. body：响应正文
+
 **代码示例：**
 ```
 
@@ -763,7 +907,8 @@ SDK以动态库的形式呈现。请将*KS3iOSSDK.framework*添加到项目工�
 
 **返回结果：**
 
-* 初始化分块上传的HTTP响应，KS3MultipartUpload类型的对象里面包含了指定的Object名称，Bucket名称，此次上传的Upload ID，Object的Owner，初始化日期
+* 初始化分块上传的HTTP响应，KS3MultipartUpload类型的对象里面包含了指定的Object名称，Bucket名称，此次上传的Upload ID，Object的Owner，初始化日期*
+
 
 **代码示例：**
 ```
@@ -787,6 +932,16 @@ SDK以动态库的形式呈现。请将*KS3iOSSDK.framework*添加到项目工�
 **返回结果：**
 
 * 块上传的HTTP请求响应
+
+KS3UploadPartResponse响应包括以下内容
+
+1. httpStatusCode：Http请求返回的状态码，200表示请求成功，400表示客户端请求错误，403表示签名错误或本地日期时间错误
+
+2. responseHeader:Http请求响应报头
+
+3. error：错误信息
+
+4. body：响应正文
 
 **代码示例：**
 ```
@@ -816,6 +971,16 @@ SDK以动态库的形式呈现。请将*KS3iOSSDK.framework*添加到项目工�
 
 * 罗列已经上传的块的HTTP请求响应，它包含了类型为KS3ListPartsResult的请求的结果，它包含指定的Bucket名称，指定的Object名称，此次上传的Upload ID，partNumberMarker，它表示块号标记，将返回大于此块号的分块，maxParts，它表示块大小限制，isTruncated，它表示是否取完分块，Owner它表示创建分块上传的用户
 
+KS3ListPartsResponse响应包括以下内容
+
+1. httpStatusCode：Http请求返回的状态码，200表示请求成功，400表示客户端请求错误，403表示签名错误或本地日期时间错误
+
+2. responseHeader:Http请求响应报头
+
+3. error：错误信息
+
+4. body：响应正文
+
 **代码示例：**
 ```
 
@@ -839,6 +1004,16 @@ SDK以动态库的形式呈现。请将*KS3iOSSDK.framework*添加到项目工�
 **返回结果：**
 
 * 取消上传的HTTP请求响应
+
+KS3AbortMultipartUploadResponse响应包括以下内容
+
+1. httpStatusCode：Http请求返回的状态码，204表示请求成功，400表示客户端请求错误，403表示签名错误或本地日期时间错误
+
+2. responseHeader:Http请求响应报头
+
+3. error：错误信息
+
+4. body：响应正文
 
 **代码示例：**
 ```
@@ -869,6 +1044,16 @@ SDK以动态库的形式呈现。请将*KS3iOSSDK.framework*添加到项目工�
 **返回结果：**
 
 * 组装所有块的HTTP请求响应
+
+KS3CompleteMultipartUploadResponse响应包括以下内容
+
+1. httpStatusCode：Http请求返回的状态码，200表示请求成功，400表示客户端请求错误，403表示签名错误或本地日期时间错误
+
+2. responseHeader:Http请求响应报头
+
+3. error：错误信息
+
+4. body：响应正文
 
 **代码示例：**
 ```
