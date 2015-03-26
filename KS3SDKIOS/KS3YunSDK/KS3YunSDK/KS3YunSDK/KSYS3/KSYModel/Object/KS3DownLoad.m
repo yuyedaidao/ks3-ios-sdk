@@ -182,6 +182,10 @@
             }
         }];
     }
+    else {
+        [connection cancel];
+        connection = [[NSURLConnection alloc] initWithRequest:urlRequest delegate:self startImmediately:YES];
+    }
 }
 
 - (void)stop
