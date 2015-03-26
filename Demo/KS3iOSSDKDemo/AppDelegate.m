@@ -22,7 +22,7 @@ NSString *const strSecretKey = @"9Z6VbeYUJ0BiKcuwYe5x/j76TZvYe9VRh2OdH15m";
 //NSString *const strSecretKey = @"OxJr4PEt9xg2d0+zYo+ckkMLVBwHLuebYnzS5Ev1";
 
 // **** 测试token host
-NSString *const strTokenHost = @"http://0.0.0.0:11911"; // **** token 的请求地址
+NSString *const strTokenHost = @"120.132.78.51​";//@"http://0.0.0.0:11911"; // **** token 的请求地址
 
 @interface AppDelegate ()
 
