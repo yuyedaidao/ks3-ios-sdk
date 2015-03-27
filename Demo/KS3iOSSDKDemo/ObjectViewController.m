@@ -279,9 +279,12 @@
 //                [[KS3Client initialize] uploadPart:req];
 //            }
             _uploader = [[KS3FileUploader alloc] initWithBucketName:kBucketName];
-            _uploader.strFilePath = [[NSBundle mainBundle] pathForResource:@"bugDownload" ofType:@"txt"];
-            _uploader.strKey = @"upload_release.txt";
-            _uploader.partSize = 5; // **** unit: MB, must larger than 5
+//            _uploader.strFilePath = [[NSBundle mainBundle] pathForResource:@"bugDownload" ofType:@"txt"];
+            _uploader.strFilePath = [[NSBundle mainBundle] pathForResource:@"test" ofType:@"jpg"];
+//            _uploader.strKey = @"upload_release.txt";
+            _uploader.strKey = @"upload_test.jpg";
+            _uploader.partSize = 30; // **** unit: KB, must larger than 0, if set less than 0, it will be 100 one block
+                                     // **** 如果文件大于5 MB，
             
             // **** 如果没有回调，就不要设置callback，不然会导致complete upload方法失败而无法合成文件
 //            _uploader.callbackBody = @"objectKey=${key}&etag=${etag}&location=${kss-location}&name=${kss-price}";

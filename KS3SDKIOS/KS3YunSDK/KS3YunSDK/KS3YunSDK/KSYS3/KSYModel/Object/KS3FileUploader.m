@@ -14,6 +14,7 @@
 #import "KS3ListPartsRequest.h"
 #import "KS3ListPartsResponse.h"
 #import "KS3CompleteMultipartUploadRequest.h"
+#import "KS3CompleteMultipartUploadResponse.h"
 #import "KS3Part.h"
 #import "KS3MultipartUpload.h"
 #import "KS3AbortMultipartUploadRequest.h"
@@ -43,7 +44,7 @@
 {
     self = [super init];
     if (self) {
-        _partSize = 5.0;
+        _partSize = 100.0;//KB //5.0;
         _bucketName = strBucketName;
     }
     return self;
@@ -79,7 +80,7 @@
     if (!(_partSize > 0 || _partSize != 0)) {
         _partLength = _fileSize;
     }else{
-       _partLength = _partSize * 1024.0 * 1024.0;
+        _partLength = _partSize * 1024.0;// * 1024.0;
     }
     
     _totalNum = (ceilf((float)_fileSize / (float)_partLength));
@@ -99,7 +100,7 @@
 
 - (void)uploadWithPartNumber:(NSInteger)partNumber
 {
-    long long partLength = _partSize * 1024.0 * 1024.0;
+    long long partLength = _partSize * 1024.0;// * 1024.0;
     NSData *data = nil;
     if (_uploadNum == _totalNum) {
         data = [_fileHandle readDataToEndOfFile];
@@ -132,7 +133,10 @@
         req.callbackBody = _callbackBody;
         req.callbackParams = _callbackParams;
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-             [[KS3Client initialize] completeMultipartUpload:req];
+             KS3CompleteMultipartUploadResponse *resp = [[KS3Client initialize] completeMultipartUpload:req];
+            if (resp.httpStatusCode != 200) {
+                NSLog(@"#####complete multipart upload failed!!! code: %d#####", resp.httpStatusCode);
+            }
             _uploadCompleteBlock(self);
         });
     }
@@ -167,14 +171,17 @@
     _uploadProgressChangedBlock(self, progress);
 }
 
-#pragma mark - Override
+#pragma mark - Override (deprecated - 2015/03/27)
 
 - (void)setPartSize:(double)partSize
 {
     _partSize = partSize;
-    if (partSize < 5.0) {
-        _partSize = 5.0;
+    if (partSize < 0) {
+        partSize = 100.0;// KB
     }
+//    if (partSize < 5.0) {
+//        _partSize = 5.0;
+//    }
 }
 
 @end
