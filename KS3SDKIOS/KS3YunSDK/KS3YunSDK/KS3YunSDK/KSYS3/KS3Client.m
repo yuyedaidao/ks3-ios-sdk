@@ -94,11 +94,6 @@ static NSTimeInterval const KingSoftYun_RequestTimeout = 60;
     }
 }
 
-- (void)connectWithTokenHost:(NSString *)tokenHost
-{
-    _credentials = [[KS3Credentials alloc] initWithTokenHost:tokenHost];
-}
-
 #pragma mark - Buckets
 
 - (NSArray *)listBuckets
@@ -315,17 +310,13 @@ static NSTimeInterval const KingSoftYun_RequestTimeout = 60;
 - (KS3Response *)invoke:(KS3Request *)request
 {
     NSString *message = nil;
-    if (!_credentials) {
-        message = @"请配置签名信息！";
+    if (_credentials == nil) {
+        NSLog(@"######### 采用Token的方式 #############");
     }
     else {
-        if (!_credentials.tokenHost) {
-            if (!_credentials.secretKey || !_credentials.secretKey) {
-                message = @"请配置的accessKey和secretKey!";
-            }
-        }
-        if (!_credentials.tokenHost && !_credentials.secretKey && !_credentials.accessKey) {
-            message = @"请配置accessKey和secretKey或token!";
+        NSLog(@"######### 采用本地AK/SK的方式 #############");
+        if (_credentials.accessKey == nil || _credentials.secretKey == nil) {
+            message = @"请正确的配置accessKey和secretKey!";
         }
     }
     if (message) {
@@ -348,7 +339,20 @@ static NSTimeInterval const KingSoftYun_RequestTimeout = 60;
     NSMutableURLRequest *urlRequest = [self signKSS3Request:request];
     [urlRequest setTimeoutInterval:KingSoftYun_RequestTimeout];
     
-    [self setTokenForURLRequest:urlRequest WithRequest:request];
+    //[self setTokenForURLRequest:urlRequest WithRequest:request];
+    // **** set token
+    if (_credentials == nil) {
+        NSString *strDate = [urlRequest valueForHTTPHeaderField:@"Date"];
+        NSDictionary *dicParams = [NSDictionary dictionaryWithObjectsAndKeys:
+                                   request.httpMethod,  @"http_method",
+                                   request.contentMd5,  @"content_md5",
+                                   request.contentType, @"content_type",
+                                   strDate,             @"date",
+                                   request.kSYHeader,   @"headers",
+                                   request.kSYResource, @"resource", nil];
+        NSString *strToken = [_delegate strTokenWithParams:dicParams];
+        [urlRequest setValue:strToken forHTTPHeaderField:@"Authorization"];
+    }
     
     KS3Response *response = [KS3Client constructResponseFromRequest:request];
     [response setRequest:request];
@@ -381,49 +385,6 @@ static NSTimeInterval const KingSoftYun_RequestTimeout = 60;
         [[NSRunLoop currentRunLoop] runMode:KSYS3DefaultRunLoopMode beforeDate:[NSDate dateWithTimeIntervalSinceNow:0.1]];
     }
     return response;
-}
-
-- (void)setTokenForURLRequest:(NSMutableURLRequest *)urlRequest WithRequest:(KS3Request *)request
-{
-    if (_credentials.tokenHost != nil) {
-        NSString *strDate = [urlRequest valueForHTTPHeaderField:@"Date"];
-        NSDictionary *dicParams = [NSDictionary dictionaryWithObjectsAndKeys:
-                                   request.httpMethod,  @"http_method",
-                                   request.contentMd5,  @"content_md5",
-                                   request.contentType, @"content_type",
-                                   strDate,             @"date",
-                                   request.kSYHeader,   @"headers",
-                                   request.kSYResource, @"resource", nil];
-        NSURL *tokenUrl = [NSURL URLWithString:_credentials.tokenHost];
-        NSMutableURLRequest *tokenRequest = [[NSMutableURLRequest alloc] initWithURL:tokenUrl
-                                                                         cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
-                                                                     timeoutInterval:10];
-        NSData *dataParams = [NSJSONSerialization dataWithJSONObject:dicParams options:NSJSONWritingPrettyPrinted error:nil];
-        KS3ServiceResponse *response1 = [[KS3ServiceResponse alloc] init];
-        [tokenRequest setURL:tokenUrl];
-        [tokenRequest setHTTPMethod:@"POST"];
-        [tokenRequest setHTTPBody:dataParams];
-        NSURLConnection *tokenConnection = [[NSURLConnection alloc] initWithRequest:tokenRequest delegate:response1 startImmediately:NO];
-        [tokenConnection scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:KSYS3DefaultRunLoopMode];
-        request.urlConnection = tokenConnection;
-        [tokenConnection start];
-        NSTimer *timeoutTimer = [NSTimer scheduledTimerWithTimeInterval:KingSoftYun_RequestTimeout
-                                                                 target:response1
-                                                               selector:@selector(timeout)
-                                                               userInfo:nil
-                                                                repeats:NO];
-        [[NSRunLoop currentRunLoop] addTimer:timeoutTimer forMode:KSYS3DefaultRunLoopMode];
-        while (!response1.isFinishedLoading) {
-            [[NSRunLoop currentRunLoop] runMode:KSYS3DefaultRunLoopMode beforeDate:[NSDate dateWithTimeIntervalSinceNow:0.1]];
-        }
-        if (response1.error == nil && response1.body != nil) {
-            NSString *strToken = [[NSString alloc] initWithData:response1.body encoding:NSUTF8StringEncoding];
-            [urlRequest setValue:strToken forHTTPHeaderField:@"Authorization"];
-        }
-        else {
-            NSLog(@"获取token失败");
-        }
-    }
 }
 
 #pragma mark - Download

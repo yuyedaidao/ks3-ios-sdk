@@ -10,26 +10,22 @@
 
 @implementation KS3Credentials
 
+- (id)init {
+    self = [super init];
+    if (self) {
+        _accessKey = nil;
+        _secretKey = nil;
+    }
+    return self;
+}
+
 - (id)initWithAccessKey:(NSString *)accessKey withSecretKey:(NSString *)secretKey
 {
     self = [super init];
     if (self) {
         _accessKey = accessKey;
         _secretKey = secretKey;
-        _tokenHost = nil;
         NSLog(@"##### 采用本地AK/SK签名的方式!#####");
-    }
-    return self;
-}
-
-- (id)initWithTokenHost:(NSString *)tokenHost
-{
-    self = [super init];
-    if (self) {
-        _accessKey = nil;
-        _secretKey = nil;
-        _tokenHost = tokenHost;
-        NSLog(@"##### 采用服务器端Token签名的方式!#####");
     }
     return self;
 }
