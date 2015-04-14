@@ -144,47 +144,17 @@
     [request setValue:strAuthorization forHTTPHeaderField:@"Authorization"];
     [request addValue:range forHTTPHeaderField:@"Range"];
     
-    // **** 如果采用服务器计算token的方式，则设置token
-    [self setTokenForURLRequest:request withResource:strCanonResource];
-}
-
-- (void)setTokenForURLRequest:(NSMutableURLRequest *)urlRequest withResource:(NSString *)strResource
-{
-    if (_credentials.tokenHost != nil) {
-        NSString *strDate = [urlRequest valueForHTTPHeaderField:@"Date"];
+    // **** set token
+    if (_credentials == nil) {
         NSDictionary *dicParams = [NSDictionary dictionaryWithObjectsAndKeys:
-                                   @"GET",      @"http_method",
-                                   @"",         @"content_md5",
-                                   @"",         @"content_type",
-                                   strDate,     @"date",
-                                   @"",         @"headers",
-                                   strResource, @"resource", nil];
-        NSURL *tokenUrl = [NSURL URLWithString:_credentials.tokenHost];
-        NSMutableURLRequest *tokenRequest = [[NSMutableURLRequest alloc] initWithURL:tokenUrl
-                                                                         cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
-                                                                     timeoutInterval:10];
-        NSData *dataParams = [NSJSONSerialization dataWithJSONObject:dicParams options:NSJSONWritingPrettyPrinted error:nil];
-        [tokenRequest setURL:tokenUrl];
-        [tokenRequest setHTTPMethod:@"POST"];
-        [tokenRequest setHTTPBody:dataParams];
-        
-        [NSURLConnection sendAsynchronousRequest:tokenRequest queue:[NSOperationQueue currentQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
-            if (connectionError == nil) {
-                NSString *strToken = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-                NSLog(@"#### 获取token成功! #### token: %@", strToken);
-                [urlRequest setValue:strToken forHTTPHeaderField:@"Authorization"];
-                
-                [connection cancel];
-                connection = [[NSURLConnection alloc] initWithRequest:urlRequest delegate:self startImmediately:YES];
-            }
-            else {
-                NSLog(@"#### 获取token失败，error: %@", connectionError);
-            }
-        }];
-    }
-    else {
-        [connection cancel];
-        connection = [[NSURLConnection alloc] initWithRequest:urlRequest delegate:self startImmediately:YES];
+                                   @"GET",  @"http_method",
+                                   @"",     @"content_md5",
+                                   @"",     @"content_type",
+                                   strTime, @"date",
+                                   @"",     @"headers",
+                                   @"",     @"resource", nil];
+        NSString *strToken = [_tokenDelegate strTokenWithParams:dicParams];
+        [request setValue:strToken forHTTPHeaderField:@"Authorization"];
     }
 }
 
