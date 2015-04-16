@@ -68,7 +68,17 @@ typedef void(^kSS3DownloadFileCompleteionBlock)(KS3DownLoad *aDownload, NSString
 @class KS3PutObjectCopyRequest;
 @class KS3PutObjectCopyResponse;
 
+@protocol TokenDelegate <NSObject>
+
+@required
+
+- (NSString *)strTokenWithParams:(NSDictionary *)dicParams;
+
+@end
+
 @interface KS3Client : KS3WebServiceClient
+
+@property (nonatomic, weak) id<TokenDelegate> delegate;
 /**
  *  初始化
  *
@@ -83,14 +93,6 @@ typedef void(^kSS3DownloadFileCompleteionBlock)(KS3DownLoad *aDownload, NSString
  *  注释：这个接口必须实现（这个是使用下面API的（前提）），建议在工程的delegate里面实现
  */
 - (void)connectWithAccessKey:(NSString *)accessKey withSecretKey:(NSString *)secretKey;
-
-/**
- *  设置token host
- *
- *  @param tokenHost
- *  注释：这个接口必须实现（这个是把ak/sk保存在服务器上的方式），建议在工程的delegate里面实现
- */
-- (void)connectWithTokenHost:(NSString *)tokenHost;
 
 /**
  *  列出客户所有的Bucket信息

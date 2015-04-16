@@ -90,6 +90,7 @@
 + (NSString *)strDateWithDate:(NSDate *)date andType:(NSString *)strType
 {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    dateFormatter.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US"];
     [dateFormatter setTimeZone:[NSTimeZone timeZoneWithName:@"UTC"]];
     [dateFormatter setDateFormat:@"EEE, d MMM yyyy HH:mm:ss"];
     NSString *str = [dateFormatter stringFromDate:date];

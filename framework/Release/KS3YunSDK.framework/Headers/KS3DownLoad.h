@@ -33,6 +33,8 @@
 
 @property (nonatomic, weak) id<KS3DownloadDelegate> delegate;
 
+@property (nonatomic, weak) id<TokenDelegate> tokenDelegate;
+
 @property (strong, nonatomic) NSString *bucketName;
 
 @property (strong, nonatomic) NSString *key;

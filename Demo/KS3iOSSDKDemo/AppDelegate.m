@@ -10,12 +10,12 @@
 #import <KS3YunSDK/KS3YunSDK.h>
 
 // **** 外网白名单测试
-NSString *const strAccessKey = @"GENJ6O5PQFVE37MEEMZA";
-NSString *const strSecretKey = @"9Z6VbeYUJ0BiKcuwYe5x/j76TZvYe9VRh2OdH15m";
+//NSString *const strAccessKey = @"GENJ6O5PQFVE37MEEMZA";
+//NSString *const strSecretKey = @"9Z6VbeYUJ0BiKcuwYe5x/j76TZvYe9VRh2OdH15m";
 
 // **** 用户的AK/SK
-//NSString *const strAccessKey = @"IYh4GQWndtnQvmCJWFL4";
-//NSString *const strSecretKey = @"1+RBTrWaeT6LaixUV5SGPFpeTa/wZEeZlGzYaZfr";
+NSString *const strAccessKey = @"IYh4GQWndtnQvmCJWFL4";
+NSString *const strSecretKey = @"1+RBTrWaeT6LaixUV5SGPFpeTa/wZEeZlGzYaZfr";
 
 // **** 测试callback
 //NSString *const strAccessKey = @"VSDNT6SHFNDWBXYZRS3A";

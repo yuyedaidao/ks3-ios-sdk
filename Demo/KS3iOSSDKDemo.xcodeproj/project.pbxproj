@@ -431,7 +431,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iOS Development: Cheng Zhou (V43246M398)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Cheng Zhou (V43246M398)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -446,7 +446,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iOS Development: Cheng Zhou (V43246M398)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Cheng Zhou (V43246M398)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
