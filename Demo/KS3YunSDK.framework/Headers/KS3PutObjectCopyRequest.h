@@ -7,6 +7,7 @@
 //
 
 #import "KS3Request.h"
+#import "KS3BucketObject.h"
 
 @interface KS3PutObjectCopyRequest : KS3Request
 
@@ -32,6 +33,7 @@
 
 @property (nonatomic, strong) NSString *key;
 
-- (instancetype)initWithName:(NSString *)bucketName;
+//- (instancetype)initWithName:(NSString *)bucketName;
+- (instancetype)initWithName:(KS3BucketObject *)destBucketObj sourceBucketObj:(KS3BucketObject *)sourBucketObj;
 
 @end

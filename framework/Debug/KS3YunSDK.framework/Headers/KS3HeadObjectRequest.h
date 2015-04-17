@@ -17,6 +17,6 @@
 @property (nonatomic, strong) NSString *ifNoneMatch;
 @property (nonatomic, strong) NSString *key;
 
-- (instancetype)initWithName:(NSString *)bucketName;
+- (instancetype)initWithName:(NSString *)bucketName withKeyName:(NSString *)strKey;
 
 @end

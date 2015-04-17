@@ -21,10 +21,10 @@
     NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
     // setting response header to use it in shouldRetry method of AmazonAbstractWebServiceClient
     _responseHeader = [httpResponse allHeaderFields];
-//    NSLog(@"Response Headers:");
-//    for (NSString *header in [[httpResponse allHeaderFields] allKeys]) {
-//        NSLog(@"%@ = [%@]", header, [[httpResponse allHeaderFields] valueForKey:header]);
-//    }
+    NSLog(@"Response Headers:");
+    for (NSString *header in [[httpResponse allHeaderFields] allKeys]) {
+        NSLog(@"%@ = [%@]", header, [[httpResponse allHeaderFields] valueForKey:header]);
+    }
     self.httpStatusCode = (int32_t)[httpResponse statusCode];
     [body setLength:0];
     if ([self.request.delegate respondsToSelector:@selector(request:didReceiveResponse:)]) {
@@ -57,8 +57,8 @@
 -(void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)theError
 {
     _isFinishedLoading = YES;
-//    NSDictionary *info = [theError userInfo];
-//    NSLog(@"%@",info);
+    NSDictionary *info = [theError userInfo];
+    NSLog(@"%@",info);
     self.error = theError;
 //    for (id key in info)
 //    {

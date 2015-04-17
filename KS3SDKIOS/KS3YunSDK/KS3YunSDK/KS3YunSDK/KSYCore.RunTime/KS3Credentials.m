@@ -25,7 +25,7 @@
     if (self) {
         _accessKey = accessKey;
         _secretKey = secretKey;
-        NSLog(@"##### 采用本地AK/SK签名的方式!#####");
+        NSLog(@"##### 初始化本地AK/SK #####");
     }
     return self;
 }

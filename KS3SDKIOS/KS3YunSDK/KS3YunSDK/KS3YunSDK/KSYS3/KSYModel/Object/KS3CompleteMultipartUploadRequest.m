@@ -10,13 +10,10 @@
 #import "KS3Constants.h"
 
 @interface KS3CompleteMultipartUploadRequest ()
-
 @property (strong, nonatomic) NSMutableDictionary *parts;
-
 @end
 
 @implementation KS3CompleteMultipartUploadRequest
-
 -(id)initWithMultipartUpload:(KS3MultipartUpload *)multipartUpload
 {
     if(self = [super init])
@@ -51,7 +48,7 @@
                     [self.urlRequest setValue:_callbackParams[strKey] forHTTPHeaderField:strKey];
                 }
                 else {
-                    NSLog(@"#### The header with field: \"%@\" and value: \"%@\" is not cocrect, this header will be ingored ####", strKey, _callbackParams[strKey]);
+                    NSLog(@"The header with field: \"%@\" and value: \"%@\" is not correct, this header will be ingored", strKey, _callbackParams[strKey]);
                 }
             }
         }
@@ -59,6 +56,7 @@
     
     [self setKSYResource:[NSString stringWithFormat:@"%@/%@?%@=%@", self.kSYResource,_key, kKS3QueryParamUploadId, self.uploadId]];
     self.host = [NSString stringWithFormat:@"http://%@.kss.ksyun.com/%@?uploadId=%@", self.bucket, self.key, self.uploadId];
+//    self.host = [NSString stringWithFormat:@"http://115.231.96.27:8080/%@/%@?uploadId=%@", self.bucket, self.key, self.uploadId];
     [super configureURLRequest];
     [self.urlRequest setHTTPMethod:kHttpMethodPost];
     [self.urlRequest setHTTPBody:[self requestBody]];
@@ -74,8 +72,7 @@
     }
     [_parts setObject:etag forKey:[NSNumber numberWithInt:partNumber]];
 }
-
-- (NSData *)requestBody
+-(NSData *)requestBody
 {
     NSMutableString *xml = [NSMutableString stringWithFormat:@"<CompleteMultipartUpload>"];
     NSComparator   comparePartNumbers = ^ (id part1, id part2) {
@@ -89,5 +86,4 @@
     [xml appendString:@"</CompleteMultipartUpload>"];
     return [xml dataUsingEncoding:NSUTF8StringEncoding];
 }
-
 @end

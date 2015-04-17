@@ -17,6 +17,7 @@
 
 #pragma mark - Download block
 
+typedef void(^KSS3GetTokenSuccessBlock)(NSString *strToken);
 typedef void(^KSS3DownloadBeginBlock)(KS3DownLoad *aDownload, NSURLResponse *responseHeaders);
 typedef void(^KSS3DownloadProgressChangeBlock)(KS3DownLoad *aDownload, double newProgress);
 typedef void(^KSS3DownloadFailedBlock)(KS3DownLoad *aDownload, NSError *error);
@@ -67,18 +68,13 @@ typedef void(^kSS3DownloadFileCompleteionBlock)(KS3DownLoad *aDownload, NSString
 @class KS3SetBucketLoggingRequest;
 @class KS3PutObjectCopyRequest;
 @class KS3PutObjectCopyResponse;
-
-@protocol TokenDelegate <NSObject>
-
-@required
-
-- (NSString *)strTokenWithParams:(NSDictionary *)dicParams;
-
-@end
+@class KS3Response;
+@class KS3Request;
+@class KS3InitiateMultipartUploadRequest;
+@class KS3GetBucketLoggingRequest;
 
 @interface KS3Client : KS3WebServiceClient
 
-@property (nonatomic, weak) id<TokenDelegate> delegate;
 /**
  *  初始化
  *
@@ -90,7 +86,7 @@ typedef void(^kSS3DownloadFileCompleteionBlock)(KS3DownLoad *aDownload, NSString
  *
  *  @param accessKey
  *  @param secretKey 
- *  注释：这个接口必须实现（这个是使用下面API的（前提）），建议在工程的delegate里面实现
+ *  注释：这个接口必须实现（这个是使用下面API的（前提））建议在工程的delegate里面实现
  */
 - (void)connectWithAccessKey:(NSString *)accessKey withSecretKey:(NSString *)secretKey;
 
@@ -99,15 +95,8 @@ typedef void(^kSS3DownloadFileCompleteionBlock)(KS3DownLoad *aDownload, NSString
  *
  *  @return 所有bucket的数组
  */
-- (NSArray *)listBuckets;
-/**
- *  创建一个新的Bucket
- *
- *  @param bucketName
- *
- *  @return 返回resonse对象（里边有服务返回的数据（具体的参照demo））
- */
-- (KS3CreateBucketResponse *)createBucketWithName:(NSString *)bucketName;
+- (NSArray *)listBuckets:(KS3ListBucketsRequest *)listBucketsRequest;
+
 /**
  *  创建一个新的Bucket
  *
@@ -116,14 +105,6 @@ typedef void(^kSS3DownloadFileCompleteionBlock)(KS3DownLoad *aDownload, NSString
  *  @return 返回resonse对象（里边有服务返回的数据（具体的参照demo））
  */
 - (KS3CreateBucketResponse *)createBucket:(KS3CreateBucketRequest *)createBucketRequest;
-/**
- *  删除指定Bucket
- *
- *  @param bucketName
- *
- *  @return 返回resonse对象（里边有服务返回的数据（具体的参照demo））
- */
-- (KS3DeleteBucketResponse *)deleteBucketWithName:(NSString *)bucketName;
 /**
  *  删除指定Bucket
  *
@@ -140,14 +121,7 @@ typedef void(^kSS3DownloadFileCompleteionBlock)(KS3DownLoad *aDownload, NSString
  *  @return 返回resonse对象（里边有服务返回的数据（具体的参照demo））
  */
 - (KS3HeadBucketResponse *)headBucket:(KS3HeadBucketRequest *)headBucketRequest;
-/**
- *  获得Bucket的acl
- *
- *  @param bucketName
- *
- *  @return 返回resonse对象（里边有服务返回的数据（具体的参照demo））
- */
-- (KS3GetACLResponse *)getBucketACL:(NSString *)bucketName;
+
 /**
  *  获得Bucket的acl
  *
@@ -155,7 +129,7 @@ typedef void(^kSS3DownloadFileCompleteionBlock)(KS3DownLoad *aDownload, NSString
  *
  *  @return 返回resonse对象（里边有服务返回的数据（具体的参照demo））
  */
-- (KS3GetACLResponse *)getACL:(KS3GetACLRequest *)getACLRequest;
+- (KS3GetACLResponse *)getBucketACL:(KS3GetACLRequest *)getACLRequest;
 /**
  *  设置Bucket的ACL
  *
@@ -163,7 +137,7 @@ typedef void(^kSS3DownloadFileCompleteionBlock)(KS3DownLoad *aDownload, NSString
  *
  *  @return 返回resonse对象（里边有服务返回的数据（具体的参照demo））
  */
-- (KS3SetACLResponse *)setACL:(KS3SetACLRequest *)getACLRequest;
+- (KS3SetACLResponse *)setBucketACL:(KS3SetACLRequest *)getACLRequest;
 /**
  *  设置GrantACL信息
  *
@@ -179,15 +153,8 @@ typedef void(^kSS3DownloadFileCompleteionBlock)(KS3DownLoad *aDownload, NSString
  *
  *  @return 返回resonse对象（里边有服务返回的数据（具体的参照demo））
  */
-- (NSArray *)listObjectsInBucket:(NSString *)bucketName;
-/**
- *  列举Bucket内的Object
- *
- *  @param listObjectsRequest 设置列举Bucket内的Object的request信息
- *
- *  @return 返回resonse对象（里边有服务返回的数据（具体的参照demo））
- */
 - (KS3ListObjectsResponse *)listObjects:(KS3ListObjectsRequest *)listObjectsRequest;
+
 /**
  *  获得Bucket的日志信息
  *
@@ -195,7 +162,7 @@ typedef void(^kSS3DownloadFileCompleteionBlock)(KS3DownLoad *aDownload, NSString
  *
  *  @return 返回resonse对象（里边有服务返回的数据（具体的参照demo））
  */
-- (KS3GetBucketLoggingResponse *)getBucketLoggingWithName:(NSString *)bucketName;
+- (KS3GetBucketLoggingResponse *)getBucketLogging:(KS3GetBucketLoggingRequest *)getBucketLoggingRequest;
 /**
  *  下载Object数据
  *
@@ -272,7 +239,7 @@ typedef void(^kSS3DownloadFileCompleteionBlock)(KS3DownLoad *aDownload, NSString
  *
  *  @return 返回resonse对象（里边有服务返回的数据（具体的参照demo））
  */
-- (KS3MultipartUpload *)initiateMultipartUploadWithKey:(NSString *)theKey withBucket:(NSString *)bucketName;
+- (KS3MultipartUpload *)initiateMultipartUploadWithRequest:(KS3InitiateMultipartUploadRequest *)request;
 
 /**
  *  上传分块
@@ -321,6 +288,7 @@ typedef void(^kSS3DownloadFileCompleteionBlock)(KS3DownLoad *aDownload, NSString
  */
 - (KS3DownLoad *)downloadObjectWithBucketName:(NSString *)bucketName
                                           key:(NSString *)key
+                                tokenDelegate:(id)tokenDelegate
                            downloadBeginBlock:(KSS3DownloadBeginBlock)downloadBeginBlock
                       downloadFileCompleteion:(kSS3DownloadFileCompleteionBlock)downloadFileCompleteion
                   downloadProgressChangeBlock:(KSS3DownloadProgressChangeBlock)downloadProgressChangeBlock

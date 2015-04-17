@@ -17,5 +17,6 @@
 @property (nonatomic, assign) int32_t partNumberMarker;
 @property (nonatomic, strong) NSString *encodingType;
 
--(id)initWithMultipartUpload:(KS3MultipartUpload *)multipartUpload;
+- (id)initWithMultipartUpload:(KS3MultipartUpload *)multipartUpload;
+
 @end

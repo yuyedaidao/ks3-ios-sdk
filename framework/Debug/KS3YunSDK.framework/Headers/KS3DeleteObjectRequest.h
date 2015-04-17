@@ -11,5 +11,7 @@
 @interface KS3DeleteObjectRequest : KS3Request
 
 @property (nonatomic, strong) NSString *key;
-- (instancetype)initWithName:(NSString *)bucketName;
+
+- (instancetype)initWithName:(NSString *)bucketName withKeyName:(NSString *)strKey;
+
 @end

@@ -158,9 +158,7 @@
 
 + (void)signRequestV4:(KS3ServiceRequest *)serviceRequest urlRequest:(KS3URLRequest *)urlRequest headers:(NSMutableDictionary *)headers payload:(NSString *)payload credentials:(KS3Credentials *)credentials
 {
-    NSDate *date = [NSDate date];
-    NSString *dateTime = [KS3AuthUtils strDateWithDate:date andType:@"GMT"];
-    [urlRequest setValue:dateTime forHTTPHeaderField:@"Date"];
+    [urlRequest setValue:serviceRequest.strDate forHTTPHeaderField:@"Date"];
     NSString *strAuthorization = @"";
     if (credentials.accessKey != nil && credentials.secretKey != nil) {
         strAuthorization = [KS3AuthUtils KSYAuthorizationWithHTTPVerb:serviceRequest.credentials.accessKey
@@ -168,7 +166,7 @@
                                                              httpVerb:serviceRequest.httpMethod
                                                            contentMd5:serviceRequest.contentMd5
                                                           contentType:serviceRequest.contentType
-                                                                 date:date
+                                                                 date:serviceRequest.requestDate
                                                canonicalizedKssHeader:serviceRequest.kSYHeader
                                                 canonicalizedResource:serviceRequest.kSYResource];
     }

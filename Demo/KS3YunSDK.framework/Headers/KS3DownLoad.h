@@ -9,7 +9,12 @@
 #import <Foundation/Foundation.h>
 #import "KS3Client.h"
 
+@protocol DownloadTokenDelegate <NSObject>
 
+@required
+- (void)strTokenWithParams:(NSDictionary *)dicParams;
+
+@end
 @class KS3Credentials;
 
 @protocol KS3DownloadDelegate;
@@ -33,7 +38,7 @@
 
 @property (nonatomic, weak) id<KS3DownloadDelegate> delegate;
 
-@property (nonatomic, weak) id<TokenDelegate> tokenDelegate;
+@property (nonatomic, weak) id<DownloadTokenDelegate> tokenDelegate;
 
 @property (strong, nonatomic) NSString *bucketName;
 
@@ -46,6 +51,8 @@
 @property (nonatomic, strong) NSString *fileName;
 
 @property (nonatomic, strong) NSString *filePath;
+
+@property (nonatomic, strong) NSString *strKS3Token;
 
 @property (nonatomic, readonly) unsigned long long fileSize;
 
@@ -64,6 +71,7 @@
 
 
 - (void)stopAndClear;
+- (void)setStrKS3Token:(NSString *)ks3Token;
 
 @end
 

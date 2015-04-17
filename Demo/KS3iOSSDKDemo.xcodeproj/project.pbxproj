@@ -7,11 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		130B17021A5E3623006AB149 /* KS3YunSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 130B17001A5E3612006AB149 /* KS3YunSDK.framework */; };
-		130B17031A5E3623006AB149 /* KS3YunSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 130B17001A5E3612006AB149 /* KS3YunSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		13215E981A4123A800B4AC64 /* ObjectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13215E971A4123A800B4AC64 /* ObjectViewController.m */; };
 		13215EA01A416F7D00B4AC64 /* bugDownload.txt in Resources */ = {isa = PBXBuildFile; fileRef = 13215E9F1A416F7D00B4AC64 /* bugDownload.txt */; };
 		13215EA41A418A8B00B4AC64 /* test.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 13215EA31A418A8B00B4AC64 /* test.jpg */; };
+		13ECA35B1ADFB50500DB3AAE /* KS3YunSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 130B17001A5E3612006AB149 /* KS3YunSDK.framework */; };
+		13ECA35C1ADFB50500DB3AAE /* KS3YunSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 130B17001A5E3612006AB149 /* KS3YunSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		13EECBE51A402237004199BD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13EECBE41A402237004199BD /* main.m */; };
 		13EECBE81A402237004199BD /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13EECBE71A402237004199BD /* AppDelegate.m */; };
 		13EECBEB1A402237004199BD /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13EECBEA1A402237004199BD /* ViewController.m */; };
@@ -37,13 +37,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		13EECD521A402CFC004199BD /* Embed Frameworks */ = {
+		13ECA35D1ADFB50600DB3AAE /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				130B17031A5E3623006AB149 /* KS3YunSDK.framework in Embed Frameworks */,
+				13ECA35C1ADFB50500DB3AAE /* KS3YunSDK.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -86,7 +86,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				130B17021A5E3623006AB149 /* KS3YunSDK.framework in Frameworks */,
+				13ECA35B1ADFB50500DB3AAE /* KS3YunSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -208,7 +208,7 @@
 				13EECBDB1A402237004199BD /* Sources */,
 				13EECBDC1A402237004199BD /* Frameworks */,
 				13EECBDD1A402237004199BD /* Resources */,
-				13EECD521A402CFC004199BD /* Embed Frameworks */,
+				13ECA35D1ADFB50600DB3AAE /* Embed Frameworks */,
 			);
 			buildRules = (
 			);

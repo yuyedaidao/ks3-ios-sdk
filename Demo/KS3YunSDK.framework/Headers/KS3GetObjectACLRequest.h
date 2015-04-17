@@ -11,5 +11,6 @@
 @interface KS3GetObjectACLRequest : KS3Request
 
 @property (strong, nonatomic) NSString *key;
-- (instancetype)initWithName:(NSString *)bucketName;
+
+- (instancetype)initWithName:(NSString *)bucketName withKeyName:(NSString *)strKey;
 @end

@@ -11,25 +11,30 @@
 
 @implementation KS3GetObjectACLRequest
 
-- (instancetype)initWithName:(NSString *)bucketName
+- (instancetype)initWithName:(NSString *)bucketName withKeyName:(NSString *)strKey
 {
     self = [super init];
     if (self) {
         self.bucket = bucketName;
+        self.key = strKey;
         self.httpMethod = kHttpMethodGet;
         self.contentMd5 = @"";
         self.contentType = @"";
         self.kSYHeader = @"";
         self.kSYResource = [NSString stringWithFormat:@"/%@", bucketName];
         self.host = [NSString stringWithFormat:@"http://%@.kss.ksyun.com/", bucketName];
+        
+        //
+        self.kSYResource = [NSString stringWithFormat:@"%@/%@?acl",self.kSYResource,_key];
+        self.host = [NSString stringWithFormat:@"%@%@?acl",self.host,_key];
     }
     return self;
 }
 
 - (KS3URLRequest *)configureURLRequest
 {
-    self.kSYResource = [NSString stringWithFormat:@"%@/%@?acl",self.kSYResource,_key];
-    self.host = [NSString stringWithFormat:@"%@%@?acl",self.host,_key];
+//    self.kSYResource = [NSString stringWithFormat:@"%@/%@?acl",self.kSYResource,_key];
+//    self.host = [NSString stringWithFormat:@"%@%@?acl",self.host,_key];
     [super configureURLRequest];
     return self.urlRequest;
 }

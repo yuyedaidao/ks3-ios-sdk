@@ -12,9 +12,11 @@
 @implementation KS3ListPartsResponse
 -(void)processBody
 {
+    NSLog(@"KS3ListPartsResponse  body: %@", [[NSString alloc] initWithData:body encoding:NSUTF8StringEncoding]);
     KS3ListPartsResultXMLParser *xmlParser = [[KS3ListPartsResultXMLParser alloc] init];
     [xmlParser kSS3XMLarse:body];
     _listResult = xmlParser.listPartsResult;
+    
 //    NSLog(@"KSS3InitiateMultipartUploadResponse %d",self.httpStatusCode);
 ////    NSLog(@"KSS3InitiateMultipartUploadResponse  %@",body);
 //    NSLog(@" 0 0 0 0 0 %@",[self.error description]);

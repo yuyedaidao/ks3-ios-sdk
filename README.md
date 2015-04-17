@@ -83,11 +83,48 @@ Authorization: KSS P3UPCMORAFON76Q6RTNQ:vU9XqPLcXd3nWdlfLWIhruZrLAM=
 ```
 
 #####必要的说明
-对于使用token方式初始化SDK的用户，需要使用另外一种初始化KS3Client的方法
+对于使用token方式初始化SDK的用户，需要使用另外一种方式去调用API。做法如下：
+>
+因为token是用户自己去获取，所以要在用户获取到token之后，用它初始化KS3Request的strKS3Token属性设置，那么在获取token之前就需要先把要请求的API的KS3Request初始化一个对应的实例，然后再用这个获得了token的实例去调用相应的API即可。以获取账号下所有bucket为例（listBuckets:）：
 
-\- (void)connectWithTokenHost:(NSString *)tokenHost;
+```
 
-方法中的tokenHost就是用户自己的app server的token的url地址，SDK传递httpMethod，contentMd5，contentType，strDate，header，resource以POST的方式传递到app server中，app server需要根据上述签名规则，利用AccessKeyID及AccessKeySecret计算出签名并正确返回给SDK。上述方法中的contentMd5, contentType, header参数可为空。若为空，则SDK会使用空字符串("")替代, 但strDate和resource不能为空。
+NSDictionary *dicParams = [self dicParamsWithReq:listBucketRequest];
+NSURL *tokenUrl = [NSURL URLWithString:@"http://0.0.0.0:11911"];
+NSMutableURLRequest *tokenRequest = [[NSMutableURLRequest alloc] initWithURL:tokenUrl
+                                                                 cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
+                                                             timeoutInterval:10];
+NSData *dataParams = [NSJSONSerialization dataWithJSONObject:dicParams options:NSJSONWritingPrettyPrinted error:nil];
+[tokenRequest setURL:tokenUrl];
+[tokenRequest setHTTPMethod:@"POST"];
+[tokenRequest setHTTPBody:dataParams];
+[NSURLConnection sendAsynchronousRequest:tokenRequest queue:[NSOperationQueue currentQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+    if (connectionError == nil) {
+        NSString *strToken = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        NSLog(@"#### 获取token成功! #### token: %@", strToken);
+        listBucketRequest.strKS3Token = strToken;
+        _arrBuckets = [[KS3Client initialize] listBuckets:(KS3ListBucketsRequest *)listBucketRequest];
+        [_bucketListTable reloadData];
+    }
+    else {
+        NSLog(@"#### 获取token失败，error: %@", connectionError);
+    }
+}];
+
+- (NSDictionary *)dicParamsWithReq:(KS3Request *)request {
+    NSDictionary *dicParams = [NSDictionary dictionaryWithObjectsAndKeys:
+                               request.httpMethod,  @"http_method",
+                               request.contentMd5,  @"content_md5",
+                               request.contentType, @"content_type",
+                               request.strDate,     @"date",
+                               request.kSYHeader,   @"headers",
+                               request.kSYResource, @"resource", nil];
+    return dicParams;
+}
+
+```
+
+用户向自己的app server请求token需要提供httpMethod，contentMd5，contentType，strDate，header，resource这6个字段给app server，然后app server根据上述签名规则，利用AccessKeyID及AccessKeySecret计算出签名并正确返回给SDK。上述方法中的contentMd5, contentType, header参数可为空。若为空，则SDK会使用空字符串("")替代, 但strDate和resource不能为空。
 
 为保证请求时间的一致性，需要App客户端及业务服务期保证各自的时间正确性，否则用错误的时间尝试请求，会返回403Forbidden错误。
 
@@ -105,7 +142,7 @@ resource 表示用户访问的资源
 - 申请AccessKeyID、AccessKeySecret
 
 ####SDK配置
-SDK以动态库的形式呈现。请将*KS3iOSSDK.framework*添加到项目工程中。如果开发工具是Xcode6，请在*project->target->General*中的‘Embedded Binaries‘中添加*KS3iOSSDK.framework*
+SDK以动态库的形式呈现。请将*KS3iOSSDK.framework*添加到项目工程中。如果开发工具是Xcode6+，请在*project->target->General*中的‘Embedded Binaries‘中添加*KS3iOSSDK.framework*
 
 ####运行环境
 支持iOS5及以上版本
@@ -200,12 +237,32 @@ SDK以动态库的形式呈现。请将*KS3iOSSDK.framework*添加到项目工�
 
 ```
 
-- 利用token初始化，每次需要调用SDK的API时都需要使用请求一次token，然后用这个token初始化KS3Client（推荐使用）
+- 利用token进行请求，每次需要调用SDK的API时都需要使用请求一次token，然后用这个token初始化KS3Request的strKS3Token，再进行API请求（推荐使用）
 
 对应的代码如下：
 
 ```
-[[KS3Client initialize] connectWithSecurityToken:theSecurityToken];
+	NSDictionary *dicParams = [self dicParamsWithReq:listBucketRequest];
+    NSURL *tokenUrl = [NSURL URLWithString:@"http://0.0.0.0:11911"];
+    NSMutableURLRequest *tokenRequest = [[NSMutableURLRequest alloc] initWithURL:tokenUrl
+                                                                     cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
+                                                                 timeoutInterval:10];
+    NSData *dataParams = [NSJSONSerialization dataWithJSONObject:dicParams options:NSJSONWritingPrettyPrinted error:nil];
+    [tokenRequest setURL:tokenUrl];
+    [tokenRequest setHTTPMethod:@"POST"];
+    [tokenRequest setHTTPBody:dataParams];
+    [NSURLConnection sendAsynchronousRequest:tokenRequest queue:[NSOperationQueue currentQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+        if (connectionError == nil) {
+            NSString *strToken = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+            NSLog(@"#### 获取token成功! #### token: %@", strToken);
+            listBucketRequest.strKS3Token = strToken;
+            _arrBuckets = [[KS3Client initialize] listBuckets:(KS3ListBucketsRequest *)listBucketRequest];
+            [_bucketListTable reloadData];
+        }
+        else {
+            NSLog(@"#### 获取token失败，error: %@", connectionError);
+        }
+    }];
 ```
 
 
@@ -247,11 +304,11 @@ SDK以动态库的形式呈现。请将*KS3iOSSDK.framework*添加到项目工�
 
 **方法名：** 
 
-\- (NSArray \*)listBuckets;
+\- (NSArray *)listBuckets:(KS3ListBucketsRequest *)listBucketsRequest;
 
 **参数说明：**  
 
-* 无
+* listBucketRequest：获取Bucket列表的KS3ListBucketsRequest对象
 
 **返回结果：**
 
@@ -260,7 +317,7 @@ SDK以动态库的形式呈现。请将*KS3iOSSDK.framework*添加到项目工�
 **代码示例：**
 ```
 
-	NSArray *arrBuckets = [[KS3Client initialize] listBuckets];
+	NSArray *arrBuckets = [[KS3Client initialize] listBuckets:listBucketRequest];
 		   
 ```
 
@@ -272,11 +329,11 @@ SDK以动态库的形式呈现。请将*KS3iOSSDK.framework*添加到项目工�
 
 **方法名：** 
 
-\- (KS3CreateBucketResponse \*)createBucketWithName:(NSString \*)bucketName;
+\- (KS3CreateBucketResponse *)createBucket:(KS3CreateBucketRequest *)createBucketRequest;
 
 **参数说明：**
 
-* bucketName：指定的Bucket名称
+* createBucketRequest：创建Bucket的KS3CreateBucketRequest请求
 
 **返回结果：**
 
@@ -295,7 +352,14 @@ SDK以动态库的形式呈现。请将*KS3iOSSDK.framework*添加到项目工�
 **代码示例：**
 ```
 
-		KS3CreateBucketResponse *response = [[KS3Client initialize] createBucketWithName:@"your-bucket-name"];
+		KS3CreateBucketRequest *createBucketReq = [[KS3CreateBucketRequest alloc] initWithName:strBucketName];
+		KS3CreateBucketResponse *response = [[KS3Client initialize] createBucket:createBucketReq];
+        if (response.httpStatusCode == 200) {
+            NSLog(@"Create bucket success!");
+        }
+        else {
+            NSLog(@"error: %@", response.error.localizedDescription);
+        }
 ```
 
 #####Delete Bucket:
@@ -304,11 +368,11 @@ SDK以动态库的形式呈现。请将*KS3iOSSDK.framework*添加到项目工�
 
 **方法名：** 
 
-\- (KS3DeleteBucketResponse \*)deleteBucketWithName:(NSString \*)bucketName;
+\- (KS3DeleteBucketResponse *)deleteBucket:(KS3DeleteBucketRequest *)deleteBucketRequest;
 
 **参数说明：**
 
-* bucketName ：指定的Bucket名称
+* deleteBucketRequest ：删除Bucket的KS3DeleteBucketRequest请求
 
 **返回结果：**
 
@@ -327,8 +391,14 @@ SDK以动态库的形式呈现。请将*KS3iOSSDK.framework*添加到项目工�
 
 **代码示例：**
 ```
-
-		KS3DeleteBucketResponse *response = [[KS3Client initialize] deleteBucketWithName:@"your-bucket-name"];
+		KS3DeleteBucketRequest *deleteBucketReq = [[KS3DeleteBucketRequest alloc] initWithName:@"uuu"];
+		KS3DeleteBucketResponse *response = [[KS3Client initialize] deleteBucket:deleteBucketReq];
+		if (response.httpStatusCode == 204) { // **** 没有返回任何内容
+            NSLog(@"Delete bucket success!");
+        }
+        else {
+            NSLog(@"Delete bucket error: %@", response.error.description);
+        }
 ```
 
 #####Get Bucket ACL:
@@ -363,22 +433,22 @@ SDK以动态库的形式呈现。请将*KS3iOSSDK.framework*添加到项目工�
 		KS3GetACLRequest *getACLRequest = [[KS3GetACLRequest alloc] initWithName:@"your-bucket-name"];
         KS3GetACLResponse *response = [[KS3Client initialize] getACL:getACLRequest];		
         KS3BucketACLResult *result = response.listBucketsResult;
-            if (response.httpStatusCode == 200) {
-                NSLog(@"Get bucket acl success!");
-                
-                NSLog(@"Bucket owner ID:          %@",result.owner.ID);
-                NSLog(@"Bucket owner displayName: %@",result.owner.displayName);
-                
-                for (KS3Grant *grant in result.accessControlList) {
-                    NSLog(@"%@",grant.grantee.ID);
-                    NSLog(@"%@",grant.grantee.displayName);
-                    NSLog(@"%@",grant.grantee.URI);
-                    NSLog(@"%@",grant.permission);
-                }
+        if (response.httpStatusCode == 200) {
+            NSLog(@"Get bucket acl success!");
+            
+            NSLog(@"Bucket owner ID:          %@",result.owner.ID);
+            NSLog(@"Bucket owner displayName: %@",result.owner.displayName);
+            
+            for (KS3Grant *grant in result.accessControlList) {
+                NSLog(@"%@",grant.grantee.ID);
+                NSLog(@"%@",grant.grantee.displayName);
+                NSLog(@"%@",grant.grantee.URI);
+                NSLog(@"%@",grant.permission);
             }
-            else {
-                NSLog(@"Get bucket acl error: %@", response.error.description);
-            }
+        }
+        else {
+            NSLog(@"Get bucket acl error: %@", response.error.description);
+        }
 ```
 
 #####Put Bucket ACL:
@@ -410,19 +480,19 @@ SDK以动态库的形式呈现。请将*KS3iOSSDK.framework*添加到项目工�
 **代码示例：**
 ```
 
-		KS3SetGrantACLRequest *request = [[KS3SetGrantACLRequest alloc] initWithName:@"your-bucket-name"];
-            KS3GrantAccessControlList *acl = [[KS3GrantAccessControlList alloc] init];
-            [acl setGrantControlAccess:KingSoftYun_Grant_Permission_Read];
-            acl.identifier = @"user-identifier";
-            acl.displayName = @"user-displayName";
-            request.acl = acl;
-            KS3SetGrantACLResponse *response = [[KS3Client initialize] setGrantACL:request];
-            if (response.httpStatusCode == 200) {
-                NSLog(@"Set grant acl success!");
-            }
-            else {
-                NSLog(@"Set grant acl error: %@", response.error.description);
-            }
+		KS3SetGrantACLRequest *setGrantACLRequest = [[KS3SetGrantACLRequest alloc] initWithName:kBucketName];
+        KS3GrantAccessControlList *acl = [[KS3GrantAccessControlList alloc] init];
+        acl.identifier = @"4567894346";
+        acl.displayName = @"accDisplayName";
+        [acl setGrantControlAccess:KingSoftYun_Grant_Permission_Read];
+        setGrantACLRequest.acl = acl;
+        KS3SetGrantACLResponse *response = [[KS3Client initialize] setGrantACL:setGrantACLRequest];
+        if (response.httpStatusCode == 200) {
+            NSLog(@"Set bucket grant acl success!");
+        }
+        else {
+            NSLog(@"Set bucket grant acl error: %@", response.error.description);
+        }
 
 ```
 
@@ -453,16 +523,16 @@ SDK以动态库的形式呈现。请将*KS3iOSSDK.framework*添加到项目工�
 **代码示例：**
 ```
 
-		KS3SetACLRequest *setACLRequest = [[KS3SetACLRequest alloc] initWithName:@"your-bucket-name"];
+		KS3SetACLRequest *setBucketACLReq = [[KS3SetACLRequest alloc] initWithName:kBucketName];
         KS3AccessControlList *acl = [[KS3AccessControlList alloc] init];
-        [acl setContronAccess:KingSoftYun_Permission_Public_Read_Write];
-        setACLRequest.acl = acl;
-        KS3SetACLResponse *response = [[KS3Client initialize] setACL:setACLRequest];
+        [acl setContronAccess:KingSoftYun_Permission_Public_Read];
+        setBucketACLReq.acl = acl;
+        KS3SetACLResponse *response = [[KS3Client initialize] setBucketACL:setBucketACLReq];
         if (response.httpStatusCode == 200) {
-	        NSLog(@"Set bucket acl success!");
+            NSLog(@"Set bucket acl success!");
         }
         else {
-	        NSLog(@"Set bucket acl error: %@", response.error.description);
+            NSLog(@"Set bucket acl error: %@", response.error.description);
         }
 
 ```
@@ -496,14 +566,14 @@ SDK以动态库的形式呈现。请将*KS3iOSSDK.framework*添加到项目工�
 **代码示例：**
 ```
 
-		KS3HeadBucketRequest *request = [[KS3HeadBucketRequest alloc] initWithName:@"your-bucket-name"];
-            KS3HeadBucketResponse *response = [[KS3Client initialize] headBucket:request];
-            if (response.httpStatusCode == 200) {
-                NSLog(@"Head bucket success!");
-            }
-            else {
-                NSLog(@"Head bucket error: %@", response.error.description);
-            }
+		KS3HeadBucketRequest *request = [[KS3HeadBucketRequest alloc] initWithName:kBucketName];
+        KS3HeadBucketResponse *response = [[KS3Client initialize] headBucket:request];
+        if (response.httpStatusCode == 200) {
+            NSLog(@"Head bucket success!");
+        }
+        else {
+            NSLog(@"Head bucket error: %@", response.error.description);
+        }
 
 ```
 
@@ -515,12 +585,19 @@ SDK以动态库的形式呈现。请将*KS3iOSSDK.framework*添加到项目工�
 
 **方法名：** 
 
-\- (KS3DownLoad \*)downloadObjectWithBucketName:(NSString \*)strBucketName key:(NSString \*)strObject downloadBeginBlock:(KS3DownloadBeginBlock)downloadBeginBlock downloadFileCompleteion:(KS3DownloadFileCompleteionBlock)downloadFileCompleteion downloadProgressChangeBlock:(KS3DownloadProgressChangeBlock)downloadProgressChangeBlock failedBlock:(KS3DownloadFailedBlock)failedBlock;
+\- (KS3DownLoad *)downloadObjectWithBucketName:(NSString *)bucketName
+                                          key:(NSString *)key
+                                tokenDelegate:(id)tokenDelegate
+                           downloadBeginBlock:(KSS3DownloadBeginBlock)downloadBeginBlock
+                      downloadFileCompleteion:(kSS3DownloadFileCompleteionBlock)downloadFileCompleteion
+                  downloadProgressChangeBlock:(KSS3DownloadProgressChangeBlock)downloadProgressChangeBlock
+                                  failedBlock:(KSS3DownloadFailedBlock)failedBlock;
 
 **参数说明：**
 
 * strBucketName：指定的Bucket名称
-* strObjName：指定的Object名称
+* key：指定的Object名称
+* tokenDelegate：设置token的delegate
 * downloadBeginBlock：表示下载开始的block
 * downloadFileCompleteion：表示下载完成后的block
 * downloadProgressChangeBlock:表示下载中的block
@@ -533,16 +610,20 @@ SDK以动态库的形式呈现。请将*KS3iOSSDK.framework*添加到项目工�
 **代码示例：**
 ```
 
-		[[KS3Client initialize] downloadObjectWithBucketName:@"your-bucket-name" key:@"object-name" downloadBeginBlock:^(KS3DownLoad *aDownload, NSURLResponse *responseHeaders) {
+		_downloader = [[KS3Client initialize] downloadObjectWithBucketName:kBucketName key:kObjectName tokenDelegate:self downloadBeginBlock:^(KS3DownLoad *aDownload, NSURLResponse *responseHeaders) {
+                NSLog(@"1212221");
                 
             } downloadFileCompleteion:^(KS3DownLoad *aDownload, NSString *filePath) {
+                NSLog(@"completed, file path: %@", filePath);
                 
             } downloadProgressChangeBlock:^(KS3DownLoad *aDownload, double newProgress) {
                 progressView.progress = newProgress;
+                NSLog(@"progress: %f", newProgress);
                 
             } failedBlock:^(KS3DownLoad *aDownload, NSError *error) {
-                
+                NSLog(@"failed: %@", error.description);
             }];
+            [_downloader start];
 
 ```
 
@@ -575,9 +656,7 @@ SDK以动态库的形式呈现。请将*KS3iOSSDK.framework*添加到项目工�
 
 **代码示例：**
 ```
-
-		KS3HeadObjectRequest *headObjRequest = [[KS3HeadObjectRequest alloc] initWithName:@"your-bucket-name"];
-            headObjRequest.key = @"object-name";
+			KS3HeadObjectRequest *headObjRequest = [[KS3HeadObjectRequest alloc] initWithName:kBucketName withKeyName:kObjectName];
             KS3HeadObjectResponse *response = [[KS3Client initialize] headObject:headObjRequest];
             if (response.httpStatusCode == 200) {
                 NSLog(@"Head object success!");
@@ -615,9 +694,7 @@ SDK以动态库的形式呈现。请将*KS3iOSSDK.framework*添加到项目工�
 
 **代码示例：**
 ```
-
-		KS3DeleteObjectRequest *deleteObjRequest = [[KS3DeleteObjectRequest alloc] initWithName:@"your-bucket-name"];
-            deleteObjRequest.key = @"object-name";
+			KS3DeleteObjectRequest *deleteObjRequest = [[KS3DeleteObjectRequest alloc] initWithName:kBucketName withKeyName:kObjectName];
             KS3DeleteObjectResponse *response = [[KS3Client initialize] deleteObject:deleteObjRequest];
             if (response.httpStatusCode == 200) {
                 NSLog(@"Delete object success!");
@@ -655,9 +732,7 @@ SDK以动态库的形式呈现。请将*KS3iOSSDK.framework*添加到项目工�
 
 **代码示例：**
 ```
-
-		KS3GetObjectACLRequest  *getObjectACLRequest = [[KS3GetObjectACLRequest alloc] initWithName:@"your-bucket-name"];
-            getObjectACLRequest.key = @"object-name";
+			KS3GetObjectACLRequest  *getObjectACLRequest = [[KS3GetObjectACLRequest alloc] initWithName:kBucketName withKeyName:kObjectName];
             KS3GetObjectACLResponse *response = [[KS3Client initialize] getObjectACL:getObjectACLRequest];
             KS3BucketACLResult *result = response.listBucketsResult;
             if (response.httpStatusCode == 200) {
@@ -707,11 +782,9 @@ SDK以动态库的形式呈现。请将*KS3iOSSDK.framework*添加到项目工�
 **代码示例：**
 ```
 
-		KS3SetObjectACLRequest *setObjectACLRequest = [[KS3SetObjectACLRequest alloc] initWithName:@"your-bucket-name"];
-            setObjectACLRequest.key = strObjectName;
-            KS3AccessControlList *acl = [[KS3AccessControlList alloc] init];
-            [acl setContronAccess:KingSoftYun_Permission_Private];
-            setObjectACLRequest.acl = acl;
+			KS3AccessControlList *acl = [[KS3AccessControlList alloc] init];
+            [acl setContronAccess:KingSoftYun_Permission_Public_Read_Write];
+            KS3SetObjectACLRequest *setObjectACLRequest = [[KS3SetObjectACLRequest alloc] initWithName:kBucketName withKeyName:kObjectName acl:acl];
             KS3SetObjectACLResponse *response = [[KS3Client initialize] setObjectACL:setObjectACLRequest];
             if (response.httpStatusCode == 200) {
                 NSLog(@"Set object acl success!");
@@ -748,20 +821,18 @@ SDK以动态库的形式呈现。请将*KS3iOSSDK.framework*添加到项目工�
 **代码示例：**
 ```
 
-		KS3SetObjectGrantACLRequest *request = [[KS3SetObjectGrantACLRequest alloc] initWithName:@"your-bucket-name"];
-            request.key = @"object-name";
-            KS3GrantAccessControlList *acl = [[KS3GrantAccessControlList alloc] init];
-            [acl setGrantControlAccess:KingSoftYun_Grant_Permission_Read];
-            acl.identifier = @"user-identifier";
-            acl.displayName = @"user-displayName";
-            request.acl = acl;
-            KS3SetObjectGrantACLResponse *response = [[KS3Client initialize] setObjectGrantACL:request];
-            if (response.httpStatusCode == 200) {
-                NSLog(@"Set object grant acl success!");
-            }
-            else {
-                NSLog(@"Set object grant acl error: %@", response.error.description);
-            }
+		KS3GrantAccessControlList *acl = [[KS3GrantAccessControlList alloc] init];
+        acl.identifier = kObjectName;
+        acl.displayName = @"blues111DisplayName";
+        [acl setGrantControlAccess:KingSoftYun_Grant_Permission_Read];
+        KS3SetObjectGrantACLRequest *setObjectGrantACLRequest = [[KS3SetObjectGrantACLRequest alloc] initWithName:kBucketName withKeyName:kObjectName grantAcl:acl];
+        KS3SetObjectGrantACLResponse *response = [[KS3Client initialize] setObjectGrantACL:request];
+        if (response.httpStatusCode == 200) {
+            NSLog(@"Set object grant acl success!");
+        }
+        else {
+            NSLog(@"Set object grant acl error: %@", response.error.description);
+        }
 ```
 
 #####List Objects：
@@ -795,7 +866,7 @@ SDK以动态库的形式呈现。请将*KS3iOSSDK.framework*添加到项目工�
 **代码示例：**
 ````
 
-		KS3ListObjectsRequest *listObjectRequest = [[KS3ListObjectsRequest alloc] initWithName:@"your-bucket-name"];
+		KS3ListObjectsRequest *listObjectRequest = [[KS3ListObjectsRequest alloc] initWithName:kBucketName];
     	KS3ListObjectsResponse *response = [[KS3Client initialize] listObjects:listObjectRequest];
     	_result = response.listBucketsResult;
     	_arrObjects = response.listBucketsResult.objectSummaries;
@@ -841,13 +912,18 @@ SDK以动态库的形式呈现。请将*KS3iOSSDK.framework*添加到项目工�
 **代码示例：**
 ```
 
-	/* 一定要实现委托方法 (这种情况如果实现委托，返回的reponse一般返回为nil，具体获取返回对象需要到委托方法里面获取，如果不实现委托，reponse不会为nil*/
-		KS3PutObjectRequest *putObjRequest = [[KS3PutObjectRequest alloc] initWithName:@"your-bucket-name"];
-            putObjRequest.delegate = self;
+			KS3PutObjectRequest *putObjRequest = [[KS3PutObjectRequest alloc] initWithName:kBucketName];
             NSString *fileName = [[NSBundle mainBundle] pathForResource:@"test" ofType:@"jpg"];
             putObjRequest.data = [NSData dataWithContentsOfFile:fileName options:NSDataReadingMappedIfSafe error:nil];
             putObjRequest.filename = [fileName lastPathComponent];
-            [[KS3Client initialize] putObject:putObjRequest];
+            putObjRequest.contentMd5 = [KS3SDKUtil base64md5FromData:putObjRequest.data];
+            KS3PutObjectResponse *response = [[KS3Client initialize] putObject:putObjRequest];
+            if (response.httpStatusCode == 200) {
+                NSLog(@"Put object success");
+            }
+            else {
+                NSLog(@"Put object failed");
+            }
 
 ```
 
@@ -881,13 +957,16 @@ KS3PutObjectResponse响应包括以下内容
 **代码示例：**
 ```
 
-	/* 一定要实现委托方法 (这种情况如果实现委托，返回的reponse一般返回为nil，具体获取返回对象需要到委托方法里面获取，如果不实现委托，reponse不会为nil*/
-		KS3PutObjectRequest *putObjRequest = [[KS3PutObjectRequest alloc] initWithName:@"your-bucket-name"];
-            putObjRequest.delegate = self;
-            NSString *fileName = [[NSBundle mainBundle] pathForResource:@"test" ofType:@"jpg"];
-            putObjRequest.data = [NSData dataWithContentsOfFile:fileName options:NSDataReadingMappedIfSafe error:nil];
-            putObjRequest.filename = [fileName lastPathComponent];
-            [[KS3Client initialize] putObject:putObjRequest];
+			KS3BucketObject *destBucketObj = [[KS3BucketObject alloc] initWithBucketName:kDesBucketName keyName:kDesObjectName];
+            KS3BucketObject *sourceBucketObj = [[KS3BucketObject alloc] initWithBucketName:kBucketName keyName:kObjectName];
+            KS3PutObjectCopyRequest *request = [[KS3PutObjectCopyRequest alloc] initWithName:destBucketObj sourceBucketObj:sourceBucketObj];
+            KS3PutObjectCopyResponse *response = [[KS3Client initialize] putObjectCopy:request];
+            if (response.httpStatusCode == 200) {
+                NSLog(@"Put object copy success!");
+            }
+            else {
+                NSLog(@"Put object copy error: %@", response.error.description);
+            }
 
 ```
 
@@ -897,13 +976,12 @@ KS3PutObjectResponse响应包括以下内容
 
 **方法名：** 
 
-\- (KS3MultipartUpload \*)initiateMultipartUploadWithKey:(NSString \*)theKey withBucket:(NSString \*)theBucket;
+- (KS3MultipartUpload *)initiateMultipartUploadWithRequest:(KS3InitiateMultipartUploadRequest *)request;
 
 
 **参数说明：**
 
-* theKey：指定的Object名称
-* theBucket：指定的Bucket名称
+* request：初始化分块上传的KS3InitiateMultipartUploadRequest对象
 
 **返回结果：**
 
@@ -912,8 +990,8 @@ KS3PutObjectResponse响应包括以下内容
 
 **代码示例：**
 ```
-
-	KS3MultipartUpload *muilt = [[KS3Client initialize] initiateMultipartUploadWithKey:@"object-name" withBucket:@"your-bucket-name"];
+	KS3InitiateMultipartUploadRequest *initMultipartUploadReq = [[KS3InitiateMultipartUploadRequest alloc] initWithKey:strKey inBucket:kBucketName];
+	KS3MultipartUpload *muilt = [[KS3Client initialize] initiateMultipartUploadWithRequest:initMultipartUploadReq];
 
 ```
 
@@ -947,11 +1025,12 @@ KS3UploadPartResponse响应包括以下内容
 ```
 
 		KS3UploadPartRequest *req = [[KS3UploadPartRequest alloc] initWithMultipartUpload:_muilt];
-                req.delegate = self;
-                req.data = data;
-                req.partNumber = partNumber;
-                req.contentLength = data.length;
-                KS3UploadPartResponse *response = [[KS3Client initialize] uploadPart:req];
+	    req.delegate = self;
+	    req.data = data;
+	    req.partNumber = (int32_t)partNumber;
+	    req.contentLength = data.length;
+	    req.contentMd5 = [KS3SDKUtil base64md5FromData:data];
+        KS3UploadPartResponse *response = [[KS3Client initialize] uploadPart:req];
 
 ```
 
@@ -1018,7 +1097,7 @@ KS3AbortMultipartUploadResponse响应包括以下内容
 **代码示例：**
 ```
 
-		KS3AbortMultipartUploadRequest *request = [[KS3AbortMultipartUploadRequest alloc] initWithMultipartUpload:_muilt];
+			KS3AbortMultipartUploadRequest *request = [[KS3AbortMultipartUploadRequest alloc] initWithMultipartUpload:_muilt];
             KS3AbortMultipartUploadResponse *response = [[KS3Client initialize] abortMultipartUpload:request];
             if (response.httpStatusCode == 204) {
                 NSLog(@"Abort multipart upload success!");
@@ -1064,76 +1143,88 @@ KS3CompleteMultipartUploadResponse响应包括以下内容
             [req addPartWithPartNumber:part.partNumber withETag:part.etag];
         }
         [[KS3Client initialize] completeMultipartUpload:req];
+        if (resp.httpStatusCode != 200) {
+            NSLog(@"#####complete multipart upload failed!!! code: %d#####", resp.httpStatusCode);
+        }
 
 ```
 
-#####Multipart Upload Example Code 1：
+#####Multipart Upload Example Code：
 
 *分片上传代码示例*
 
 ````
 
-		NSFileHandle *fileHandle = [NSFileHandle fileHandleForReadingAtPath:[[NSBundle mainBundle] pathForResource:@"test" ofType:@"txt"]];
-        long long fileLength = [[fileHandle availableData] length];
-        long long partLength = 5*1024.0*1024.0;
-        _partInter = (ceilf((float)fileLength / (float)partLength));
-        [fileHandle seekToFileOffset:0];
-            
-        _muilt = [[KS3Client initialize] initiateMultipartUploadWithKey:@"object-name" withBucket:@"your-bucket-name"];
-        for (NSInteger i = 0; i < _partInter; i ++) {
-	        NSData *data = nil;
-	         if (i == _partInter - 1) {
-	         	data = [fileHandle readDataToEndOfFile];
-	         } 
-	         else {
-	         	data = [fileHandle readDataOfLength:partLength];
-	           [fileHandle seekToFileOffset:partLength*(i+1)];
-            }
-            KS3UploadPartRequest *req = [[KS3UploadPartRequest alloc] initWithMultipartUpload:_muilt];
-            req.delegate = self;
-            req.data = data;
-            req.partNumber = (int32_t)i+1;
-            req.contentLength = data.length;
-            [[KS3Client initialize] uploadPart:req];
+		NSString *strKey = @"upload_release.txt";
+        NSString *strFilePath = [[NSBundle mainBundle] pathForResource:@"bugDownload" ofType:@"txt"];
+        _partSize = 5;
+        _fileHandle = [NSFileHandle fileHandleForReadingAtPath:strFilePath];
+        _fileSize = [_fileHandle availableData].length;
+        if (_fileSize <= 0) {
+            NSLog(@"####This file is not exist!####");
+            return ;
         }
+        if (!(_partSize > 0 || _partSize != 0)) {
+            _partLength = _fileSize;
+        }else{
+            _partLength = _partSize * 1024.0 * 1024.0;
+        }
+        _totalNum = (ceilf((float)_fileSize / (float)_partLength));
+        [_fileHandle seekToFileOffset:0];
+        
+        KS3InitiateMultipartUploadRequest *initMultipartUploadReq = [[KS3InitiateMultipartUploadRequest alloc] initWithKey:strKey inBucket:kBucketName];
+        _muilt = [[KS3Client initialize] initiateMultipartUploadWithRequest:initMultipartUploadReq];
+        if (_muilt == nil) {
+            NSLog(@"####Init upload failed, please check access key, secret key and bucket name!####");
+            return ;
+        }
+        
+        _uploadNum = 1;
+        [self uploadWithPartNumber:_uploadNum];
+        
+        // **** 分块上传文件的块
+  		- (void)uploadWithPartNumber:(NSInteger)partNumber
+		{
+		    long long partLength = _partSize * 1024.0 * 1024.0;
+		    NSData *data = nil;
+		    if (_uploadNum == _totalNum) {
+		        data = [_fileHandle readDataToEndOfFile];
+		    }else {
+		        data = [_fileHandle readDataOfLength:(NSUInteger)partLength];
+		        [_fileHandle seekToFileOffset:partLength*(_uploadNum)];
+		    }
+		    
+		    KS3UploadPartRequest *req = [[KS3UploadPartRequest alloc] initWithMultipartUpload:_muilt];
+		    req.delegate = self;
+		    req.data = data;
+		    req.partNumber = (int32_t)partNumber;
+		    req.contentLength = data.length;
+		    req.contentMd5 = [KS3SDKUtil base64md5FromData:data];
+		    [[KS3Client initialize] uploadPart:req];
+		}
                 
         // **** 分块上传的回调，每块上传结束后都会被调用
 		- (void)request:(KingSoftServiceRequest *)request didCompleteWithResponse:(KingSoftServiceResponse *)response {
-    		_upLoadCount++;
-    		if (_partInter == _upLoadCount) {
-        		KS3ListPartsRequest *req2 = [[KS3ListPartsRequest alloc] initWithMultipartUpload:_muilt];
-        		KS3ListPartsResponse *response2 = [[KS3Client initialize] listParts:req2];
-        		KS3CompleteMultipartUploadRequest *req = [[KS3CompleteMultipartUploadRequest alloc] initWithMultipartUpload:_muilt];
-        		NSLog(@" - - - - - %@",response2.listResult.parts);
-        		for (KS3Part *part in response2.listResult.parts) {
-            		[req addPartWithPartNumber:part.partNumber withETag:part.etag];
-        		}
-        		[[KS3Client initialize] completeMultipartUpload:req];
-    		}
+    		_uploadNum ++;
+		    if (_totalNum < _uploadNum) {
+		        KS3ListPartsRequest *req2 = [[KS3ListPartsRequest alloc] initWithMultipartUpload:_muilt];
+		        KS3ListPartsResponse *response2 = [[KS3Client initialize] listParts:req2];
+                KS3CompleteMultipartUploadRequest *req = [[KS3CompleteMultipartUploadRequest alloc] initWithMultipartUpload:_muilt];
+                for (KS3Part *part in response2.listResult.parts) {
+                    [req addPartWithPartNumber:part.partNumber withETag:part.etag];
+                }
+                KS3CompleteMultipartUploadResponse *resp = [[KS3Client initialize] completeMultipartUpload:req];
+                if (resp.httpStatusCode != 200) {
+                    NSLog(@"#####complete multipart upload failed!!! code: %d#####", resp.httpStatusCode);
+                }
+		    }
+		    else {
+		        [self uploadWithPartNumber:_uploadNum];
+		    }
 		}
 		- (void)request:(KingSoftServiceRequest *)request didFailWithError:(NSError *)error {
     		NSLog(@"error: %@", error.description);
      	}
-
-````
-
-#####Multipart Upload Example Code 2：
-
-*分片上传代码示例*
-
-````
-
-	_uploader = [[KS3FileUploader alloc] initWithBucketName:@"your-bucket-name"];
-    _uploader.strFilePath = [[NSBundle mainBundle] pathForResource:@"bugDownload" ofType:@"txt"];
-    _uploader.strKey = @"your-object-name";
-    _uploader.partSize = 5; // **** unit: MB, must larger than 5
-    [_uploader startUploadWithProgressChangeBlock:^(KS3FileUploader *uploader, double progress) {
-        NSLog(@"progress: %f", progress);
-    } completeBlock:^(KS3FileUploader *uploader) {
-        NSLog(@"complete");
-    } failedBlock:^(KS3FileUploader *uploader, NSString *strUploadId, NSInteger partNumber, NSError *error) {
-        NSLog(@"failed!");
-    }];
 
 ````
 

@@ -23,6 +23,9 @@
 @property (strong, nonatomic) NSString *contentType;
 @property (strong, nonatomic) NSString *kSYHeader;
 @property (strong, nonatomic) NSString *kSYResource;
+@property (strong, nonatomic) NSDate *requestDate;
+@property (strong, nonatomic) NSString *strDate;
+@property (nonatomic, strong) NSString *strKS3Token;
 @property (weak, nonatomic) id<KingSoftServiceRequestDelegate> delegate;
 
 - (KS3URLRequest *)configureURLRequest;

@@ -22,7 +22,7 @@ NSString *const strSecretKey = @"1+RBTrWaeT6LaixUV5SGPFpeTa/wZEeZlGzYaZfr";
 - (void)setUp {
     [super setUp];
     // Put setup code here. This method is called before the invocation of each test method in the class.
-    [[KS3Client initialize] connectWithAccessKey:strAccessKey withSecretKey:strSecretKey];
+//    [[KS3Client initialize] connectWithAccessKey:strAccessKey withSecretKey:strSecretKey];
 }
 
 - (void)tearDown {
@@ -51,11 +51,37 @@ NSString *const strSecretKey = @"1+RBTrWaeT6LaixUV5SGPFpeTa/wZEeZlGzYaZfr";
 
 - (void)testLisetBuckets
 {
-    NSArray *bucketArray = [[KS3Client initialize] listBuckets];
-    for (KS3Bucket *bucket in bucketArray ) {
-        NSLog(@"%@",bucket.creationDate);
-        NSLog(@"%@",bucket.name);
-    }
+    KS3ListBucketsRequest *listBucketRequest = [[KS3ListBucketsRequest alloc] init];
+    NSDictionary *dicParams = [NSDictionary dictionaryWithObjectsAndKeys:
+                               listBucketRequest.httpMethod,  @"http_method",
+                               listBucketRequest.contentMd5,  @"content_md5",
+                               listBucketRequest.contentType, @"content_type",
+                               listBucketRequest.strDate,     @"date",
+                               listBucketRequest.kSYHeader,   @"headers",
+                               listBucketRequest.kSYResource, @"resource", nil];
+    NSURL *tokenUrl = [NSURL URLWithString:@"http://0.0.0.0:11911"];
+    NSMutableURLRequest *tokenRequest = [[NSMutableURLRequest alloc] initWithURL:tokenUrl
+                                                                     cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
+                                                                 timeoutInterval:10];
+    NSData *dataParams = [NSJSONSerialization dataWithJSONObject:dicParams options:NSJSONWritingPrettyPrinted error:nil];
+    [tokenRequest setURL:tokenUrl];
+    [tokenRequest setHTTPMethod:@"POST"];
+    [tokenRequest setHTTPBody:dataParams];
+    [NSURLConnection sendAsynchronousRequest:tokenRequest queue:[NSOperationQueue currentQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+        if (connectionError == nil) {
+            NSString *strToken = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+            NSLog(@"#### 获取token成功! #### token: %@", strToken);
+            listBucketRequest.strKS3Token = strToken;
+            NSArray *bucketArray = [[KS3Client initialize] listBuckets:listBucketRequest];
+            for (KS3Bucket *bucket in bucketArray ) {
+                NSLog(@"%@",bucket.creationDate);
+                NSLog(@"%@",bucket.name);
+            }
+        }
+        else {
+            NSLog(@"#### 获取token失败，error: %@", connectionError);
+        }
+    }];
 }
 
 - (void)testCreateBucket
@@ -77,36 +103,103 @@ NSString *const strSecretKey = @"1+RBTrWaeT6LaixUV5SGPFpeTa/wZEeZlGzYaZfr";
 
 - (void)testGetBucketAcl
 {
-    KS3GetACLResponse *response = [[KS3Client initialize] getBucketACL:@"ggg"];
-    NSArray *controlListArray = response.listBucketsResult.accessControlList;
-    for (KS3Grant *grant in controlListArray) {
-        NSLog(@"%@",grant.permission);
-        XCTAssertNotNil(grant.permission);
-        XCTAssertNotNil(grant.grantee);
-    }
-    XCTAssertEqual(200, response.httpStatusCode);
+    KS3GetACLRequest *getBucketAclReq = [[KS3GetACLRequest alloc] initWithName:@"ggg"];
+    NSDictionary *dicParams = [self dicParamsWithReq:getBucketAclReq];
+    NSURL *tokenUrl = [NSURL URLWithString:@"http://0.0.0.0:11911"];
+    NSMutableURLRequest *tokenRequest = [[NSMutableURLRequest alloc] initWithURL:tokenUrl
+                                                                     cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
+                                                                 timeoutInterval:10];
+    NSData *dataParams = [NSJSONSerialization dataWithJSONObject:dicParams options:NSJSONWritingPrettyPrinted error:nil];
+    [tokenRequest setURL:tokenUrl];
+    [tokenRequest setHTTPMethod:@"POST"];
+    [tokenRequest setHTTPBody:dataParams];
+    [NSURLConnection sendAsynchronousRequest:tokenRequest queue:[NSOperationQueue currentQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+        if (connectionError == nil) {
+            NSString *strToken = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+            NSLog(@"#### 获取token成功! #### token: %@", strToken);
+            getBucketAclReq.strKS3Token = strToken;
+            KS3GetACLResponse *response = [[KS3Client initialize] getBucketACL:getBucketAclReq];
+            KS3BucketACLResult *result = response.listBucketsResult;
+            XCTAssert(response.httpStatusCode == 200);
+            if (response.httpStatusCode == 200) {
+                NSLog(@"Get bucket acl success!");
+                
+                NSLog(@"Bucket owner ID:          %@",result.owner.ID);
+                NSLog(@"Bucket owner displayName: %@",result.owner.displayName);
+                
+                for (KS3Grant *grant in result.accessControlList) {
+                    XCTAssertNotNil(grant.permission);
+                    XCTAssertNotNil(grant.grantee);
+                }
+            }
+            else {
+                NSLog(@"Get bucket acl error: %@", response.error.description);
+            }
+        }
+        else {
+            NSLog(@"#### 获取token失败，error: %@", connectionError);
+        }
+    }];
 }
 
 - (void)testSetBucktAcl
 {
-    KS3SetACLRequest *setAclRequest =[[KS3SetACLRequest alloc] initWithName:@"ggg"];
-    KS3AccessControlList *acl = [[KS3AccessControlList alloc] init];
-    [acl setContronAccess:KingSoftYun_Permission_Private];
-    setAclRequest.acl = acl;
-    KS3SetACLResponse *response = [[KS3Client initialize] setACL:setAclRequest];
-    NSLog(@"%d",response.httpStatusCode);
-    XCTAssertNotNil([[KS3Client initialize] setACL:setAclRequest]);
+    KS3SetACLRequest *setBucketACLReq = [[KS3SetACLRequest alloc] initWithName:@"ggg"];
+    NSDictionary *dicParams = [self dicParamsWithReq:setBucketACLReq];
+    NSURL *tokenUrl = [NSURL URLWithString:@"http://0.0.0.0:11911"];
+    NSMutableURLRequest *tokenRequest = [[NSMutableURLRequest alloc] initWithURL:tokenUrl
+                                                                     cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
+                                                                 timeoutInterval:10];
+    NSData *dataParams = [NSJSONSerialization dataWithJSONObject:dicParams options:NSJSONWritingPrettyPrinted error:nil];
+    [tokenRequest setURL:tokenUrl];
+    [tokenRequest setHTTPMethod:@"POST"];
+    [tokenRequest setHTTPBody:dataParams];
+    [NSURLConnection sendAsynchronousRequest:tokenRequest queue:[NSOperationQueue currentQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+        if (connectionError == nil) {
+            NSString *strToken = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+            NSLog(@"#### 获取token成功! #### token: %@", strToken);
+            setBucketACLReq.strKS3Token = strToken;
+            KS3AccessControlList *acl = [[KS3AccessControlList alloc] init];
+            [acl setContronAccess:KingSoftYun_Permission_Private];
+            setBucketACLReq.acl = acl;
+            KS3SetACLResponse *response = [[KS3Client initialize] setBucketACL:setBucketACLReq];
+            XCTAssert(response.httpStatusCode == 200);
+        }
+        else {
+            NSLog(@"#### 获取token失败，error: %@", connectionError);
+        }
+    }];
 }
 
 - (void)testGetBucketLogging
 {
-    KS3GetBucketLoggingResponse *response = [[KS3Client initialize] getBucketLoggingWithName:@"testCreateBucket-WF1"];
-    XCTAssertEqual(200, response.httpStatusCode);
+    KS3GetBucketLoggingRequest *getBucketLoggingReq = [[KS3GetBucketLoggingRequest alloc] initWithName:@"testCreateBucket-WF1"];
+    NSDictionary *dicParams = [self dicParamsWithReq:getBucketLoggingReq];
+    NSURL *tokenUrl = [NSURL URLWithString:@"http://0.0.0.0:11911"];
+    NSMutableURLRequest *tokenRequest = [[NSMutableURLRequest alloc] initWithURL:tokenUrl
+                                                                     cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
+                                                                 timeoutInterval:10];
+    NSData *dataParams = [NSJSONSerialization dataWithJSONObject:dicParams options:NSJSONWritingPrettyPrinted error:nil];
+    [tokenRequest setURL:tokenUrl];
+    [tokenRequest setHTTPMethod:@"POST"];
+    [tokenRequest setHTTPBody:dataParams];
+    [NSURLConnection sendAsynchronousRequest:tokenRequest queue:[NSOperationQueue currentQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+        if (connectionError == nil) {
+            NSString *strToken = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+            NSLog(@"#### 获取token成功! #### token: %@", strToken);
+            getBucketLoggingReq.strKS3Token = strToken;
+            KS3GetBucketLoggingResponse *response = [[KS3Client initialize] getBucketLogging:getBucketLoggingReq];
+            XCTAssert(response.httpStatusCode == 200);
+        }
+        else {
+            NSLog(@"#### 获取token失败，error: %@", connectionError);
+        }
+    }];
 }
 
 - (void)testPutObject
 {
-    KS3PutObjectRequest *req = [[KS3PutObjectRequest alloc] initWithName:@"ggg"];
+    KS3PutObjectRequest *req = [[KS3PutObjectRequest alloc] initWithName:@"ggg" withAcl:nil grantAcl:nil];
     NSBundle *bundle = [NSBundle bundleForClass:[self class]];
     NSString *path = [bundle pathForResource:@"Test" ofType:@"jpg"];
     req.data = [NSData dataWithContentsOfFile:path options:NSDataReadingMappedIfSafe error:nil];
@@ -120,18 +213,16 @@ NSString *const strSecretKey = @"1+RBTrWaeT6LaixUV5SGPFpeTa/wZEeZlGzYaZfr";
 
 - (void)testPutObjectCopy
 {
-    KS3PutObjectCopyRequest *req = [[KS3PutObjectCopyRequest alloc] initWithName:@"ggg"];
-    req.key = @"test_copy.txt";
-    req.strSourceBucket = @"acc";
-    req.strSourceObject = @"Count_1.txt";
+    KS3BucketObject *destBucketObj = [[KS3BucketObject alloc] initWithBucketName:@"ggg" keyName:@"test_copy.txt"];
+    KS3BucketObject *sourceBucketObj = [[KS3BucketObject alloc] initWithBucketName:@"acc" keyName:@"Count_1.txt"];
+    KS3PutObjectCopyRequest *req = [[KS3PutObjectCopyRequest alloc] initWithName:destBucketObj sourceBucketObj:sourceBucketObj];
     KS3PutObjectCopyResponse *response = [[KS3Client initialize] putObjectCopy:req];
     XCTAssertEqual(200, response.httpStatusCode);
 }
 
 - (void)testHeadObject
 {
-    KS3HeadObjectRequest *req = [[KS3HeadObjectRequest alloc] initWithName:@"ggg"];
-    req.key = @"Test.jpg";
+    KS3HeadObjectRequest *req = [[KS3HeadObjectRequest alloc] initWithName:@"ggg" withKeyName:@"Test.jpg"];
     KS3HeadObjectResponse *response = [[KS3Client initialize] headObject:req];
     NSLog(@"%d",response.httpStatusCode);
     NSLog(@"- = -= - =- = -= -%@",[response.error description]);
@@ -139,8 +230,7 @@ NSString *const strSecretKey = @"1+RBTrWaeT6LaixUV5SGPFpeTa/wZEeZlGzYaZfr";
     XCTAssertEqual(200, response.httpStatusCode);
 }
 - (void)testDeleteObject{
-    KS3DeleteObjectRequest *req = [[KS3DeleteObjectRequest alloc] initWithName:@"ggg"];
-    req.key = @"Test.jpg";
+    KS3DeleteObjectRequest *req = [[KS3DeleteObjectRequest alloc] initWithName:@"ggg" withKeyName:@"Test.jpg"];
     KS3DeleteObjectResponse *response = [[KS3Client initialize] deleteObject:req];
     NSLog(@"- = -= - =- = -= -%d",response.httpStatusCode);
     XCTAssertEqual(204, response.httpStatusCode);
@@ -148,8 +238,7 @@ NSString *const strSecretKey = @"1+RBTrWaeT6LaixUV5SGPFpeTa/wZEeZlGzYaZfr";
 
 - (void)testGetObjectACL
 {
-    KS3GetObjectACLRequest *req = [[KS3GetObjectACLRequest alloc] initWithName:@"ggg"];
-    req.key = @"Test.jpg";
+    KS3GetObjectACLRequest *req = [[KS3GetObjectACLRequest alloc] initWithName:@"ggg" withKeyName:@"Test.jpg"];
     KS3GetObjectACLResponse *response = [[KS3Client initialize] getObjectACL:req];
     NSLog(@"-=-=-=-=--=-=--=-=%@",[[NSString alloc] initWithData:[response body]  encoding:NSUTF8StringEncoding]);
     
@@ -164,10 +253,9 @@ NSString *const strSecretKey = @"1+RBTrWaeT6LaixUV5SGPFpeTa/wZEeZlGzYaZfr";
 
 - (void)testSetObjectACL
 {
-    KS3SetObjectACLRequest *req = [[KS3SetObjectACLRequest alloc] initWithName:@"ggg"];
-    req.key = @"Test.jpg";
-    req.acl = [[KS3AccessControlList alloc] init];
-    [req.acl setContronAccess:KingSoftYun_Permission_Public_Read_Write];
+    KS3AccessControlList *acl = [[KS3AccessControlList alloc] init];
+    [acl setContronAccess:KingSoftYun_Permission_Public_Read_Write];
+    KS3SetObjectACLRequest *req = [[KS3SetObjectACLRequest alloc] initWithName:@"ggg" withKeyName:@"Test.jpg" acl:acl];
     KS3SetObjectACLResponse *response = [[KS3Client initialize] setObjectACL:req];
     NSLog(@"%@",[response.error description]);
     NSLog(@"-----%@",[[NSString alloc] initWithData:[response body]  encoding:NSUTF8StringEncoding]);
@@ -192,52 +280,52 @@ NSString *const strSecretKey = @"1+RBTrWaeT6LaixUV5SGPFpeTa/wZEeZlGzYaZfr";
 
 - (void)testFKUpload
 {
-    NSInteger _upLoadCount = 0;
-    NSFileHandle *fileHandle = [NSFileHandle fileHandleForReadingAtPath:[[NSBundle mainBundle] pathForResource:@"500M" ofType:@"txt"]];
-    long long fileLength = [[fileHandle availableData] length];
-    long long partLength = 100*1024.0*1024.0;
-    NSInteger partNumber = (ceilf((float)fileLength / (float)partLength));
-    NSLog(@"%lld",fileLength);
-    NSLog(@"%lld",partLength);
-    NSLog(@"%ld",(long)partNumber);
-    [fileHandle seekToFileOffset:0];
-    KS3MultipartUpload *muilt = [[KS3Client initialize] initiateMultipartUploadWithKey:@"500.txt" withBucket:@"testCreateBucket-WF1"];
-    for (NSInteger i = 0; i < partNumber; i ++) {
-        NSData *data = nil;
-        if (i == partNumber - 1) {
-            data = [fileHandle readDataToEndOfFile];
-        }else {
-            data = [fileHandle readDataOfLength:(NSUInteger)partLength];
-            [fileHandle seekToFileOffset:partLength*(i+1)];
-        }
-        KS3UploadPartRequest *req = [[KS3UploadPartRequest alloc] initWithMultipartUpload:muilt];
-        req.data = data;
-        req.partNumber = (int32_t)i+1;
-        req.contentLength = data.length;
-        KS3UploadPartResponse *response11 = [[KS3Client initialize] uploadPart:req];
-        XCTAssertEqual(200, response11.httpStatusCode);
-        if (response11) {
-            _upLoadCount++;
-            if (partNumber == _upLoadCount) {
-                NSLog(@"%ld",(long)partNumber);
-                NSLog(@"%ld",(long)_upLoadCount);
-                KS3ListPartsRequest *req2 = [[KS3ListPartsRequest alloc] initWithMultipartUpload:muilt];
-                KS3ListPartsResponse *response2 = [[KS3Client initialize] listParts:req2];
-                XCTAssertEqual(200, response2.httpStatusCode);
-                KS3CompleteMultipartUploadRequest *req = [[KS3CompleteMultipartUploadRequest alloc] initWithMultipartUpload:muilt];
-                NSLog(@"%@",response2.listResult.parts);
-                for (KS3Part *part in response2.listResult.parts) {
-                    [req addPartWithPartNumber:part.partNumber withETag:part.etag];
-                }
-                XCTAssertEqual(200, [((KS3CompleteMultipartUploadResponse *)[[KS3Client initialize] completeMultipartUpload:req]) httpStatusCode]);
-            }
-        }
-    }
+//    NSInteger _upLoadCount = 0;
+//    NSFileHandle *fileHandle = [NSFileHandle fileHandleForReadingAtPath:[[NSBundle mainBundle] pathForResource:@"500M" ofType:@"txt"]];
+//    long long fileLength = [[fileHandle availableData] length];
+//    long long partLength = 100*1024.0*1024.0;
+//    NSInteger partNumber = (ceilf((float)fileLength / (float)partLength));
+//    NSLog(@"%lld",fileLength);
+//    NSLog(@"%lld",partLength);
+//    NSLog(@"%ld",(long)partNumber);
+//    [fileHandle seekToFileOffset:0];
+//    KS3MultipartUpload *muilt = [[KS3Client initialize] initiateMultipartUploadWithKey:@"500.txt" withBucket:@"testCreateBucket-WF1"];
+//    for (NSInteger i = 0; i < partNumber; i ++) {
+//        NSData *data = nil;
+//        if (i == partNumber - 1) {
+//            data = [fileHandle readDataToEndOfFile];
+//        }else {
+//            data = [fileHandle readDataOfLength:(NSUInteger)partLength];
+//            [fileHandle seekToFileOffset:partLength*(i+1)];
+//        }
+//        KS3UploadPartRequest *req = [[KS3UploadPartRequest alloc] initWithMultipartUpload:muilt];
+//        req.data = data;
+//        req.partNumber = (int32_t)i+1;
+//        req.contentLength = data.length;
+//        KS3UploadPartResponse *response11 = [[KS3Client initialize] uploadPart:req];
+//        XCTAssertEqual(200, response11.httpStatusCode);
+//        if (response11) {
+//            _upLoadCount++;
+//            if (partNumber == _upLoadCount) {
+//                NSLog(@"%ld",(long)partNumber);
+//                NSLog(@"%ld",(long)_upLoadCount);
+//                KS3ListPartsRequest *req2 = [[KS3ListPartsRequest alloc] initWithMultipartUpload:muilt];
+//                KS3ListPartsResponse *response2 = [[KS3Client initialize] listParts:req2];
+//                XCTAssertEqual(200, response2.httpStatusCode);
+//                KS3CompleteMultipartUploadRequest *req = [[KS3CompleteMultipartUploadRequest alloc] initWithMultipartUpload:muilt];
+//                NSLog(@"%@",response2.listResult.parts);
+//                for (KS3Part *part in response2.listResult.parts) {
+//                    [req addPartWithPartNumber:part.partNumber withETag:part.etag];
+//                }
+//                XCTAssertEqual(200, [((KS3CompleteMultipartUploadResponse *)[[KS3Client initialize] completeMultipartUpload:req]) httpStatusCode]);
+//            }
+//        }
+//    }
 }
 
 - (void)testDownLoad
 {
-    [[KS3Client initialize] downloadObjectWithBucketName:@"ggg" key:@"Test.jpg" downloadBeginBlock:^(KS3DownLoad *aDownload, NSURLResponse *responseHeaders) {
+    [[KS3Client initialize] downloadObjectWithBucketName:@"ggg" key:@"Test.jpg" tokenDelegate:self downloadBeginBlock:^(KS3DownLoad *aDownload, NSURLResponse *responseHeaders) {
         NSLog(@"start");
     } downloadFileCompleteion:^(KS3DownLoad *aDownload, NSString *filePath) {
         NSLog(@"%@",filePath);
@@ -249,6 +337,17 @@ NSString *const strSecretKey = @"1+RBTrWaeT6LaixUV5SGPFpeTa/wZEeZlGzYaZfr";
         NSLog(@"%@",[error description]);
         
     }];
+}
+
+- (NSDictionary *)dicParamsWithReq:(KS3Request *)request {
+    NSDictionary *dicParams = [NSDictionary dictionaryWithObjectsAndKeys:
+                               request.httpMethod,  @"http_method",
+                               request.contentMd5,  @"content_md5",
+                               request.contentType, @"content_type",
+                               request.strDate,     @"date",
+                               request.kSYHeader,   @"headers",
+                               request.kSYResource, @"resource", nil];
+    return dicParams;
 }
 
 @end

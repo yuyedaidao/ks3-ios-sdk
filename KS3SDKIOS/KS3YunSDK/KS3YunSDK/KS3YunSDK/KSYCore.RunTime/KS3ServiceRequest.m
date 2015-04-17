@@ -10,7 +10,6 @@
 #import "KS3AuthUtils.h"
 #import "KS3ClientException.h"
 
-
 @implementation KS3ServiceRequest
 
 - (instancetype)init
@@ -22,6 +21,9 @@
         _kSYHeader = @"";
         _kSYResource = @"";
         _host = @"";
+        _requestDate = [NSDate date];
+        _strDate = [KS3AuthUtils strDateWithDate:_requestDate andType:@"GMT"];
+        _strKS3Token = nil;
         _urlRequest = [KS3URLRequest new];}
     return self;
 }
@@ -37,6 +39,7 @@
     return _urlRequest;
     
 }
+
 - (KS3ClientException *)validate
 {
     return nil;

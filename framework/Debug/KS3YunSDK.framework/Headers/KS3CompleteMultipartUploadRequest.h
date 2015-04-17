@@ -8,7 +8,9 @@
 
 #import "KS3Request.h"
 #import "KS3MultipartUpload.h"
+
 @interface KS3CompleteMultipartUploadRequest : KS3Request
+
 @property (nonatomic, strong) NSString *key;
 @property (nonatomic, strong) NSString *uploadId;
 @property (nonatomic, strong) NSData *dataParts;

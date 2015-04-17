@@ -10,15 +10,17 @@
 #import "KS3SDKUtil.h"
 #import "KS3Credentials.h"
 #import "KS3AuthUtils.h"
-#import "KS3ServiceResponse.h"
-#import "KS3ClientException.h"
+#import "KS3Request.h"
+#import "KS3Response.h"
 
 @interface KS3DownLoad ()
 
 @property (strong, nonatomic) KS3Credentials *credentials;
 @end
 
-@implementation KS3DownLoad
+@implementation KS3DownLoad {
+    BOOL _isToken;
+}
 
 @synthesize delegate;
 @synthesize overwrite;
@@ -34,9 +36,11 @@
     {
         _credentials = credentials;
         url = aUrl;
+        _isToken = NO;
     }
     return self;
 }
+
 - (NSString *)applicationDocumentFilePath
 {
     NSArray  *documentPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
@@ -122,6 +126,7 @@
     NSString *strHost = [NSString stringWithFormat:@"http://%@.kss.ksyun.com/%@", _bucketName, _key];
     NSDate *curDate = getCurrentDate();
     NSString *strCanonResource = [NSString stringWithFormat:@"/%@/%@", _bucketName,_key];
+    
     NSString *strAuthorization = @"";
     if (_credentials.accessKey != nil && _credentials.secretKey != nil) {
         strAuthorization = [KS3AuthUtils strAuthorizationWithHTTPVerb:_credentials.accessKey
@@ -145,7 +150,10 @@
     [request addValue:range forHTTPHeaderField:@"Range"];
     
     // **** set token
+    NSLog(@"====== start ======");
+    _isToken = NO;
     if (_credentials == nil) {
+        NSLog(@"====== _credentials is empty ======");
         NSDictionary *dicParams = [NSDictionary dictionaryWithObjectsAndKeys:
                                    @"GET",  @"http_method",
                                    @"",     @"content_md5",
@@ -153,9 +161,32 @@
                                    strTime, @"date",
                                    @"",     @"headers",
                                    @"",     @"resource", nil];
-        NSString *strToken = [_tokenDelegate strTokenWithParams:dicParams];
-        [request setValue:strToken forHTTPHeaderField:@"Authorization"];
+        [_tokenDelegate strTokenWithParams:dicParams];
+        if (!_isToken) {
+            [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
+        }
+        NSLog(@"====== apply token ======");
+        [request setValue:_strKS3Token forHTTPHeaderField:@"Authorization"];
     }
+    [connection cancel];
+    connection = [[NSURLConnection alloc] initWithRequest:request delegate:self startImmediately:YES];
+}
+
+- (KS3Response *)startURLRequest:(NSMutableURLRequest *)urlRequest
+                      KS3Request:(KS3Request *)request
+                           token:(NSString *)strToken {
+    if (strToken != nil) {
+        [urlRequest setValue:strToken forHTTPHeaderField:@"Authorization"];
+        [connection cancel];
+        connection = [[NSURLConnection alloc] initWithRequest:urlRequest delegate:self startImmediately:YES];
+    }
+    return nil;
+}
+
+- (void)setKS3Token:(NSString *)ks3Token {
+    NSLog(@"====== token set success ======");
+    _isToken = YES;
+    _strKS3Token = ks3Token;
 }
 
 - (void)stop
