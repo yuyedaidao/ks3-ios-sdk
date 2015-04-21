@@ -12,6 +12,8 @@
 	<dict>
 		<key>4FCCAB3F651221CB1B9A88502FD291482C161431</key>
 		<string>github.com:ks3sdk/ks3-ios-sdk.git</string>
+		<key>CF3B3D28E943E76AD302935C66F20069196A747C</key>
+		<string>bitbucket.org:BluesChow/ks3sdkdebug.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>Demo/KS3iOSSDKDemo.xcodeproj</string>
@@ -19,6 +21,8 @@
 	<dict>
 		<key>4FCCAB3F651221CB1B9A88502FD291482C161431</key>
 		<string>../../..</string>
+		<key>CF3B3D28E943E76AD302935C66F20069196A747C</key>
+		<string>../../../../Documents/sdk-debug</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>github.com:ks3sdk/ks3-ios-sdk.git</string>
@@ -35,6 +39,14 @@
 			<string>4FCCAB3F651221CB1B9A88502FD291482C161431</string>
 			<key>IDESourceControlWCCName</key>
 			<string>ks3-ios-sdk</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>CF3B3D28E943E76AD302935C66F20069196A747C</string>
+			<key>IDESourceControlWCCName</key>
+			<string>sdk-debug</string>
 		</dict>
 	</array>
 </dict>

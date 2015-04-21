@@ -160,6 +160,7 @@
 {
     [urlRequest setValue:serviceRequest.strDate forHTTPHeaderField:@"Date"];
     NSString *strAuthorization = @"";
+    NSString *strResource = [self URLEncodedString:serviceRequest.kSYResource];
     if (credentials.accessKey != nil && credentials.secretKey != nil) {
         strAuthorization = [KS3AuthUtils KSYAuthorizationWithHTTPVerb:serviceRequest.credentials.accessKey
                                                             secretKey:serviceRequest.credentials.secretKey
@@ -168,11 +169,22 @@
                                                           contentType:serviceRequest.contentType
                                                                  date:serviceRequest.requestDate
                                                canonicalizedKssHeader:serviceRequest.kSYHeader
-                                                canonicalizedResource:serviceRequest.kSYResource];
+                                                canonicalizedResource:strResource];
     }
     [urlRequest setValue:strAuthorization forHTTPHeaderField:@"Authorization"];
-    [urlRequest setURL:[NSURL URLWithString:serviceRequest.host]];
+    [urlRequest setURL:[NSURL URLWithString:[self URLEncodedString:serviceRequest.host]]];
     [urlRequest setHTTPMethod:serviceRequest.httpMethod];
+}
+
++ (NSString *)URLEncodedString:(NSString *)str
+{
+    NSString *encodedString = (NSString *)
+    CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault,
+                                                              (CFStringRef)str,
+                                                              (CFStringRef)@"!$&'()*+,-./:;=?@_~%#[]",
+                                                              NULL,
+                                                              kCFStringEncodingUTF8));
+    return encodedString;
 }
 
 @end

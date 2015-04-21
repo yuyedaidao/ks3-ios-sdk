@@ -12,6 +12,7 @@
 		13215EA41A418A8B00B4AC64 /* test.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 13215EA31A418A8B00B4AC64 /* test.jpg */; };
 		13ECA35B1ADFB50500DB3AAE /* KS3YunSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 130B17001A5E3612006AB149 /* KS3YunSDK.framework */; };
 		13ECA35C1ADFB50500DB3AAE /* KS3YunSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 130B17001A5E3612006AB149 /* KS3YunSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		13ECA4151AE65F8C00DB3AAE /* test副 ¥ 本 $.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 13ECA4141AE65F8C00DB3AAE /* test副 ¥ 本 $.jpg */; };
 		13EECBE51A402237004199BD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13EECBE41A402237004199BD /* main.m */; };
 		13EECBE81A402237004199BD /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13EECBE71A402237004199BD /* AppDelegate.m */; };
 		13EECBEB1A402237004199BD /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13EECBEA1A402237004199BD /* ViewController.m */; };
@@ -56,6 +57,7 @@
 		13215E971A4123A800B4AC64 /* ObjectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ObjectViewController.m; sourceTree = "<group>"; };
 		13215E9F1A416F7D00B4AC64 /* bugDownload.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bugDownload.txt; sourceTree = SOURCE_ROOT; };
 		13215EA31A418A8B00B4AC64 /* test.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = test.jpg; sourceTree = SOURCE_ROOT; };
+		13ECA4141AE65F8C00DB3AAE /* test副 ¥ 本 $.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "test副 ¥ 本 $.jpg"; path = "../../../../Documents/sdk-debug/test副 ¥ 本 $.jpg"; sourceTree = "<group>"; };
 		13EECBDF1A402237004199BD /* KS3iOSSDKDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KS3iOSSDKDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13EECBE31A402237004199BD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		13EECBE41A402237004199BD /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -140,6 +142,7 @@
 		13EECBE21A402237004199BD /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				13ECA4141AE65F8C00DB3AAE /* test副 ¥ 本 $.jpg */,
 				13215EA31A418A8B00B4AC64 /* test.jpg */,
 				13215E9F1A416F7D00B4AC64 /* bugDownload.txt */,
 				13EECBE31A402237004199BD /* Info.plist */,
@@ -281,6 +284,7 @@
 			files = (
 				13EECBEE1A402237004199BD /* Main.storyboard in Resources */,
 				13215EA41A418A8B00B4AC64 /* test.jpg in Resources */,
+				13ECA4151AE65F8C00DB3AAE /* test副 ¥ 本 $.jpg in Resources */,
 				13EECBF31A402237004199BD /* LaunchScreen.xib in Resources */,
 				13EECBF01A402237004199BD /* Images.xcassets in Resources */,
 				13215EA01A416F7D00B4AC64 /* bugDownload.txt in Resources */,
@@ -439,6 +443,7 @@
 				INFOPLIST_FILE = KS3iOSSDKDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -454,6 +459,7 @@
 				INFOPLIST_FILE = KS3iOSSDKDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};

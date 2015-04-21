@@ -41,6 +41,17 @@
     return self;
 }
 
+- (NSString *)URLEncodedString:(NSString *)str
+{
+    NSString *encodedString = (NSString *)
+    CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault,
+                                                              (CFStringRef)str,
+                                                              (CFStringRef)@"!$&'()*+,-./:;=?@_~%#[]",
+                                                              NULL,
+                                                              kCFStringEncodingUTF8));
+    return encodedString;
+}
+
 - (NSString *)applicationDocumentFilePath
 {
     NSArray  *documentPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
@@ -126,6 +137,8 @@
     NSString *strHost = [NSString stringWithFormat:@"http://%@.kss.ksyun.com/%@", _bucketName, _key];
     NSDate *curDate = getCurrentDate();
     NSString *strCanonResource = [NSString stringWithFormat:@"/%@/%@", _bucketName,_key];
+    strCanonResource = [self URLEncodedString:strCanonResource];
+    strHost = [self URLEncodedString:strHost];
     
     NSString *strAuthorization = @"";
     if (_credentials.accessKey != nil && _credentials.secretKey != nil) {
