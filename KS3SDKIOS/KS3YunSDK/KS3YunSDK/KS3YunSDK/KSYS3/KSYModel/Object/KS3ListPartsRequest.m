@@ -15,8 +15,8 @@
 {
     if(self = [self init])
     {
-        self.bucket   = multipartUpload.bucket;
-        self.key      = multipartUpload.key;
+        self.bucket   = [self URLEncodedString:multipartUpload.bucket];
+        self.key      = [self URLEncodedString:multipartUpload.key];
         self.uploadId = multipartUpload.uploadId;
         self.contentMd5  = @"";
         self.contentType = @"";

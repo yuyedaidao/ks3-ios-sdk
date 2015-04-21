@@ -13,7 +13,7 @@
 {
     self = [super init];
     if (self) {
-        self.bucket = bucketName;
+        self.bucket = [self URLEncodedString:bucketName];
         self.httpMethod = kHttpMethodHead;
         self.contentMd5 = @"";
         self.contentType = @"";

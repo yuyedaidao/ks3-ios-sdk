@@ -32,6 +32,7 @@
 - (void)sign;
 - (KS3ClientException *)validate;
 - (void)cancel;
+- (NSString *)URLEncodedString:(NSString *)str;
 @end
 
 @protocol KingSoftServiceRequestDelegate <NSObject>

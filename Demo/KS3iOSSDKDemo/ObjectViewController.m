@@ -96,7 +96,7 @@
             /**
              *  如果是暂停下载，就需要把_downloadConnection的file做为参数传到download方法里面
              */
-            _downloader = [[KS3Client initialize] downloadObjectWithBucketName:kBucketName key:@"test副 ¥ 本 $.jpg" tokenDelegate:self downloadBeginBlock:^(KS3DownLoad *aDownload, NSURLResponse *responseHeaders) {
+            _downloader = [[KS3Client initialize] downloadObjectWithBucketName:kBucketName key:@"@#$%^&  .jpg" tokenDelegate:self downloadBeginBlock:^(KS3DownLoad *aDownload, NSURLResponse *responseHeaders) {
                 NSLog(@"1212221");
                 
             } downloadFileCompleteion:^(KS3DownLoad *aDownload, NSString *filePath) {
@@ -195,48 +195,11 @@
         case 3:
         {
             KS3PutObjectRequest *putObjRequest = [[KS3PutObjectRequest alloc] initWithName:kBucketName withAcl:nil grantAcl:nil];
-            NSString *fileName = [[NSBundle mainBundle] pathForResource:@"test副 ¥ 本 $" ofType:@"jpg"];
+            NSString *fileName = [[NSBundle mainBundle] pathForResource:@"+-" ofType:@"jpg"];
             putObjRequest.data = [NSData dataWithContentsOfFile:fileName options:NSDataReadingMappedIfSafe error:nil];
             putObjRequest.filename = [fileName lastPathComponent];
             putObjRequest.contentMd5 = [KS3SDKUtil base64md5FromData:putObjRequest.data];
             
-//            putObjRequest.callbackBody = @"objectKey=${key}&etag=${etag}&location=${kss-location}&name=${kss-price}";
-//            putObjRequest.callbackUrl = @"http://127.0.0.1:19090/";// success
-////            putObjRequest.callbackUrl = @"http://127.0.0.1:190910";// failed
-////            putObjRequest.callbackUrl = @"http://127.0.0.1:190910";// timeout
-//            putObjRequest.callbackParams = [NSDictionary dictionaryWithObjectsAndKeys:
-//                                            @"BeiJing", @"kss-location",
-//                                            @"$Ten",    @"kss-price",
-//                                            @"error",   @"kss", nil];
-//            [[KS3Client initialize] putObject:putObjRequest];
-            
-//            NSDictionary *dicParams = [self dicParamsWithReq:putObjRequest];
-//            
-//            NSURL *tokenUrl = [NSURL URLWithString:@"http://0.0.0.0:11911"];
-//            NSMutableURLRequest *tokenRequest = [[NSMutableURLRequest alloc] initWithURL:tokenUrl
-//                                                                             cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
-//                                                                         timeoutInterval:10];
-//            NSData *dataParams = [NSJSONSerialization dataWithJSONObject:dicParams options:NSJSONWritingPrettyPrinted error:nil];
-//            [tokenRequest setURL:tokenUrl];
-//            [tokenRequest setHTTPMethod:@"POST"];
-//            [tokenRequest setHTTPBody:dataParams];
-//            [NSURLConnection sendAsynchronousRequest:tokenRequest queue:[NSOperationQueue currentQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
-//                if (connectionError == nil) {
-//                    NSString *strToken = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-//                    NSLog(@"#### 获取token成功! #### token: %@", strToken);
-//                    putObjRequest.strKS3Token = strToken;
-//                    KS3PutObjectResponse *response = [[KS3Client initialize] putObject:putObjRequest];
-//                    if (response.httpStatusCode == 200) {
-//                        NSLog(@"Put object success");
-//                    }
-//                    else {
-//                        NSLog(@"Put object failed");
-//                    }
-//                }
-//                else {
-//                    NSLog(@"#### 获取token失败，error: %@", connectionError);
-//                }
-//            }];
             KS3PutObjectResponse *response = [[KS3Client initialize] putObject:putObjRequest];
             if (response.httpStatusCode == 200) {
                 NSLog(@"Put object success");
@@ -450,7 +413,7 @@
             break;
         case 9:
         {
-            NSString *strKey = @"upload_release.txt";
+            NSString *strKey = @"+-.txt";
             NSString *strFilePath = [[NSBundle mainBundle] pathForResource:@"bugDownload" ofType:@"txt"];
             _partSize = 5;
             _fileHandle = [NSFileHandle fileHandleForReadingAtPath:strFilePath];

@@ -34,8 +34,8 @@
 {
     if(self = [self init])
     {
-        self.key    = aKey;
-        self.bucket = aBucket;
+        self.key    = [self URLEncodedString:aKey];
+        self.bucket = [self URLEncodedString:aBucket];
         self.httpMethod = kHttpMethodPost;
         self.contentMd5 = @"";
         self.contentType = @"";

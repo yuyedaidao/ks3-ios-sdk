@@ -15,7 +15,7 @@
 {
     self = [super init];
     if (self) {
-        self.bucket = bucketName;
+        self.bucket = [self URLEncodedString:bucketName];
         self.httpMethod = kHttpMethodDelete;
         self.contentMd5 = @"";
         self.contentType = @"";
@@ -30,8 +30,8 @@
 {
     if(self = [super init])
     {
-        self.bucket   = multipartUpload.bucket;
-        self.key      = multipartUpload.key;
+        self.bucket   = [self URLEncodedString:multipartUpload.bucket];
+        self.key      = [self URLEncodedString:multipartUpload.key];
         self.uploadId = multipartUpload.uploadId;
         
         self.httpMethod = kHttpMethodDelete;

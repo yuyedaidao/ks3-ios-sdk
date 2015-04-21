@@ -18,7 +18,7 @@
 {
     self = [super init];
     if (self) {
-        self.bucket = bucketName;
+        self.bucket = [self URLEncodedString:bucketName];
         self.httpMethod = kHttpMethodPut;
         self.contentMd5 = nil;
         self.contentType = @"application/octet-stream";
@@ -120,6 +120,8 @@
         self.contentMd5 = [KS3SDKUtil base64md5FromData:self.data];
     }
     [self.urlRequest setValue:self.contentMd5 forHTTPHeaderField:kKS3HttpHdrContentMD5];
+    
+    _filename = [self URLEncodedString:_filename];
     self.kSYResource = [NSString stringWithFormat:@"%@/%@",self.kSYResource,_filename];
     self.host = [NSString stringWithFormat:@"%@/%@",self.host,_filename];
     [super configureURLRequest];

@@ -15,8 +15,8 @@
 {
     self = [super init];
     if (self) {
-        self.bucket = destBucketObj.bucketName;
-        self.key = destBucketObj.objKey;
+        self.bucket = [self URLEncodedString:destBucketObj.bucketName];
+        self.key = [self URLEncodedString:destBucketObj.objKey];
         self.httpMethod = kHttpMethodPut;
         self.contentMd5 = @"";
         self.contentType = @"";

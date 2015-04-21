@@ -42,14 +42,43 @@
 }
 
 - (NSString *)URLEncodedString:(NSString *)str
+
 {
-    NSString *encodedString = (NSString *)
-    CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault,
-                                                              (CFStringRef)str,
-                                                              (CFStringRef)@"!$&'()*+,-./:;=?@_~%#[]",
-                                                              NULL,
-                                                              kCFStringEncodingUTF8));
-    return encodedString;
+    
+    NSMutableString *output = [NSMutableString string];
+    
+    const unsigned char *source = (const unsigned char *)[str UTF8String];
+    
+    int sourceLen = strlen((const char *)source);
+    
+    for (int i = 0; i < sourceLen; ++i) {
+        
+        const unsigned char thisChar = source[i];
+        
+        if (thisChar == ' '){
+            
+            [output appendString:@"+"];
+            
+        } else if (thisChar == '.' || thisChar == '-' || thisChar == '_' || thisChar == '~' ||
+                   
+                   (thisChar >= 'a' && thisChar <= 'z') ||
+                   
+                   (thisChar >= 'A' && thisChar <= 'Z') ||
+                   
+                   (thisChar >= '0' && thisChar <= '9')) {
+            
+            [output appendFormat:@"%c", thisChar];
+            
+        } else {
+            
+            [output appendFormat:@"%%%02X", thisChar];
+            
+        }
+        
+    }
+    
+    return output;
+    
 }
 
 - (NSString *)applicationDocumentFilePath
@@ -134,11 +163,12 @@
     
     NSString *range = [NSString stringWithFormat:@"bytes=%llu-",offset];
     
+    _bucketName = [self URLEncodedString:_bucketName];
+    _key = [self URLEncodedString:_key];
+    
     NSString *strHost = [NSString stringWithFormat:@"http://%@.kss.ksyun.com/%@", _bucketName, _key];
     NSDate *curDate = getCurrentDate();
     NSString *strCanonResource = [NSString stringWithFormat:@"/%@/%@", _bucketName,_key];
-    strCanonResource = [self URLEncodedString:strCanonResource];
-    strHost = [self URLEncodedString:strHost];
     
     NSString *strAuthorization = @"";
     if (_credentials.accessKey != nil && _credentials.secretKey != nil) {
