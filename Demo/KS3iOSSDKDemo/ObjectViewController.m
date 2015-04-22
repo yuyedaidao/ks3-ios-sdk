@@ -14,6 +14,18 @@
 #define kObjectSpecial1 @"+-.jpg"
 #define kObjectSpecial2 @"+-.txt"
 
+//1 a b  + - * ~ ! @  # ^ :中 ～ 文.jpg
+#define kTestSpecial1 @"1 a b  + - * ~ ! @  # ^ & :\"中 ～ 文.jpg"//@"1 a b  + - * ~ ! @  # ^ & :\"中 ～ 文.jpg"
+#define kTestSpecial2 @"a 1 b  + - * ~ ! @  # ^ & :\"中 ～ 文"
+#define kTestSpecial3 @"+ - b  + - * ~ ! @  # ^ & :\"中 ～ 文"
+#define kTestSpecial4 @"  1 a b+ - * ~ ! @  # ^ & :\"中 ～ 文"
+#define kTestSpecial5 @"＋ a b  + - * ~ ! @  # ^ & :\"中 ～ 文"
+#define kTestSpecial6 @"－ a b  + - * ~ ! @  # ^ & :\"中 ～ 文"
+#define kTestSpecial7 @"—— a b  + - * ~ ! @  # ^ & :\"中 ～ 文"
+#define kTestSpecial8 @"¥ 1 a b + - * ~ ! @  # ^ & :\"中 ～ 文"
+#define kTestSpecial9 @"％ 1 a b + - * ~ ! @  # ^ & :\"中 ～ 文"
+#define kTestSpecial10 @"中 ～ 文—— 1 a b  + - * ~ ! @  # ^ & :\"中 ～ 文"
+
 #import "ObjectViewController.h"
 #import <KS3YunSDK/KS3YunSDK.h>
 
@@ -98,7 +110,7 @@
             /**
              *  如果是暂停下载，就需要把_downloadConnection的file做为参数传到download方法里面
              */
-            _downloader = [[KS3Client initialize] downloadObjectWithBucketName:kBucketName key:kObjectSpecial1 tokenDelegate:self downloadBeginBlock:^(KS3DownLoad *aDownload, NSURLResponse *responseHeaders) {
+            _downloader = [[KS3Client initialize] downloadObjectWithBucketName:kBucketName key:@"1 a b  + - * ~ ! @  # ^ :中 ～ 文.jpg" tokenDelegate:self downloadBeginBlock:^(KS3DownLoad *aDownload, NSURLResponse *responseHeaders) {
                 NSLog(@"1212221");
                 
             } downloadFileCompleteion:^(KS3DownLoad *aDownload, NSString *filePath) {
@@ -116,7 +128,7 @@
             break;
         case 1:
         {
-            KS3DeleteObjectRequest *deleteObjRequest = [[KS3DeleteObjectRequest alloc] initWithName:kBucketName withKeyName:kObjectSpecial1];
+            KS3DeleteObjectRequest *deleteObjRequest = [[KS3DeleteObjectRequest alloc] initWithName:kBucketName withKeyName:kTestSpecial1];
 //            deleteObjRequest.key = @"test.jpg";
 //            NSDictionary *dicParams = [self dicParamsWithReq:deleteObjRequest];
 //            
@@ -198,9 +210,9 @@
         case 3:
         {
             KS3PutObjectRequest *putObjRequest = [[KS3PutObjectRequest alloc] initWithName:kBucketName withAcl:nil grantAcl:nil];
-            NSString *fileName = [[NSBundle mainBundle] pathForResource:@"+-" ofType:@"jpg"];
+            NSString *fileName = [[NSBundle mainBundle] pathForResource:@"test" ofType:@"jpg"];
             putObjRequest.data = [NSData dataWithContentsOfFile:fileName options:NSDataReadingMappedIfSafe error:nil];
-            putObjRequest.filename = [fileName lastPathComponent];
+            putObjRequest.filename = @"1 a b  + - * ~ ! @  # ^ :中 ～ 文.jpg";//[fileName lastPathComponent];
             putObjRequest.contentMd5 = [KS3SDKUtil base64md5FromData:putObjRequest.data];
             
             KS3PutObjectResponse *response = [[KS3Client initialize] putObject:putObjRequest];
@@ -417,7 +429,7 @@
             break;
         case 9:
         {
-            NSString *strKey = @"+-.txt";
+            NSString *strKey = kObjectSpecial1;//@"+-.txt";
             NSString *strFilePath = [[NSBundle mainBundle] pathForResource:@"bugDownload" ofType:@"txt"];
             _partSize = 5;
             _fileHandle = [NSFileHandle fileHandleForReadingAtPath:strFilePath];
