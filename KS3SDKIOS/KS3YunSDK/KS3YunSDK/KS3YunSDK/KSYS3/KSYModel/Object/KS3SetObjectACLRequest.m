@@ -21,7 +21,7 @@
         self.contentMd5 = @"";
         self.contentType = @"";
         self.kSYHeader = @"";
-        self.kSYResource = [NSString stringWithFormat:@"/%@", bucketName];
+        self.kSYResource = [NSString stringWithFormat:@"/%@", self.bucket];
         self.host = @"";
         
         //
@@ -34,10 +34,6 @@
 }
 - (KS3URLRequest *)configureURLRequest
 {
-//    self.kSYHeader = [@"x-kss-acl:" stringByAppendingString:_acl.accessACL];
-//    self.kSYHeader = [NSString stringWithFormat:@"%@\n",self.kSYHeader];
-//    self.kSYResource = [NSString stringWithFormat:@"%@/%@?acl", self.kSYResource,_key];
-//    self.host = [NSString stringWithFormat:@"http://%@.kss.ksyun.com/%@?acl", self.bucket, _key];
     [super configureURLRequest];
     [self.urlRequest setHTTPMethod:kHttpMethodPut];
     [self.urlRequest setValue:_acl.accessACL forHTTPHeaderField:@"x-kss-acl"];

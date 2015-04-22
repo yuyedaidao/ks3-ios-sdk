@@ -42,7 +42,6 @@
 }
 
 - (NSString *)URLEncodedString:(NSString *)str
-
 {
     
     NSMutableString *output = [NSMutableString string];

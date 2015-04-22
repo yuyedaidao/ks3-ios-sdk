@@ -11,19 +11,6 @@
 #import "KS3BucketNameUtilities.h"
 @implementation KS3CreateBucketRequest
 
-//- (instancetype)init
-//{
-//    self = [super init];
-//    if (self) {
-//        self.httpMethod = kHttpMethodPut;
-//        self.contentMd5 = @"";
-//        self.contentType = @"";
-//        self.kSYHeader = @"";
-//        self.kSYResource = @"";
-//        self.host = @"";
-//    }
-//    return self;
-//}
 - (instancetype)initWithName:(NSString *)bucketName
 {
     self = [super init];
@@ -33,17 +20,12 @@
         self.contentMd5 = @"";
         self.contentType = @"";
         self.kSYHeader = @"";
-        self.kSYResource = [NSString stringWithFormat:@"/%@/", bucketName];
-        self.host = [NSString stringWithFormat:@"http://%@.kss.ksyun.com", bucketName];
+        self.kSYResource = [NSString stringWithFormat:@"/%@/", self.bucket];
+        self.host = [NSString stringWithFormat:@"http://%@.kss.ksyun.com", self.bucket];
     }
     return self;
 }
-//- (KS3URLRequest *)configureURLRequest
-//{
-//    self.kSYResource = [NSString stringWithFormat:@"%@/%@",self.kSYResource,self.bucket];
-//    [super configureURLRequest];
-//    return self.urlRequest;
-//}
+
 - (KS3ClientException *)validate
 {
     KS3ClientException *clientException = [super validate];

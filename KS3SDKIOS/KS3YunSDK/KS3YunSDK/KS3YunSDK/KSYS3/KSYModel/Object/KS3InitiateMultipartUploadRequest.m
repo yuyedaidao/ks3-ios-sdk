@@ -42,7 +42,7 @@
         self.kSYHeader = @"";
         self.acl = acl;
         self.arrGrantAcl = arrGrantAcl;
-        self.kSYResource = [NSString stringWithFormat:@"/%@", aBucket];
+        self.kSYResource = [NSString stringWithFormat:@"/%@", self.bucket];
         self.host = @"";
         
         //
@@ -92,17 +92,9 @@
     self.arrGrantAcl = arrGrantAcl;
 }
 
-//-(void)setExpires:(int32_t)exp
-//{
-//    _expires    = exp;
-//    _expiresSet = YES;
-//}
-
 -(NSMutableURLRequest *)configureURLRequest
 {
-//    self.kSYResource = [NSString stringWithFormat:@"%@/%@?uploads",self.kSYResource,_key];
     self.host = [NSString stringWithFormat:@"http://%@.kss.ksyun.com/%@?uploads", self.bucket, self.key];
-//    self.host = [NSString stringWithFormat:@"http://115.231.96.27:8080/%@/%@?uploads", self.bucket, self.key];
     
     if (_acl != nil) {
         [self.urlRequest setValue:_acl.accessACL forHTTPHeaderField:@"x-kss-acl"];

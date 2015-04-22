@@ -11,10 +11,6 @@
 @implementation KS3SetACLResponse
 -(void)processBody
 {
-//    NSLog(@"KSS3BucketACLResponse %d",self.httpStatusCode);
-//    NSLog(@"KSS3BucketACLResponse  %@",body);
-//    NSLog(@" 0 0 0 0 0 %@",[self.error description]);
-
     
 }
 

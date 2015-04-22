@@ -12,11 +12,6 @@
 
 -(void)processBody
 {
-  
-//    NSLog(@"KSS3SetObjectACLResponse %d",self.httpStatusCode);
-//    NSLog(@"KSS3SetObjectACLResponse  %@",body);
-//    NSLog(@" 0 0 0 0 0 %@",[self.error description]);
-
 }
 
 @end

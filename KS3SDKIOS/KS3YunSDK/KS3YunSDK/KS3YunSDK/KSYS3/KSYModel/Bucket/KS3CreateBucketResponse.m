@@ -11,8 +11,6 @@
 @implementation KS3CreateBucketResponse
 -(void)processBody
 {
-//    NSLog(@"%d",self.httpStatusCode);
-//    NSLog(@"%@",body);
-//    NSLog(@" 0 0 0 0 0 %@",[self.error description]);
+    
 }
 @end

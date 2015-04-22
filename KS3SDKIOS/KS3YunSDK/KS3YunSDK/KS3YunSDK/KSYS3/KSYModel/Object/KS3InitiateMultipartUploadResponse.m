@@ -13,11 +13,6 @@
 
 -(void)processBody
 {
-    
-//    NSLog(@"KSS3InitiateMultipartUploadResponse %d",self.httpStatusCode);
-//    NSLog(@"KSS3InitiateMultipartUploadResponse  %@",body);
-//    NSLog(@" 0 0 0 0 0 %@",[self.error description]);
-    
     KS3InitiateMultipartUploadXMLParser *xmlParser = [[KS3InitiateMultipartUploadXMLParser alloc] init];
     [xmlParser kSS3XMLarse:body];
     _multipartUpload = xmlParser.listBuctkResult.multipartUpload;

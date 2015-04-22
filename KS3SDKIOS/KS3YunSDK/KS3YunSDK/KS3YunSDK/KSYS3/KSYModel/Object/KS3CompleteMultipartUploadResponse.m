@@ -13,11 +13,6 @@
 {
     
     NSLog(@"KSS3CompleteMultipartUploadResponse %d",self.httpStatusCode);
-////    NSLog(@"KSS3CompleteMultipartUploadResponse  %@",body);
-//    NSLog(@" 0 0 0 0 0 %@",[self.error description]);
-    
-    
-    
 }
 
 @end

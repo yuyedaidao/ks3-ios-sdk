@@ -11,6 +11,8 @@
 #define kObjectName @"Count_1.txt"//@"test_download.txt"//@"bug.txt"
 #define kDesBucketName @"blues11"//@"ggg"//
 #define kDesObjectName @"bug_copy.txt"
+#define kObjectSpecial1 @"+-.jpg"
+#define kObjectSpecial2 @"+-.txt"
 
 #import "ObjectViewController.h"
 #import <KS3YunSDK/KS3YunSDK.h>
@@ -96,7 +98,7 @@
             /**
              *  如果是暂停下载，就需要把_downloadConnection的file做为参数传到download方法里面
              */
-            _downloader = [[KS3Client initialize] downloadObjectWithBucketName:kBucketName key:@"@#$%^&  .jpg" tokenDelegate:self downloadBeginBlock:^(KS3DownLoad *aDownload, NSURLResponse *responseHeaders) {
+            _downloader = [[KS3Client initialize] downloadObjectWithBucketName:kBucketName key:kObjectSpecial1 tokenDelegate:self downloadBeginBlock:^(KS3DownLoad *aDownload, NSURLResponse *responseHeaders) {
                 NSLog(@"1212221");
                 
             } downloadFileCompleteion:^(KS3DownLoad *aDownload, NSString *filePath) {
@@ -114,7 +116,7 @@
             break;
         case 1:
         {
-            KS3DeleteObjectRequest *deleteObjRequest = [[KS3DeleteObjectRequest alloc] initWithName:kBucketName withKeyName:@"test.jpg"];
+            KS3DeleteObjectRequest *deleteObjRequest = [[KS3DeleteObjectRequest alloc] initWithName:kBucketName withKeyName:kObjectSpecial1];
 //            deleteObjRequest.key = @"test.jpg";
 //            NSDictionary *dicParams = [self dicParamsWithReq:deleteObjRequest];
 //            
@@ -154,7 +156,7 @@
             break;
         case 2:
         {
-            KS3HeadObjectRequest *headObjRequest = [[KS3HeadObjectRequest alloc] initWithName:kBucketName withKeyName:kObjectName];
+            KS3HeadObjectRequest *headObjRequest = [[KS3HeadObjectRequest alloc] initWithName:kBucketName withKeyName:kObjectSpecial1];
 //            headObjRequest.key = kObjectName;
 //            NSDictionary *dicParams = [self dicParamsWithReq:headObjRequest];
 //            
@@ -184,6 +186,7 @@
 //                }
 //            }];
             KS3HeadObjectResponse *response = [[KS3Client initialize] headObject:headObjRequest];
+            NSString *str = [[NSString alloc] initWithData:response.body encoding:NSUTF8StringEncoding];
             if (response.httpStatusCode == 200) {
                 NSLog(@"Head object success!");
             }
@@ -211,8 +214,8 @@
             break;
         case 4:
         {
-            KS3BucketObject *destBucketObj = [[KS3BucketObject alloc] initWithBucketName:kDesBucketName keyName:kDesObjectName];
-            KS3BucketObject *sourceBucketObj = [[KS3BucketObject alloc] initWithBucketName:kBucketName keyName:kObjectName];
+            KS3BucketObject *destBucketObj = [[KS3BucketObject alloc] initWithBucketName:kDesBucketName keyName:kObjectSpecial1];
+            KS3BucketObject *sourceBucketObj = [[KS3BucketObject alloc] initWithBucketName:kBucketName keyName:kObjectSpecial1];
             KS3PutObjectCopyRequest *request = [[KS3PutObjectCopyRequest alloc] initWithName:destBucketObj sourceBucketObj:sourceBucketObj];
 //            request.key = kDesObjectName;
 //            request.strSourceBucket = kBucketName;
@@ -246,6 +249,7 @@
 //                }
 //            }];
             KS3PutObjectCopyResponse *response = [[KS3Client initialize] putObjectCopy:request];
+            NSString *str = [[NSString alloc] initWithData:response.body encoding:NSUTF8StringEncoding];
             if (response.httpStatusCode == 200) {
                 NSLog(@"Put object copy success!");
             }
@@ -261,7 +265,7 @@
             break;
         case 6:
         {
-            KS3GetObjectACLRequest  *getObjectACLRequest = [[KS3GetObjectACLRequest alloc] initWithName:kBucketName withKeyName:kObjectName];
+            KS3GetObjectACLRequest  *getObjectACLRequest = [[KS3GetObjectACLRequest alloc] initWithName:kBucketName withKeyName:kObjectSpecial1];
 //            getObjectACLRequest.key = kObjectName;
             
 //            NSDictionary *dicParams = [self dicParamsWithReq:getObjectACLRequest];
@@ -324,7 +328,7 @@
         {
             KS3AccessControlList *acl = [[KS3AccessControlList alloc] init];
             [acl setContronAccess:KingSoftYun_Permission_Public_Read_Write];
-            KS3SetObjectACLRequest *setObjectACLRequest = [[KS3SetObjectACLRequest alloc] initWithName:kBucketName withKeyName:kObjectName acl:acl];
+            KS3SetObjectACLRequest *setObjectACLRequest = [[KS3SetObjectACLRequest alloc] initWithName:kBucketName withKeyName:kObjectSpecial1 acl:acl];
 //            setObjectACLRequest.key = kObjectName;
 //            setObjectACLRequest.acl = acl;
             
@@ -370,7 +374,7 @@
             acl.identifier = kObjectName;
             acl.displayName = @"blues111DisplayName";
             [acl setGrantControlAccess:KingSoftYun_Grant_Permission_Read];
-            KS3SetObjectGrantACLRequest *setObjectGrantACLRequest = [[KS3SetObjectGrantACLRequest alloc] initWithName:kBucketName withKeyName:kObjectName grantAcl:acl];
+            KS3SetObjectGrantACLRequest *setObjectGrantACLRequest = [[KS3SetObjectGrantACLRequest alloc] initWithName:kBucketName withKeyName:kObjectSpecial1 grantAcl:acl];
 //            setObjectGrantACLRequest.key = kObjectName;
             
 //            setObjectGrantACLRequest.acl = acl;

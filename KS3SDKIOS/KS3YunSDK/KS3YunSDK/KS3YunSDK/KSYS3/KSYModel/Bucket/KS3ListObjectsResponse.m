@@ -17,11 +17,5 @@
     KS3ListObjectsXMLPrarser *xmlParser = [[KS3ListObjectsXMLPrarser alloc] init];
     [xmlParser kSS3XMLarse:body];
     _listBucketsResult = xmlParser.listBuctkResult;
-//    for (KSS3ObjectSummary *objectSummary in _listBucketsResult.objectSummaries) {
-//        NSLog(@"%@",objectSummary.Key);
-//         NSLog(@"%@",objectSummary.owner.ID);
-//    }
-
-
 }
 @end

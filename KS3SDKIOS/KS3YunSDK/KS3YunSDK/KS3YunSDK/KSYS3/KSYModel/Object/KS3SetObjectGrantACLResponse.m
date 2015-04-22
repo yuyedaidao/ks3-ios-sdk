@@ -12,9 +12,7 @@
 
 - (void)processBody
 {
-//    NSLog(@"KSS3SetObjectACLResponse %d",self.httpStatusCode);
-//    NSLog(@"KSS3SetObjectACLResponse  %@, %@",body, [[NSString alloc] initWithData:body encoding:NSUTF8StringEncoding]);
-//    NSLog(@" 0 0 0 0 0 %@",[self.error description]);
+    
 }
 
 @end

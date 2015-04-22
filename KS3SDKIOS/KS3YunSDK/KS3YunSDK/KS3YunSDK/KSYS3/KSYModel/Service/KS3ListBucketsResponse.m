@@ -16,14 +16,5 @@
     KS3ListBucketsXMLParser *xmlParser = [[KS3ListBucketsXMLParser alloc] init];
     [xmlParser kSS3XMLarse:body];
     _listBucketsResult = xmlParser.listBuctkResult;
-//    NSLog(@"－－－－－%@",xmlParser.listBuctkResult);
-//    NSLog(@"%@",xmlParser.listBuctkResult.owner.ID);
-//    NSLog(@"%@",xmlParser.listBuctkResult.owner.displayName);
-//    NSLog(@"%@",xmlParser.listBuctkResult.buckets);
-//    for (KSS3Buckket *bucket in xmlParser.listBuctkResult.buckets) {
-//        NSLog(@"%@",bucket.name);
-//        NSLog(@"%@",bucket.creationDate);
-//        
-//    }
 }
 @end

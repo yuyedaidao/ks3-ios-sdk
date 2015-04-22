@@ -20,8 +20,8 @@
         self.contentMd5 = @"";
         self.contentType = @"";
         self.kSYHeader = @"";
-        self.kSYResource = [NSString stringWithFormat:@"/%@/?acl", bucketName];
-        self.host = [NSString stringWithFormat:@"http://%@.kss.ksyun.com/?acl", bucketName];
+        self.kSYResource = [NSString stringWithFormat:@"/%@/?acl", self.bucket];
+        self.host = [NSString stringWithFormat:@"http://%@.kss.ksyun.com/?acl", self.bucket];
     }
     return self;
 }

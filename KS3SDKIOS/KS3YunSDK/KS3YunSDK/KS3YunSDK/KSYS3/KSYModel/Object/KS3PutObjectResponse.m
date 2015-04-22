@@ -11,11 +11,7 @@
 @implementation KS3PutObjectResponse
 -(void)processBody
 {
-//    NSLog(@"KSS3PutObjectResponse %d",self.httpStatusCode);
-//    NSLog(@"KSS3PutObjectResponse  %@",body);
-//    NSLog(@"KSS3PutObjectResponse 0 0 0 0 0 %@",[self.error description]);
-//    NSLog(@"KSS3PutObjectResponse %@",self.responseHeader);
-    
+
 }
 
 

@@ -21,8 +21,8 @@
         self.contentMd5 = @"";
         self.contentType = @"";
         self.kSYHeader = @"";
-        self.kSYResource =  [NSString stringWithFormat:@"/%@", bucketName];
-        self.host = [NSString stringWithFormat:@"http://%@.kss.ksyun.com", bucketName];
+        self.kSYResource =  [NSString stringWithFormat:@"/%@", self.bucket];
+        self.host = [NSString stringWithFormat:@"http://%@.kss.ksyun.com", self.bucket];
         
         //
         self.host = [NSString stringWithFormat:@"%@/%@",self.host,_key];
@@ -33,8 +33,6 @@
 
 - (KS3URLRequest *)configureURLRequest
 {
-//    self.host = [NSString stringWithFormat:@"%@/%@",self.host,_key];
-//    self.kSYResource = [NSString stringWithFormat:@"%@/%@",self.kSYResource,_key];
     [super configureURLRequest];
     
     // **** http header

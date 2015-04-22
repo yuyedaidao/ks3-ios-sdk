@@ -39,7 +39,6 @@
 -(NSMutableURLRequest *)configureURLRequest
 {
     self.host = [NSString stringWithFormat:@"http://%@.kss.ksyun.com/%@?partNumber=%d&uploadId=%@", self.bucket, _key, _partNumber, _multipartUpload.uploadId];
-//    self.host = [NSString stringWithFormat:@"http://115.231.96.27:8080/%@/%@?partNumber=%d&uploadId=%@", self.bucket, _key, _partNumber, _multipartUpload.uploadId];
     
     if (nil == self.contentMd5 && YES == self.generateMD5 && self.data != nil) {
         self.contentMd5 = [KS3SDKUtil base64md5FromData:self.data];

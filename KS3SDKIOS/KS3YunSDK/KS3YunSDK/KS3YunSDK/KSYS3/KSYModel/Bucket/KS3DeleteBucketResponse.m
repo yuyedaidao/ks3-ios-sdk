@@ -12,9 +12,7 @@
 
 -(void)processBody
 {
-//    NSLog(@"KSS3DeleteBucketResponse %d",self.httpStatusCode);
-//    NSLog(@"KSS3DeleteBucketResponse  %@",body);
-//    NSLog(@" 0 0 0 0 0 %@",[self.error description]);
+    
 }
 
 @end

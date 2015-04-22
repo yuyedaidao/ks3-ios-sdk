@@ -11,10 +11,6 @@
 @implementation KS3UploadPartResponse
 -(void)processBody
 {
-//    NSLog(@"KSS3UploadPartResponse %d",self.httpStatusCode);
-//    NSLog(@"KSS3UploadPartResponse  %@",body);
-//    NSLog(@" 0 0 0 0 0 %@",[self.error description]);
-//    NSLog(@"%@",self.responseHeader);
     
 }
 @end

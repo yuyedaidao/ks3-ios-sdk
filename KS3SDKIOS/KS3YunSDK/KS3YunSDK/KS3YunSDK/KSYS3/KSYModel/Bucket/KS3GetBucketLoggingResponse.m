@@ -11,9 +11,6 @@
 @implementation KS3GetBucketLoggingResponse
 -(void)processBody
 {
-//    NSLog(@"KSS3GetBucketLoggingResponse %d",self.httpStatusCode);
-//    NSLog(@"KSS3GetBucketLoggingResponse  %@",body);
-//    NSLog(@" 0 0 0 0 0 %@",[self.error description]);
-    
+  
 }
 @end

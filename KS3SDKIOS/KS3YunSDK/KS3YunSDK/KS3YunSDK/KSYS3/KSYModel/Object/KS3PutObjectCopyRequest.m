@@ -25,8 +25,8 @@
         self.host = [NSString stringWithFormat:@"http://%@.kss.ksyun.com", self.bucket];
         
         // ****
-        self.strSourceBucket = sourBucketObj.bucketName;
-        self.strSourceObject = sourBucketObj.objKey;
+        self.strSourceBucket = [self URLEncodedString:sourBucketObj.bucketName];
+        self.strSourceObject = [self URLEncodedString:sourBucketObj.objKey];
         NSString *strValue = [NSString stringWithFormat:@"/%@/%@", _strSourceBucket, _strSourceObject];
         self.kSYHeader = [@"x-kss-copy-source:" stringByAppendingString:strValue];
         self.kSYHeader = [self.kSYHeader stringByAppendingString:@"\n"];
@@ -39,10 +39,6 @@
 - (KS3URLRequest *)configureURLRequest
 {
     NSString *strValue = [NSString stringWithFormat:@"/%@/%@", _strSourceBucket, _strSourceObject];
-//    self.kSYHeader = [@"x-kss-copy-source:" stringByAppendingString:strValue];
-//    self.kSYHeader = [self.kSYHeader stringByAppendingString:@"\n"];
-//    self.host = [NSString stringWithFormat:@"%@/%@",self.host,_key];
-//    self.kSYResource = [NSString stringWithFormat:@"%@/%@",self.kSYResource,_key];
     
     [super configureURLRequest];
     [self.urlRequest setValue:strValue forHTTPHeaderField:@"x-kss-copy-source"];
