@@ -203,7 +203,6 @@ static NSTimeInterval const KingSoftYun_RequestTimeout = 60;
 - (KS3MultipartUpload *)initiateMultipartUploadWithRequest:(KS3InitiateMultipartUploadRequest *)request
 {
     KS3InitiateMultipartUploadResponse *response = (KS3InitiateMultipartUploadResponse *)[self invoke:request];
-    NSString *strBody = [[NSString alloc] initWithData:response.body encoding:NSUTF8StringEncoding];
     return response.multipartUpload;
 }
 
@@ -333,10 +332,7 @@ static NSTimeInterval const KingSoftYun_RequestTimeout = 60;
     }
     NSLog(@"====== downloadObjectWithBucketName ======");
     NSString *strHost = [NSString stringWithFormat:@"http://%@.kss.ksyun.com/%@", bucketName, key];
-    KS3DownLoad *downLoad = [[KS3DownLoad alloc] initWithUrl:strHost credentials:_credentials];
-    downLoad.tokenDelegate = tokenDelegate;
-    downLoad.bucketName = bucketName;
-    downLoad.key = key;
+    KS3DownLoad *downLoad = [[KS3DownLoad alloc] initWithUrl:strHost credentials:_credentials :bucketName :key];
     downLoad.downloadBeginBlock = downloadBeginBlock;
     downLoad.downloadFileCompleteionBlock = downloadFileCompleteion;
     downLoad.downloadProgressChangeBlock = downloadProgressChangeBlock;

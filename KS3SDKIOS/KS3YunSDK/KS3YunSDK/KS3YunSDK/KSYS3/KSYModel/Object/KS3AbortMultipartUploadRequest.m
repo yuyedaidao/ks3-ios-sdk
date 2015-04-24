@@ -45,9 +45,12 @@
     return self;
 }
 
+- (void)setCompleteRequest
+{
+      self.kSYResource = [NSString stringWithFormat:@"%@/%@?uploadId=%@", self.kSYResource, _key, self.uploadId];
+}
 - (KS3URLRequest *)configureURLRequest{
     
-    self.kSYResource = [NSString stringWithFormat:@"%@/%@?uploadId=%@", self.kSYResource, _key, self.uploadId];
     self.host = [NSString stringWithFormat:@"%@/%@?uploadId=%@",self.host,_key, _uploadId];
     [super configureURLRequest];
     return self.urlRequest;

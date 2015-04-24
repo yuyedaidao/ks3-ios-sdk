@@ -18,7 +18,6 @@
 @property (nonatomic, strong) NSString *uploadId;
 @property (nonatomic, strong) NSData *data;
 @property (nonatomic, strong) NSString *key;
-
-- (id)initWithMultipartUpload:(KS3MultipartUpload *)multipartUpload;
+-(id)initWithMultipartUpload:(KS3MultipartUpload *)multipartUpload partNumber:(int32_t)partNumber data:(NSData *)data generateMD5:(BOOL)generateMD5;
 
 @end

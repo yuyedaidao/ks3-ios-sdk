@@ -11,7 +11,7 @@
 #import "KS3Constants.h"
 @implementation KS3SetACLRequest
 
-- (instancetype)initWithName:(NSString *)bucketName
+- (instancetype)initWithName:(NSString *)bucketName accessACL:(KS3AccessControlList *)accessACL
 {
     self = [super init];
     if (self) {
@@ -22,14 +22,18 @@
         self.kSYHeader = @"";
         self.kSYResource =  [NSString stringWithFormat:@"/%@/?acl", self.bucket];
         self.host = [NSString stringWithFormat:@"http://%@.kss.ksyun.com/?acl", self.bucket];
+        
+        if (accessACL) {
+            self.kSYHeader = [@"x-kss-acl:" stringByAppendingString:_acl.accessACL];
+        }
+        self.kSYHeader = [NSString stringWithFormat:@"%@\n",self.kSYHeader];
     }
     return self;
 }
 
 - (KS3URLRequest *)configureURLRequest
 {
-    self.kSYHeader = [@"x-kss-acl:" stringByAppendingString:_acl.accessACL];
-    self.kSYHeader = [NSString stringWithFormat:@"%@\n",self.kSYHeader];
+    
     [super configureURLRequest];
     [self.urlRequest setValue:_acl.accessACL forHTTPHeaderField:@"x-kss-acl"];
     return self.urlRequest;

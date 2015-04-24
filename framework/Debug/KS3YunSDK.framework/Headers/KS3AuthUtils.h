@@ -31,6 +31,8 @@ typedef enum{
                     canonicalizedKssHeader:(NSString *)strHeaders
                      canonicalizedResource:(NSString *)strResource;
 
+
+
 + (NSString *)strDateWithDate:(NSDate *)date andType:(NSString *)strType;
 
 + (void)signRequestV4:(KS3ServiceRequest *)serviceRequest urlRequest:(KS3URLRequest *)urlRequest headers:(NSMutableDictionary *)headers payload:(NSString *)payload credentials:(KS3Credentials *)credentials;

@@ -8,7 +8,8 @@
 
 #import "ListBucketViewController.h"
 #import <KS3YunSDK/KS3YunSDK.h>
-
+#import "KS3Util.h"
+#import "AppDelegate.h"
 @interface ListBucketViewController () <UIActionSheetDelegate>
 
 @property (nonatomic, strong) IBOutlet UITableView *bucketListTable;
@@ -34,29 +35,8 @@
 
 - (void)listBuckets {
     KS3ListBucketsRequest *listBucketRequest = [[KS3ListBucketsRequest alloc] init];
-    
-    // **** use token
-//    NSDictionary *dicParams = [self dicParamsWithReq:listBucketRequest];
-//    NSURL *tokenUrl = [NSURL URLWithString:@"http://0.0.0.0:11911"];
-//    NSMutableURLRequest *tokenRequest = [[NSMutableURLRequest alloc] initWithURL:tokenUrl
-//                                                                     cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
-//                                                                 timeoutInterval:10];
-//    NSData *dataParams = [NSJSONSerialization dataWithJSONObject:dicParams options:NSJSONWritingPrettyPrinted error:nil];
-//    [tokenRequest setURL:tokenUrl];
-//    [tokenRequest setHTTPMethod:@"POST"];
-//    [tokenRequest setHTTPBody:dataParams];
-//    [NSURLConnection sendAsynchronousRequest:tokenRequest queue:[NSOperationQueue currentQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
-//        if (connectionError == nil) {
-//            NSString *strToken = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-//            NSLog(@"#### 获取token成功! #### token: %@", strToken);
-//            listBucketRequest.strKS3Token = strToken;
-//            _arrBuckets = [[KS3Client initialize] listBuckets:(KS3ListBucketsRequest *)listBucketRequest];
-//            [_bucketListTable reloadData];
-//        }
-//        else {
-//            NSLog(@"#### 获取token失败，error: %@", connectionError);
-//        }
-//    }];
+    [listBucketRequest setCompleteRequest];
+//    [listBucketRequest setStrKS3Token:[KS3Util getAuthorization:listBucketRequest]];
     
     // **** use ak/sk
     _arrBuckets = [[KS3Client initialize] listBuckets:(KS3ListBucketsRequest *)listBucketRequest];
@@ -182,10 +162,11 @@
             default:
                 break;
         }
-        KS3SetACLRequest *setACLRequest = [[KS3SetACLRequest alloc] initWithName:bucketObj.name];
         KS3AccessControlList *acl = [[KS3AccessControlList alloc] init];
         [acl setContronAccess:cannedACLType];
-        setACLRequest.acl = acl;
+        KS3SetACLRequest *setACLRequest = [[KS3SetACLRequest alloc] initWithName:bucketObj.name accessACL:acl] ;
+       
+//        setACLRequest.acl = acl;
         NSDictionary *dicParams = [self dicParamsWithReq:setACLRequest];
         NSURL *tokenUrl = [NSURL URLWithString:@"http://0.0.0.0:11911"];
         NSMutableURLRequest *tokenRequest = [[NSMutableURLRequest alloc] initWithURL:tokenUrl

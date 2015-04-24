@@ -17,20 +17,28 @@
 
 @implementation KS3UploadPartRequest
 
--(id)initWithMultipartUpload:(KS3MultipartUpload *)multipartUpload
+- (id)initWithMultipartUpload:(KS3MultipartUpload *)multipartUpload partNumber:(int32_t)partNumber data:(NSData *)data generateMD5:(BOOL)generateMD5
 {
     if(self = [super init])
     {
         self.bucket   = [self URLEncodedString:multipartUpload.bucket];
         self.key      = [self URLEncodedString:multipartUpload.key];
         self.uploadId = multipartUpload.uploadId;
-        
+        _data = data;
+        _partNumber = partNumber;
+        _generateMD5 = generateMD5;
         self.contentMd5 = nil;
         _generateMD5 = YES;
         _multipartUpload = multipartUpload;
         self.contentType = @"binary/octet-stream";
         self.kSYHeader = @"";
         self.httpMethod = kHttpMethodPut;
+        self.host = [NSString stringWithFormat:@"http://%@.kss.ksyun.com/%@?partNumber=%d&uploadId=%@", self.bucket, _key, _partNumber, _multipartUpload.uploadId];
+        
+        if (nil == self.contentMd5 && YES == self.generateMD5 && self.data != nil) {
+            self.contentMd5 = [KS3SDKUtil base64md5FromData:self.data];
+        }
+        self.kSYResource = [NSString stringWithFormat:@"/%@/%@?%@=%d&%@=%@", self.bucket,self.key, kKS3QueryParamPartNumber, self.partNumber, kKS3QueryParamUploadId, self.uploadId];
     }
     
     return self;
@@ -38,12 +46,7 @@
 
 -(NSMutableURLRequest *)configureURLRequest
 {
-    self.host = [NSString stringWithFormat:@"http://%@.kss.ksyun.com/%@?partNumber=%d&uploadId=%@", self.bucket, _key, _partNumber, _multipartUpload.uploadId];
     
-    if (nil == self.contentMd5 && YES == self.generateMD5 && self.data != nil) {
-        self.contentMd5 = [KS3SDKUtil base64md5FromData:self.data];
-    }
-    self.kSYResource = [NSString stringWithFormat:@"/%@/%@?%@=%d&%@=%@", self.bucket,self.key, kKS3QueryParamPartNumber, self.partNumber, kKS3QueryParamUploadId, self.uploadId];
     
     [super configureURLRequest];
     if (self.contentLength < 1) {

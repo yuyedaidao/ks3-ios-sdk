@@ -12,6 +12,8 @@
 
 #import "GetAllObjectsViewController.h"
 #import <KS3YunSDK/KS3YunSDK.h>
+#import "KS3Util.h"
+#import "AppDelegate.h"
 
 @interface GetAllObjectsViewController () <UIActionSheetDelegate>
 
@@ -36,40 +38,9 @@
 
 - (void)listObjects {
     KS3ListObjectsRequest *listObjectRequest = [[KS3ListObjectsRequest alloc] initWithName:kBucketName];
-//    NSDictionary *dicParams = [self dicParamsWithReq:listObjectRequest];
-//    
-//    NSURL *tokenUrl = [NSURL URLWithString:@"http://0.0.0.0:11911"];
-//    NSMutableURLRequest *tokenRequest = [[NSMutableURLRequest alloc] initWithURL:tokenUrl
-//                                                                     cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
-//                                                                 timeoutInterval:10];
-//    NSData *dataParams = [NSJSONSerialization dataWithJSONObject:dicParams options:NSJSONWritingPrettyPrinted error:nil];
-//    [tokenRequest setURL:tokenUrl];
-//    [tokenRequest setHTTPMethod:@"POST"];
-//    [tokenRequest setHTTPBody:dataParams];
-//    [NSURLConnection sendAsynchronousRequest:tokenRequest queue:[NSOperationQueue currentQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
-//        if (connectionError == nil) {
-//            NSString *strToken = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-//            NSLog(@"#### 获取token成功! #### token: %@", strToken);
-//            listObjectRequest.strKS3Token = strToken;
-//            KS3ListObjectsResponse *response = [[KS3Client initialize] listObjects:listObjectRequest];
-//            _result = response.listBucketsResult;
-//            _arrObjects = response.listBucketsResult.objectSummaries;
-//            [_objectTable reloadData];
-//            
-//            for (KS3ObjectSummary *objectSummary in _arrObjects) {
-//                NSLog(@"%@",objectSummary.Key);
-//                NSLog(@"%@",objectSummary.owner.ID);
-//            }
-//            NSLog(@"%@",_result.bucketName);
-//            NSLog(@"%ld",(long)_result.objectSummaries.count);
-//            NSLog(@"%ld",(long)_result.commonPrefixes.count);
-//            
-//            NSLog(@"KSS3ListObjectsResponse %d",response.httpStatusCode);
-//        }
-//        else {
-//            NSLog(@"#### 获取token失败，error: %@", connectionError);
-//        }
-//    }];
+    [listObjectRequest setCompleteRequest];
+//    [listObjectRequest setStrKS3Token:[KS3Util getAuthorization:listObjectRequest]];
+
     KS3ListObjectsResponse *response = [[KS3Client initialize] listObjects:listObjectRequest];
     _result = response.listBucketsResult;
     _arrObjects = response.listBucketsResult.objectSummaries;

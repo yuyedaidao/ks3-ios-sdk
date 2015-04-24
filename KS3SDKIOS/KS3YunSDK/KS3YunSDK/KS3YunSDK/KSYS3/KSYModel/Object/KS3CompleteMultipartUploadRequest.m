@@ -29,7 +29,8 @@
     }
     return self;
 }
--(NSURLRequest *)configureURLRequest
+
+- (void)setCompleteRequest
 {
     // **** 一定要先设置callbackbody，再设置callbackurl才可以签名成功
     if (nil != _callbackBody && nil != _callbackUrl) {
@@ -56,7 +57,12 @@
     
     [self setKSYResource:[NSString stringWithFormat:@"%@/%@?%@=%@", self.kSYResource,_key, kKS3QueryParamUploadId, self.uploadId]];
     self.host = [NSString stringWithFormat:@"http://%@.kss.ksyun.com/%@?uploadId=%@", self.bucket, self.key, self.uploadId];
-//    self.host = [NSString stringWithFormat:@"http://115.231.96.27:8080/%@/%@?uploadId=%@", self.bucket, self.key, self.uploadId];
+
+}
+
+
+-(NSURLRequest *)configureURLRequest
+{
     [super configureURLRequest];
     [self.urlRequest setHTTPMethod:kHttpMethodPost];
     [self.urlRequest setHTTPBody:[self requestBody]];

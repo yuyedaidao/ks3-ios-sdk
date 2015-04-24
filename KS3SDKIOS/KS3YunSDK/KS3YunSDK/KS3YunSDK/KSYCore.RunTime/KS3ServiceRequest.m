@@ -28,6 +28,10 @@
     return self;
 }
 
+- (void)setCompleteRequest
+{
+    
+}
 - (void)sign
 {
     [KS3AuthUtils signRequestV4:self urlRequest:_urlRequest headers:nil payload:nil credentials:_credentials];

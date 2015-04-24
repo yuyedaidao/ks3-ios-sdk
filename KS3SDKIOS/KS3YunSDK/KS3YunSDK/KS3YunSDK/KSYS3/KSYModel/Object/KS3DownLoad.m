@@ -12,14 +12,13 @@
 #import "KS3AuthUtils.h"
 #import "KS3Request.h"
 #import "KS3Response.h"
-
+#import "KS3Constants.h"
 @interface KS3DownLoad ()
 
 @property (strong, nonatomic) KS3Credentials *credentials;
 @end
 
 @implementation KS3DownLoad {
-    BOOL _isToken;
 }
 
 @synthesize delegate;
@@ -29,14 +28,25 @@
 @synthesize filePath;
 @synthesize fileSize;
 
-- (id)initWithUrl:(NSString *)aUrl credentials:(KS3Credentials *)credentials
+- (id)initWithUrl:(NSString *)aUrl credentials:(KS3Credentials *)credentials :(NSString *)bucketName :(NSString *)objectKey
 {
     self = [super init];
     if (self)
     {
         _credentials = credentials;
         url = aUrl;
-        _isToken = NO;
+        _requestDate = getCurrentDate();
+        _strDate = [KS3AuthUtils strDateWithDate:_requestDate andType:@"GMT"];
+        _contentMd5 = @"";
+        _contentType = @"";
+        _kSYHeader = @"";
+        _kSYResource = @"";
+        _strKS3Token = nil;
+        _httpMethod = kHttpMethodGet;
+        _bucketName = [self URLEncodedString:bucketName];
+        _key = [self URLEncodedString:objectKey];
+        _kSYResource = [NSString stringWithFormat:@"/%@/%@", _bucketName,_key];
+        
     }
     return self;
 }
@@ -159,15 +169,9 @@
     [fileHandle closeFile];
     fileHandle = [NSFileHandle fileHandleForWritingAtPath:temporaryPath];
     offset = [fileHandle seekToEndOfFile];
-    
     NSString *range = [NSString stringWithFormat:@"bytes=%llu-",offset];
-    
-    _bucketName = [self URLEncodedString:_bucketName];
-    _key = [self URLEncodedString:_key];
-    
     NSString *strHost = [NSString stringWithFormat:@"http://%@.kss.ksyun.com/%@", _bucketName, _key];
-    NSDate *curDate = getCurrentDate();
-    NSString *strCanonResource = [NSString stringWithFormat:@"/%@/%@", _bucketName,_key];
+  
     
     NSString *strAuthorization = @"";
     if (_credentials.accessKey != nil && _credentials.secretKey != nil) {
@@ -176,38 +180,32 @@
                                                              httpVerb:KSS3_HTTPVerbGet
                                                            contentMd5:@""
                                                           contentType:@""
-                                                                 date:curDate
+                                                                 date:_requestDate
                                                canonicalizedKssHeader:@""
-                                                canonicalizedResource:strCanonResource];
+                                                canonicalizedResource:_kSYResource];
     }
-    NSString *strTime = [KS3AuthUtils strDateWithDate:curDate andType:@"GMT"];
+    
     
     NSURL *urlRequest = [NSURL URLWithString:strHost];
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:urlRequest
                                                                 cachePolicy:NSURLRequestReloadIgnoringCacheData
                                                             timeoutInterval:10];
     [request setHTTPMethod:@"GET"];
-    [request setValue:strTime forHTTPHeaderField:@"Date"];
+    [request setValue:_strDate forHTTPHeaderField:@"Date"];
     [request setValue:strAuthorization forHTTPHeaderField:@"Authorization"];
     [request addValue:range forHTTPHeaderField:@"Range"];
     
     // **** set token
     NSLog(@"====== start ======");
-    _isToken = NO;
     if (_credentials == nil) {
         NSLog(@"====== _credentials is empty ======");
-        NSDictionary *dicParams = [NSDictionary dictionaryWithObjectsAndKeys:
-                                   @"GET",  @"http_method",
-                                   @"",     @"content_md5",
-                                   @"",     @"content_type",
-                                   strTime, @"date",
-                                   @"",     @"headers",
-                                   @"",     @"resource", nil];
-        [_tokenDelegate strTokenWithParams:dicParams];
-        if (!_isToken) {
-            [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
-        }
-        NSLog(@"====== apply token ======");
+//        NSDictionary *dicParams = [NSDictionary dictionaryWithObjectsAndKeys:
+//                                   @"GET",  @"http_method",
+//                                   @"",     @"content_md5",
+//                                   @"",     @"content_type",
+//                                   _strDate, @"date",
+//                                   @"",     @"headers",
+//                                   @"",     @"resource", nil];
         [request setValue:_strKS3Token forHTTPHeaderField:@"Authorization"];
     }
     [connection cancel];
@@ -225,11 +223,6 @@
     return nil;
 }
 
-- (void)setKS3Token:(NSString *)ks3Token {
-    NSLog(@"====== token set success ======");
-    _isToken = YES;
-    _strKS3Token = ks3Token;
-}
 
 - (void)stop
 {

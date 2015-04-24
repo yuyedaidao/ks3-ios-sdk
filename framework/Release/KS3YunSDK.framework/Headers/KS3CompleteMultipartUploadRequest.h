@@ -19,7 +19,9 @@
 @property (nonatomic, strong) NSDictionary *callbackParams;
 
 - (id)initWithMultipartUpload:(KS3MultipartUpload *)multipartUpload;
+
 - (void)addPartWithPartNumber:(int)partNumber withETag:(NSString *)etag;
+
 - (NSData *)requestBody;
 
 @end

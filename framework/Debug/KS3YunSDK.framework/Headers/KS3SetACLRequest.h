@@ -13,6 +13,6 @@
 
 @property (strong, nonatomic) KS3AccessControlList *acl;
 
-- (instancetype)initWithName:(NSString *)bucketName;
+- (instancetype)initWithName:(NSString *)bucketName accessACL:(KS3AccessControlList *)accessACL;
 
 @end

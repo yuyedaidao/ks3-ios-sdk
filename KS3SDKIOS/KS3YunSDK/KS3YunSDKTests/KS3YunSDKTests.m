@@ -144,7 +144,7 @@ NSString *const strSecretKey = @"1+RBTrWaeT6LaixUV5SGPFpeTa/wZEeZlGzYaZfr";
 
 - (void)testSetBucktAcl
 {
-    KS3SetACLRequest *setBucketACLReq = [[KS3SetACLRequest alloc] initWithName:@"ggg"];
+    KS3SetACLRequest *setBucketACLReq = [[KS3SetACLRequest alloc] initWithName:@"ggg" accessACL:nil];
     NSDictionary *dicParams = [self dicParamsWithReq:setBucketACLReq];
     NSURL *tokenUrl = [NSURL URLWithString:@"http://0.0.0.0:11911"];
     NSMutableURLRequest *tokenRequest = [[NSMutableURLRequest alloc] initWithURL:tokenUrl

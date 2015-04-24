@@ -76,7 +76,7 @@
     self.arrGrantAcl = arrGrantAcl;
 }
 
-- (KS3URLRequest *)configureURLRequest
+- (void)setCompleteRequest
 {
     [self.urlRequest setHTTPBody:_data];
     [self.urlRequest setValue:self.contentType forHTTPHeaderField:kKSHttpHdrContentType];
@@ -124,6 +124,11 @@
     _filename = [self URLEncodedString:_filename];
     self.kSYResource = [NSString stringWithFormat:@"%@/%@",self.kSYResource,_filename];
     self.host = [NSString stringWithFormat:@"%@/%@",self.host,_filename];
+}
+
+- (KS3URLRequest *)configureURLRequest
+{
+
     [super configureURLRequest];
     return self.urlRequest;
 }

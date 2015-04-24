@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0A34FDFB1AEA0F64008144B4 /* KS3Util.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A34FDFA1AEA0F64008144B4 /* KS3Util.m */; };
 		13215E981A4123A800B4AC64 /* ObjectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13215E971A4123A800B4AC64 /* ObjectViewController.m */; };
 		13215EA01A416F7D00B4AC64 /* bugDownload.txt in Resources */ = {isa = PBXBuildFile; fileRef = 13215E9F1A416F7D00B4AC64 /* bugDownload.txt */; };
 		13215EA41A418A8B00B4AC64 /* test.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 13215EA31A418A8B00B4AC64 /* test.jpg */; };
@@ -52,6 +53,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0A34FDF91AEA0F64008144B4 /* KS3Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KS3Util.h; sourceTree = "<group>"; };
+		0A34FDFA1AEA0F64008144B4 /* KS3Util.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KS3Util.m; sourceTree = "<group>"; };
 		130B17001A5E3612006AB149 /* KS3YunSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = KS3YunSDK.framework; sourceTree = "<group>"; };
 		13215E961A4123A800B4AC64 /* ObjectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjectViewController.h; sourceTree = "<group>"; };
 		13215E971A4123A800B4AC64 /* ObjectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ObjectViewController.m; sourceTree = "<group>"; };
@@ -135,6 +138,8 @@
 				13EECBEF1A402237004199BD /* Images.xcassets */,
 				13EECBF11A402237004199BD /* LaunchScreen.xib */,
 				13EECBE21A402237004199BD /* Supporting Files */,
+				0A34FDF91AEA0F64008144B4 /* KS3Util.h */,
+				0A34FDFA1AEA0F64008144B4 /* KS3Util.m */,
 			);
 			path = KS3iOSSDKDemo;
 			sourceTree = "<group>";
@@ -308,6 +313,7 @@
 				13EECBEB1A402237004199BD /* ViewController.m in Sources */,
 				13EECD631A403C3D004199BD /* CreateBucketViewController.m in Sources */,
 				13EECD5A1A403964004199BD /* ListBucketViewController.m in Sources */,
+				0A34FDFB1AEA0F64008144B4 /* KS3Util.m in Sources */,
 				13EECD601A403A7B004199BD /* BucketViewController.m in Sources */,
 				13EECD661A405A13004199BD /* GetAllObjectsViewController.m in Sources */,
 				13215E981A4123A800B4AC64 /* ObjectViewController.m in Sources */,
@@ -392,6 +398,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				PROVISIONING_PROFILE = "a8e06075-1073-489e-8e8b-e5bf148654b8";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -413,7 +420,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Cheng Zhou (V43246M398)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Cheng Zhou (V43246M398)";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -426,6 +434,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				PROVISIONING_PROFILE = "a8e06075-1073-489e-8e8b-e5bf148654b8";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -442,8 +451,9 @@
 				);
 				INFOPLIST_FILE = KS3iOSSDKDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "a8e06075-1073-489e-8e8b-e5bf148654b8";
 			};
 			name = Debug;
 		};
@@ -458,8 +468,9 @@
 				);
 				INFOPLIST_FILE = KS3iOSSDKDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "a8e06075-1073-489e-8e8b-e5bf148654b8";
 			};
 			name = Release;
 		};

@@ -14,6 +14,6 @@
 
 @property (nonatomic, strong) KS3GrantAccessControlList *acl;
 
-- (instancetype)initWithName:(NSString *)bucketName;
+- (instancetype)initWithName:(NSString *)bucketName accessACL:(KS3GrantAccessControlList *)accessACL;
 
 @end

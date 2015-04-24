@@ -34,7 +34,7 @@
     unsigned long long  offset;
     
 }
-- (id)initWithUrl:(NSString *)aUrl credentials:(KS3Credentials *)credentials;
+- (id)initWithUrl:(NSString *)aUrl credentials:(KS3Credentials *)credentials :(NSString *)bucketName :(NSString *)objectKey;
 
 @property (nonatomic, weak) id<KS3DownloadDelegate> delegate;
 
@@ -52,7 +52,22 @@
 
 @property (nonatomic, strong) NSString *filePath;
 
+@property (strong, nonatomic) NSString *httpMethod;
+
+@property (strong, nonatomic) NSString *contentMd5;
+
+@property (strong, nonatomic) NSString *contentType;
+
+@property (strong, nonatomic) NSString *kSYHeader;
+
+@property (strong, nonatomic) NSString *kSYResource;
+
 @property (nonatomic, strong) NSString *strKS3Token;
+
+@property (strong, nonatomic) NSDate *requestDate;
+
+@property (strong, nonatomic) NSString *strDate;
+
 
 @property (nonatomic, readonly) unsigned long long fileSize;
 
