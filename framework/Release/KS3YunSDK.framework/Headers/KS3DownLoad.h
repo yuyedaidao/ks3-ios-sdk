@@ -9,12 +9,6 @@
 #import <Foundation/Foundation.h>
 #import "KS3Client.h"
 
-@protocol DownloadTokenDelegate <NSObject>
-
-@required
-- (void)strTokenWithParams:(NSDictionary *)dicParams;
-
-@end
 @class KS3Credentials;
 
 @protocol KS3DownloadDelegate;
@@ -85,6 +79,7 @@
 
 
 - (void)stopAndClear;
+
 - (void)setStrKS3Token:(NSString *)ks3Token;
 
 @end
