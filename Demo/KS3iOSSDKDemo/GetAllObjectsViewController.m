@@ -39,7 +39,8 @@
 - (void)listObjects {
     KS3ListObjectsRequest *listObjectRequest = [[KS3ListObjectsRequest alloc] initWithName:kBucketName];
     [listObjectRequest setCompleteRequest];
-//    [listObjectRequest setStrKS3Token:[KS3Util getAuthorization:listObjectRequest]];
+     //使用token签名时从Appserver获取token后设置token，使用Ak sk则忽略，不需要调用
+    [listObjectRequest setStrKS3Token:[KS3Util getAuthorization:listObjectRequest]];
 
     KS3ListObjectsResponse *response = [[KS3Client initialize] listObjects:listObjectRequest];
     _result = response.listBucketsResult;

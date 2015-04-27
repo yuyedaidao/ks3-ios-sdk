@@ -36,7 +36,8 @@
 - (void)listBuckets {
     KS3ListBucketsRequest *listBucketRequest = [[KS3ListBucketsRequest alloc] init];
     [listBucketRequest setCompleteRequest];
-//    [listBucketRequest setStrKS3Token:[KS3Util getAuthorization:listBucketRequest]];
+     //使用token签名时从Appserver获取token后设置token，使用Ak sk则忽略，不需要调用
+    [listBucketRequest setStrKS3Token:[KS3Util getAuthorization:listBucketRequest]];
     
     // **** use ak/sk
     _arrBuckets = [[KS3Client initialize] listBuckets:(KS3ListBucketsRequest *)listBucketRequest];

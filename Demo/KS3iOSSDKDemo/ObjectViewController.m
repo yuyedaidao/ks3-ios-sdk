@@ -34,7 +34,7 @@
 #import <KS3YunSDK/KS3YunSDK.h>
 #import "KS3Util.h"
 #import "AppDelegate.h"
-@interface ObjectViewController () <KingSoftServiceRequestDelegate, DownloadTokenDelegate>
+@interface ObjectViewController () <KingSoftServiceRequestDelegate>
 @property (nonatomic, strong) NSArray *arrItems;
 @property (nonatomic, strong) KS3DownLoad *downloader;
 
@@ -107,9 +107,9 @@
                 NSLog(@"failed: %@", error.description);
             }];
            
-           // /*
-//            [_downloader setStrKS3Token:[KS3Util KSYAuthorizationWithHTTPVerb:strAccessKey secretKey:strSecretKey httpVerb:_downloader.httpMethod contentMd5:_downloader.contentMd5 contentType:_downloader.contentType date:_downloader.strDate canonicalizedKssHeader:_downloader.kSYHeader canonicalizedResource:_downloader.kSYResource]];
-             //*/
+            // //使用token签名时从Appserver获取token后设置token，使用Ak sk则忽略，不需要调用
+           [_downloader setStrKS3Token:[KS3Util KSYAuthorizationWithHTTPVerb:strAccessKey secretKey:strSecretKey httpVerb:_downloader.httpMethod contentMd5:_downloader.contentMd5 contentType:_downloader.contentType date:_downloader.strDate canonicalizedKssHeader:_downloader.kSYHeader canonicalizedResource:_downloader.kSYResource]];
+   
             [_downloader start];
 
 
@@ -137,6 +137,7 @@
         {
             KS3HeadObjectRequest *headObjRequest = [[KS3HeadObjectRequest alloc] initWithName:kBucketName withKeyName:kObjectSpecial2];
             [headObjRequest setCompleteRequest];
+             //使用token签名时从Appserver获取token后设置token，使用Ak sk则忽略，不需要调用
 //            [headObjRequest setStrKS3Token:[KS3Util getAuthorization:headObjRequest]];
             KS3HeadObjectResponse *response = [[KS3Client initialize] headObject:headObjRequest];
             NSString *str = [[NSString alloc] initWithData:response.body encoding:NSUTF8StringEncoding];
@@ -150,13 +151,21 @@
             break;
         case 3:
         {
-            KS3PutObjectRequest *putObjRequest = [[KS3PutObjectRequest alloc] initWithName:kBucketName withAcl:nil grantAcl:nil];
+            
+            KS3AccessControlList *ControlList = [[KS3AccessControlList alloc] init];
+            [ControlList setContronAccess:KingSoftYun_Permission_Public_Read_Write];
+            KS3GrantAccessControlList *acl = [[KS3GrantAccessControlList alloc] init];
+            acl.identifier = @"4567894346";
+            acl.displayName = @"accDisplayName";
+            [acl setGrantControlAccess:KingSoftYun_Grant_Permission_Read];
+            KS3PutObjectRequest *putObjRequest = [[KS3PutObjectRequest alloc] initWithName:kBucketName withAcl:ControlList grantAcl:@[acl]];
             NSString *fileName = [[NSBundle mainBundle] pathForResource:@"test" ofType:@"jpg"];
             putObjRequest.data = [NSData dataWithContentsOfFile:fileName options:NSDataReadingMappedIfSafe error:nil];
-            putObjRequest.filename = @"11@@@ a b  + - * ~ ! @  # ^ :中 ～ 文.jpg";//[fileName lastPathComponent];
+            putObjRequest.filename = @"#####!!!@@######@@@11@@@ a b  + - * ~ ! @  # ^ :中 ～ 文.jpg";//[fileName lastPathComponent];
             putObjRequest.contentMd5 = [KS3SDKUtil base64md5FromData:putObjRequest.data];
             [putObjRequest setCompleteRequest];
-//            [putObjRequest setStrKS3Token:[KS3Util getAuthorization:putObjRequest]];
+             //使用token签名时从Appserver获取token后设置token，使用Ak sk则忽略，不需要调用
+            [putObjRequest setStrKS3Token:[KS3Util getAuthorization:putObjRequest]];
             KS3PutObjectResponse *response = [[KS3Client initialize] putObject:putObjRequest];
             NSLog(@"%@",[[NSString alloc] initWithData:response.body encoding:NSUTF8StringEncoding]);
             if (response.httpStatusCode == 200) {
@@ -173,6 +182,7 @@
             KS3BucketObject *sourceBucketObj = [[KS3BucketObject alloc] initWithBucketName:kBucketName keyName:@"1111 a b  + - * ~ ! @  # ^ :中 ～ 文.jpg"];
             KS3PutObjectCopyRequest *request = [[KS3PutObjectCopyRequest alloc] initWithName:destBucketObj sourceBucketObj:sourceBucketObj];
             [request setCompleteRequest];
+             //使用token签名时从Appserver获取token后设置token，使用Ak sk则忽略，不需要调用
 //            [request setStrKS3Token:[KS3Util getAuthorization:request]];
             KS3PutObjectCopyResponse *response = [[KS3Client initialize] putObjectCopy:request];
             NSString *str = [[NSString alloc] initWithData:response.body encoding:NSUTF8StringEncoding];
@@ -193,7 +203,8 @@
         {
             KS3GetObjectACLRequest  *getObjectACLRequest = [[KS3GetObjectACLRequest alloc] initWithName:kBucketName withKeyName:kObjectSpecial2];
             [getObjectACLRequest setCompleteRequest];
-//            [getObjectACLRequest setStrKS3Token:[KS3Util getAuthorization:getObjectACLRequest]];
+             //使用token签名时从Appserver获取token后设置token，使用Ak sk则忽略，不需要调用
+            [getObjectACLRequest setStrKS3Token:[KS3Util getAuthorization:getObjectACLRequest]];
             KS3GetObjectACLResponse *response = [[KS3Client initialize] getObjectACL:getObjectACLRequest];
             KS3BucketACLResult *result = response.listBucketsResult;
               NSString *str = [[NSString alloc] initWithData:response.body encoding:NSUTF8StringEncoding];
@@ -221,6 +232,7 @@
             [acl setContronAccess:KingSoftYun_Permission_Public_Read_Write];
             KS3SetObjectACLRequest *setObjectACLRequest = [[KS3SetObjectACLRequest alloc] initWithName:kBucketName withKeyName:kObjectSpecial2 acl:acl];
             [setObjectACLRequest setCompleteRequest];
+             //使用token签名时从Appserver获取token后设置token，使用Ak sk则忽略，不需要调用
 //            [setObjectACLRequest setStrKS3Token:[KS3Util getAuthorization:setObjectACLRequest]];
             KS3SetObjectACLResponse *response = [[KS3Client initialize] setObjectACL:setObjectACLRequest];
               NSString *str = [[NSString alloc] initWithData:response.body encoding:NSUTF8StringEncoding];
@@ -240,6 +252,7 @@
             [acl setGrantControlAccess:KingSoftYun_Grant_Permission_Read];
             KS3SetObjectGrantACLRequest *setObjectGrantACLRequest = [[KS3SetObjectGrantACLRequest alloc] initWithName:kBucketName withKeyName:kObjectSpecial2 grantAcl:acl];
             [setObjectGrantACLRequest setCompleteRequest];
+             //使用token签名时从Appserver获取token后设置token，使用Ak sk则忽略，不需要调用
 //            [setObjectGrantACLRequest setStrKS3Token:[KS3Util getAuthorization:setObjectGrantACLRequest]];
             KS3SetObjectGrantACLResponse *response = [[KS3Client initialize] setObjectGrantACL:setObjectGrantACLRequest];
             if (response.httpStatusCode == 200) {
@@ -252,7 +265,7 @@
             break;
         case 9:
         {
-            NSString *strKey = @"sssssss.text";//@"+-.txt";
+            NSString *strKey = @"@@@@sssssss#######@@@@@@.text";//@"+-.txt";
             NSString *strFilePath = [[NSBundle mainBundle] pathForResource:@"bugDownload" ofType:@"txt"];
             _partSize = 5;
             _fileHandle = [NSFileHandle fileHandleForReadingAtPath:strFilePath];
@@ -269,9 +282,12 @@
             _totalNum = (ceilf((float)_fileSize / (float)_partLength));
             [_fileHandle seekToFileOffset:0];
             
-            KS3InitiateMultipartUploadRequest *initMultipartUploadReq = [[KS3InitiateMultipartUploadRequest alloc] initWithKey:strKey inBucket:kBucketName acl:nil grantAcl:nil];
+            KS3AccessControlList *acl = [[KS3AccessControlList alloc] init];
+            [acl setContronAccess:KingSoftYun_Permission_Private];
+            KS3InitiateMultipartUploadRequest *initMultipartUploadReq = [[KS3InitiateMultipartUploadRequest alloc] initWithKey:strKey inBucket:kBucketName acl:acl grantAcl:nil];
             [initMultipartUploadReq setCompleteRequest];
-//            [initMultipartUploadReq setStrKS3Token:[KS3Util getAuthorization:initMultipartUploadReq]];
+             //使用token签名时从Appserver获取token后设置token，使用Ak sk则忽略，不需要调用
+            [initMultipartUploadReq setStrKS3Token:[KS3Util getAuthorization:initMultipartUploadReq]];
             _muilt = [[KS3Client initialize] initiateMultipartUploadWithRequest:initMultipartUploadReq];
             if (_muilt == nil) {
                 NSLog(@"####Init upload failed, please check access key, secret key and bucket name!####");
@@ -291,6 +307,7 @@
         {
             KS3AbortMultipartUploadRequest *request = [[KS3AbortMultipartUploadRequest alloc] initWithMultipartUpload:_muilt];
             [request setCompleteRequest];
+             //使用token签名时从Appserver获取token后设置token，使用Ak sk则忽略，不需要调用
 //            [request setStrKS3Token:[KS3Util getAuthorization:request]];
             KS3AbortMultipartUploadResponse *response = [[KS3Client initialize] abortMultipartUpload:request];
               NSString *str = [[NSString alloc] initWithData:response.body encoding:NSUTF8StringEncoding];
@@ -322,7 +339,9 @@
     req.delegate = self;
     req.contentLength = data.length;
     req.contentMd5 = [KS3SDKUtil base64md5FromData:data];
-//    [req setStrKS3Token:[KS3Util getAuthorization:req]];
+    [req setCompleteRequest];
+     //使用token签名时从Appserver获取token后设置token，使用Ak sk则忽略，不需要调用
+    [req setStrKS3Token:[KS3Util getAuthorization:req]];
     [[KS3Client initialize] uploadPart:req];
 }
 
@@ -335,19 +354,23 @@
     _uploadNum ++;
     if (_totalNum < _uploadNum) {
         KS3ListPartsRequest *req2 = [[KS3ListPartsRequest alloc] initWithMultipartUpload:_muilt];
-//        [req2 setStrKS3Token:[KS3Util getAuthorization:req2]];
+        [req2 setCompleteRequest];
+         //使用token签名时从Appserver获取token后设置token，使用Ak sk则忽略，不需要调用
+        [req2 setStrKS3Token:[KS3Util getAuthorization:req2]];
         
         KS3ListPartsResponse *response2 = [[KS3Client initialize] listParts:req2];
         
         KS3CompleteMultipartUploadRequest *req = [[KS3CompleteMultipartUploadRequest alloc] initWithMultipartUpload:_muilt];
         
-        //req参数设置完一定要调这个函数
-        [req setCompleteRequest];
+        
         
         for (KS3Part *part in response2.listResult.parts) {
             [req addPartWithPartNumber:part.partNumber withETag:part.etag];
         }
-//        [req setStrKS3Token:[KS3Util getAuthorization:req]];
+        //req参数设置完一定要调这个函数
+        [req setCompleteRequest];
+         //使用token签名时从Appserver获取token后设置token，使用Ak sk则忽略，不需要调用
+        [req setStrKS3Token:[KS3Util getAuthorization:req]];
         KS3CompleteMultipartUploadResponse *resp = [[KS3Client initialize] completeMultipartUpload:req];
         if (resp.httpStatusCode != 200) {
             NSLog(@"#####complete multipart upload failed!!! code: %d#####", resp.httpStatusCode);

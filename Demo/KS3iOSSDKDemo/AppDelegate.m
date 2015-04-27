@@ -32,8 +32,8 @@ NSString *const strTokenHost = @"http://0.0.0.0:11911"; // **** token 的请求�
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // **** use ak/sk
-    [[KS3Client initialize] connectWithAccessKey:strAccessKey withSecretKey:strSecretKey];
+    // 使用Ak sk需要设置，token直接在request中设置
+//    [[KS3Client initialize] connectWithAccessKey:strAccessKey withSecretKey:strSecretKey];
     return YES;
 }
 

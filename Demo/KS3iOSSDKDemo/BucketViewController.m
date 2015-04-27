@@ -68,6 +68,7 @@
         {
             KS3DeleteBucketRequest *deleteBucketReq = [[KS3DeleteBucketRequest alloc] initWithName:@"uuu"];
                [deleteBucketReq setCompleteRequest];
+            //使用token签名时从Appserver获取token后设置token，使用Ak sk则忽略，不需要调用
 //            [deleteBucketReq setStrKS3Token:[KS3Util getAuthorization:deleteBucketReq]];
          
             KS3DeleteBucketResponse *response = [[KS3Client initialize] deleteBucket:deleteBucketReq];
@@ -83,6 +84,7 @@
         {
             KS3HeadBucketRequest *headBucketReq = [[KS3HeadBucketRequest alloc] initWithName:kBucketName];
             [headBucketReq setCompleteRequest];
+             //使用token签名时从Appserver获取token后设置token，使用Ak sk则忽略，不需要调用
 //            [headBucketReq setStrKS3Token:[KS3Util getAuthorization:headBucketReq]];
             KS3HeadBucketResponse *responsee = [[KS3Client initialize] headBucket:headBucketReq];
             if (responsee.httpStatusCode == 200) {
@@ -97,6 +99,7 @@
         {
             KS3GetACLRequest *getBucketAclReq = [[KS3GetACLRequest alloc] initWithName:kBucketName];
                [getBucketAclReq setCompleteRequest];
+             //使用token签名时从Appserver获取token后设置token，使用Ak sk则忽略，不需要调用
 //            [getBucketAclReq setStrKS3Token:[KS3Util getAuthorization:getBucketAclReq]];
             KS3GetACLResponse *response = [[KS3Client initialize] getBucketACL:getBucketAclReq];
             KS3BucketACLResult *result = response.listBucketsResult;
@@ -126,6 +129,7 @@
 //            setBucketACLReq.acl = acl;
             KS3SetACLRequest *setBucketACLReq = [[KS3SetACLRequest alloc] initWithName:kBucketName accessACL:acl];
                [setBucketACLReq setCompleteRequest];
+             //使用token签名时从Appserver获取token后设置token，使用Ak sk则忽略，不需要调用
 //            [setBucketACLReq setStrKS3Token:[KS3Util getAuthorization:setBucketACLReq]];
       
             KS3SetACLResponse *response = [[KS3Client initialize] setBucketACL:setBucketACLReq];
@@ -147,6 +151,7 @@
             
             KS3SetGrantACLRequest *setGrantACLRequest = [[KS3SetGrantACLRequest alloc] initWithName:kBucketName accessACL:acl];
                [setGrantACLRequest setCompleteRequest];
+            //使用token签名时从Appserver获取token后设置token，使用Ak sk则忽略，不需要调用
 //            [setGrantACLRequest setStrKS3Token:[KS3Util getAuthorization:setGrantACLRequest]];
            
             KS3SetGrantACLResponse *response = [[KS3Client initialize] setGrantACL:setGrantACLRequest];
@@ -162,6 +167,7 @@
         {
             KS3GetBucketLoggingRequest *getBucketLoggingReq = [[KS3GetBucketLoggingRequest alloc] initWithName:kBucketName];
                [getBucketLoggingReq setCompleteRequest];
+            // //使用token签名时从Appserver获取token后设置token，使用Ak sk则忽略，不需要调用
 //            [getBucketLoggingReq setStrKS3Token:[KS3Util getAuthorization:getBucketLoggingReq]];
             KS3GetBucketLoggingResponse *response = [[KS3Client initialize] getBucketLogging:getBucketLoggingReq];
             if (response.httpStatusCode == 200) {
