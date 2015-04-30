@@ -1,2 +1,6 @@
 加载framework说明
 目录framework下面4个文件夹
+1)Debug-iphoneos
+2)Debug-iphonesimulator
+3)Release-iphoneos
+4)Release-iphonesimulator
