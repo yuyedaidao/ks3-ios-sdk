@@ -288,7 +288,6 @@ typedef void(^kSS3DownloadFileCompleteionBlock)(KS3DownLoad *aDownload, NSString
  */
 - (KS3DownLoad *)downloadObjectWithBucketName:(NSString *)bucketName
                                           key:(NSString *)key
-                                tokenDelegate:(id)tokenDelegate
                            downloadBeginBlock:(KSS3DownloadBeginBlock)downloadBeginBlock
                       downloadFileCompleteion:(kSS3DownloadFileCompleteionBlock)downloadFileCompleteion
                   downloadProgressChangeBlock:(KSS3DownloadProgressChangeBlock)downloadProgressChangeBlock

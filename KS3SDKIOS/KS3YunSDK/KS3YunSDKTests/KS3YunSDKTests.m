@@ -325,7 +325,7 @@ NSString *const strSecretKey = @"1+RBTrWaeT6LaixUV5SGPFpeTa/wZEeZlGzYaZfr";
 
 - (void)testDownLoad
 {
-    [[KS3Client initialize] downloadObjectWithBucketName:@"ggg" key:@"Test.jpg" tokenDelegate:self downloadBeginBlock:^(KS3DownLoad *aDownload, NSURLResponse *responseHeaders) {
+    [[KS3Client initialize] downloadObjectWithBucketName:@"ggg" key:@"Test.jpg"  downloadBeginBlock:^(KS3DownLoad *aDownload, NSURLResponse *responseHeaders) {
         NSLog(@"start");
     } downloadFileCompleteion:^(KS3DownLoad *aDownload, NSString *filePath) {
         NSLog(@"%@",filePath);

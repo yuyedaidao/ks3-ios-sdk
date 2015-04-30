@@ -1,0 +1,509 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0A2105511AEF2BC300A8865C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A2105501AEF2BC300A8865C /* main.m */; };
+		0A2105541AEF2BC300A8865C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A2105531AEF2BC300A8865C /* AppDelegate.m */; };
+		0A2105571AEF2BC300A8865C /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A2105561AEF2BC300A8865C /* ViewController.m */; };
+		0A21055A1AEF2BC300A8865C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0A2105581AEF2BC300A8865C /* Main.storyboard */; };
+		0A21055C1AEF2BC300A8865C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0A21055B1AEF2BC300A8865C /* Images.xcassets */; };
+		0A21055F1AEF2BC300A8865C /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0A21055D1AEF2BC300A8865C /* LaunchScreen.xib */; };
+		0A21056B1AEF2BC300A8865C /* KS3SDKDemo_AKSKTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A21056A1AEF2BC300A8865C /* KS3SDKDemo_AKSKTests.m */; };
+		0A2105821AEF2CAE00A8865C /* BucketViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A2105771AEF2CAE00A8865C /* BucketViewController.m */; };
+		0A2105831AEF2CAE00A8865C /* CreateBucketViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A2105791AEF2CAE00A8865C /* CreateBucketViewController.m */; };
+		0A2105841AEF2CAE00A8865C /* GetAllObjectsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A21057B1AEF2CAE00A8865C /* GetAllObjectsViewController.m */; };
+		0A2105851AEF2CAE00A8865C /* ListBucketViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A21057D1AEF2CAE00A8865C /* ListBucketViewController.m */; };
+		0A2105861AEF2CAE00A8865C /* ObjectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A21057F1AEF2CAE00A8865C /* ObjectViewController.m */; };
+		0A2105871AEF2CAE00A8865C /* ServiceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A2105811AEF2CAE00A8865C /* ServiceViewController.m */; };
+		0A2105881AEF2D8C00A8865C /* KS3YunSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A2105741AEF2C0100A8865C /* KS3YunSDK.framework */; };
+		0A2105891AEF2D8C00A8865C /* KS3YunSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0A2105741AEF2C0100A8865C /* KS3YunSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		0A2105E01AEF311800A8865C /* +-.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0A2105DD1AEF311800A8865C /* +-.jpg */; };
+		0A2105E11AEF311800A8865C /* bugDownload.txt in Resources */ = {isa = PBXBuildFile; fileRef = 0A2105DE1AEF311800A8865C /* bugDownload.txt */; };
+		0A2105E21AEF311800A8865C /* test.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0A2105DF1AEF311800A8865C /* test.jpg */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		0A2105651AEF2BC300A8865C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0A2105431AEF2BC300A8865C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0A21054A1AEF2BC300A8865C;
+			remoteInfo = "KS3SDKDemo-AKSK";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		0A21058A1AEF2D8C00A8865C /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				0A2105891AEF2D8C00A8865C /* KS3YunSDK.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		0A21054B1AEF2BC300A8865C /* KS3SDKDemo-AKSK.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "KS3SDKDemo-AKSK.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		0A21054F1AEF2BC300A8865C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0A2105501AEF2BC300A8865C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		0A2105521AEF2BC300A8865C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		0A2105531AEF2BC300A8865C /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		0A2105551AEF2BC300A8865C /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		0A2105561AEF2BC300A8865C /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		0A2105591AEF2BC300A8865C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		0A21055B1AEF2BC300A8865C /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		0A21055E1AEF2BC300A8865C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		0A2105641AEF2BC300A8865C /* KS3SDKDemo-AKSKTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "KS3SDKDemo-AKSKTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		0A2105691AEF2BC300A8865C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0A21056A1AEF2BC300A8865C /* KS3SDKDemo_AKSKTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KS3SDKDemo_AKSKTests.m; sourceTree = "<group>"; };
+		0A2105741AEF2C0100A8865C /* KS3YunSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = KS3YunSDK.framework; sourceTree = "<group>"; };
+		0A2105761AEF2CAE00A8865C /* BucketViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BucketViewController.h; sourceTree = "<group>"; };
+		0A2105771AEF2CAE00A8865C /* BucketViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BucketViewController.m; sourceTree = "<group>"; };
+		0A2105781AEF2CAE00A8865C /* CreateBucketViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateBucketViewController.h; sourceTree = "<group>"; };
+		0A2105791AEF2CAE00A8865C /* CreateBucketViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateBucketViewController.m; sourceTree = "<group>"; };
+		0A21057A1AEF2CAE00A8865C /* GetAllObjectsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GetAllObjectsViewController.h; sourceTree = "<group>"; };
+		0A21057B1AEF2CAE00A8865C /* GetAllObjectsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GetAllObjectsViewController.m; sourceTree = "<group>"; };
+		0A21057C1AEF2CAE00A8865C /* ListBucketViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListBucketViewController.h; sourceTree = "<group>"; };
+		0A21057D1AEF2CAE00A8865C /* ListBucketViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListBucketViewController.m; sourceTree = "<group>"; };
+		0A21057E1AEF2CAE00A8865C /* ObjectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjectViewController.h; sourceTree = "<group>"; };
+		0A21057F1AEF2CAE00A8865C /* ObjectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ObjectViewController.m; sourceTree = "<group>"; };
+		0A2105801AEF2CAE00A8865C /* ServiceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServiceViewController.h; sourceTree = "<group>"; };
+		0A2105811AEF2CAE00A8865C /* ServiceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServiceViewController.m; sourceTree = "<group>"; };
+		0A2105DD1AEF311800A8865C /* +-.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "+-.jpg"; sourceTree = SOURCE_ROOT; };
+		0A2105DE1AEF311800A8865C /* bugDownload.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bugDownload.txt; sourceTree = SOURCE_ROOT; };
+		0A2105DF1AEF311800A8865C /* test.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = test.jpg; sourceTree = SOURCE_ROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		0A2105481AEF2BC300A8865C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0A2105881AEF2D8C00A8865C /* KS3YunSDK.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0A2105611AEF2BC300A8865C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0A2105421AEF2BC300A8865C = {
+			isa = PBXGroup;
+			children = (
+				0A2105741AEF2C0100A8865C /* KS3YunSDK.framework */,
+				0A21054D1AEF2BC300A8865C /* KS3SDKDemo-AKSK */,
+				0A2105671AEF2BC300A8865C /* KS3SDKDemo-AKSKTests */,
+				0A21054C1AEF2BC300A8865C /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		0A21054C1AEF2BC300A8865C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				0A21054B1AEF2BC300A8865C /* KS3SDKDemo-AKSK.app */,
+				0A2105641AEF2BC300A8865C /* KS3SDKDemo-AKSKTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		0A21054D1AEF2BC300A8865C /* KS3SDKDemo-AKSK */ = {
+			isa = PBXGroup;
+			children = (
+				0A2105DD1AEF311800A8865C /* +-.jpg */,
+				0A2105DE1AEF311800A8865C /* bugDownload.txt */,
+				0A2105DF1AEF311800A8865C /* test.jpg */,
+				0A2105761AEF2CAE00A8865C /* BucketViewController.h */,
+				0A2105771AEF2CAE00A8865C /* BucketViewController.m */,
+				0A2105781AEF2CAE00A8865C /* CreateBucketViewController.h */,
+				0A2105791AEF2CAE00A8865C /* CreateBucketViewController.m */,
+				0A21057A1AEF2CAE00A8865C /* GetAllObjectsViewController.h */,
+				0A21057B1AEF2CAE00A8865C /* GetAllObjectsViewController.m */,
+				0A21057C1AEF2CAE00A8865C /* ListBucketViewController.h */,
+				0A21057D1AEF2CAE00A8865C /* ListBucketViewController.m */,
+				0A21057E1AEF2CAE00A8865C /* ObjectViewController.h */,
+				0A21057F1AEF2CAE00A8865C /* ObjectViewController.m */,
+				0A2105801AEF2CAE00A8865C /* ServiceViewController.h */,
+				0A2105811AEF2CAE00A8865C /* ServiceViewController.m */,
+				0A2105521AEF2BC300A8865C /* AppDelegate.h */,
+				0A2105531AEF2BC300A8865C /* AppDelegate.m */,
+				0A2105551AEF2BC300A8865C /* ViewController.h */,
+				0A2105561AEF2BC300A8865C /* ViewController.m */,
+				0A2105581AEF2BC300A8865C /* Main.storyboard */,
+				0A21055B1AEF2BC300A8865C /* Images.xcassets */,
+				0A21055D1AEF2BC300A8865C /* LaunchScreen.xib */,
+				0A21054E1AEF2BC300A8865C /* Supporting Files */,
+			);
+			path = "KS3SDKDemo-AKSK";
+			sourceTree = "<group>";
+		};
+		0A21054E1AEF2BC300A8865C /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				0A21054F1AEF2BC300A8865C /* Info.plist */,
+				0A2105501AEF2BC300A8865C /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		0A2105671AEF2BC300A8865C /* KS3SDKDemo-AKSKTests */ = {
+			isa = PBXGroup;
+			children = (
+				0A21056A1AEF2BC300A8865C /* KS3SDKDemo_AKSKTests.m */,
+				0A2105681AEF2BC300A8865C /* Supporting Files */,
+			);
+			path = "KS3SDKDemo-AKSKTests";
+			sourceTree = "<group>";
+		};
+		0A2105681AEF2BC300A8865C /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				0A2105691AEF2BC300A8865C /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		0A21054A1AEF2BC300A8865C /* KS3SDKDemo-AKSK */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0A21056E1AEF2BC300A8865C /* Build configuration list for PBXNativeTarget "KS3SDKDemo-AKSK" */;
+			buildPhases = (
+				0A2105471AEF2BC300A8865C /* Sources */,
+				0A2105481AEF2BC300A8865C /* Frameworks */,
+				0A2105491AEF2BC300A8865C /* Resources */,
+				0A21058A1AEF2D8C00A8865C /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "KS3SDKDemo-AKSK";
+			productName = "KS3SDKDemo-AKSK";
+			productReference = 0A21054B1AEF2BC300A8865C /* KS3SDKDemo-AKSK.app */;
+			productType = "com.apple.product-type.application";
+		};
+		0A2105631AEF2BC300A8865C /* KS3SDKDemo-AKSKTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0A2105711AEF2BC300A8865C /* Build configuration list for PBXNativeTarget "KS3SDKDemo-AKSKTests" */;
+			buildPhases = (
+				0A2105601AEF2BC300A8865C /* Sources */,
+				0A2105611AEF2BC300A8865C /* Frameworks */,
+				0A2105621AEF2BC300A8865C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				0A2105661AEF2BC300A8865C /* PBXTargetDependency */,
+			);
+			name = "KS3SDKDemo-AKSKTests";
+			productName = "KS3SDKDemo-AKSKTests";
+			productReference = 0A2105641AEF2BC300A8865C /* KS3SDKDemo-AKSKTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		0A2105431AEF2BC300A8865C /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0630;
+				ORGANIZATIONNAME = "Jack Wong";
+				TargetAttributes = {
+					0A21054A1AEF2BC300A8865C = {
+						CreatedOnToolsVersion = 6.3;
+					};
+					0A2105631AEF2BC300A8865C = {
+						CreatedOnToolsVersion = 6.3;
+						TestTargetID = 0A21054A1AEF2BC300A8865C;
+					};
+				};
+			};
+			buildConfigurationList = 0A2105461AEF2BC300A8865C /* Build configuration list for PBXProject "KS3SDKDemo-AKSK" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 0A2105421AEF2BC300A8865C;
+			productRefGroup = 0A21054C1AEF2BC300A8865C /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				0A21054A1AEF2BC300A8865C /* KS3SDKDemo-AKSK */,
+				0A2105631AEF2BC300A8865C /* KS3SDKDemo-AKSKTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		0A2105491AEF2BC300A8865C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0A21055A1AEF2BC300A8865C /* Main.storyboard in Resources */,
+				0A2105E21AEF311800A8865C /* test.jpg in Resources */,
+				0A2105E01AEF311800A8865C /* +-.jpg in Resources */,
+				0A2105E11AEF311800A8865C /* bugDownload.txt in Resources */,
+				0A21055F1AEF2BC300A8865C /* LaunchScreen.xib in Resources */,
+				0A21055C1AEF2BC300A8865C /* Images.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0A2105621AEF2BC300A8865C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		0A2105471AEF2BC300A8865C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0A2105571AEF2BC300A8865C /* ViewController.m in Sources */,
+				0A2105831AEF2CAE00A8865C /* CreateBucketViewController.m in Sources */,
+				0A2105541AEF2BC300A8865C /* AppDelegate.m in Sources */,
+				0A2105821AEF2CAE00A8865C /* BucketViewController.m in Sources */,
+				0A2105851AEF2CAE00A8865C /* ListBucketViewController.m in Sources */,
+				0A2105871AEF2CAE00A8865C /* ServiceViewController.m in Sources */,
+				0A2105841AEF2CAE00A8865C /* GetAllObjectsViewController.m in Sources */,
+				0A2105511AEF2BC300A8865C /* main.m in Sources */,
+				0A2105861AEF2CAE00A8865C /* ObjectViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0A2105601AEF2BC300A8865C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0A21056B1AEF2BC300A8865C /* KS3SDKDemo_AKSKTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		0A2105661AEF2BC300A8865C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0A21054A1AEF2BC300A8865C /* KS3SDKDemo-AKSK */;
+			targetProxy = 0A2105651AEF2BC300A8865C /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		0A2105581AEF2BC300A8865C /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0A2105591AEF2BC300A8865C /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		0A21055D1AEF2BC300A8865C /* LaunchScreen.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0A21055E1AEF2BC300A8865C /* Base */,
+			);
+			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		0A21056C1AEF2BC300A8865C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		0A21056D1AEF2BC300A8865C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		0A21056F1AEF2BC300A8865C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
+				INFOPLIST_FILE = "KS3SDKDemo-AKSK/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		0A2105701AEF2BC300A8865C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
+				INFOPLIST_FILE = "KS3SDKDemo-AKSK/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		0A2105721AEF2BC300A8865C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "KS3SDKDemo-AKSKTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/KS3SDKDemo-AKSK.app/KS3SDKDemo-AKSK";
+			};
+			name = Debug;
+		};
+		0A2105731AEF2BC300A8865C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "KS3SDKDemo-AKSKTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/KS3SDKDemo-AKSK.app/KS3SDKDemo-AKSK";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		0A2105461AEF2BC300A8865C /* Build configuration list for PBXProject "KS3SDKDemo-AKSK" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0A21056C1AEF2BC300A8865C /* Debug */,
+				0A21056D1AEF2BC300A8865C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		0A21056E1AEF2BC300A8865C /* Build configuration list for PBXNativeTarget "KS3SDKDemo-AKSK" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0A21056F1AEF2BC300A8865C /* Debug */,
+				0A2105701AEF2BC300A8865C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		0A2105711AEF2BC300A8865C /* Build configuration list for PBXNativeTarget "KS3SDKDemo-AKSKTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0A2105721AEF2BC300A8865C /* Debug */,
+				0A2105731AEF2BC300A8865C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 0A2105431AEF2BC300A8865C /* Project object */;
+}

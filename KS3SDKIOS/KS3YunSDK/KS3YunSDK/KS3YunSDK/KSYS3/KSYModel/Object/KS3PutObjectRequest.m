@@ -34,7 +34,6 @@
         //
         
         if (_acl != nil) {
-            
             self.kSYHeader = [@"x-kss-acl:" stringByAppendingString:_acl.accessACL];
             self.kSYHeader = [NSString stringWithFormat:@"%@\n",self.kSYHeader];
         }
