@@ -1,6 +1,9 @@
 加载framework说明
+由于为了减少SDK的大小我们没有打通用的framework。如果需要通用的framework请用lipo打通用framework
 目录framework下面4个文件夹
 1)Debug-iphoneos
 2)Debug-iphonesimulator
 3)Release-iphoneos
 4)Release-iphonesimulator
+请根据自己工程的配置选取合适的framework.
+
