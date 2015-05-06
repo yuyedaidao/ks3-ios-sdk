@@ -26,6 +26,7 @@
 @property (strong, nonatomic) NSDate *requestDate;
 @property (strong, nonatomic) NSString *strDate;
 @property (nonatomic, strong) NSString *strKS3Token;
+@property NSTimeInterval timeoutInterval;
 @property (weak, nonatomic) id<KingSoftServiceRequestDelegate> delegate;
 
 - (KS3URLRequest *)configureURLRequest;

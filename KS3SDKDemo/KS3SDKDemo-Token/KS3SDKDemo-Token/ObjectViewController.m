@@ -123,7 +123,7 @@
         {
             KS3DeleteObjectRequest *deleteObjRequest = [[KS3DeleteObjectRequest alloc] initWithName:kBucketName withKeyName:kObjectSpecial1];
             [deleteObjRequest setCompleteRequest];
-//            [deleteObjRequest setStrKS3Token:[KS3Util getAuthorization:deleteObjRequest]];
+            [deleteObjRequest setStrKS3Token:[KS3Util getAuthorization:deleteObjRequest]];
             KS3DeleteObjectResponse *response = [[KS3Client initialize] deleteObject:deleteObjRequest];
             if (response.httpStatusCode == 204) {
                 NSLog(@"Delete object success!");

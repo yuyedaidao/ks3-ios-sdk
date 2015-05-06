@@ -185,11 +185,14 @@
                                                 canonicalizedResource:_kSYResource];
     }
     
-    
+    NSTimeInterval downloadTimeOut = _timeoutInterval;
+    if (_timeoutInterval == 0 || _timeoutInterval < 0) {
+        downloadTimeOut = 60;
+    }
     NSURL *urlRequest = [NSURL URLWithString:strHost];
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:urlRequest
                                                                 cachePolicy:NSURLRequestReloadIgnoringCacheData
-                                                            timeoutInterval:10];
+                                                            timeoutInterval:downloadTimeOut];
     [request setHTTPMethod:@"GET"];
     [request setValue:_strDate forHTTPHeaderField:@"Date"];
     [request setValue:strAuthorization forHTTPHeaderField:@"Authorization"];

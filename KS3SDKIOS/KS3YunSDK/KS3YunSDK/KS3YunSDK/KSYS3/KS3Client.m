@@ -244,6 +244,15 @@ static NSTimeInterval const KingSoftYun_RequestTimeout = 60;
     return urlRequest;
 }
 
+- (NSTimeInterval)getRequestTimeOut:(KS3Request *)request
+{
+    NSTimeInterval ksyRequestTimeOut = request.timeoutInterval;
+    if (ksyRequestTimeOut == 0 || ksyRequestTimeOut < 0) {
+        ksyRequestTimeOut = KingSoftYun_RequestTimeout;
+        
+    }
+    return ksyRequestTimeOut;
+}
 - (KS3Response *)invoke:(KS3Request *)request
 {
     NSString *message = nil;
@@ -269,8 +278,8 @@ static NSTimeInterval const KingSoftYun_RequestTimeout = 60;
         return response;
     }
     NSMutableURLRequest *urlRequest = [self signKSS3Request:request];
-    [urlRequest setTimeoutInterval:KingSoftYun_RequestTimeout];
     
+    [urlRequest setTimeoutInterval:[self getRequestTimeOut:request]];
     return [self startURLRequest:urlRequest KS3Request:request token:request.strKS3Token];
 }
 
@@ -285,7 +294,8 @@ static NSTimeInterval const KingSoftYun_RequestTimeout = 60;
                                                                          delegate:response
                                                                  startImmediately:NO];
         request.urlConnection = urlConnection;
-        [NSTimer scheduledTimerWithTimeInterval:KingSoftYun_RequestTimeout
+        
+        [NSTimer scheduledTimerWithTimeInterval:[self getRequestTimeOut:request]
                                          target:response
                                        selector:@selector(timeout)
                                        userInfo:nil
@@ -299,7 +309,8 @@ static NSTimeInterval const KingSoftYun_RequestTimeout = 60;
     [urlConnection  scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:KSYS3DefaultRunLoopMode];
     request.urlConnection = urlConnection;
     [urlConnection start];
-    NSTimer *timeoutTimer = [NSTimer timerWithTimeInterval:KingSoftYun_RequestTimeout
+    
+    NSTimer *timeoutTimer = [NSTimer timerWithTimeInterval:[self getRequestTimeOut:request]
                                                     target:response
                                                   selector:@selector(timeout)
                                                   userInfo:nil

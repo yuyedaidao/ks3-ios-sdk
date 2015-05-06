@@ -155,6 +155,7 @@
         case 6:
         {
             KS3GetBucketLoggingRequest *getBucketLoggingReq = [[KS3GetBucketLoggingRequest alloc] initWithName:kBucketName];
+//            getBucketLoggingReq.timeoutInterval = 10;
                [getBucketLoggingReq setCompleteRequest];
             KS3GetBucketLoggingResponse *response = [[KS3Client initialize] getBucketLogging:getBucketLoggingReq];
             if (response.httpStatusCode == 200) {

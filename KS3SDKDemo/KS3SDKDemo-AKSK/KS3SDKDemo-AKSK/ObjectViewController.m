@@ -105,7 +105,7 @@
             } failedBlock:^(KS3DownLoad *aDownload, NSError *error) {
                 NSLog(@"failed: %@", error.description);
             }];
-        
+//            _downloader.timeoutInterval = 10;
    
             [_downloader start];
 

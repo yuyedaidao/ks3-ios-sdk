@@ -61,6 +61,7 @@
 
 @property (strong, nonatomic) NSString *strDate;
 
+@property NSTimeInterval timeoutInterval;
 
 @property (nonatomic, readonly) unsigned long long fileSize;
 
