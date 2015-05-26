@@ -20,11 +20,10 @@
 		0A2105851AEF2CAE00A8865C /* ListBucketViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A21057D1AEF2CAE00A8865C /* ListBucketViewController.m */; };
 		0A2105861AEF2CAE00A8865C /* ObjectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A21057F1AEF2CAE00A8865C /* ObjectViewController.m */; };
 		0A2105871AEF2CAE00A8865C /* ServiceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A2105811AEF2CAE00A8865C /* ServiceViewController.m */; };
-		0A2105881AEF2D8C00A8865C /* KS3YunSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A2105741AEF2C0100A8865C /* KS3YunSDK.framework */; };
-		0A2105891AEF2D8C00A8865C /* KS3YunSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0A2105741AEF2C0100A8865C /* KS3YunSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		0A2105E01AEF311800A8865C /* +-.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0A2105DD1AEF311800A8865C /* +-.jpg */; };
 		0A2105E11AEF311800A8865C /* bugDownload.txt in Resources */ = {isa = PBXBuildFile; fileRef = 0A2105DE1AEF311800A8865C /* bugDownload.txt */; };
 		0A2105E21AEF311800A8865C /* test.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0A2105DF1AEF311800A8865C /* test.jpg */; };
+		0AEDB3001B147E8100EB79F8 /* KS3YunSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0AEDB2FF1B147E8100EB79F8 /* KS3YunSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,7 +43,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				0A2105891AEF2D8C00A8865C /* KS3YunSDK.framework in Embed Frameworks */,
+				0AEDB3001B147E8100EB79F8 /* KS3YunSDK.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -65,7 +64,6 @@
 		0A2105641AEF2BC300A8865C /* KS3SDKDemo-AKSKTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "KS3SDKDemo-AKSKTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A2105691AEF2BC300A8865C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0A21056A1AEF2BC300A8865C /* KS3SDKDemo_AKSKTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KS3SDKDemo_AKSKTests.m; sourceTree = "<group>"; };
-		0A2105741AEF2C0100A8865C /* KS3YunSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = KS3YunSDK.framework; sourceTree = "<group>"; };
 		0A2105761AEF2CAE00A8865C /* BucketViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BucketViewController.h; sourceTree = "<group>"; };
 		0A2105771AEF2CAE00A8865C /* BucketViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BucketViewController.m; sourceTree = "<group>"; };
 		0A2105781AEF2CAE00A8865C /* CreateBucketViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateBucketViewController.h; sourceTree = "<group>"; };
@@ -81,6 +79,7 @@
 		0A2105DD1AEF311800A8865C /* +-.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "+-.jpg"; sourceTree = SOURCE_ROOT; };
 		0A2105DE1AEF311800A8865C /* bugDownload.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bugDownload.txt; sourceTree = SOURCE_ROOT; };
 		0A2105DF1AEF311800A8865C /* test.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = test.jpg; sourceTree = SOURCE_ROOT; };
+		0AEDB2FF1B147E8100EB79F8 /* KS3YunSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = KS3YunSDK.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,7 +87,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0A2105881AEF2D8C00A8865C /* KS3YunSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -105,7 +103,7 @@
 		0A2105421AEF2BC300A8865C = {
 			isa = PBXGroup;
 			children = (
-				0A2105741AEF2C0100A8865C /* KS3YunSDK.framework */,
+				0AEDB2FF1B147E8100EB79F8 /* KS3YunSDK.framework */,
 				0A21054D1AEF2BC300A8865C /* KS3SDKDemo-AKSK */,
 				0A2105671AEF2BC300A8865C /* KS3SDKDemo-AKSKTests */,
 				0A21054C1AEF2BC300A8865C /* Products */,
@@ -494,6 +492,7 @@
 				0A2105701AEF2BC300A8865C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		0A2105711AEF2BC300A8865C /* Build configuration list for PBXNativeTarget "KS3SDKDemo-AKSKTests" */ = {
 			isa = XCConfigurationList;
@@ -502,6 +501,7 @@
 				0A2105731AEF2BC300A8865C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

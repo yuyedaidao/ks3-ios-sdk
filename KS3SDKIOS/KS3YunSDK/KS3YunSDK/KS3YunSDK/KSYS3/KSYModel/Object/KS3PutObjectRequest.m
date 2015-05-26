@@ -38,7 +38,6 @@
             self.kSYHeader = [NSString stringWithFormat:@"%@\n",self.kSYHeader];
         }
         if (_arrGrantAcl != nil) {
-            [self sortGrantAcl]; // **** ACL的 x-kss 需要先排序
             for (NSInteger i = 0; i < _arrGrantAcl.count; i ++) {
                 KS3GrantAccessControlList *grantAcl = _arrGrantAcl[i];
                 NSString *strValue = [NSString stringWithFormat:@"id=\"%@\", ", grantAcl.identifier];
@@ -95,7 +94,7 @@
     
     // **** 一定要先设置callbackbody，再设置callbackurl才可以签名成功
     if (nil != _callbackBody && nil != _callbackUrl) {
-        self.kSYHeader = [@"x-kss-callbackbody:" stringByAppendingString:_callbackBody];
+        self.kSYHeader = [self.kSYHeader stringByAppendingString:[@"x-kss-callbackbody:" stringByAppendingString:_callbackBody]];
         self.kSYHeader = [self.kSYHeader stringByAppendingFormat:@"\n"];
         [self.urlRequest setValue:_callbackBody forHTTPHeaderField:@"x-kss-callbackbody"];
         
@@ -123,6 +122,20 @@
     _filename = [self URLEncodedString:_filename];
     self.kSYResource = [NSString stringWithFormat:@"%@/%@",self.kSYResource,_filename];
     self.host = [NSString stringWithFormat:@"%@/%@",self.host,_filename];
+    
+    if (![self.kSYHeader isEqualToString:@""]) {
+        NSArray *componentsArray = [self.kSYHeader componentsSeparatedByString:@"\n"];
+        NSMutableArray *componentsArray1 = [[NSMutableArray alloc] initWithArray:componentsArray];
+        if (componentsArray1.count) {
+            [componentsArray1 removeLastObject];
+        }
+        NSArray *headerArray = [componentsArray1 sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+            return [obj1 compare:obj2];
+        }];
+        self.kSYHeader = [headerArray componentsJoinedByString:@"\n"];
+        self.kSYHeader = [self.kSYHeader stringByAppendingString:@"\n"];
+      
+    }
 }
 
 - (KS3URLRequest *)configureURLRequest

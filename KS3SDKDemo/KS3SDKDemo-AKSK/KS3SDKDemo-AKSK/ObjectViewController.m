@@ -153,10 +153,15 @@
             acl.identifier = @"4567894346";
             acl.displayName = @"accDisplayName";
             [acl setGrantControlAccess:KingSoftYun_Grant_Permission_Read];
-            KS3PutObjectRequest *putObjRequest = [[KS3PutObjectRequest alloc] initWithName:kBucketName withAcl:ControlList grantAcl:@[acl]];
+            KS3PutObjectRequest *putObjRequest = [[KS3PutObjectRequest alloc] initWithName:kBucketName
+                                                                                   withAcl:ControlList//ControlList//ControlList
+                                                                                  grantAcl:@[acl]];//];//@[acl]];
             NSString *fileName = [[NSBundle mainBundle] pathForResource:@"test" ofType:@"jpg"];
             putObjRequest.data = [NSData dataWithContentsOfFile:fileName options:NSDataReadingMappedIfSafe error:nil];
-            putObjRequest.filename = kTestSpecial10;//[fileName lastPathComponent];
+            putObjRequest.filename = @"女生派000003.jpg";//kTestSpecial10;//[fileName lastPathComponent];
+//            putObjRequest.callbackUrl = @"http://123.59.36.81/index.php/api/photos/callback";
+//            putObjRequest.callbackBody = @"location=${kss-location}&name=${kss-name}&uid=8888";
+//            putObjRequest.callbackParams = @{@"kss-location": @"china_location", @"kss-name": @"lulu_name"};
             putObjRequest.contentMd5 = [KS3SDKUtil base64md5FromData:putObjRequest.data];
             [putObjRequest setCompleteRequest];
             KS3PutObjectResponse *response = [[KS3Client initialize] putObject:putObjRequest];
@@ -252,7 +257,7 @@
             break;
         case 9:
         {
-            NSString *strKey = @"%%%%%@@@@sssssss#######@@@@@@.text";//@"+-.txt";
+            NSString *strKey = @"nvshengpai111000111.text";//@"+-.txt";
             NSString *strFilePath = [[NSBundle mainBundle] pathForResource:@"bugDownload" ofType:@"txt"];
             _partSize = 5;
             _fileHandle = [NSFileHandle fileHandleForReadingAtPath:strFilePath];
@@ -347,7 +352,10 @@
         for (KS3Part *part in response2.listResult.parts) {
             [req addPartWithPartNumber:part.partNumber withETag:part.etag];
         }
-        //req参数设置完一定要调这个函数
+//        req.callbackUrl = @"http://123.59.36.81/index.php/api/photos/callback";
+//        req.callbackBody = @"location=${kss-location}&name=${kss-name}&uid=8888";
+//        req.callbackParams = @{@"kss-location": @"china_location", @"kss-name": @"lulu_name"};
+//        req参数设置完一定要调这个函数
         [req setCompleteRequest];
         KS3CompleteMultipartUploadResponse *resp = [[KS3Client initialize] completeMultipartUpload:req];
         if (resp.httpStatusCode != 200) {
