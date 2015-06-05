@@ -81,6 +81,8 @@
         self.request.logModel.ksyErrorcode = errorHandler.exception.statusCode;
         
     }
+ 
+ 
     
     if (([KS3Client initialize].totalRequestCount%[KS3Client initialize].recordRate) == 0 || [KS3Client initialize].totalRequestCount == 1) {
         [KSYLogManager sendLogData:self.request.logModel];
