@@ -9,6 +9,8 @@
 #import "KS3ServiceRequest.h"
 #import "KS3AuthUtils.h"
 #import "KS3ClientException.h"
+#import "KS3Client.h"
+#import "KS3LogModel.h"
 
 @implementation KS3ServiceRequest
 
@@ -24,7 +26,11 @@
         _requestDate = [NSDate date];
         _strDate = [KS3AuthUtils strDateWithDate:_requestDate andType:@"GMT"];
         _strKS3Token = nil;
-        _urlRequest = [KS3URLRequest new];}
+        [KS3Client initialize].totalRequestCount++;
+        _urlRequest = [KS3URLRequest new];
+        _logModel = [KS3LogModel new];
+        _logModel.ksyErrorcode = -2;
+    }
     return self;
 }
 
@@ -53,6 +59,34 @@
     [self.urlConnection cancel];
 }
 
+- (NSString *)vHostToVPath:(NSString *)vHost
+{
+    NSString *vPath = @"";
+    if ([vHost hasPrefix:@"http://"]) {
+        NSArray *ipsArray = [[KS3Client initialize] ksyIps];
+        if (ipsArray.count) {
+            NSString *ipS = ipsArray[0];
+            if (![ipS hasPrefix:@"http://"]) {
+                ipS = [NSString stringWithFormat:@"http://%@",ipS];
+            }
+            NSMutableArray *paraMeterArray = [NSMutableArray arrayWithArray:[[vHost substringFromIndex:7] componentsSeparatedByString:@"/"]];
+            if (paraMeterArray.count) {
+                NSArray *vHostArray = [paraMeterArray[0] componentsSeparatedByString:@"."];
+                if (vHostArray.count) {
+                    NSString *buckName = vHostArray[0];
+                    [paraMeterArray replaceObjectAtIndex:0 withObject:buckName];
+                }
+            }
+            NSString *components = [paraMeterArray componentsJoinedByString:@"/"];
+            vPath = [NSString stringWithFormat:@"%@/%@",ipS,components];
+            [self setHost:vPath];
+            [self.urlRequest setValue:@"kss.ksyun.com" forHTTPHeaderField:@"host"];
+        }else{
+            return vHost;
+        }
+    }
+    return vPath;
+}
 - (NSString *)URLEncodedString:(NSString *)str
 {
     NSMutableString *output = [NSMutableString string];

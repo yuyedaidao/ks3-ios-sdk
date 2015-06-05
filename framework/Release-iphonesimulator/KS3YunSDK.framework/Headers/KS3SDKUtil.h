@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+@class KS3Response;
 extern NSString *const KSYS3DefaultRunLoopMode;
 @interface KS3SDKUtil : NSObject
 NSDate* getCurrentDate();
@@ -15,6 +16,7 @@ NSDate* getCurrentDate();
 + (NSString *)applicationDocumentFilePath;
 + (BOOL)isIpString:(NSString *)aString;
 + (BOOL)isVaildBucketName:(NSString *)bucket;
++ (BOOL)isDNSParseFaild:(KS3Response *)response;
 @end
 
 @interface NSData (WithBase64)

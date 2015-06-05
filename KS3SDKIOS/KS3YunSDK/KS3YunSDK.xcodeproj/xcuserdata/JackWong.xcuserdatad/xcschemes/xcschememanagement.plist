@@ -4,6 +4,11 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>KS3YunSDK Tests.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
 		<key>KS3YunSDK.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -12,7 +17,22 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>0A27EAFD1B170BD500935599</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>0A27EBBF1B170C5B00935599</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>0A34FDEA1AE9EB38008144B4</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>0A566DE41B17091E00CE531B</key>
 		<dict>
 			<key>primary</key>
 			<true/>

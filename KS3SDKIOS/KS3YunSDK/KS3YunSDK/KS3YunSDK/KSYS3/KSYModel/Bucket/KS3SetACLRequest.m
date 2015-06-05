@@ -20,9 +20,10 @@
         self.contentMd5 = @"";
         self.contentType = @"";
         self.kSYHeader = @"";
+        _acl = accessACL;
         self.kSYResource =  [NSString stringWithFormat:@"/%@/?acl", self.bucket];
         self.host = [NSString stringWithFormat:@"http://%@.kss.ksyun.com/?acl", self.bucket];
-        _acl = accessACL;
+        
         if (accessACL) {
             self.kSYHeader = [@"x-kss-acl:" stringByAppendingString:_acl.accessACL];
         }

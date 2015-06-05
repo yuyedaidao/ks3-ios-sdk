@@ -7,7 +7,7 @@
 //
 
 #warning Please set correct bucket name
-#define kBucketName @"acc"
+#define kBucketName @"kssjw"
 //#define kBucketName @"alert1"
 
 #import "GetAllObjectsViewController.h"

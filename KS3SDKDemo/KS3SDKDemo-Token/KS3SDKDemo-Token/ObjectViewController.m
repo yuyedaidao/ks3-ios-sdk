@@ -10,9 +10,9 @@
 
 
 
-#define kBucketName @"acc"//@"alert1"//@"bucketcors"//@"alert1"
+#define kBucketName @"kssjw"//@"alert1"//@"bucketcors"//@"alert1"
 #define kObjectName @"Count_1.txt"//@"test_download.txt"//@"bug.txt"
-#define kDesBucketName @"blues11"//@"ggg"//
+#define kDesBucketName @"kssjw2"//@"ggg"//
 #define kDesObjectName @"bug_copy.txt"
 #define kObjectSpecial1 @"+-.jpg"
 #define kObjectSpecial2 @"+-.txt"
@@ -161,7 +161,7 @@
             KS3PutObjectRequest *putObjRequest = [[KS3PutObjectRequest alloc] initWithName:kBucketName withAcl:ControlList grantAcl:@[acl]];
             NSString *fileName = [[NSBundle mainBundle] pathForResource:@"test" ofType:@"jpg"];
             putObjRequest.data = [NSData dataWithContentsOfFile:fileName options:NSDataReadingMappedIfSafe error:nil];
-            putObjRequest.filename = @"#####!!!@@######@@@11@@@ a b  + - * ~ ! @  # ^ :中 ～ 文.jpg";//[fileName lastPathComponent];
+            putObjRequest.filename = @"20150404视频云&标准存储服务产品规划-07.pptx";//@"testtoken-01&.jpg";//[fileName lastPathComponent];
             putObjRequest.contentMd5 = [KS3SDKUtil base64md5FromData:putObjRequest.data];
             [putObjRequest setCompleteRequest];
              //使用token签名时从Appserver获取token后设置token，使用Ak sk则忽略，不需要调用
@@ -178,8 +178,8 @@
             break;
         case 4:
         {
-            KS3BucketObject *destBucketObj = [[KS3BucketObject alloc] initWithBucketName:kDesBucketName keyName:@"111111111 a b  + - * ~ ! @  # ^ :中 ～ 文.jpg"];
-            KS3BucketObject *sourceBucketObj = [[KS3BucketObject alloc] initWithBucketName:kBucketName keyName:@"1111 a b  + - * ~ ! @  # ^ :中 ～ 文.jpg"];
+            KS3BucketObject *destBucketObj = [[KS3BucketObject alloc] initWithBucketName:kDesBucketName keyName:@"testtoken-11.text"];
+            KS3BucketObject *sourceBucketObj = [[KS3BucketObject alloc] initWithBucketName:kBucketName keyName:@"testtoken-11.text"];
             KS3PutObjectCopyRequest *request = [[KS3PutObjectCopyRequest alloc] initWithName:destBucketObj sourceBucketObj:sourceBucketObj];
             [request setCompleteRequest];
              //使用token签名时从Appserver获取token后设置token，使用Ak sk则忽略，不需要调用
@@ -265,7 +265,7 @@
             break;
         case 9:
         {
-            NSString *strKey = @"#####@@@@sssssss#######@@@@@@.text";//@"+-.txt";
+            NSString *strKey = @"testtoken-11.text";//@"+-.txt";
             NSString *strFilePath = [[NSBundle mainBundle] pathForResource:@"bugDownload" ofType:@"txt"];
             _partSize = 5;
             _fileHandle = [NSFileHandle fileHandleForReadingAtPath:strFilePath];
@@ -360,10 +360,8 @@
         
         KS3ListPartsResponse *response2 = [[KS3Client initialize] listParts:req2];
         
+        
         KS3CompleteMultipartUploadRequest *req = [[KS3CompleteMultipartUploadRequest alloc] initWithMultipartUpload:_muilt];
-        
-        
-        
         for (KS3Part *part in response2.listResult.parts) {
             [req addPartWithPartNumber:part.partNumber withETag:part.etag];
         }
@@ -371,7 +369,9 @@
         [req setCompleteRequest];
          //使用token签名时从Appserver获取token后设置token，使用Ak sk则忽略，不需要调用
         [req setStrKS3Token:[KS3Util getAuthorization:req]];
+        
         KS3CompleteMultipartUploadResponse *resp = [[KS3Client initialize] completeMultipartUpload:req];
+        NSLog(@"%@",[[NSString alloc] initWithData:resp.body encoding:NSUTF8StringEncoding]);
         if (resp.httpStatusCode != 200) {
             NSLog(@"#####complete multipart upload failed!!! code: %d#####", resp.httpStatusCode);
         }

@@ -11,7 +11,7 @@
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>4FCCAB3F651221CB1B9A88502FD291482C161431</key>
-		<string>https://github.com/ks3sdk/ks3-ios-sdk</string>
+		<string>github.com:ks3sdk/ks3-ios-sdk.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>KS3SDKIOS/KS3YunSDK/KS3YunSDK.xcodeproj</string>
@@ -21,7 +21,7 @@
 		<string>../../../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>https://github.com/ks3sdk/ks3-ios-sdk</string>
+	<string>github.com:ks3sdk/ks3-ios-sdk.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>

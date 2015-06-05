@@ -50,11 +50,11 @@
 		</data>
 		<key>Headers/KS3Client.h</key>
 		<data>
-		e1IEqak+1M95V+AeMAXsWUsOZQs=
+		qF6/0iT7nuvZPeOnqRL1bRx7hi4=
 		</data>
 		<key>Headers/KS3ClientException.h</key>
 		<data>
-		cqps1FBUn/7yFha2v1q9bhLICZc=
+		WHh9ow1XBrToUkovbcHNxgp6bX0=
 		</data>
 		<key>Headers/KS3CompleteMultipartUploadRequest.h</key>
 		<data>
@@ -106,7 +106,7 @@
 		</data>
 		<key>Headers/KS3ErrorHandler.h</key>
 		<data>
-		vUtesdViNHVWg0vl2Jg6042OfOk=
+		RXmlUJ4vYypnu+D4amUat8MWL7c=
 		</data>
 		<key>Headers/KS3GetACLRequest.h</key>
 		<data>
@@ -228,6 +228,10 @@
 		<data>
 		f/XU3Fex0R/zpycSw/wWhHfPXdc=
 		</data>
+		<key>Headers/KS3LogModel.h</key>
+		<data>
+		h0vdvcRYoPaC8+NEh2V5K5+bfeM=
+		</data>
 		<key>Headers/KS3MD5Util.h</key>
 		<data>
 		GteDYhtdr9eK6pi4PqZet1z8SkQ=
@@ -282,15 +286,15 @@
 		</data>
 		<key>Headers/KS3SDKUtil.h</key>
 		<data>
-		OorjfYKvbx+QYtldhZfOcV/v84s=
+		f+YmwGZ4Kx0VipF4jhv9cezbvJY=
 		</data>
 		<key>Headers/KS3ServiceRequest.h</key>
 		<data>
-		6YGh+wL0e3VhRep4jJNaWk9dpuc=
+		e6UCFmrmMzlPBW4Ia6bOgVDGZbM=
 		</data>
 		<key>Headers/KS3ServiceResponse.h</key>
 		<data>
-		0T/HMWkphwydT3taZl2tXaEJBN0=
+		2Q1KpkF3pmak8v62/NgjHWAmpbo=
 		</data>
 		<key>Headers/KS3SetACLRequest.h</key>
 		<data>
@@ -350,7 +354,15 @@
 		</data>
 		<key>Headers/KS3YunSDK.h</key>
 		<data>
-		INuMdKQ4oXg1wRjbc5Qs2rj+nBE=
+		aHNl/RDdETQsgIUw+oD9Zf9GZrU=
+		</data>
+		<key>Headers/KSYHardwareInfo.h</key>
+		<data>
+		cgMDMzf2uyFppSOPjCM9NV/At3I=
+		</data>
+		<key>Headers/KSYLogManager.h</key>
+		<data>
+		5ZftdVRHtPPy/bBd94jyX+cXPUs=
 		</data>
 		<key>Headers/RegexKitLite.h</key>
 		<data>
@@ -413,11 +425,11 @@
 		</data>
 		<key>Headers/KS3Client.h</key>
 		<data>
-		e1IEqak+1M95V+AeMAXsWUsOZQs=
+		qF6/0iT7nuvZPeOnqRL1bRx7hi4=
 		</data>
 		<key>Headers/KS3ClientException.h</key>
 		<data>
-		cqps1FBUn/7yFha2v1q9bhLICZc=
+		WHh9ow1XBrToUkovbcHNxgp6bX0=
 		</data>
 		<key>Headers/KS3CompleteMultipartUploadRequest.h</key>
 		<data>
@@ -469,7 +481,7 @@
 		</data>
 		<key>Headers/KS3ErrorHandler.h</key>
 		<data>
-		vUtesdViNHVWg0vl2Jg6042OfOk=
+		RXmlUJ4vYypnu+D4amUat8MWL7c=
 		</data>
 		<key>Headers/KS3GetACLRequest.h</key>
 		<data>
@@ -591,6 +603,10 @@
 		<data>
 		f/XU3Fex0R/zpycSw/wWhHfPXdc=
 		</data>
+		<key>Headers/KS3LogModel.h</key>
+		<data>
+		h0vdvcRYoPaC8+NEh2V5K5+bfeM=
+		</data>
 		<key>Headers/KS3MD5Util.h</key>
 		<data>
 		GteDYhtdr9eK6pi4PqZet1z8SkQ=
@@ -645,15 +661,15 @@
 		</data>
 		<key>Headers/KS3SDKUtil.h</key>
 		<data>
-		OorjfYKvbx+QYtldhZfOcV/v84s=
+		f+YmwGZ4Kx0VipF4jhv9cezbvJY=
 		</data>
 		<key>Headers/KS3ServiceRequest.h</key>
 		<data>
-		6YGh+wL0e3VhRep4jJNaWk9dpuc=
+		e6UCFmrmMzlPBW4Ia6bOgVDGZbM=
 		</data>
 		<key>Headers/KS3ServiceResponse.h</key>
 		<data>
-		0T/HMWkphwydT3taZl2tXaEJBN0=
+		2Q1KpkF3pmak8v62/NgjHWAmpbo=
 		</data>
 		<key>Headers/KS3SetACLRequest.h</key>
 		<data>
@@ -713,7 +729,15 @@
 		</data>
 		<key>Headers/KS3YunSDK.h</key>
 		<data>
-		INuMdKQ4oXg1wRjbc5Qs2rj+nBE=
+		aHNl/RDdETQsgIUw+oD9Zf9GZrU=
+		</data>
+		<key>Headers/KSYHardwareInfo.h</key>
+		<data>
+		cgMDMzf2uyFppSOPjCM9NV/At3I=
+		</data>
+		<key>Headers/KSYLogManager.h</key>
+		<data>
+		5ZftdVRHtPPy/bBd94jyX+cXPUs=
 		</data>
 		<key>Headers/RegexKitLite.h</key>
 		<data>

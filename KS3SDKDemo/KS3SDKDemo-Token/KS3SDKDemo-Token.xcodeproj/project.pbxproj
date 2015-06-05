@@ -14,8 +14,6 @@
 		0A2105A51AEF2E0400A8865C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0A2105A41AEF2E0400A8865C /* Images.xcassets */; };
 		0A2105A81AEF2E0400A8865C /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0A2105A61AEF2E0400A8865C /* LaunchScreen.xib */; };
 		0A2105B41AEF2E0400A8865C /* KS3SDKDemo_TokenTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A2105B31AEF2E0400A8865C /* KS3SDKDemo_TokenTests.m */; };
-		0A2105BF1AEF2ECB00A8865C /* KS3YunSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A2105BD1AEF2EBF00A8865C /* KS3YunSDK.framework */; };
-		0A2105C01AEF2ECB00A8865C /* KS3YunSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0A2105BD1AEF2EBF00A8865C /* KS3YunSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		0A2105D01AEF2F1E00A8865C /* BucketViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A2105C31AEF2F1E00A8865C /* BucketViewController.m */; };
 		0A2105D11AEF2F1E00A8865C /* CreateBucketViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A2105C51AEF2F1E00A8865C /* CreateBucketViewController.m */; };
 		0A2105D21AEF2F1E00A8865C /* GetAllObjectsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A2105C71AEF2F1E00A8865C /* GetAllObjectsViewController.m */; };
@@ -26,6 +24,8 @@
 		0A2105DA1AEF310B00A8865C /* +-.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0A2105D71AEF310B00A8865C /* +-.jpg */; };
 		0A2105DB1AEF310B00A8865C /* bugDownload.txt in Resources */ = {isa = PBXBuildFile; fileRef = 0A2105D81AEF310B00A8865C /* bugDownload.txt */; };
 		0A2105DC1AEF310B00A8865C /* test.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0A2105D91AEF310B00A8865C /* test.jpg */; };
+		0AF0C4BA1B1F217100B87080 /* KS3YunSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AF0C4B71B1F1FA500B87080 /* KS3YunSDK.framework */; };
+		0AF0C4BB1B1F217100B87080 /* KS3YunSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0AF0C4B71B1F1FA500B87080 /* KS3YunSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +36,27 @@
 			remoteGlobalIDString = 0A2105931AEF2E0400A8865C;
 			remoteInfo = "KS3SDKDemo-Token";
 		};
+		0AF0C4B61B1F1FA500B87080 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0AF0C4B11B1F1FA500B87080 /* KS3YunSDK.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 0A6390821A42AF2200BA3A99;
+			remoteInfo = KS3YunSDK;
+		};
+		0AF0C4B81B1F1FA500B87080 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0AF0C4B11B1F1FA500B87080 /* KS3YunSDK.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 0A27EBC01B170C5B00935599;
+			remoteInfo = "KS3YunSDK Tests";
+		};
+		0AF0C4BC1B1F217100B87080 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0AF0C4B11B1F1FA500B87080 /* KS3YunSDK.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 0A6390811A42AF2200BA3A99;
+			remoteInfo = KS3YunSDK;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -45,7 +66,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				0A2105C01AEF2ECB00A8865C /* KS3YunSDK.framework in Embed Frameworks */,
+				0AF0C4BB1B1F217100B87080 /* KS3YunSDK.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -66,7 +87,6 @@
 		0A2105AD1AEF2E0400A8865C /* KS3SDKDemo-TokenTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "KS3SDKDemo-TokenTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A2105B21AEF2E0400A8865C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0A2105B31AEF2E0400A8865C /* KS3SDKDemo_TokenTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KS3SDKDemo_TokenTests.m; sourceTree = "<group>"; };
-		0A2105BD1AEF2EBF00A8865C /* KS3YunSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = KS3YunSDK.framework; sourceTree = SOURCE_ROOT; };
 		0A2105C21AEF2F1E00A8865C /* BucketViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BucketViewController.h; sourceTree = "<group>"; };
 		0A2105C31AEF2F1E00A8865C /* BucketViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BucketViewController.m; sourceTree = "<group>"; };
 		0A2105C41AEF2F1E00A8865C /* CreateBucketViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateBucketViewController.h; sourceTree = "<group>"; };
@@ -84,6 +104,7 @@
 		0A2105D71AEF310B00A8865C /* +-.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "+-.jpg"; sourceTree = SOURCE_ROOT; };
 		0A2105D81AEF310B00A8865C /* bugDownload.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bugDownload.txt; sourceTree = SOURCE_ROOT; };
 		0A2105D91AEF310B00A8865C /* test.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = test.jpg; sourceTree = SOURCE_ROOT; };
+		0AF0C4B11B1F1FA500B87080 /* KS3YunSDK.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = KS3YunSDK.xcodeproj; path = ../../KS3SDKIOS/KS3YunSDK/KS3YunSDK.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,7 +112,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0A2105BF1AEF2ECB00A8865C /* KS3YunSDK.framework in Frameworks */,
+				0AF0C4BA1B1F217100B87080 /* KS3YunSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -108,6 +129,7 @@
 		0A21058B1AEF2E0400A8865C = {
 			isa = PBXGroup;
 			children = (
+				0AF0C4B11B1F1FA500B87080 /* KS3YunSDK.xcodeproj */,
 				0A2105961AEF2E0400A8865C /* KS3SDKDemo-Token */,
 				0A2105B01AEF2E0400A8865C /* KS3SDKDemo-TokenTests */,
 				0A2105951AEF2E0400A8865C /* Products */,
@@ -129,7 +151,6 @@
 				0A2105D71AEF310B00A8865C /* +-.jpg */,
 				0A2105D81AEF310B00A8865C /* bugDownload.txt */,
 				0A2105D91AEF310B00A8865C /* test.jpg */,
-				0A2105BD1AEF2EBF00A8865C /* KS3YunSDK.framework */,
 				0A2105C21AEF2F1E00A8865C /* BucketViewController.h */,
 				0A2105C31AEF2F1E00A8865C /* BucketViewController.m */,
 				0A2105C41AEF2F1E00A8865C /* CreateBucketViewController.h */,
@@ -182,6 +203,15 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		0AF0C4B21B1F1FA500B87080 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				0AF0C4B71B1F1FA500B87080 /* KS3YunSDK.framework */,
+				0AF0C4B91B1F1FA500B87080 /* KS3YunSDK Tests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -197,6 +227,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				0AF0C4BD1B1F217100B87080 /* PBXTargetDependency */,
 			);
 			name = "KS3SDKDemo-Token";
 			productName = "KS3SDKDemo-Token";
@@ -250,6 +281,12 @@
 			mainGroup = 0A21058B1AEF2E0400A8865C;
 			productRefGroup = 0A2105951AEF2E0400A8865C /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 0AF0C4B21B1F1FA500B87080 /* Products */;
+					ProjectRef = 0AF0C4B11B1F1FA500B87080 /* KS3YunSDK.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				0A2105931AEF2E0400A8865C /* KS3SDKDemo-Token */,
@@ -257,6 +294,23 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		0AF0C4B71B1F1FA500B87080 /* KS3YunSDK.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = KS3YunSDK.framework;
+			remoteRef = 0AF0C4B61B1F1FA500B87080 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		0AF0C4B91B1F1FA500B87080 /* KS3YunSDK Tests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "KS3YunSDK Tests.xctest";
+			remoteRef = 0AF0C4B81B1F1FA500B87080 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		0A2105921AEF2E0400A8865C /* Resources */ = {
@@ -314,6 +368,11 @@
 			isa = PBXTargetDependency;
 			target = 0A2105931AEF2E0400A8865C /* KS3SDKDemo-Token */;
 			targetProxy = 0A2105AE1AEF2E0400A8865C /* PBXContainerItemProxy */;
+		};
+		0AF0C4BD1B1F217100B87080 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = KS3YunSDK;
+			targetProxy = 0AF0C4BC1B1F217100B87080 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

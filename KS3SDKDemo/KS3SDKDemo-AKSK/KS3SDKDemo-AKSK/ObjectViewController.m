@@ -10,11 +10,11 @@
 
 
 
-#define kBucketName @"acc"//@"alert1"//@"bucketcors"//@"alert1"
+#define kBucketName @"kssjw"//@"alert1"//@"bucketcors"//@"alert1"
 #define kObjectName @"Count_1.txt"//@"test_download.txt"//@"bug.txt"
-#define kDesBucketName @"blues11"//@"ggg"//
+#define kDesBucketName @"kssjw2"//@"ggg"//
 #define kDesObjectName @"bug_copy.txt"
-#define kObjectSpecial1 @"n-----1.text"
+#define kObjectSpecial1 @"+-.jpg"
 #define kObjectSpecial2 @"+-.txt"
 
 
@@ -92,7 +92,7 @@
             /**
              *  如果是暂停下载，就需要把_downloadConnection的file做为参数传到download方法里面
              */
-            _downloader = [[KS3Client initialize] downloadObjectWithBucketName:kBucketName key:@"testtoken-11.text" downloadBeginBlock:^(KS3DownLoad *aDownload, NSURLResponse *responseHeaders) {
+            _downloader = [[KS3Client initialize] downloadObjectWithBucketName:kBucketName key:@"@#$%^&eourj ％  ％ %  %!!!~~~@)fkds.txt" downloadBeginBlock:^(KS3DownLoad *aDownload, NSURLResponse *responseHeaders) {
                 NSLog(@"1212221");
                 
             } downloadFileCompleteion:^(KS3DownLoad *aDownload, NSString *filePath) {
@@ -132,7 +132,7 @@
             break;
         case 2:
         {
-            KS3HeadObjectRequest *headObjRequest = [[KS3HeadObjectRequest alloc] initWithName:kBucketName withKeyName:@"n-----1.text"];
+            KS3HeadObjectRequest *headObjRequest = [[KS3HeadObjectRequest alloc] initWithName:kBucketName withKeyName:@"a.mp4"];
             [headObjRequest setCompleteRequest];
             KS3HeadObjectResponse *response = [[KS3Client initialize] headObject:headObjRequest];
             NSString *str = [[NSString alloc] initWithData:response.body encoding:NSUTF8StringEncoding];
@@ -154,18 +154,20 @@
             acl.displayName = @"accDisplayName";
             [acl setGrantControlAccess:KingSoftYun_Grant_Permission_Read];
             KS3PutObjectRequest *putObjRequest = [[KS3PutObjectRequest alloc] initWithName:kBucketName
-                                                                                   withAcl:nil//ControlList//ControlList//ControlList
-                                                                                  grantAcl:nil];//@[acl]];//];//@[acl]];
+                                                                                   withAcl:ControlList//ControlList//ControlList
+                                                                                  grantAcl:@[acl]];//];//@[acl]];
             NSString *fileName = [[NSBundle mainBundle] pathForResource:@"test" ofType:@"jpg"];
             putObjRequest.data = [NSData dataWithContentsOfFile:fileName options:NSDataReadingMappedIfSafe error:nil];
-            putObjRequest.filename = @"cup.jpg";//kTestSpecial10;//[fileName lastPathComponent];
+            putObjRequest.filename = @"女生派0-----.jpg";//kTestSpecial10;//[fileName lastPathComponent];
 //            putObjRequest.callbackUrl = @"http://123.59.36.81/index.php/api/photos/callback";
 //            putObjRequest.callbackBody = @"location=${kss-location}&name=${kss-name}&uid=8888";
 //            putObjRequest.callbackParams = @{@"kss-location": @"china_location", @"kss-name": @"lulu_name"};
             putObjRequest.contentMd5 = [KS3SDKUtil base64md5FromData:putObjRequest.data];
             [putObjRequest setCompleteRequest];
             KS3PutObjectResponse *response = [[KS3Client initialize] putObject:putObjRequest];
-            NSLog(@"%@",[[NSString alloc] initWithData:response.body encoding:NSUTF8StringEncoding]);
+            NSLog(@"----%@",[[NSString alloc] initWithData:response.body encoding:NSUTF8StringEncoding]);
+            NSLog(@"- -- -%@",response.responseHeader);
+            NSLog(@"response.exception.message%@",response.exception.message);
             if (response.httpStatusCode == 200) {
                 NSLog(@"Put object success");
             }
@@ -176,8 +178,8 @@
             break;
         case 4:
         {
-            KS3BucketObject *destBucketObj = [[KS3BucketObject alloc] initWithBucketName:kDesBucketName keyName:@"n-----1.text"];
-            KS3BucketObject *sourceBucketObj = [[KS3BucketObject alloc] initWithBucketName:kBucketName keyName:@"n-----1.text"];
+            KS3BucketObject *destBucketObj = [[KS3BucketObject alloc] initWithBucketName:kDesBucketName keyName:@"2222222211111 a b  + - * ~ ! @  # ^ :中 ～ 文.jpg"];
+            KS3BucketObject *sourceBucketObj = [[KS3BucketObject alloc] initWithBucketName:kBucketName keyName:@"1111 a b  + - * ~ ! @  # ^ :中 ～ 文.jpg"];
             KS3PutObjectCopyRequest *request = [[KS3PutObjectCopyRequest alloc] initWithName:destBucketObj sourceBucketObj:sourceBucketObj];
             [request setCompleteRequest];
 
@@ -198,7 +200,7 @@
             break;
         case 6:
         {
-            KS3GetObjectACLRequest  *getObjectACLRequest = [[KS3GetObjectACLRequest alloc] initWithName:kBucketName withKeyName:kObjectSpecial1];
+            KS3GetObjectACLRequest  *getObjectACLRequest = [[KS3GetObjectACLRequest alloc] initWithName:kBucketName withKeyName:kObjectSpecial2];
             [getObjectACLRequest setCompleteRequest];
 
             KS3GetObjectACLResponse *response = [[KS3Client initialize] getObjectACL:getObjectACLRequest];
@@ -226,7 +228,7 @@
         {
             KS3AccessControlList *acl = [[KS3AccessControlList alloc] init];
             [acl setContronAccess:KingSoftYun_Permission_Public_Read_Write];
-            KS3SetObjectACLRequest *setObjectACLRequest = [[KS3SetObjectACLRequest alloc] initWithName:kBucketName withKeyName:kObjectSpecial1 acl:acl];
+            KS3SetObjectACLRequest *setObjectACLRequest = [[KS3SetObjectACLRequest alloc] initWithName:kBucketName withKeyName:kObjectSpecial2 acl:acl];
             [setObjectACLRequest setCompleteRequest];
             KS3SetObjectACLResponse *response = [[KS3Client initialize] setObjectACL:setObjectACLRequest];
               NSString *str = [[NSString alloc] initWithData:response.body encoding:NSUTF8StringEncoding];
@@ -244,7 +246,7 @@
             acl.identifier = kObjectName;
             acl.displayName = @"blues111DisplayName";
             [acl setGrantControlAccess:KingSoftYun_Grant_Permission_Read];
-            KS3SetObjectGrantACLRequest *setObjectGrantACLRequest = [[KS3SetObjectGrantACLRequest alloc] initWithName:kBucketName withKeyName:kObjectSpecial1 grantAcl:acl];
+            KS3SetObjectGrantACLRequest *setObjectGrantACLRequest = [[KS3SetObjectGrantACLRequest alloc] initWithName:kBucketName withKeyName:kObjectSpecial2 grantAcl:acl];
             [setObjectGrantACLRequest setCompleteRequest];
             KS3SetObjectGrantACLResponse *response = [[KS3Client initialize] setObjectGrantACL:setObjectGrantACLRequest];
             if (response.httpStatusCode == 200) {
@@ -257,7 +259,7 @@
             break;
         case 9:
         {
-            NSString *strKey = @"122122nvshengpai111000111.text";//@"+-.txt";
+            NSString *strKey = @"n-----1.text";//@"+-.txt";
             NSString *strFilePath = [[NSBundle mainBundle] pathForResource:@"bugDownload" ofType:@"txt"];
             _partSize = 5;
             _fileHandle = [NSFileHandle fileHandleForReadingAtPath:strFilePath];

@@ -43,7 +43,7 @@
         self.acl = acl;
         self.arrGrantAcl = arrGrantAcl;
         self.kSYResource = [NSString stringWithFormat:@"/%@", self.bucket];
-        self.host = @"";
+        self.host = [NSString stringWithFormat:@"http://%@.kss.ksyun.com/%@?uploads", self.bucket, self.key];
         
         //
         self.kSYResource = [NSString stringWithFormat:@"%@/%@?uploads",self.kSYResource,_key];
@@ -94,7 +94,7 @@
 
 -(NSMutableURLRequest *)configureURLRequest
 {
-    self.host = [NSString stringWithFormat:@"http://%@.kss.ksyun.com/%@?uploads", self.bucket, self.key];
+    
     
     if (_acl != nil) {
         [self.urlRequest setValue:_acl.accessACL forHTTPHeaderField:@"x-kss-acl"];

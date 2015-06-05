@@ -8,7 +8,7 @@
 
 #import "KS3CompleteMultipartUploadRequest.h"
 #import "KS3Constants.h"
-
+#import "KSYMacroDefinition.h"
 @interface KS3CompleteMultipartUploadRequest ()
 @property (strong, nonatomic) NSMutableDictionary *parts;
 @end

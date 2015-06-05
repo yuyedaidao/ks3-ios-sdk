@@ -9,6 +9,7 @@
 #import "KS3MD5Util.h"
 #import <CommonCrypto/CommonHMAC.h>
 #import <CommonCrypto/CommonDigest.h>
+#import "KS3Response.h"
 
 @implementation KS3MD5Util
 

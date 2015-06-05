@@ -7,7 +7,7 @@
 //
 
 #warning Please set correct bucket name
-#define kBucketName @"acc"
+#define kBucketName @"kssjw"
 //#define kBucketName @"alert1"
 
 #import "BucketViewController.h"
@@ -65,7 +65,7 @@
             break;
         case 1:
         {
-            KS3DeleteBucketRequest *deleteBucketReq = [[KS3DeleteBucketRequest alloc] initWithName:@"uuu"];
+            KS3DeleteBucketRequest *deleteBucketReq = [[KS3DeleteBucketRequest alloc] initWithName:@"gggg"];
                [deleteBucketReq setCompleteRequest];
          
             KS3DeleteBucketResponse *response = [[KS3Client initialize] deleteBucket:deleteBucketReq];

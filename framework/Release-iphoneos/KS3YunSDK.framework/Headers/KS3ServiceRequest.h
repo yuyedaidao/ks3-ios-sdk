@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "KS3Credentials.h"
 #import "KS3URLRequest.h"
+@class KS3LogModel;
 @class KS3ServiceResponse;
 @class KS3ClientException;
 @protocol  KingSoftServiceRequestDelegate;
@@ -29,12 +30,17 @@
 @property NSTimeInterval timeoutInterval;
 @property (weak, nonatomic) id<KingSoftServiceRequestDelegate> delegate;
 
+@property (assign, nonatomic) BOOL reTry;
+@property (strong, nonatomic) KS3LogModel *logModel;
+
 - (KS3URLRequest *)configureURLRequest;
 - (void)sign;
 - (KS3ClientException *)validate;
 - (void)cancel;
 - (NSString *)URLEncodedString:(NSString *)str;
 - (void)setCompleteRequest;
+
+- (NSString *)vHostToVPath:(NSString *)vHost;
 @end
 
 @protocol KingSoftServiceRequestDelegate <NSObject>

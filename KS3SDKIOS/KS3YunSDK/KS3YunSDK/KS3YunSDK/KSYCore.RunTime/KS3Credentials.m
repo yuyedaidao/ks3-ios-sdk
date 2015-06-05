@@ -7,7 +7,7 @@
 //
 
 #import "KS3Credentials.h"
-
+#import "KSYMacroDefinition.h"
 @implementation KS3Credentials
 
 - (id)init {

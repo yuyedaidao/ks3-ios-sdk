@@ -13,6 +13,7 @@
 #import "KS3Request.h"
 #import "KS3Response.h"
 #import "KS3Constants.h"
+#import "KSYMacroDefinition.h"
 @interface KS3DownLoad ()
 
 @property (strong, nonatomic) KS3Credentials *credentials;

@@ -11,6 +11,7 @@
 #import "KS3ServiceRequest.h"
 #import "KS3Constants.h"
 
+static NSDateFormatter *format = nil;
 @implementation KS3AuthUtils
 
 + (NSString *)strAuthorizationWithHTTPVerb:(NSString *)accessKey
@@ -89,13 +90,22 @@
 
 + (NSString *)strDateWithDate:(NSDate *)date andType:(NSString *)strType
 {
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    dateFormatter.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US"];
-    [dateFormatter setTimeZone:[NSTimeZone timeZoneWithName:@"UTC"]];
-    [dateFormatter setDateFormat:@"EEE, d MMM yyyy HH:mm:ss"];
+    NSDateFormatter *dateFormatter = [self shareDataFormatter];
     NSString *str = [dateFormatter stringFromDate:date];
     NSString *strTime = [str stringByAppendingFormat:@" %@", strType];
     return strTime;
+}
+
++ (NSDateFormatter *)shareDataFormatter
+{
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        format = [[NSDateFormatter alloc] init];
+        format.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US"];
+        [format setTimeZone:[NSTimeZone timeZoneWithName:@"UTC"]];
+        [format setDateFormat:@"EEE, d MMM yyyy HH:mm:ss"];
+    });
+    return format;
 }
 
 + (NSString *)KSYSignatureWithHTTPVerb:(NSString *)secretKey

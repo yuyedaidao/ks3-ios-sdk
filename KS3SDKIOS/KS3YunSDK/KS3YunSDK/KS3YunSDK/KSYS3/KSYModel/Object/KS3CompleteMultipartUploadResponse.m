@@ -7,7 +7,7 @@
 //
 
 #import "KS3CompleteMultipartUploadResponse.h"
-
+#import "KSYMacroDefinition.h"
 @implementation KS3CompleteMultipartUploadResponse
 -(void)processBody
 {

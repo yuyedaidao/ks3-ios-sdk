@@ -12,7 +12,14 @@
 
 @property (strong, nonatomic) NSString *message;
 
+@property (strong, nonatomic) NSString *requestId;
+
+@property (assign, nonatomic) int32_t statusCode;
+
+@property (nonatomic, retain) NSString *errorCode;
+
 @property (strong, nonatomic) NSError *error;
+- (id)initWithMessage:(NSString *)theMessage;
 
 + (id)exceptionWithMessage:(NSString *)theMessage;
 

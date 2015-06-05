@@ -11,7 +11,7 @@
 #import "KS3SDKUtil.h"
 #import "KS3AccessControlList.h"
 #import "KS3GrantAccessControlList.h"
-
+#import "KSYMacroDefinition.h"
 @implementation KS3PutObjectRequest
 
 - (instancetype)initWithName:(NSString *)bucketName withAcl:(KS3AccessControlList *)acl grantAcl:(NSArray *)arrGrantAcl
@@ -27,12 +27,7 @@
         self.acl = acl;
         self.arrGrantAcl = arrGrantAcl;
         self.kSYResource =  [NSString stringWithFormat:@"/%@", self.bucket];
-        self.host = [NSString stringWithFormat:@"http://%@.kss.ksyun.com", self.bucket]; // **** 线上版本，无callback
-//        self.host = [NSString stringWithFormat:@"http://115.231.96.27:8080/%@", bucketName]; // **** 线上测试callback
-//        self.host = [NSString stringWithFormat:@"http://192.168.135.79/%@", bucketName];// **** 旷余健主机
-        
-        //
-        
+        self.host = [NSString stringWithFormat:@"http://%@.kss.ksyun.com", self.bucket];
         if (_acl != nil) {
             self.kSYHeader = [@"x-kss-acl:" stringByAppendingString:_acl.accessACL];
             self.kSYHeader = [NSString stringWithFormat:@"%@\n",self.kSYHeader];
@@ -105,7 +100,7 @@
         // **** 回调的自定义参数
         if (nil != _callbackParams) {
             for (NSString *strKey in _callbackParams.allKeys) {
-                if (strKey.length >= 4 && [[strKey substringToIndex:4] isEqualToString:@"kss-"] == YES) {
+                if (strKey.length >= 4 && [strKey hasPrefix:@"kss-"]) {
                     [self.urlRequest setValue:_callbackParams[strKey] forHTTPHeaderField:strKey];
                 }
                 else {
@@ -136,6 +131,7 @@
         self.kSYHeader = [self.kSYHeader stringByAppendingString:@"\n"];
       
     }
+    
 }
 
 - (KS3URLRequest *)configureURLRequest

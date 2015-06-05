@@ -8,7 +8,7 @@
 
 #import "KS3ListPartsResponse.h"
 #import "KS3ListPartsResultXMLParser.h"
-
+#import "KSYMacroDefinition.h"
 @implementation KS3ListPartsResponse
 -(void)processBody
 {

@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
+#import <KS3YunSDK/KS3YunSDK.h>
 
 @interface KS3SDKDemo_AKSKTests : XCTestCase
 
@@ -27,6 +28,23 @@
 
 - (void)testExample {
     // This is an example of a functional test case.
+    
+//    NSLog(@"-----%@",[KSYHardwareInfo checkNetworkType]);
+    
+    @try {
+        NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:@"http://ksss.ksyun.com"]];
+        NSError *error = nil;
+        NSURLResponse *response = [[NSURLResponse alloc] init];
+        [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
+        NSLog(@"%@",[error description]);
+    }
+    @catch (NSException *exception) {
+        NSLog(@"%@",[exception description]);
+    }
+    @finally {
+        
+    }
+    
     XCTAssert(YES, @"Pass");
 }
 
@@ -34,7 +52,13 @@
     // This is an example of a performance test case.
     [self measureBlock:^{
         // Put the code you want to measure the time of here.
+//        NSLog(@"%@",);
+//        NSString *networkinfo = [KSYHardwareInfo getMobileNetworkInfo];
+//        NSLog(@"---------%@",networkinfo);
+
     }];
 }
+
+
 
 @end

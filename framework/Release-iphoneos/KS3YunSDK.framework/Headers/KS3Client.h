@@ -76,6 +76,14 @@ typedef void(^kSS3DownloadFileCompleteionBlock)(KS3DownLoad *aDownload, NSString
 @interface KS3Client : KS3WebServiceClient
 
 /**
+ *  <#Description#>
+ */
+@property (nonatomic)  NSInteger totalRequestCount;
+
+@property (nonatomic)  NSInteger recordRate;
+@property (strong, nonatomic, readonly) NSArray *ksyIps;
+
+/**
  *  初始化
  *
  *  @return Client对象
@@ -300,6 +308,13 @@ typedef void(^kSS3DownloadFileCompleteionBlock)(KS3DownLoad *aDownload, NSString
  *  @return 版本信息
  */
 + (NSString *)apiVersion;
+
+/**
+ *  <#Description#>
+ *
+ *  @param rataInteger <#rataInteger description#>
+ */
+
 
 
 @end

@@ -8,10 +8,11 @@
 
 
 #import "AppDelegate.h"
+#import <KS3YunSDK/KS3YunSDK.h>
 
 // **** 用户的AK/SK
-NSString * const strAccessKey = @"IYh4GQWndtnQvmCJWFL4";
-NSString * const strSecretKey = @"1+RBTrWaeT6LaixUV5SGPFpeTa/wZEeZlGzYaZfr";
+NSString * const strAccessKey = @"lMQTr0hNlMpB0iOk/i+x";
+NSString * const strSecretKey = @"D4CsYLs75JcWEjbiI22zR3P7kJ/+5B1qdEje7A7I";
 
 @interface AppDelegate ()
 
@@ -22,6 +23,7 @@ NSString * const strSecretKey = @"1+RBTrWaeT6LaixUV5SGPFpeTa/wZEeZlGzYaZfr";
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    [[KS3Client initialize] setRecordRate:3];
     return YES;
 }
 
