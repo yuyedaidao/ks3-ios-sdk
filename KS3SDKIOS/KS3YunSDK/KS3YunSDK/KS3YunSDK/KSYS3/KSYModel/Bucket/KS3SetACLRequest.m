@@ -22,7 +22,7 @@
         self.kSYHeader = @"";
         self.kSYResource =  [NSString stringWithFormat:@"/%@/?acl", self.bucket];
         self.host = [NSString stringWithFormat:@"http://%@.kss.ksyun.com/?acl", self.bucket];
-        
+        _acl = accessACL;
         if (accessACL) {
             self.kSYHeader = [@"x-kss-acl:" stringByAppendingString:_acl.accessACL];
         }

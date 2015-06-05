@@ -14,7 +14,7 @@
 #define kObjectName @"Count_1.txt"//@"test_download.txt"//@"bug.txt"
 #define kDesBucketName @"blues11"//@"ggg"//
 #define kDesObjectName @"bug_copy.txt"
-#define kObjectSpecial1 @"+-.jpg"
+#define kObjectSpecial1 @"n-----1.text"
 #define kObjectSpecial2 @"+-.txt"
 
 
@@ -92,7 +92,7 @@
             /**
              *  如果是暂停下载，就需要把_downloadConnection的file做为参数传到download方法里面
              */
-            _downloader = [[KS3Client initialize] downloadObjectWithBucketName:kBucketName key:@"@#$%^&eourj ％  ％ %  %!!!~~~@)fkds.txt" downloadBeginBlock:^(KS3DownLoad *aDownload, NSURLResponse *responseHeaders) {
+            _downloader = [[KS3Client initialize] downloadObjectWithBucketName:kBucketName key:@"testtoken-11.text" downloadBeginBlock:^(KS3DownLoad *aDownload, NSURLResponse *responseHeaders) {
                 NSLog(@"1212221");
                 
             } downloadFileCompleteion:^(KS3DownLoad *aDownload, NSString *filePath) {
@@ -132,7 +132,7 @@
             break;
         case 2:
         {
-            KS3HeadObjectRequest *headObjRequest = [[KS3HeadObjectRequest alloc] initWithName:kBucketName withKeyName:@"a.mp4"];
+            KS3HeadObjectRequest *headObjRequest = [[KS3HeadObjectRequest alloc] initWithName:kBucketName withKeyName:@"n-----1.text"];
             [headObjRequest setCompleteRequest];
             KS3HeadObjectResponse *response = [[KS3Client initialize] headObject:headObjRequest];
             NSString *str = [[NSString alloc] initWithData:response.body encoding:NSUTF8StringEncoding];
@@ -154,11 +154,11 @@
             acl.displayName = @"accDisplayName";
             [acl setGrantControlAccess:KingSoftYun_Grant_Permission_Read];
             KS3PutObjectRequest *putObjRequest = [[KS3PutObjectRequest alloc] initWithName:kBucketName
-                                                                                   withAcl:ControlList//ControlList//ControlList
-                                                                                  grantAcl:@[acl]];//];//@[acl]];
+                                                                                   withAcl:nil//ControlList//ControlList//ControlList
+                                                                                  grantAcl:nil];//@[acl]];//];//@[acl]];
             NSString *fileName = [[NSBundle mainBundle] pathForResource:@"test" ofType:@"jpg"];
             putObjRequest.data = [NSData dataWithContentsOfFile:fileName options:NSDataReadingMappedIfSafe error:nil];
-            putObjRequest.filename = @"女生派000003.jpg";//kTestSpecial10;//[fileName lastPathComponent];
+            putObjRequest.filename = @"cup.jpg";//kTestSpecial10;//[fileName lastPathComponent];
 //            putObjRequest.callbackUrl = @"http://123.59.36.81/index.php/api/photos/callback";
 //            putObjRequest.callbackBody = @"location=${kss-location}&name=${kss-name}&uid=8888";
 //            putObjRequest.callbackParams = @{@"kss-location": @"china_location", @"kss-name": @"lulu_name"};
@@ -176,8 +176,8 @@
             break;
         case 4:
         {
-            KS3BucketObject *destBucketObj = [[KS3BucketObject alloc] initWithBucketName:kDesBucketName keyName:@"2222222211111 a b  + - * ~ ! @  # ^ :中 ～ 文.jpg"];
-            KS3BucketObject *sourceBucketObj = [[KS3BucketObject alloc] initWithBucketName:kBucketName keyName:@"1111 a b  + - * ~ ! @  # ^ :中 ～ 文.jpg"];
+            KS3BucketObject *destBucketObj = [[KS3BucketObject alloc] initWithBucketName:kDesBucketName keyName:@"n-----1.text"];
+            KS3BucketObject *sourceBucketObj = [[KS3BucketObject alloc] initWithBucketName:kBucketName keyName:@"n-----1.text"];
             KS3PutObjectCopyRequest *request = [[KS3PutObjectCopyRequest alloc] initWithName:destBucketObj sourceBucketObj:sourceBucketObj];
             [request setCompleteRequest];
 
@@ -198,7 +198,7 @@
             break;
         case 6:
         {
-            KS3GetObjectACLRequest  *getObjectACLRequest = [[KS3GetObjectACLRequest alloc] initWithName:kBucketName withKeyName:kObjectSpecial2];
+            KS3GetObjectACLRequest  *getObjectACLRequest = [[KS3GetObjectACLRequest alloc] initWithName:kBucketName withKeyName:kObjectSpecial1];
             [getObjectACLRequest setCompleteRequest];
 
             KS3GetObjectACLResponse *response = [[KS3Client initialize] getObjectACL:getObjectACLRequest];
@@ -226,7 +226,7 @@
         {
             KS3AccessControlList *acl = [[KS3AccessControlList alloc] init];
             [acl setContronAccess:KingSoftYun_Permission_Public_Read_Write];
-            KS3SetObjectACLRequest *setObjectACLRequest = [[KS3SetObjectACLRequest alloc] initWithName:kBucketName withKeyName:kObjectSpecial2 acl:acl];
+            KS3SetObjectACLRequest *setObjectACLRequest = [[KS3SetObjectACLRequest alloc] initWithName:kBucketName withKeyName:kObjectSpecial1 acl:acl];
             [setObjectACLRequest setCompleteRequest];
             KS3SetObjectACLResponse *response = [[KS3Client initialize] setObjectACL:setObjectACLRequest];
               NSString *str = [[NSString alloc] initWithData:response.body encoding:NSUTF8StringEncoding];
@@ -244,7 +244,7 @@
             acl.identifier = kObjectName;
             acl.displayName = @"blues111DisplayName";
             [acl setGrantControlAccess:KingSoftYun_Grant_Permission_Read];
-            KS3SetObjectGrantACLRequest *setObjectGrantACLRequest = [[KS3SetObjectGrantACLRequest alloc] initWithName:kBucketName withKeyName:kObjectSpecial2 grantAcl:acl];
+            KS3SetObjectGrantACLRequest *setObjectGrantACLRequest = [[KS3SetObjectGrantACLRequest alloc] initWithName:kBucketName withKeyName:kObjectSpecial1 grantAcl:acl];
             [setObjectGrantACLRequest setCompleteRequest];
             KS3SetObjectGrantACLResponse *response = [[KS3Client initialize] setObjectGrantACL:setObjectGrantACLRequest];
             if (response.httpStatusCode == 200) {
@@ -257,7 +257,7 @@
             break;
         case 9:
         {
-            NSString *strKey = @"nvshengpai111000111.text";//@"+-.txt";
+            NSString *strKey = @"122122nvshengpai111000111.text";//@"+-.txt";
             NSString *strFilePath = [[NSBundle mainBundle] pathForResource:@"bugDownload" ofType:@"txt"];
             _partSize = 5;
             _fileHandle = [NSFileHandle fileHandleForReadingAtPath:strFilePath];
