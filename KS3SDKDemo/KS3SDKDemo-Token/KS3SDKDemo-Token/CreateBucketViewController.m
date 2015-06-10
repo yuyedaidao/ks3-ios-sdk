@@ -32,6 +32,7 @@
      //使用token签名时从Appserver获取token后设置token，使用Ak sk则忽略，不需要调用
     [createBucketReq setStrKS3Token:[KS3Util getAuthorization:createBucketReq]];
     KS3CreateBucketResponse *response = [[KS3Client initialize] createBucket:createBucketReq];
+    NSLog(@"%@",[[NSString alloc] initWithData:response.body encoding:NSUTF8StringEncoding])    ;
     if (response.httpStatusCode == 200) {
         NSLog(@"Create bucket success!");
     }

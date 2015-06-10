@@ -65,7 +65,7 @@
             break;
         case 1:
         {
-            KS3DeleteBucketRequest *deleteBucketReq = [[KS3DeleteBucketRequest alloc] initWithName:@"gggg"];
+            KS3DeleteBucketRequest *deleteBucketReq = [[KS3DeleteBucketRequest alloc] initWithName:@"abcde"];
                [deleteBucketReq setCompleteRequest];
          
             KS3DeleteBucketResponse *response = [[KS3Client initialize] deleteBucket:deleteBucketReq];

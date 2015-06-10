@@ -81,7 +81,12 @@
     uint8_t cHMAC[CC_SHA1_DIGEST_LENGTH];
     CCHmac(kCCHmacAlgSHA1, cKey, strlen(cKey), cData, strlen(cData), cHMAC);
     NSData *HMAC = [[NSData alloc] initWithBytes:cHMAC length:CC_SHA1_DIGEST_LENGTH];
-    NSString *strHash = [HMAC base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
+    NSString *strHash = @"";
+    if ([HMAC respondsToSelector:@selector(base64EncodedDataWithOptions:)]) {
+        strHash = [HMAC base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
+    }else {
+        strHash = [HMAC base64Encoding];
+    }
     return strHash;
 }
 @end
