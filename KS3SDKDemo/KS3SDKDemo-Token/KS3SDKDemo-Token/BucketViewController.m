@@ -66,7 +66,7 @@
             break;
         case 1:
         {
-            KS3DeleteBucketRequest *deleteBucketReq = [[KS3DeleteBucketRequest alloc] initWithName:@"uuu"];
+            KS3DeleteBucketRequest *deleteBucketReq = [[KS3DeleteBucketRequest alloc] initWithName:@"acb"];
                [deleteBucketReq setCompleteRequest];
             //使用token签名时从Appserver获取token后设置token，使用Ak sk则忽略，不需要调用
             [deleteBucketReq setStrKS3Token:[KS3Util getAuthorization:deleteBucketReq]];

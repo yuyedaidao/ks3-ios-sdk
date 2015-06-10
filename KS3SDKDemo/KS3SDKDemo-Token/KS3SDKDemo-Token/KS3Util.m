@@ -87,8 +87,6 @@
     }else {
         strHash = [HMAC base64Encoding];
     }
-    
-    return strHash;
     return strHash;
 }
 @end
