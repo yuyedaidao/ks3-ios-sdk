@@ -273,25 +273,29 @@ static NSString     * const KingSoftYun_Host_GETIp2      = @"http://123.59.35.94
 
 - (void)getKSSIPList:(NSString *)host
 {
-    NSURLRequest *requestIP1 = [[NSURLRequest alloc] initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/kssiplist",host]]];
-    [NSURLConnection sendAsynchronousRequest:requestIP1 queue:[NSOperationQueue currentQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
-        if (connectionError) {
-            if ([host isEqualToString:KingSoftYun_Host_GETIp1]) {
-                [self getKSSIPList:KingSoftYun_Host_GETIp2];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        NSMutableURLRequest *requestIP1 = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/kssiplist",host]]];
+        requestIP1.timeoutInterval = 10;
+        [NSURLConnection sendAsynchronousRequest:requestIP1 queue:[NSOperationQueue currentQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+            if (connectionError) {
+                if ([host isEqualToString:KingSoftYun_Host_GETIp1]) {
+                    [self getKSSIPList:KingSoftYun_Host_GETIp2];
+                }
+            }else{
+                NSError *error = nil;
+                NSDictionary *jsonDict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
+                if (!error) {
+                    getIPSuccess = YES;
+                    _ksyIps = [jsonDict[@"ct"] componentsSeparatedByString:@","];
+                }
             }
-        }else{
-            NSError *error = nil;
-            NSDictionary *jsonDict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
-            if (!error) {
+            if ([host isEqualToString:KingSoftYun_Host_GETIp2]) {
                 getIPSuccess = YES;
-                _ksyIps = [jsonDict[@"ct"] componentsSeparatedByString:@","];
             }
-        }
-        if ([host isEqualToString:KingSoftYun_Host_GETIp2]) {
-            getIPSuccess = YES;
-        }
-    }];
-    
+        }];
+        
+
+    });
     
 }
 - (KS3Response *)invoke:(KS3Request *)request

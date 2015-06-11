@@ -152,29 +152,32 @@
         case 3:
         {
             
-            KS3AccessControlList *ControlList = [[KS3AccessControlList alloc] init];
-            [ControlList setContronAccess:KingSoftYun_Permission_Public_Read_Write];
-            KS3GrantAccessControlList *acl = [[KS3GrantAccessControlList alloc] init];
-            acl.identifier = @"4567894346";
-            acl.displayName = @"accDisplayName";
-            [acl setGrantControlAccess:KingSoftYun_Grant_Permission_Read];
-            KS3PutObjectRequest *putObjRequest = [[KS3PutObjectRequest alloc] initWithName:kBucketName withAcl:ControlList grantAcl:@[acl]];
-            NSString *fileName = [[NSBundle mainBundle] pathForResource:@"test" ofType:@"jpg"];
-            putObjRequest.data = [NSData dataWithContentsOfFile:fileName options:NSDataReadingMappedIfSafe error:nil];
-            putObjRequest.filename = @"20150404视频云&标准存储服务产品规划-07.pptx";//@"testtoken-01&.jpg";//[fileName lastPathComponent];
-            putObjRequest.contentMd5 = [KS3SDKUtil base64md5FromData:putObjRequest.data];
-            [putObjRequest setCompleteRequest];
-             //使用token签名时从Appserver获取token后设置token，使用Ak sk则忽略，不需要调用
-            [putObjRequest setStrKS3Token:[KS3Util getAuthorization:putObjRequest]];
-            KS3PutObjectResponse *response = [[KS3Client initialize] putObject:putObjRequest];
-            NSLog(@"%@",[[NSString alloc] initWithData:response.body encoding:NSUTF8StringEncoding]);
-            if (response.httpStatusCode == 200) {
-                NSLog(@"Put object success");
-            }
-            else {
-                NSLog(@"Put object failed");
-            }
-        }
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                KS3AccessControlList *ControlList = [[KS3AccessControlList alloc] init];
+                [ControlList setContronAccess:KingSoftYun_Permission_Public_Read_Write];
+                KS3GrantAccessControlList *acl = [[KS3GrantAccessControlList alloc] init];
+                acl.identifier = @"4567894346";
+                acl.displayName = @"accDisplayName";
+                [acl setGrantControlAccess:KingSoftYun_Grant_Permission_Read];
+                KS3PutObjectRequest *putObjRequest = [[KS3PutObjectRequest alloc] initWithName:kBucketName withAcl:ControlList grantAcl:@[acl]];
+                NSString *fileName = [[NSBundle mainBundle] pathForResource:@"test" ofType:@"jpg"];
+                putObjRequest.data = [NSData dataWithContentsOfFile:fileName options:NSDataReadingMappedIfSafe error:nil];
+                putObjRequest.filename = @"20150404视频云&标准存储服务产品规划-07.pptx";//@"testtoken-01&.jpg";//[fileName lastPathComponent];
+                putObjRequest.contentMd5 = [KS3SDKUtil base64md5FromData:putObjRequest.data];
+                [putObjRequest setCompleteRequest];
+                //使用token签名时从Appserver获取token后设置token，使用Ak sk则忽略，不需要调用
+                [putObjRequest setStrKS3Token:[KS3Util getAuthorization:putObjRequest]];
+                KS3PutObjectResponse *response = [[KS3Client initialize] putObject:putObjRequest];
+                NSLog(@"%@",[[NSString alloc] initWithData:response.body encoding:NSUTF8StringEncoding]);
+                if (response.httpStatusCode == 200) {
+                    NSLog(@"Put object success");
+                }
+                else {
+                    NSLog(@"Put object failed");
+                }
+
+            });
+                    }
             break;
         case 4:
         {
