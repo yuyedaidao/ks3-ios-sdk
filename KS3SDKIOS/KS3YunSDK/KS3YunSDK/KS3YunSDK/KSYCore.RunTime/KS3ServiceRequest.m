@@ -59,7 +59,7 @@
     [self.urlConnection cancel];
 }
 
-- (NSString *)vHostToVPath:(NSString *)vHost
+- (NSString *)vHostToVPath:(NSString *)vHost withBucketName:(NSString *)strBucketName
 {
     NSString *vPath = @"";
     if ([vHost hasPrefix:@"http://"]) {
@@ -71,11 +71,18 @@
             }
             NSMutableArray *paraMeterArray = [NSMutableArray arrayWithArray:[[vHost substringFromIndex:7] componentsSeparatedByString:@"/"]];
             if (paraMeterArray.count) {
-                NSArray *vHostArray = [paraMeterArray[0] componentsSeparatedByString:@"."];
-                if (vHostArray.count) {
-                    NSString *buckName = vHostArray[0];
-                    [paraMeterArray replaceObjectAtIndex:0 withObject:buckName];
+                if (strBucketName != nil) {
+                    [paraMeterArray replaceObjectAtIndex:0 withObject:strBucketName];
                 }
+                else {
+                    [paraMeterArray removeObjectAtIndex:0]; // **** 某些API不带有bucket的名字
+                }
+                // **** bucket 名称可能含有“.”，按照“.”区分是错误的
+//                NSArray *vHostArray = [paraMeterArray[0] componentsSeparatedByString:@"."];
+//                if (vHostArray.count) {
+//                    NSString *buckName = vHostArray[0];
+//                    [paraMeterArray replaceObjectAtIndex:0 withObject:buckName];
+//                }
             }
             NSString *components = [paraMeterArray componentsJoinedByString:@"/"];
             vPath = [NSString stringWithFormat:@"%@/%@",ipS,components];

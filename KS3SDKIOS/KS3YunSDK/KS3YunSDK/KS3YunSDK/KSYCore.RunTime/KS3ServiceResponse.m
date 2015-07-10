@@ -106,7 +106,7 @@
                 if ([self.request isMemberOfClass:[KS3PutObjectRequest class]]) {
                     if (!self.request.reTry) {
                         KS3ServiceRequest *reTryRequest = self.request;
-                        [reTryRequest vHostToVPath:reTryRequest.host];
+                        [reTryRequest vHostToVPath:reTryRequest.host withBucketName:[(KS3PutObjectRequest *)reTryRequest bucket]];
                         [[KS3Client initialize] putObject:(KS3PutObjectRequest *)reTryRequest];
                         self.request.reTry = YES;
                     }else{
@@ -117,7 +117,7 @@
                 }else if ([self.request isMemberOfClass:[KS3InitiateMultipartUploadRequest class]]){
                     if (!self.request.reTry) {
                         KS3ServiceRequest *reTryRequest = self.request;
-                        [reTryRequest vHostToVPath:reTryRequest.host];
+                        [reTryRequest vHostToVPath:reTryRequest.host withBucketName:[(KS3InitiateMultipartUploadRequest *)reTryRequest bucket]];
                         [[KS3Client initialize] initiateMultipartUploadWithRequest:(KS3InitiateMultipartUploadRequest *)reTryRequest];
                         self.request.reTry = YES;
                     }else{
@@ -129,7 +129,7 @@
                 }else if ([self.request isMemberOfClass:[KS3UploadPartRequest class]]){
                     if (!self.request.reTry) {
                         KS3ServiceRequest *reTryRequest = self.request;
-                        [reTryRequest vHostToVPath:reTryRequest.host];
+                        [reTryRequest vHostToVPath:reTryRequest.host withBucketName:[(KS3UploadPartRequest *)reTryRequest bucket]];
                         [[KS3Client initialize] uploadPart:(KS3UploadPartRequest *)reTryRequest];
                         self.request.reTry = YES;
                     }else{
@@ -141,7 +141,7 @@
                 }else if ([self.request isMemberOfClass:[KS3ListPartsRequest class]]){
                     if (!self.request.reTry) {
                         KS3ServiceRequest *reTryRequest = self.request;
-                        [reTryRequest vHostToVPath:reTryRequest.host];
+                        [reTryRequest vHostToVPath:reTryRequest.host withBucketName:[(KS3ListPartsRequest *)reTryRequest bucket]];
                         [[KS3Client initialize] listParts:(KS3ListPartsRequest *)reTryRequest];
                         self.request.reTry = YES;
                     }else{
@@ -153,7 +153,7 @@
                 }else if ([self.request isMemberOfClass:[KS3CompleteMultipartUploadRequest class]]){
                     if (!self.request.reTry) {
                         KS3ServiceRequest *reTryRequest = self.request;
-                        [reTryRequest vHostToVPath:reTryRequest.host];
+                        [reTryRequest vHostToVPath:reTryRequest.host withBucketName:[(KS3CompleteMultipartUploadRequest *)reTryRequest bucket]];
                         [[KS3Client initialize] completeMultipartUpload:(KS3CompleteMultipartUploadRequest *)reTryRequest];
                         self.request.reTry = YES;
                     }else{
@@ -165,7 +165,7 @@
                 }else if ([self.request isMemberOfClass:[KS3AbortMultipartUploadRequest class]]){
                     if (!self.request.reTry) {
                         KS3ServiceRequest *reTryRequest = self.request;
-                        [reTryRequest vHostToVPath:reTryRequest.host];
+                        [reTryRequest vHostToVPath:reTryRequest.host withBucketName:[(KS3AbortMultipartUploadRequest *)reTryRequest bucket]];
                         [[KS3Client initialize] abortMultipartUpload:(KS3AbortMultipartUploadRequest *)reTryRequest];
                         self.request.reTry = YES;
                     }else{
@@ -178,7 +178,7 @@
                            [KS3PutObjectRequest class]]){ // **** 写重复了
                     if (!self.request.reTry) {
                         KS3ServiceRequest *reTryRequest = self.request;
-                        [reTryRequest vHostToVPath:reTryRequest.host];
+                        [reTryRequest vHostToVPath:reTryRequest.host withBucketName:[(KS3PutObjectRequest *)reTryRequest bucket]];
                         [[KS3Client initialize] putObject:(KS3PutObjectRequest *)reTryRequest];
                         self.request.reTry = YES;
                     }else{

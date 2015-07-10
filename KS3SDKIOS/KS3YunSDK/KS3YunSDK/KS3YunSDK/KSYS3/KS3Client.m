@@ -339,7 +339,7 @@ static NSString     * const KingSoftYun_Host_GETIp2      = @"http://123.59.35.94
         if ([KS3SDKUtil isDNSParseFaild:response]) {
             if (!request.reTry) {
                 request.reTry = YES;
-                [request vHostToVPath:request.host];
+                [request vHostToVPath:request.host withBucketName:request.bucket];
                 return [self startURLRequest:request token:request.strKS3Token];
             }
         }
