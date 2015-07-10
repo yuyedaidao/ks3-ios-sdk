@@ -296,8 +296,44 @@ static NSString     * const KingSoftYun_Host_GETIp2      = @"http://123.59.35.94
         
 
     });
-    
 }
+
+- (void)syncKS3IPList:(NSString *)host timeoutInterval:(NSTimeInterval)timeoutInterval completionHander:(void (^) (NSArray *ipsArray))completionHander faildHander:(void (^)(NSError *error,NSString *host))faildHander {
+    NSArray *ks3IPSArray= [NSMutableArray array];
+    NSMutableURLRequest *requestIP1 = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/kssiplist",host]]];
+    requestIP1.timeoutInterval = timeoutInterval;
+    NSError *error = nil;
+    NSData *data = [NSURLConnection sendSynchronousRequest:requestIP1 returningResponse:nil error:&error];
+    if (data) {
+        NSError *dataError = nil;
+        NSDictionary *jsonDict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&dataError];
+        if (!dataError) {
+            ks3IPSArray = [jsonDict[@"ct"] componentsSeparatedByString:@","];
+            completionHander(ks3IPSArray);
+        }else {
+            faildHander(dataError,host);
+        }
+    }else {
+        faildHander(error,host);
+    }
+}
+
+- (void)syncGetIPList:(NSTimeInterval)timeoutInterval completionHandler:(void (^) (BOOL success,NSArray *ipsArray,NSError *error))hander {
+    [self syncKS3IPList:KingSoftYun_Host_GETIp1 timeoutInterval:timeoutInterval completionHander:^(NSArray *ipsArray) {
+        hander(YES,ipsArray,nil);
+    } faildHander:^(NSError *error,NSString *host) {
+        if ([host isEqualToString:KingSoftYun_Host_GETIp1]) {
+            [self syncKS3IPList:KingSoftYun_Host_GETIp2 timeoutInterval:timeoutInterval completionHander:^(NSArray *ipsArray) {
+                hander(YES,ipsArray,nil);
+            } faildHander:^(NSError *error, NSString *host) {
+                hander(NO,nil,error);
+            }];
+        }else {
+            hander(NO,nil,error);
+        }
+    }];
+}
+
 - (KS3Response *)invoke:(KS3Request *)request
 {
     {
