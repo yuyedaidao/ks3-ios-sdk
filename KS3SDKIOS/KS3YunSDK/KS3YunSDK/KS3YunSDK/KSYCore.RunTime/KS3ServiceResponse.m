@@ -100,7 +100,7 @@
     NSLog(@"[theError userInfo] -----%@",info);
     self.request.logModel.ksyErrorcode = [theError code];
     self.error = theError;
-    if (self.request.delegate) {
+    if (self.request.delegate) { // **** 如果人为的为除了Put object, multipart upload object之外的API请求设置了delegate，也不会重试，这只针对这几个特定的请求有效
         if ([theError code] == -1003) {
             if ([[theError localizedDescription] hasPrefix:@"A server with the specified hostname could not be found"]) {
                 if ([self.request isMemberOfClass:[KS3PutObjectRequest class]]) {
@@ -175,7 +175,7 @@
                     }
                     
                 }else if ([self.request isMemberOfClass:
-                           [KS3PutObjectRequest class]]){
+                           [KS3PutObjectRequest class]]){ // **** 写重复了
                     if (!self.request.reTry) {
                         KS3ServiceRequest *reTryRequest = self.request;
                         [reTryRequest vHostToVPath:reTryRequest.host];
