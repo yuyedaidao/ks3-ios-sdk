@@ -66,6 +66,7 @@
 #import "KS3LogModel.h"
 #import "KSYHardwareInfo.h"
 #import "KSYLogManager.h"
+#import "KSYLogClient.h"
 
 static NSString     * const KingSoftYun_Host_Name      = @"http://kss.ksyun.com";
 static NSTimeInterval const KingSoftYun_RequestTimeout = 60;
@@ -79,8 +80,8 @@ static NSString     * const KingSoftYun_Host_GETIp2      = @"http://123.59.35.94
 
 @property (strong, nonatomic) KS3Credentials *credentials;
 @property (strong, nonatomic) KSS3GetTokenSuccessBlock tokenBlock;
-@property (strong, nonatomic) NSMutableData *tokenData;
-
+@property (assign, nonatomic) BOOL isSend;
+@property (strong, nonatomic) NSTimer *sendTimer;
 
 
 @end
@@ -90,6 +91,9 @@ static NSString     * const KingSoftYun_Host_GETIp2      = @"http://123.59.35.94
 {
     if (self == [super init]) {
         _recordRate = 1;
+        _isSend = YES;
+        _sendTimer = [NSTimer scheduledTimerWithTimeInterval:3600 target:self selector:@selector(sendLog) userInfo:nil repeats:YES]; // **** 应该是 1小时 ＝ 3600秒 发一次
+        [_sendTimer setFireDate:[NSDate distantPast]]; // **** 立即执行
     }
     return self;
 }
@@ -100,10 +104,17 @@ static NSString     * const KingSoftYun_Host_GETIp2      = @"http://123.59.35.94
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         shareObj = [[self alloc] init];
-        //        [self getKS3IPList:KingSoftYun_Host_GETIp1];
+//        [self getKS3IPList:KingSoftYun_Host_GETIp1];
         
     });
     return shareObj;
+}
+
+#pragma mark - DataBase
+
+- (void)sendLog {
+    KSYLogClient *logClient = [[KSYLogClient alloc] init];
+    [logClient sendData];
 }
 
 #pragma mark - Init credentials

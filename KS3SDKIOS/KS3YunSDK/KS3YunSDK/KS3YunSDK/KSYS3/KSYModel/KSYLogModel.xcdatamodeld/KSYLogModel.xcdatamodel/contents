@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="7549" systemVersion="14D136" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="KSYLog" representedClassName="KSYLog" syncable="YES">
+        <attribute name="build_version" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="client_state" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="device_id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="first_data_time" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="ksy_error_code" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="manufacturer" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="mobile_network_type" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="model" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="network_type" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="request_id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="response_size" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="response_time" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="send_before_time" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="source_ip" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="target_ip" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="KSYLog" positionX="-63" positionY="-18" width="128" height="270"/>
+    </elements>
+</model>

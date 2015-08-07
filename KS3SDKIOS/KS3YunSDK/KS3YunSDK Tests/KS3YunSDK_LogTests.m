@@ -62,7 +62,7 @@
 //    NSURL *fileName = [[NSBundle mainBundle] URLForResource:@"test" withExtension:@"png"];
     NSString *filePath = [[[NSBundle bundleForClass:[self class]] resourcePath] stringByAppendingPathComponent:@"test.png"];
 //    NSLog(@"%@",fileName);
-    NSLog(@"%@",filePath);
+    NSLog(@"filePath: -- %@",filePath);
     XCTAssertNotNil(filePath);
     putObjRequest.data = [NSData dataWithContentsOfFile:filePath options:NSDataReadingMappedIfSafe error:nil];
     XCTAssertNotNil(putObjRequest.data);
@@ -150,7 +150,7 @@
         [_fileHandle seekToFileOffset:partLength*(_uploadNum)];
     }
 //    
-//    for (<#initialization#>; <#condition#>; <#increment#>) {
+//    for (NSInteger i = 0; i < _totalNum; i ++) {
 //        KS3UploadPartRequest *req = [[KS3UploadPartRequest alloc] initWithMultipartUpload:_muilt partNumber:(int32_t)_uploadNum data:data generateMD5:NO];
 //        req.delegate = self;
 //        req.contentLength = data.length;

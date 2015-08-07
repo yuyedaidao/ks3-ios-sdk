@@ -66,6 +66,18 @@
 		0AEE1DDA1B217A2B00B12916 /* KSYMacroDefinition.h in Headers */ = {isa = PBXBuildFile; fileRef = 0AEE1DD91B217A2B00B12916 /* KSYMacroDefinition.h */; };
 		0AF0C1F31B1EA9100043D511 /* KS3YunSDK_LogTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AF0C1F21B1EA9100043D511 /* KS3YunSDK_LogTests.m */; };
 		0AF0C4AE1B1EAED100B87080 /* KS3Util.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AF0C4AD1B1EAED100B87080 /* KS3Util.m */; };
+		131829741B705E0F002A3A03 /* test.png in Resources */ = {isa = PBXBuildFile; fileRef = 131829731B705E0E002A3A03 /* test.png */; };
+		132152DA1B5CF64800BAF8B6 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 132152D91B5CF64800BAF8B6 /* CoreData.framework */; };
+		132152DD1B5CF8A200BAF8B6 /* KSYLogClient.h in Headers */ = {isa = PBXBuildFile; fileRef = 132152DB1B5CF8A200BAF8B6 /* KSYLogClient.h */; };
+		132152DE1B5CF8A200BAF8B6 /* KSYLogClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 132152DC1B5CF8A200BAF8B6 /* KSYLogClient.m */; };
+		132152E11B5CF9E000BAF8B6 /* KSYLogModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 132152DF1B5CF9DF00BAF8B6 /* KSYLogModel.xcdatamodeld */; };
+		132152E41B5CFCA300BAF8B6 /* KSYLog.h in Headers */ = {isa = PBXBuildFile; fileRef = 132152E21B5CFCA300BAF8B6 /* KSYLog.h */; };
+		132152E51B5CFCA300BAF8B6 /* KSYLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 132152E31B5CFCA300BAF8B6 /* KSYLog.m */; };
+		132152E81B5D165C00BAF8B6 /* Reachability.h in Headers */ = {isa = PBXBuildFile; fileRef = 132152E61B5D165C00BAF8B6 /* Reachability.h */; };
+		132152E91B5D165C00BAF8B6 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 132152E71B5D165C00BAF8B6 /* Reachability.m */; };
+		133AF7F61B6752E500500BFE /* libz.1.2.5.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 133AF7F51B6752E500500BFE /* libz.1.2.5.dylib */; };
+		133AF7F91B67533C00500BFE /* LFCGzipUtillity.h in Headers */ = {isa = PBXBuildFile; fileRef = 133AF7F71B67533C00500BFE /* LFCGzipUtillity.h */; };
+		133AF7FA1B67533C00500BFE /* LFCGzipUtillity.m in Sources */ = {isa = PBXBuildFile; fileRef = 133AF7F81B67533C00500BFE /* LFCGzipUtillity.m */; };
 		13A689521ADF51D000CE8CF7 /* KS3BucketObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 13A689501ADF51D000CE8CF7 /* KS3BucketObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		13A689531ADF51D000CE8CF7 /* KS3BucketObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 13A689511ADF51D000CE8CF7 /* KS3BucketObject.m */; };
 		13B9A6E31A5CCE94001E55BC /* KS3ListBucketsRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 13B9A6DB1A5CCE94001E55BC /* KS3ListBucketsRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -275,6 +287,18 @@
 		0AF0C1F21B1EA9100043D511 /* KS3YunSDK_LogTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KS3YunSDK_LogTests.m; sourceTree = "<group>"; };
 		0AF0C4AC1B1EAED100B87080 /* KS3Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KS3Util.h; sourceTree = "<group>"; };
 		0AF0C4AD1B1EAED100B87080 /* KS3Util.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KS3Util.m; sourceTree = "<group>"; };
+		131829731B705E0E002A3A03 /* test.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = test.png; path = "../../../KS3SDKDemo/KS3SDKDemo-Token/test.png"; sourceTree = "<group>"; };
+		132152D91B5CF64800BAF8B6 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		132152DB1B5CF8A200BAF8B6 /* KSYLogClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSYLogClient.h; sourceTree = "<group>"; };
+		132152DC1B5CF8A200BAF8B6 /* KSYLogClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSYLogClient.m; sourceTree = "<group>"; };
+		132152E01B5CF9DF00BAF8B6 /* KSYLogModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = KSYLogModel.xcdatamodel; sourceTree = "<group>"; };
+		132152E21B5CFCA300BAF8B6 /* KSYLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSYLog.h; sourceTree = "<group>"; };
+		132152E31B5CFCA300BAF8B6 /* KSYLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSYLog.m; sourceTree = "<group>"; };
+		132152E61B5D165C00BAF8B6 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		132152E71B5D165C00BAF8B6 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		133AF7F51B6752E500500BFE /* libz.1.2.5.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.2.5.dylib; path = usr/lib/libz.1.2.5.dylib; sourceTree = SDKROOT; };
+		133AF7F71B67533C00500BFE /* LFCGzipUtillity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LFCGzipUtillity.h; sourceTree = "<group>"; };
+		133AF7F81B67533C00500BFE /* LFCGzipUtillity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LFCGzipUtillity.m; sourceTree = "<group>"; };
 		13A689501ADF51D000CE8CF7 /* KS3BucketObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KS3BucketObject.h; path = KS3YunSDK/KS3YunSDK/KSYS3/KSYModel/Object/KS3BucketObject.h; sourceTree = SOURCE_ROOT; };
 		13A689511ADF51D000CE8CF7 /* KS3BucketObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KS3BucketObject.m; path = KS3YunSDK/KS3YunSDK/KSYS3/KSYModel/Object/KS3BucketObject.m; sourceTree = SOURCE_ROOT; };
 		13B9A6DB1A5CCE94001E55BC /* KS3ListBucketsRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KS3ListBucketsRequest.h; sourceTree = "<group>"; };
@@ -420,6 +444,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				133AF7F61B6752E500500BFE /* libz.1.2.5.dylib in Frameworks */,
+				132152DA1B5CF64800BAF8B6 /* CoreData.framework in Frameworks */,
 				0AA9B9921B1703E100167A4A /* CoreTelephony.framework in Frameworks */,
 				0A6C29551A4971A20056A43C /* libicucore.A.dylib in Frameworks */,
 			);
@@ -431,6 +457,7 @@
 		0A27EBC11B170C5B00935599 /* KS3YunSDK Tests */ = {
 			isa = PBXGroup;
 			children = (
+				131829731B705E0E002A3A03 /* test.png */,
 				0AF0C4AC1B1EAED100B87080 /* KS3Util.h */,
 				0AF0C4AD1B1EAED100B87080 /* KS3Util.m */,
 				0A27EBC41B170C5B00935599 /* KS3YunSDK_Tests.m */,
@@ -451,6 +478,8 @@
 		0A6390781A42AF2200BA3A99 = {
 			isa = PBXGroup;
 			children = (
+				133AF7F51B6752E500500BFE /* libz.1.2.5.dylib */,
+				132152D91B5CF64800BAF8B6 /* CoreData.framework */,
 				0AA9B9911B1703E100167A4A /* CoreTelephony.framework */,
 				0A6C29541A4971A20056A43C /* libicucore.A.dylib */,
 				0A6390841A42AF2200BA3A99 /* KS3YunSDK */,
@@ -568,6 +597,11 @@
 				0AA9B9881B16E86800167A4A /* KSYHardwareInfo.m */,
 				0A27EBEC1B17220800935599 /* KSYLogManager.h */,
 				0A27EBED1B17220800935599 /* KSYLogManager.m */,
+				132152DB1B5CF8A200BAF8B6 /* KSYLogClient.h */,
+				132152DC1B5CF8A200BAF8B6 /* KSYLogClient.m */,
+				132152E21B5CFCA300BAF8B6 /* KSYLog.h */,
+				132152E31B5CFCA300BAF8B6 /* KSYLog.m */,
+				132152DF1B5CF9DF00BAF8B6 /* KSYLogModel.xcdatamodeld */,
 				0A22DFD21B1D8008009111AA /* KS3ExceptionConstants.h */,
 				0AEE1DD91B217A2B00B12916 /* KSYMacroDefinition.h */,
 			);
@@ -579,6 +613,10 @@
 			children = (
 				0A6C294C1A496C3F0056A43C /* RegexKitLite.h */,
 				0A6C294D1A496C3F0056A43C /* RegexKitLite.m */,
+				132152E61B5D165C00BAF8B6 /* Reachability.h */,
+				132152E71B5D165C00BAF8B6 /* Reachability.m */,
+				133AF7F71B67533C00500BFE /* LFCGzipUtillity.h */,
+				133AF7F81B67533C00500BFE /* LFCGzipUtillity.m */,
 			);
 			path = KSYUtil;
 			sourceTree = "<group>";
@@ -742,6 +780,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0A8727231A47FB7400A3AAC5 /* KS3Constants.h in Headers */,
+				132152E41B5CFCA300BAF8B6 /* KSYLog.h in Headers */,
 				0A63914E1A42AFA800BA3A99 /* KS3Client.h in Headers */,
 				0A94F2CC1A42DB580006B005 /* KS3GrantAccessControlList.h in Headers */,
 				0A6391AA1A42AFA800BA3A99 /* KS3Owner.h in Headers */,
@@ -761,6 +800,7 @@
 				13B9A7221A5CCEDD001E55BC /* KS3HeadBucketRequest.h in Headers */,
 				13B9A71E1A5CCEDD001E55BC /* KS3GetBucketLoggingRequest.h in Headers */,
 				13B9A7951A5CCF9D001E55BC /* KS3UploadPartRequest.h in Headers */,
+				132152E81B5D165C00BAF8B6 /* Reachability.h in Headers */,
 				13B9A7DF1A5CDC25001E55BC /* KS3DownLoad.h in Headers */,
 				13B9A7B11A5CD180001E55BC /* KS3ListPartsResult.h in Headers */,
 				13B9A71C1A5CCEDD001E55BC /* KS3GetACLResponse.h in Headers */,
@@ -809,6 +849,8 @@
 				13B9A7341A5CCEDD001E55BC /* KS3SetGrantACLRequest.h in Headers */,
 				13B9A77D1A5CCF9D001E55BC /* KS3InitiateMultipartUploadRequest.h in Headers */,
 				13B9A7201A5CCEDD001E55BC /* KS3GetBucketLoggingResponse.h in Headers */,
+				133AF7F91B67533C00500BFE /* LFCGzipUtillity.h in Headers */,
+				132152DD1B5CF8A200BAF8B6 /* KSYLogClient.h in Headers */,
 				13B9A7971A5CCF9D001E55BC /* KS3UploadPartResponse.h in Headers */,
 				13B9A78F1A5CCF9D001E55BC /* KS3SetObjectACLResponse.h in Headers */,
 				13B9A6E51A5CCE94001E55BC /* KS3ListBucketsResponse.h in Headers */,
@@ -916,6 +958,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				131829741B705E0F002A3A03 /* test.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -977,6 +1020,7 @@
 				13B9A6E41A5CCE94001E55BC /* KS3ListBucketsRequest.m in Sources */,
 				13B9A7291A5CCEDD001E55BC /* KS3ListObjectsResponse.m in Sources */,
 				0A63917F1A42AFA800BA3A99 /* KS3Grant.m in Sources */,
+				132152E51B5CFCA300BAF8B6 /* KSYLog.m in Sources */,
 				13B9A71D1A5CCEDD001E55BC /* KS3GetACLResponse.m in Sources */,
 				13B9A7D21A5CD303001E55BC /* KS3CompleteMultipartUploadResult.m in Sources */,
 				13B9A6E61A5CCE94001E55BC /* KS3ListBucketsResponse.m in Sources */,
@@ -993,10 +1037,14 @@
 				13B9A7311A5CCEDD001E55BC /* KS3SetBucketLoggingRequest.m in Sources */,
 				13B9A7271A5CCEDD001E55BC /* KS3ListObjectsRequest.m in Sources */,
 				13B9A7C41A5CD28C001E55BC /* KS3ObjectSummary.m in Sources */,
+				132152E11B5CF9E000BAF8B6 /* KSYLogModel.xcdatamodeld in Sources */,
+				133AF7FA1B67533C00500BFE /* LFCGzipUtillity.m in Sources */,
 				13B9A7351A5CCEDD001E55BC /* KS3SetGrantACLRequest.m in Sources */,
 				13B9A7901A5CCF9D001E55BC /* KS3SetObjectACLResponse.m in Sources */,
 				13A689531ADF51D000CE8CF7 /* KS3BucketObject.m in Sources */,
 				13B9A7841A5CCF9D001E55BC /* KS3ListPartsResponse.m in Sources */,
+				132152E91B5D165C00BAF8B6 /* Reachability.m in Sources */,
+				132152DE1B5CF8A200BAF8B6 /* KSYLogClient.m in Sources */,
 				0A6391551A42AFA800BA3A99 /* KS3AccessControlList.m in Sources */,
 				13B9A7781A5CCF9D001E55BC /* KS3GetObjectResponse.m in Sources */,
 				13B9A7AC1A5CD15F001E55BC /* KS3ListObjectsXMLPrarser.m in Sources */,
@@ -1256,6 +1304,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		132152DF1B5CF9DF00BAF8B6 /* KSYLogModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				132152E01B5CF9DF00BAF8B6 /* KSYLogModel.xcdatamodel */,
+			);
+			currentVersion = 132152E01B5CF9DF00BAF8B6 /* KSYLogModel.xcdatamodel */;
+			path = KSYLogModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 0A6390791A42AF2200BA3A99 /* Project object */;
 }

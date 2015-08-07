@@ -20,6 +20,7 @@
 #import "KS3CompleteMultipartUploadRequest.h"
 #import "KS3AbortMultipartUploadRequest.h"
 #import "KSYMacroDefinition.h"
+#import "KSYLogClient.h"
 
 @implementation KS3ServiceResponse
 
@@ -85,7 +86,10 @@
  
     
     if (([KS3Client initialize].totalRequestCount%[KS3Client initialize].recordRate) == 0 || [KS3Client initialize].totalRequestCount == 1) {
-        [KSYLogManager sendLogData:self.request.logModel];
+//        [KSYLogManager sendLogData:self.request.logModel];
+        
+        KSYLogClient *logClient = [[KSYLogClient alloc] init];
+        [logClient insertLog:self.request.logModel];
     }
 }
 
@@ -200,7 +204,10 @@
     
     if (([KS3Client initialize].totalRequestCount%[KS3Client initialize].recordRate) == 0 || [KS3Client initialize].totalRequestCount == 1) {
         
-        [KSYLogManager sendLogData:self.request.logModel];
+//        [KSYLogManager sendLogData:self.request.logModel];
+        
+        KSYLogClient *logClient = [[KSYLogClient alloc] init];
+        [logClient insertLog:self.request.logModel];
     }
     
 }
