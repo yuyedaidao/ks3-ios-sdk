@@ -1,8 +1,8 @@
-##KS3 SDK for iOS使用指南
+## KS3 SDK for iOS使用指南
 ---
-###V1.2.0 改动日志
+### V1.2.0 改动日志
 -
-* 优化日志字段，减小数据量* 存储方式变更，转为本地数据库存储* 日志发送方式变更，改为WIFI环境下，每小时触发一次发送，单次最多120条，发完为止。* 发送日志时，采用gzip压缩* 提供日志工具类KSYLogClient，提供日志写入方法KSYLogClient *logClient = [[KSYLogClient alloc] init];[logClient insertLog:self.request.logModel];
+* 优化日志字段，减小数据量* 存储方式变更，转为本地数据库存储* 日志发送方式变更，改为WIFI环境下，每小时触发一次发送，单次最多120条，发完为止。* 发送日志时，采用gzip压缩* 提供日志工具类KSYLogClient，提供日志写入方法KSYLogClient \*logClient = [[KSYLogClient alloc] init];[logClient insertLog:self.request.logModel];
 -
 
 ---
