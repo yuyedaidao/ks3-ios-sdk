@@ -50,7 +50,7 @@
 		</data>
 		<key>Headers/KS3Client.h</key>
 		<data>
-		qF6/0iT7nuvZPeOnqRL1bRx7hi4=
+		X5tvqcFUCv7Lpk/BmeljorR7JW0=
 		</data>
 		<key>Headers/KS3ClientException.h</key>
 		<data>
@@ -106,7 +106,7 @@
 		</data>
 		<key>Headers/KS3ErrorHandler.h</key>
 		<data>
-		RXmlUJ4vYypnu+D4amUat8MWL7c=
+		gIVWJORWVOQn9i5u9OdBgSJlmc4=
 		</data>
 		<key>Headers/KS3GetACLRequest.h</key>
 		<data>
@@ -290,7 +290,7 @@
 		</data>
 		<key>Headers/KS3ServiceRequest.h</key>
 		<data>
-		e6UCFmrmMzlPBW4Ia6bOgVDGZbM=
+		c3+y/vrbPOlyNzqheGuIF9cWru4=
 		</data>
 		<key>Headers/KS3ServiceResponse.h</key>
 		<data>
@@ -370,7 +370,15 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		2KioPjLGwYEA7SVP3JyHjA0HiVs=
+		NxL5f6SgdOlpXEzI2wc5DKT0PHk=
+		</data>
+		<key>KSYLogModel.momd/KSYLogModel.mom</key>
+		<data>
+		of7w1tAWm2zufTwjcpCn+pM4uQo=
+		</data>
+		<key>KSYLogModel.momd/VersionInfo.plist</key>
+		<data>
+		TuppYvIz80pAgcqLi/UHmdmpSQI=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -425,7 +433,7 @@
 		</data>
 		<key>Headers/KS3Client.h</key>
 		<data>
-		qF6/0iT7nuvZPeOnqRL1bRx7hi4=
+		X5tvqcFUCv7Lpk/BmeljorR7JW0=
 		</data>
 		<key>Headers/KS3ClientException.h</key>
 		<data>
@@ -481,7 +489,7 @@
 		</data>
 		<key>Headers/KS3ErrorHandler.h</key>
 		<data>
-		RXmlUJ4vYypnu+D4amUat8MWL7c=
+		gIVWJORWVOQn9i5u9OdBgSJlmc4=
 		</data>
 		<key>Headers/KS3GetACLRequest.h</key>
 		<data>
@@ -665,7 +673,7 @@
 		</data>
 		<key>Headers/KS3ServiceRequest.h</key>
 		<data>
-		e6UCFmrmMzlPBW4Ia6bOgVDGZbM=
+		c3+y/vrbPOlyNzqheGuIF9cWru4=
 		</data>
 		<key>Headers/KS3ServiceResponse.h</key>
 		<data>
@@ -742,6 +750,14 @@
 		<key>Headers/RegexKitLite.h</key>
 		<data>
 		LJGEjHykDDf6LRwniYR3WfY8R6o=
+		</data>
+		<key>KSYLogModel.momd/KSYLogModel.mom</key>
+		<data>
+		of7w1tAWm2zufTwjcpCn+pM4uQo=
+		</data>
+		<key>KSYLogModel.momd/VersionInfo.plist</key>
+		<data>
+		TuppYvIz80pAgcqLi/UHmdmpSQI=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>

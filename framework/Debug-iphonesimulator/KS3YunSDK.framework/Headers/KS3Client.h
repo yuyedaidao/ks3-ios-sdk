@@ -301,6 +301,14 @@ typedef void(^kSS3DownloadFileCompleteionBlock)(KS3DownLoad *aDownload, NSString
                   downloadProgressChangeBlock:(KSS3DownloadProgressChangeBlock)downloadProgressChangeBlock
                                   failedBlock:(KSS3DownloadFailedBlock)failedBlock;
 
+/**
+ *  同步获取保底IP列表
+ *
+ *  @param timeoutInterval 设置超时时间
+ *  @param hander          返回句柄
+ */
+
+- (void)syncGetIPList:(NSTimeInterval)timeoutInterval completionHandler:(void (^) (BOOL success,NSArray *ipsArray,NSError *error))hander;
 
 /**
  *  返回版本信息

@@ -209,7 +209,7 @@ NSString *const strSecretKey = @"1+RBTrWaeT6LaixUV5SGPFpeTa/wZEeZlGzYaZfr";
     KS3PutObjectRequest *putObjRequest = [[KS3PutObjectRequest alloc] initWithName:@"acc"
                                                                            withAcl:ControlList
                                                                           grantAcl:@[acl]];
-    NSURL *fileName = [[NSBundle mainBundle] URLForResource:@"test" withExtension:@"png"];
+    NSURL *fileName = [[NSBundle mainBundle] URLForResource:@"test" withExtension:@"jpg"];
     NSString *filePath = [[[NSBundle bundleForClass:[self class]] resourcePath] stringByAppendingPathComponent:@"test.png"];
     NSLog(@"%@",fileName);
     NSLog(@"%@",filePath);

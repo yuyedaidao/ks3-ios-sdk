@@ -40,7 +40,7 @@
 - (NSString *)URLEncodedString:(NSString *)str;
 - (void)setCompleteRequest;
 
-- (NSString *)vHostToVPath:(NSString *)vHost;
+- (NSString *)vHostToVPath:(NSString *)vHost withBucketName:(NSString *)strBucketName;
 @end
 
 @protocol KingSoftServiceRequestDelegate <NSObject>

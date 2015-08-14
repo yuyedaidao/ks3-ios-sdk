@@ -26,3 +26,5 @@ extern NSString *const KS3iOSSDKClientErrorDomain;
 + (NSError *)errorFromException:(NSException *)exception serviceErrorDomain:(NSString *)serviceErrorDomain clientErrorDomain:(NSString *)clientErrorDomain;
 - (void)convertKS3Error;
 @end
+
+

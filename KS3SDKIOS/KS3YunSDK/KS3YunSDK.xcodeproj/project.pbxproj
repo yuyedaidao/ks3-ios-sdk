@@ -66,7 +66,6 @@
 		0AEE1DDA1B217A2B00B12916 /* KSYMacroDefinition.h in Headers */ = {isa = PBXBuildFile; fileRef = 0AEE1DD91B217A2B00B12916 /* KSYMacroDefinition.h */; };
 		0AF0C1F31B1EA9100043D511 /* KS3YunSDK_LogTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AF0C1F21B1EA9100043D511 /* KS3YunSDK_LogTests.m */; };
 		0AF0C4AE1B1EAED100B87080 /* KS3Util.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AF0C4AD1B1EAED100B87080 /* KS3Util.m */; };
-		131829741B705E0F002A3A03 /* test.png in Resources */ = {isa = PBXBuildFile; fileRef = 131829731B705E0E002A3A03 /* test.png */; };
 		132152DA1B5CF64800BAF8B6 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 132152D91B5CF64800BAF8B6 /* CoreData.framework */; };
 		132152DD1B5CF8A200BAF8B6 /* KSYLogClient.h in Headers */ = {isa = PBXBuildFile; fileRef = 132152DB1B5CF8A200BAF8B6 /* KSYLogClient.h */; };
 		132152DE1B5CF8A200BAF8B6 /* KSYLogClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 132152DC1B5CF8A200BAF8B6 /* KSYLogClient.m */; };
@@ -208,6 +207,7 @@
 		13B9A7DC1A5CD3C0001E55BC /* KS3ObjectACLXMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B9A7DA1A5CD3C0001E55BC /* KS3ObjectACLXMLParser.m */; };
 		13B9A7DF1A5CDC25001E55BC /* KS3DownLoad.h in Headers */ = {isa = PBXBuildFile; fileRef = 13B9A7DD1A5CDC25001E55BC /* KS3DownLoad.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		13B9A7E01A5CDC25001E55BC /* KS3DownLoad.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B9A7DE1A5CDC25001E55BC /* KS3DownLoad.m */; };
+		7C1A2E731B7DDA74005E64D2 /* test.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 7C1A2E721B7DDA74005E64D2 /* test.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -287,7 +287,6 @@
 		0AF0C1F21B1EA9100043D511 /* KS3YunSDK_LogTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KS3YunSDK_LogTests.m; sourceTree = "<group>"; };
 		0AF0C4AC1B1EAED100B87080 /* KS3Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KS3Util.h; sourceTree = "<group>"; };
 		0AF0C4AD1B1EAED100B87080 /* KS3Util.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KS3Util.m; sourceTree = "<group>"; };
-		131829731B705E0E002A3A03 /* test.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = test.png; path = "../../../KS3SDKDemo/KS3SDKDemo-Token/test.png"; sourceTree = "<group>"; };
 		132152D91B5CF64800BAF8B6 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		132152DB1B5CF8A200BAF8B6 /* KSYLogClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSYLogClient.h; sourceTree = "<group>"; };
 		132152DC1B5CF8A200BAF8B6 /* KSYLogClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSYLogClient.m; sourceTree = "<group>"; };
@@ -429,6 +428,7 @@
 		13B9A7DA1A5CD3C0001E55BC /* KS3ObjectACLXMLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KS3ObjectACLXMLParser.m; sourceTree = "<group>"; };
 		13B9A7DD1A5CDC25001E55BC /* KS3DownLoad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KS3DownLoad.h; sourceTree = "<group>"; };
 		13B9A7DE1A5CDC25001E55BC /* KS3DownLoad.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KS3DownLoad.m; sourceTree = "<group>"; };
+		7C1A2E721B7DDA74005E64D2 /* test.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = test.jpg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -457,7 +457,7 @@
 		0A27EBC11B170C5B00935599 /* KS3YunSDK Tests */ = {
 			isa = PBXGroup;
 			children = (
-				131829731B705E0E002A3A03 /* test.png */,
+				7C1A2E721B7DDA74005E64D2 /* test.jpg */,
 				0AF0C4AC1B1EAED100B87080 /* KS3Util.h */,
 				0AF0C4AD1B1EAED100B87080 /* KS3Util.m */,
 				0A27EBC41B170C5B00935599 /* KS3YunSDK_Tests.m */,
@@ -958,7 +958,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				131829741B705E0F002A3A03 /* test.png in Resources */,
+				7C1A2E731B7DDA74005E64D2 /* test.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
