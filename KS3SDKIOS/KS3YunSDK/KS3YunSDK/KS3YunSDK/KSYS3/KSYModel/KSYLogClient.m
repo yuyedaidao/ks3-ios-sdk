@@ -7,7 +7,7 @@
 //
 
 #import "KSYLogClient.h"
-#import "Reachability.h"
+#import "KSYReachability.h"
 #import "KSYLog.h"
 #import "LFCGzipUtillity.h"
 #import <CoreData/CoreData.h>
