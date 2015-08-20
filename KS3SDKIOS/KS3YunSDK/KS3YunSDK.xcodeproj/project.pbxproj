@@ -9,8 +9,6 @@
 /* Begin PBXBuildFile section */
 		0A22DFD01B1D4F6B009111AA /* KSYUnmarshallerXMLParserDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A22DFCE1B1D4F6B009111AA /* KSYUnmarshallerXMLParserDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0A22DFD11B1D4F6B009111AA /* KSYUnmarshallerXMLParserDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A22DFCF1B1D4F6B009111AA /* KSYUnmarshallerXMLParserDelegate.m */; };
-		0A27EBC51B170C5B00935599 /* KS3YunSDK_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A27EBC41B170C5B00935599 /* KS3YunSDK_Tests.m */; };
-		0A27EBC61B170C5B00935599 /* KS3YunSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A6390821A42AF2200BA3A99 /* KS3YunSDK.framework */; };
 		0A27EBEE1B17220800935599 /* KSYLogManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A27EBEC1B17220800935599 /* KSYLogManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0A27EBEF1B17220800935599 /* KSYLogManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A27EBED1B17220800935599 /* KSYLogManager.m */; };
 		0A6390881A42AF2200BA3A99 /* KS3YunSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A6390871A42AF2200BA3A99 /* KS3YunSDK.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -62,8 +60,6 @@
 		0AA9B98A1B16E86800167A4A /* KSYHardwareInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AA9B9881B16E86800167A4A /* KSYHardwareInfo.m */; };
 		0AA9B9921B1703E100167A4A /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AA9B9911B1703E100167A4A /* CoreTelephony.framework */; };
 		0AEE1DDA1B217A2B00B12916 /* KSYMacroDefinition.h in Headers */ = {isa = PBXBuildFile; fileRef = 0AEE1DD91B217A2B00B12916 /* KSYMacroDefinition.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		0AF0C1F31B1EA9100043D511 /* KS3YunSDK_LogTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AF0C1F21B1EA9100043D511 /* KS3YunSDK_LogTests.m */; };
-		0AF0C4AE1B1EAED100B87080 /* KS3Util.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AF0C4AD1B1EAED100B87080 /* KS3Util.m */; };
 		132152DA1B5CF64800BAF8B6 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 132152D91B5CF64800BAF8B6 /* CoreData.framework */; };
 		132152DD1B5CF8A200BAF8B6 /* KSYLogClient.h in Headers */ = {isa = PBXBuildFile; fileRef = 132152DB1B5CF8A200BAF8B6 /* KSYLogClient.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		132152DE1B5CF8A200BAF8B6 /* KSYLogClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 132152DC1B5CF8A200BAF8B6 /* KSYLogClient.m */; };
@@ -205,25 +201,13 @@
 		13B9A7DC1A5CD3C0001E55BC /* KS3ObjectACLXMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B9A7DA1A5CD3C0001E55BC /* KS3ObjectACLXMLParser.m */; };
 		13B9A7DF1A5CDC25001E55BC /* KS3DownLoad.h in Headers */ = {isa = PBXBuildFile; fileRef = 13B9A7DD1A5CDC25001E55BC /* KS3DownLoad.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		13B9A7E01A5CDC25001E55BC /* KS3DownLoad.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B9A7DE1A5CDC25001E55BC /* KS3DownLoad.m */; };
-		7C1A2E731B7DDA74005E64D2 /* test.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 7C1A2E721B7DDA74005E64D2 /* test.jpg */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		0A27EBC71B170C5B00935599 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 0A6390791A42AF2200BA3A99 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 0A6390811A42AF2200BA3A99;
-			remoteInfo = KS3YunSDK;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		0A22DFCE1B1D4F6B009111AA /* KSYUnmarshallerXMLParserDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSYUnmarshallerXMLParserDelegate.h; sourceTree = "<group>"; };
 		0A22DFCF1B1D4F6B009111AA /* KSYUnmarshallerXMLParserDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSYUnmarshallerXMLParserDelegate.m; sourceTree = "<group>"; };
 		0A22DFD21B1D8008009111AA /* KS3ExceptionConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KS3ExceptionConstants.h; sourceTree = "<group>"; };
 		0A27EBBB1B170BD500935599 /* KS3YunSDK copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "KS3YunSDK copy-Info.plist"; path = "/Users/JackWong/Documents/ks3-iossdk-log/ks3-ios-sdk/KS3SDKIOS/KS3YunSDK/KS3YunSDK copy-Info.plist"; sourceTree = "<absolute>"; };
-		0A27EBC01B170C5B00935599 /* KS3YunSDK Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "KS3YunSDK Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A27EBC31B170C5B00935599 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0A27EBC41B170C5B00935599 /* KS3YunSDK_Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KS3YunSDK_Tests.m; sourceTree = "<group>"; };
 		0A27EBEC1B17220800935599 /* KSYLogManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSYLogManager.h; sourceTree = "<group>"; };
@@ -428,14 +412,6 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		0A27EBBD1B170C5B00935599 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				0A27EBC61B170C5B00935599 /* KS3YunSDK.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		0A63907E1A42AF2200BA3A99 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -490,7 +466,6 @@
 			isa = PBXGroup;
 			children = (
 				0A6390821A42AF2200BA3A99 /* KS3YunSDK.framework */,
-				0A27EBC01B170C5B00935599 /* KS3YunSDK Tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -875,24 +850,6 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		0A27EBBF1B170C5B00935599 /* KS3YunSDK Tests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 0A27EBC91B170C5B00935599 /* Build configuration list for PBXNativeTarget "KS3YunSDK Tests" */;
-			buildPhases = (
-				0A27EBBC1B170C5B00935599 /* Sources */,
-				0A27EBBD1B170C5B00935599 /* Frameworks */,
-				0A27EBBE1B170C5B00935599 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				0A27EBC81B170C5B00935599 /* PBXTargetDependency */,
-			);
-			name = "KS3YunSDK Tests";
-			productName = "KS3YunSDK Tests";
-			productReference = 0A27EBC01B170C5B00935599 /* KS3YunSDK Tests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 		0A6390811A42AF2200BA3A99 /* KS3YunSDK */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 0A6390981A42AF2200BA3A99 /* Build configuration list for PBXNativeTarget "KS3YunSDK" */;
@@ -920,11 +877,9 @@
 				LastUpgradeCheck = 0610;
 				ORGANIZATIONNAME = kingsoft;
 				TargetAttributes = {
-					0A27EBBF1B170C5B00935599 = {
-						CreatedOnToolsVersion = 6.3.1;
-					};
 					0A6390811A42AF2200BA3A99 = {
 						CreatedOnToolsVersion = 6.1.1;
+						DevelopmentTeam = B2L72UXUAA;
 					};
 				};
 			};
@@ -941,20 +896,11 @@
 			projectRoot = "";
 			targets = (
 				0A6390811A42AF2200BA3A99 /* KS3YunSDK */,
-				0A27EBBF1B170C5B00935599 /* KS3YunSDK Tests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		0A27EBBE1B170C5B00935599 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				7C1A2E731B7DDA74005E64D2 /* test.jpg in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		0A6390801A42AF2200BA3A99 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -965,16 +911,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		0A27EBBC1B170C5B00935599 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				0AF0C4AE1B1EAED100B87080 /* KS3Util.m in Sources */,
-				0AF0C1F31B1EA9100043D511 /* KS3YunSDK_LogTests.m in Sources */,
-				0A27EBC51B170C5B00935599 /* KS3YunSDK_Tests.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		0A63907D1A42AF2200BA3A99 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1078,55 +1014,7 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
-/* Begin PBXTargetDependency section */
-		0A27EBC81B170C5B00935599 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 0A6390811A42AF2200BA3A99 /* KS3YunSDK */;
-			targetProxy = 0A27EBC71B170C5B00935599 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
-
 /* Begin XCBuildConfiguration section */
-		0A27EBCA1B170C5B00935599 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = "KS3YunSDK Tests/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Debug;
-		};
-		0A27EBCB1B170C5B00935599 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "KS3YunSDK Tests/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Release;
-		};
 		0A6390961A42AF2200BA3A99 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1226,7 +1114,8 @@
 		0A6390991A42AF2200BA3A99 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: Cheng Zhou (V43246M398)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -1238,8 +1127,9 @@
 					"$(inherited)",
 					"$(SDKROOT)/usr/lib/system",
 				);
-				MACH_O_TYPE = mh_dylib;
+				MACH_O_TYPE = staticlib;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
 			};
 			name = Debug;
@@ -1247,7 +1137,8 @@
 		0A63909A1A42AF2200BA3A99 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: Cheng Zhou (V43246M398)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -1259,8 +1150,9 @@
 					"$(inherited)",
 					"$(SDKROOT)/usr/lib/system",
 				);
-				MACH_O_TYPE = mh_dylib;
+				MACH_O_TYPE = staticlib;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
 			};
 			name = Release;
@@ -1268,15 +1160,6 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		0A27EBC91B170C5B00935599 /* Build configuration list for PBXNativeTarget "KS3YunSDK Tests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				0A27EBCA1B170C5B00935599 /* Debug */,
-				0A27EBCB1B170C5B00935599 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		0A63907C1A42AF2200BA3A99 /* Build configuration list for PBXProject "KS3YunSDK" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
