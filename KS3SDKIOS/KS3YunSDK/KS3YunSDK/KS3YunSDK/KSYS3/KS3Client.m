@@ -381,7 +381,7 @@ static NSString     * const KingSoftYun_Host_GETIp2      = @"http://123.59.35.94
     }
     
     KS3Response *response = [self startURLRequest:request token:request.strKS3Token];
-    NSLog(@"%@",[response.error description]);
+    NSLog(@"error=%@",[response.error description]);
     if ([request delegate] == nil) {
         if ([KS3SDKUtil isDNSParseFaild:response]) {
             if (!request.reTry) {

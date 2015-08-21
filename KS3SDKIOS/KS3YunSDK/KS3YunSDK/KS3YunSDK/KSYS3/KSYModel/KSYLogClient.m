@@ -66,9 +66,20 @@
     if (_managedObjectModel != nil) {
         return _managedObjectModel;
     }
-//    NSURL *modelURL = [[[NSBundle mainBundle] bundleURL] URLByAppendingPathComponent:@"Frameworks/KS3YunSDK.framework/KSYLogModel.momd"];
-    NSURL *modelURL = [[[NSBundle bundleForClass:[self class]] bundleURL] URLByAppendingPathComponent:@"KSYLogModel.momd"];
-    _managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
+    NSURL *modelURL0 = [[[NSBundle mainBundle] bundleURL] URLByAppendingPathComponent:@"Frameworks/KS3YunSDK.framework/KSYLogModel.momd"];
+
+    
+
+    NSURL *modelURL2 = [[[NSBundle bundleForClass:[self class]] bundleURL] URLByAppendingPathComponent:@"KSYLogModel.momd"];
+    NSLog(@"bundleClass is %@",NSStringFromClass([self class]));
+    NSLog(@"baseBundleUrl is %@",[[NSBundle bundleForClass:[self class]] bundleURL]);
+
+    NSURL *modelURL3 = [[[NSBundle bundleForClass:[self class]] bundleURL] URLByAppendingPathComponent:@"Frameworks/KS3YunSDK.framework/KSYLogModel.momd"];
+    NSLog(@"modelURL3 is %@",modelURL3);
+    NSLog(@"modelURL2 is %@",modelURL2);
+    NSLog(@"modelURL0 is %@",modelURL0);
+    _managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL2];
+    NSLog(@"_managedObjectModel is %@",_managedObjectModel);
     return _managedObjectModel;
 }
 
@@ -84,6 +95,7 @@
     NSLog(@"StoreURL: %@", storeURL);
     
     NSError *error = nil;
+
     _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
     if (![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error]) {
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
@@ -314,7 +326,7 @@
 }
 
 - (BOOL)isWifi {
-    Reachability *r = [Reachability reachabilityWithHostName:@"www.apple.com"];
+    KS3Reachability *r = [KS3Reachability reachabilityWithHostName:@"www.apple.com"];
     NetworkStatus status = r.currentReachabilityStatus;
     if (status == ReachableViaWiFi) {
         return YES;

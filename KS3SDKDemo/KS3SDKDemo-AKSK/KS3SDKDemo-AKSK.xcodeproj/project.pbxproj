@@ -35,13 +35,6 @@
 			remoteGlobalIDString = 0A6390821A42AF2200BA3A99;
 			remoteInfo = KS3YunSDK;
 		};
-		0A2027861B207C70008B1A58 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 0A20277F1B207C70008B1A58 /* KS3YunSDK.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 0A27EBC01B170C5B00935599;
-			remoteInfo = "KS3YunSDK Tests";
-		};
 		0A20278A1B207C7E008B1A58 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 0A20277F1B207C70008B1A58 /* KS3YunSDK.xcodeproj */;
@@ -127,7 +120,6 @@
 			isa = PBXGroup;
 			children = (
 				0A2027851B207C70008B1A58 /* KS3YunSDK.framework */,
-				0A2027871B207C70008B1A58 /* KS3YunSDK Tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -296,13 +288,6 @@
 			fileType = wrapper.framework;
 			path = KS3YunSDK.framework;
 			remoteRef = 0A2027841B207C70008B1A58 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		0A2027871B207C70008B1A58 /* KS3YunSDK Tests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = "KS3YunSDK Tests.xctest";
-			remoteRef = 0A2027861B207C70008B1A58 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -483,6 +468,7 @@
 				INFOPLIST_FILE = "KS3SDKDemo-AKSK/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MACH_O_TYPE = mh_execute;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -498,6 +484,7 @@
 				INFOPLIST_FILE = "KS3SDKDemo-AKSK/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MACH_O_TYPE = mh_execute;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
