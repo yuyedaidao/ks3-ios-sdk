@@ -66,19 +66,9 @@
     if (_managedObjectModel != nil) {
         return _managedObjectModel;
     }
-    NSURL *modelURL0 = [[[NSBundle mainBundle] bundleURL] URLByAppendingPathComponent:@"Frameworks/KS3YunSDK.framework/KSYLogModel.momd"];
 
-    
-
-    NSURL *modelURL2 = [[[NSBundle bundleForClass:[self class]] bundleURL] URLByAppendingPathComponent:@"KSYLogModel.momd"];
-    NSLog(@"bundleClass is %@",NSStringFromClass([self class]));
-    NSLog(@"baseBundleUrl is %@",[[NSBundle bundleForClass:[self class]] bundleURL]);
-
-    NSURL *modelURL3 = [[[NSBundle bundleForClass:[self class]] bundleURL] URLByAppendingPathComponent:@"Frameworks/KS3YunSDK.framework/KSYLogModel.momd"];
-    NSLog(@"modelURL3 is %@",modelURL3);
-    NSLog(@"modelURL2 is %@",modelURL2);
-    NSLog(@"modelURL0 is %@",modelURL0);
-    _managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL2];
+    NSURL *modelURL = [[[NSBundle bundleForClass:[self class]] bundleURL] URLByAppendingPathComponent:@"KSYLogModel.momd"];
+    _managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
     NSLog(@"_managedObjectModel is %@",_managedObjectModel);
     return _managedObjectModel;
 }
