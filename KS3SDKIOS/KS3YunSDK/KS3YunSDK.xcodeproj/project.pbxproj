@@ -46,8 +46,6 @@
 		0A6391B31A42AFA800BA3A99 /* KS3ResponseHeaderOverrides.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A6391221A42AFA800BA3A99 /* KS3ResponseHeaderOverrides.m */; };
 		0A6C29491A493C270056A43C /* KS3ErrorHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A6C29471A493C270056A43C /* KS3ErrorHandler.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0A6C294A1A493C270056A43C /* KS3ErrorHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A6C29481A493C270056A43C /* KS3ErrorHandler.m */; };
-		0A6C294E1A496C3F0056A43C /* RegexKitLite.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A6C294C1A496C3F0056A43C /* RegexKitLite.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		0A6C294F1A496C3F0056A43C /* RegexKitLite.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A6C294D1A496C3F0056A43C /* RegexKitLite.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		0A6C29551A4971A20056A43C /* libicucore.A.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A6C29541A4971A20056A43C /* libicucore.A.dylib */; };
 		0A75244A1A498D85000A16A1 /* Test.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0A6C295C1A498B9A0056A43C /* Test.jpg */; };
 		0A8727231A47FB7400A3AAC5 /* KS3Constants.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A8727221A47FB7400A3AAC5 /* KS3Constants.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -240,8 +238,6 @@
 		0A6391221A42AFA800BA3A99 /* KS3ResponseHeaderOverrides.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KS3ResponseHeaderOverrides.m; sourceTree = "<group>"; };
 		0A6C29471A493C270056A43C /* KS3ErrorHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KS3ErrorHandler.h; sourceTree = "<group>"; };
 		0A6C29481A493C270056A43C /* KS3ErrorHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KS3ErrorHandler.m; sourceTree = "<group>"; };
-		0A6C294C1A496C3F0056A43C /* RegexKitLite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegexKitLite.h; sourceTree = "<group>"; };
-		0A6C294D1A496C3F0056A43C /* RegexKitLite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegexKitLite.m; sourceTree = "<group>"; };
 		0A6C29541A4971A20056A43C /* libicucore.A.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.A.dylib; path = usr/lib/libicucore.A.dylib; sourceTree = SDKROOT; };
 		0A6C295C1A498B9A0056A43C /* Test.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Test.jpg; sourceTree = "<group>"; };
 		0A8727221A47FB7400A3AAC5 /* KS3Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = KS3Constants.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -535,8 +531,6 @@
 		0A6C294B1A496C3E0056A43C /* KSYUtil */ = {
 			isa = PBXGroup;
 			children = (
-				0A6C294C1A496C3F0056A43C /* RegexKitLite.h */,
-				0A6C294D1A496C3F0056A43C /* RegexKitLite.m */,
 			);
 			path = KSYUtil;
 			sourceTree = "<group>";
@@ -744,7 +738,6 @@
 				13B9A6E31A5CCE94001E55BC /* KS3ListBucketsRequest.h in Headers */,
 				13B9A7851A5CCF9D001E55BC /* KS3PutObjectCopyRequest.h in Headers */,
 				13B9A72A1A5CCEDD001E55BC /* KS3ListObjectsResult.h in Headers */,
-				0A6C294E1A496C3F0056A43C /* RegexKitLite.h in Headers */,
 				13B9A6E71A5CCE94001E55BC /* KS3ListBucketsResult.h in Headers */,
 				0A8727281A48184800A3AAC5 /* KS3ClientException.h in Headers */,
 				13B9A6E91A5CCE94001E55BC /* KS3ListBucketsXMLParser.h in Headers */,
@@ -894,7 +887,6 @@
 				0A63914D1A42AFA800BA3A99 /* KS3Response.m in Sources */,
 				13B9A7B81A5CD197001E55BC /* KS3MultipartUpload.m in Sources */,
 				13B9A7861A5CCF9D001E55BC /* KS3PutObjectCopyRequest.m in Sources */,
-				0A6C294F1A496C3F0056A43C /* RegexKitLite.m in Sources */,
 				13B9A7131A5CCEDD001E55BC /* KS3CreateBucketRequest.m in Sources */,
 				13B9A7701A5CCF9D001E55BC /* KS3CompleteMultipartUploadResponse.m in Sources */,
 				0A6391421A42AFA800BA3A99 /* KS3URLRequest.m in Sources */,
@@ -1109,7 +1101,7 @@
 					"$(inherited)",
 					"$(SDKROOT)/usr/lib/system",
 				);
-				MACH_O_TYPE = mh_dylib;
+				MACH_O_TYPE = staticlib;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
@@ -1132,7 +1124,7 @@
 					"$(inherited)",
 					"$(SDKROOT)/usr/lib/system",
 				);
-				MACH_O_TYPE = mh_dylib;
+				MACH_O_TYPE = staticlib;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
