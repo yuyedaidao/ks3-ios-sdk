@@ -1253,6 +1253,8 @@ KS3CompleteMultipartUploadResponse响应包括以下内容
      	}
 
 ````
+##备注
+上传AppStore过程中如果遇到因为KS3SDK的问题，可以尝试把工程中现有的库替换成静态库，即文件夹staticFramework中对应的库。然后在Embeddeg Binaries中删除KS3YunSDK即可。
 
 ##其它
 >完整示例，请见 [KS3-iOS-SDK-Demo](https://github.com/ks3sdk/ks3-ios-sdk/tree/master/Demo) 
