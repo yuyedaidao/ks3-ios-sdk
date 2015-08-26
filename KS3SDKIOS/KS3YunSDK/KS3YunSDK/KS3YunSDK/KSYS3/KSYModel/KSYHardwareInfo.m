@@ -16,6 +16,7 @@
 #import <CoreTelephony/CTCarrier.h>
 #import "KS3AuthUtils.h"
 #include <sys/socket.h>
+
 @implementation KSYHardwareInfo
 
 + (NSString *)deviceModel

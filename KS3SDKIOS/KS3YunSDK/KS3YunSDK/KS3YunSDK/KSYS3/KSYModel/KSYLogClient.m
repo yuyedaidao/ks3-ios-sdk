@@ -63,15 +63,43 @@
 // If the model doesn't already exist, it is created from the application's model.
 - (NSManagedObjectModel *)managedObjectModel
 {
+    
     if (_managedObjectModel != nil) {
         return _managedObjectModel;
     }
 
-    NSURL *modelURL = [[[NSBundle bundleForClass:[self class]] bundleURL] URLByAppendingPathComponent:@"KSYLogModel.momd"];
+    NSString *staticLibraryBundlePath = [[NSBundle mainBundle] pathForResource:@"KS3Resource" ofType:@"bundle"];
+
+    NSBundle *bundle = [NSBundle bundleWithPath:staticLibraryBundlePath];
+    
+    NSURL *modelURL = [bundle URLForResource:@"KSYLogModel" withExtension:@"momd"];
+    
+    NSLog(@"bundle path is %@",staticLibraryBundlePath);
+    NSLog(@"bundle is %@modelURL is %@",bundle,modelURL);
+    
     _managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
     NSLog(@"_managedObjectModel is %@",_managedObjectModel);
     return _managedObjectModel;
+
+
+//    NSMutableArray *allManagedObjectModels = [[NSMutableArray alloc] init];
+//    
+//    NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"KSYLogModel" withExtension:@"momd"];
+//    NSManagedObjectModel *projectManagedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
+//    [allManagedObjectModels addObject:projectManagedObjectModel];
+//    
+//    NSString *staticLibraryBundlePath = [[NSBundle mainBundle] pathForResource:@"KS3CoreData" ofType:@"bundle"];
+//    NSURL *staticLibraryMOMURL = [[NSBundle bundleWithPath:staticLibraryBundlePath] URLForResource:@"KSYLogModel" withExtension:@"mom"];
+//    NSManagedObjectModel *staticLibraryMOM = [[NSManagedObjectModel alloc] initWithContentsOfURL:staticLibraryMOMURL];
+//    [allManagedObjectModels addObject:staticLibraryMOM];
+//    
+//    _managedObjectModel = [NSManagedObjectModel modelByMergingModels:allManagedObjectModels];
+//    
+//    return _managedObjectModel;
+
+
 }
+
 
 // Returns the persistent store coordinator for the application.
 // If the coordinator doesn't already exist, it is created and the application's store added to it.
@@ -107,7 +135,7 @@
 
 - (void)insertLog:(KS3LogModel *)logInfo {
     NSManagedObjectContext *context = [self managedObjectContext];
-    KSYLog *log = [NSEntityDescription insertNewObjectForEntityForName:kTableName inManagedObjectContext:context];
+    KSYLog *log = [NSEntityDescription insertNewObjectForEntityForName:@"KSYLog" inManagedObjectContext:context];
     log.source_ip = logInfo.Log_source_ip;
     log.target_ip = logInfo.Log_target_ip;
     log.model = logInfo.Log_model;
@@ -226,17 +254,22 @@
 - (NSInteger)dataCount {
     NSManagedObjectContext *context = [self managedObjectContext];
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:kTableName inManagedObjectContext:context];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"KSYLog" inManagedObjectContext:context];
     [fetchRequest setEntity:entity];
     NSError *error;
-    NSArray *fetchedObjects = [context executeFetchRequest:fetchRequest error:&error];
-//    for (NSInteger i = 0; i < fetchedObjects.count; i ++) {
-//        KSYLog *log = fetchedObjects[i];
-//        NSLog(@"index: %ld", (long)i + 1);
-//        NSLog(@"request_id:%@", log.request_id);
-//        NSLog(@"ksy_error_code:%@", log.ksy_error_code);
-//    }
-    return fetchedObjects.count;
+    NSLog(@"context is %@,\nentity is %@",context,entity);
+    if (entity != nil) {
+        NSArray *fetchedObjects = [context executeFetchRequest:fetchRequest error:&error];
+        //    for (NSInteger i = 0; i < fetchedObjects.count; i ++) {
+        //        KSYLog *log = fetchedObjects[i];
+        //        NSLog(@"index: %ld", (long)i + 1);
+        //        NSLog(@"request_id:%@", log.request_id);
+        //        NSLog(@"ksy_error_code:%@", log.ksy_error_code);
+        //    }
+        return fetchedObjects.count;
+
+    }
+    return 0;
 }
 
 - (void)deleteFirstRecord {
