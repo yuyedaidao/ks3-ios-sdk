@@ -5,7 +5,7 @@
 ---
 
 * 增加静态库， 静态库兼容到IOS6.0。
-*  APP兼容IOS8.0以下的需要用静态库。 原有的集成动态库的，如果遇到提交AppStore是因为KS3SDK引起的无法正常提交的，建议下载并更新为staticFramework中对应的静态库，同时在Target->General->Embedded Binaries中删除对应的KS3SDK
+* APP兼容IOS8.0以下的需要用静态库。 原有的集成动态库的，如果遇到提交AppStore是因为KS3SDK引起的无法正常提交的，建议下载并更新为staticFramework中对应的静态库，同时在Target->General->Embedded Binaries中删除对应的KS3SDK
 ---
 ###简介
 ####金山标准存储服务
