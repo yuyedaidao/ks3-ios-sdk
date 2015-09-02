@@ -1,12 +1,14 @@
-##KS3 SDK for iOS
+	##KS3 SDK for iOS
 ---
 
 ##V.1.1.0 改动日志 (2015-09-02)
 ---
 
-* 增加静态库， 静态库兼容到IOS6.0。
-* APP兼容IOS8.0以下的需要用静态库。 原有的集成动态库的，如果遇到提交AppStore是因为KS3SDK引起的无法正常提交的，建议下载并更新为staticFramework中对应的静态库，同时在Target->General->Embedded Binaries中删除对应的KS3SDK
+* 增加静态库， 静态库兼容到IOS6.0
+
+> APP兼容IOS8.0以下的需要用静态库。 原有的集成动态库的，如果遇到提交AppStore是因为KS3SDK引起的无法正常提交的，建议下载并更新为staticFramework中对应的静态库，同时在Target->General->Embedded Binaries中删除对应的KS3SDK
 ---
+
 ###简介
 ####金山标准存储服务
 金山标准存储服务（Kingsoft Standard Storage Service），简称KS3，是金山云为开发者提供无限制、多备份、分布式的低成本存储空间解决方案。KS3 SDK for iOS替开发者解决了授权、存储资源管理以及上传下载等复杂问题，提供基于iOS平台的简单易用API，让开发者方便地构建基于KS3服务的移动应用。
