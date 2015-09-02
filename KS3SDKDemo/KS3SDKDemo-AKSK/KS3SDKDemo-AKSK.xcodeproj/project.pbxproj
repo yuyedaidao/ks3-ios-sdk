@@ -13,7 +13,6 @@
 		0A21055A1AEF2BC300A8865C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0A2105581AEF2BC300A8865C /* Main.storyboard */; };
 		0A21055C1AEF2BC300A8865C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0A21055B1AEF2BC300A8865C /* Images.xcassets */; };
 		0A21055F1AEF2BC300A8865C /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0A21055D1AEF2BC300A8865C /* LaunchScreen.xib */; };
-		0A21056B1AEF2BC300A8865C /* KS3SDKDemo_AKSKTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A21056A1AEF2BC300A8865C /* KS3SDKDemo_AKSKTests.m */; };
 		0A2105821AEF2CAE00A8865C /* BucketViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A2105771AEF2CAE00A8865C /* BucketViewController.m */; };
 		0A2105831AEF2CAE00A8865C /* CreateBucketViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A2105791AEF2CAE00A8865C /* CreateBucketViewController.m */; };
 		0A2105841AEF2CAE00A8865C /* GetAllObjectsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A21057B1AEF2CAE00A8865C /* GetAllObjectsViewController.m */; };
@@ -27,26 +26,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		0A2105651AEF2BC300A8865C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 0A2105431AEF2BC300A8865C /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 0A21054A1AEF2BC300A8865C;
-			remoteInfo = "KS3SDKDemo-AKSK";
-		};
 		0AF27E541B27DE9B00B38C40 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 0AF27E4F1B27DE9A00B38C40 /* KS3YunSDK.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 0A6390821A42AF2200BA3A99;
 			remoteInfo = KS3YunSDK;
-		};
-		0AF27E561B27DE9B00B38C40 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 0AF27E4F1B27DE9A00B38C40 /* KS3YunSDK.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 0A63908D1A42AF2200BA3A99;
-			remoteInfo = KS3YunSDKTests;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -75,7 +60,6 @@
 		0A2105591AEF2BC300A8865C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		0A21055B1AEF2BC300A8865C /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		0A21055E1AEF2BC300A8865C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		0A2105641AEF2BC300A8865C /* KS3SDKDemo-AKSKTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "KS3SDKDemo-AKSKTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A2105691AEF2BC300A8865C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0A21056A1AEF2BC300A8865C /* KS3SDKDemo_AKSKTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KS3SDKDemo_AKSKTests.m; sourceTree = "<group>"; };
 		0A2105761AEF2CAE00A8865C /* BucketViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BucketViewController.h; sourceTree = "<group>"; };
@@ -104,13 +88,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		0A2105611AEF2BC300A8865C /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -128,7 +105,6 @@
 			isa = PBXGroup;
 			children = (
 				0A21054B1AEF2BC300A8865C /* KS3SDKDemo-AKSK.app */,
-				0A2105641AEF2BC300A8865C /* KS3SDKDemo-AKSKTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -193,7 +169,6 @@
 			isa = PBXGroup;
 			children = (
 				0AF27E551B27DE9B00B38C40 /* KS3YunSDK.framework */,
-				0AF27E571B27DE9B00B38C40 /* KS3YunSDKTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -219,24 +194,6 @@
 			productReference = 0A21054B1AEF2BC300A8865C /* KS3SDKDemo-AKSK.app */;
 			productType = "com.apple.product-type.application";
 		};
-		0A2105631AEF2BC300A8865C /* KS3SDKDemo-AKSKTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 0A2105711AEF2BC300A8865C /* Build configuration list for PBXNativeTarget "KS3SDKDemo-AKSKTests" */;
-			buildPhases = (
-				0A2105601AEF2BC300A8865C /* Sources */,
-				0A2105611AEF2BC300A8865C /* Frameworks */,
-				0A2105621AEF2BC300A8865C /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				0A2105661AEF2BC300A8865C /* PBXTargetDependency */,
-			);
-			name = "KS3SDKDemo-AKSKTests";
-			productName = "KS3SDKDemo-AKSKTests";
-			productReference = 0A2105641AEF2BC300A8865C /* KS3SDKDemo-AKSKTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -248,10 +205,6 @@
 				TargetAttributes = {
 					0A21054A1AEF2BC300A8865C = {
 						CreatedOnToolsVersion = 6.3;
-					};
-					0A2105631AEF2BC300A8865C = {
-						CreatedOnToolsVersion = 6.3;
-						TestTargetID = 0A21054A1AEF2BC300A8865C;
 					};
 				};
 			};
@@ -275,7 +228,6 @@
 			projectRoot = "";
 			targets = (
 				0A21054A1AEF2BC300A8865C /* KS3SDKDemo-AKSK */,
-				0A2105631AEF2BC300A8865C /* KS3SDKDemo-AKSKTests */,
 			);
 		};
 /* End PBXProject section */
@@ -286,13 +238,6 @@
 			fileType = wrapper.framework;
 			path = KS3YunSDK.framework;
 			remoteRef = 0AF27E541B27DE9B00B38C40 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		0AF27E571B27DE9B00B38C40 /* KS3YunSDKTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = KS3YunSDKTests.xctest;
-			remoteRef = 0AF27E561B27DE9B00B38C40 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -308,13 +253,6 @@
 				0A2105E11AEF311800A8865C /* bugDownload.txt in Resources */,
 				0A21055F1AEF2BC300A8865C /* LaunchScreen.xib in Resources */,
 				0A21055C1AEF2BC300A8865C /* Images.xcassets in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		0A2105621AEF2BC300A8865C /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -337,23 +275,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		0A2105601AEF2BC300A8865C /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				0A21056B1AEF2BC300A8865C /* KS3SDKDemo_AKSKTests.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		0A2105661AEF2BC300A8865C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 0A21054A1AEF2BC300A8865C /* KS3SDKDemo-AKSK */;
-			targetProxy = 0A2105651AEF2BC300A8865C /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		0A2105581AEF2BC300A8865C /* Main.storyboard */ = {
@@ -474,7 +396,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MACH_O_TYPE = mh_execute;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "9915a55f-edb2-4a8f-b4ab-7d26c8490c19";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -482,6 +404,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -491,41 +414,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MACH_O_TYPE = mh_execute;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "9915a55f-edb2-4a8f-b4ab-7d26c8490c19";
-			};
-			name = Release;
-		};
-		0A2105721AEF2BC300A8865C /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = "KS3SDKDemo-AKSKTests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/KS3SDKDemo-AKSK.app/KS3SDKDemo-AKSK";
-			};
-			name = Debug;
-		};
-		0A2105731AEF2BC300A8865C /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = "KS3SDKDemo-AKSKTests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/KS3SDKDemo-AKSK.app/KS3SDKDemo-AKSK";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};
@@ -546,15 +435,6 @@
 			buildConfigurations = (
 				0A21056F1AEF2BC300A8865C /* Debug */,
 				0A2105701AEF2BC300A8865C /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		0A2105711AEF2BC300A8865C /* Build configuration list for PBXNativeTarget "KS3SDKDemo-AKSKTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				0A2105721AEF2BC300A8865C /* Debug */,
-				0A2105731AEF2BC300A8865C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
