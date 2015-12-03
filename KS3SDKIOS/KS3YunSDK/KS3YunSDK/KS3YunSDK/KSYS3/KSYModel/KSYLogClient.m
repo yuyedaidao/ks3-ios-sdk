@@ -69,22 +69,24 @@
     }
 
     NSString *staticLibraryBundlePath = [[NSBundle mainBundle] pathForResource:@"KS3Resource" ofType:@"bundle"];
-
     NSBundle *bundle = [NSBundle bundleWithPath:staticLibraryBundlePath];
-    
+        
     NSURL *modelURL = [bundle URLForResource:@"KSYLogModel" withExtension:@"momd"];
-    
-    NSLog(@"bundle path is %@",staticLibraryBundlePath);
-    NSLog(@"bundle is %@modelURL is %@",bundle,modelURL);
-    
+    if (modelURL == nil) {
+        modelURL = [[NSBundle mainBundle] URLForResource:@"KSYLogModel" withExtension:@"momd"];
+
+    }
+    if (modelURL == nil) {
+        modelURL = [[[NSBundle mainBundle] bundleURL] URLByAppendingPathComponent:@"Frameworks/KS3YunSDK.framework/KSYLogModel.momd"];
+
+    }
     _managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
-    NSLog(@"_managedObjectModel is %@",_managedObjectModel);
+//    NSLog(@"_managedObjectModel is %@",_managedObjectModel);
     return _managedObjectModel;
 
 
 //    NSMutableArray *allManagedObjectModels = [[NSMutableArray alloc] init];
 //    
-//    NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"KSYLogModel" withExtension:@"momd"];
 //    NSManagedObjectModel *projectManagedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
 //    [allManagedObjectModels addObject:projectManagedObjectModel];
 //    

@@ -48,7 +48,6 @@
 		0A6391B31A42AFA800BA3A99 /* KS3ResponseHeaderOverrides.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A6391221A42AFA800BA3A99 /* KS3ResponseHeaderOverrides.m */; };
 		0A6C29491A493C270056A43C /* KS3ErrorHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A6C29471A493C270056A43C /* KS3ErrorHandler.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0A6C294A1A493C270056A43C /* KS3ErrorHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A6C29481A493C270056A43C /* KS3ErrorHandler.m */; };
-		0A6C29551A4971A20056A43C /* libicucore.A.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A6C29541A4971A20056A43C /* libicucore.A.dylib */; };
 		0A8727231A47FB7400A3AAC5 /* KS3Constants.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A8727221A47FB7400A3AAC5 /* KS3Constants.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0A8727281A48184800A3AAC5 /* KS3ClientException.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A8727261A48184800A3AAC5 /* KS3ClientException.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0A8727291A48184800A3AAC5 /* KS3ClientException.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A8727271A48184800A3AAC5 /* KS3ClientException.m */; };
@@ -68,7 +67,6 @@
 		132152E51B5CFCA300BAF8B6 /* KSYLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 132152E31B5CFCA300BAF8B6 /* KSYLog.m */; };
 		132152E81B5D165C00BAF8B6 /* KSYReachability.h in Headers */ = {isa = PBXBuildFile; fileRef = 132152E61B5D165C00BAF8B6 /* KSYReachability.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		132152E91B5D165C00BAF8B6 /* KSYReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 132152E71B5D165C00BAF8B6 /* KSYReachability.m */; };
-		133AF7F61B6752E500500BFE /* libz.1.2.5.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 133AF7F51B6752E500500BFE /* libz.1.2.5.dylib */; };
 		133AF7F91B67533C00500BFE /* LFCGzipUtillity.h in Headers */ = {isa = PBXBuildFile; fileRef = 133AF7F71B67533C00500BFE /* LFCGzipUtillity.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		133AF7FA1B67533C00500BFE /* LFCGzipUtillity.m in Sources */ = {isa = PBXBuildFile; fileRef = 133AF7F81B67533C00500BFE /* LFCGzipUtillity.m */; };
 		13A689521ADF51D000CE8CF7 /* KS3BucketObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 13A689501ADF51D000CE8CF7 /* KS3BucketObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -201,6 +199,8 @@
 		13B9A7DC1A5CD3C0001E55BC /* KS3ObjectACLXMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B9A7DA1A5CD3C0001E55BC /* KS3ObjectACLXMLParser.m */; };
 		13B9A7DF1A5CDC25001E55BC /* KS3DownLoad.h in Headers */ = {isa = PBXBuildFile; fileRef = 13B9A7DD1A5CDC25001E55BC /* KS3DownLoad.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		13B9A7E01A5CDC25001E55BC /* KS3DownLoad.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B9A7DE1A5CDC25001E55BC /* KS3DownLoad.m */; };
+		7C5FDEEB1C10181B00C30401 /* libz.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C5FDEEA1C10181B00C30401 /* libz.1.dylib */; };
+		7C5FDEED1C10188500C30401 /* libicucore.A.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C5FDEEC1C10188500C30401 /* libicucore.A.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -252,7 +252,6 @@
 		0A6391221A42AFA800BA3A99 /* KS3ResponseHeaderOverrides.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KS3ResponseHeaderOverrides.m; sourceTree = "<group>"; };
 		0A6C29471A493C270056A43C /* KS3ErrorHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KS3ErrorHandler.h; sourceTree = "<group>"; };
 		0A6C29481A493C270056A43C /* KS3ErrorHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KS3ErrorHandler.m; sourceTree = "<group>"; };
-		0A6C29541A4971A20056A43C /* libicucore.A.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.A.dylib; path = usr/lib/libicucore.A.dylib; sourceTree = SDKROOT; };
 		0A8727221A47FB7400A3AAC5 /* KS3Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = KS3Constants.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		0A8727261A48184800A3AAC5 /* KS3ClientException.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KS3ClientException.h; sourceTree = "<group>"; };
 		0A8727271A48184800A3AAC5 /* KS3ClientException.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KS3ClientException.m; sourceTree = "<group>"; };
@@ -275,7 +274,6 @@
 		132152E31B5CFCA300BAF8B6 /* KSYLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSYLog.m; sourceTree = "<group>"; };
 		132152E61B5D165C00BAF8B6 /* KSYReachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSYReachability.h; sourceTree = "<group>"; };
 		132152E71B5D165C00BAF8B6 /* KSYReachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSYReachability.m; sourceTree = "<group>"; };
-		133AF7F51B6752E500500BFE /* libz.1.2.5.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.2.5.dylib; path = usr/lib/libz.1.2.5.dylib; sourceTree = SDKROOT; };
 		133AF7F71B67533C00500BFE /* LFCGzipUtillity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LFCGzipUtillity.h; sourceTree = "<group>"; };
 		133AF7F81B67533C00500BFE /* LFCGzipUtillity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LFCGzipUtillity.m; sourceTree = "<group>"; };
 		13A689501ADF51D000CE8CF7 /* KS3BucketObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KS3BucketObject.h; path = KS3YunSDK/KS3YunSDK/KSYS3/KSYModel/Object/KS3BucketObject.h; sourceTree = SOURCE_ROOT; };
@@ -409,6 +407,8 @@
 		13B9A7DD1A5CDC25001E55BC /* KS3DownLoad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KS3DownLoad.h; sourceTree = "<group>"; };
 		13B9A7DE1A5CDC25001E55BC /* KS3DownLoad.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KS3DownLoad.m; sourceTree = "<group>"; };
 		7C1A2E721B7DDA74005E64D2 /* test.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = test.jpg; sourceTree = "<group>"; };
+		7C5FDEEA1C10181B00C30401 /* libz.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.dylib; path = ../../../../../../../usr/lib/libz.1.dylib; sourceTree = "<group>"; };
+		7C5FDEEC1C10188500C30401 /* libicucore.A.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.A.dylib; path = ../../../../../../../usr/lib/libicucore.A.dylib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -416,10 +416,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				133AF7F61B6752E500500BFE /* libz.1.2.5.dylib in Frameworks */,
+				7C5FDEED1C10188500C30401 /* libicucore.A.dylib in Frameworks */,
+				7C5FDEEB1C10181B00C30401 /* libz.1.dylib in Frameworks */,
 				132152DA1B5CF64800BAF8B6 /* CoreData.framework in Frameworks */,
 				0AA9B9921B1703E100167A4A /* CoreTelephony.framework in Frameworks */,
-				0A6C29551A4971A20056A43C /* libicucore.A.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -450,10 +450,10 @@
 		0A6390781A42AF2200BA3A99 = {
 			isa = PBXGroup;
 			children = (
-				133AF7F51B6752E500500BFE /* libz.1.2.5.dylib */,
+				7C5FDEEC1C10188500C30401 /* libicucore.A.dylib */,
+				7C5FDEEA1C10181B00C30401 /* libz.1.dylib */,
 				132152D91B5CF64800BAF8B6 /* CoreData.framework */,
 				0AA9B9911B1703E100167A4A /* CoreTelephony.framework */,
-				0A6C29541A4971A20056A43C /* libicucore.A.dylib */,
 				0A6390841A42AF2200BA3A99 /* KS3YunSDK */,
 				0A27EBC11B170C5B00935599 /* KS3YunSDK Tests */,
 				0A6390831A42AF2200BA3A99 /* Products */,
@@ -879,7 +879,7 @@
 				TargetAttributes = {
 					0A6390811A42AF2200BA3A99 = {
 						CreatedOnToolsVersion = 6.1.1;
-						DevelopmentTeam = B2L72UXUAA;
+						DevelopmentTeam = R5WW6M762K;
 					};
 				};
 			};
@@ -1120,6 +1120,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = KS3YunSDK/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -1127,7 +1128,7 @@
 					"$(inherited)",
 					"$(SDKROOT)/usr/lib/system",
 				);
-				MACH_O_TYPE = staticlib;
+				MACH_O_TYPE = mh_dylib;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
@@ -1143,6 +1144,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = KS3YunSDK/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -1150,7 +1152,7 @@
 					"$(inherited)",
 					"$(SDKROOT)/usr/lib/system",
 				);
-				MACH_O_TYPE = staticlib;
+				MACH_O_TYPE = mh_dylib;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;

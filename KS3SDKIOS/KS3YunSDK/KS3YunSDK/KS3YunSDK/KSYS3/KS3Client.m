@@ -296,12 +296,19 @@ static NSString     * const KingSoftYun_Host_GETIp2      = @"http://123.59.35.94
                 NSError *error = nil;
                 NSDictionary *jsonDict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
                 if (!error) {
-                    getIPSuccess = YES;
-                    _ksyIps = [jsonDict[@"ct"] componentsSeparatedByString:@","];
+                    @synchronized(self) {
+                        getIPSuccess = YES;
+                        _ksyIps = [jsonDict[@"ct"] componentsSeparatedByString:@","];
+
+                    }
+
                 }
             }
             if ([host isEqualToString:KingSoftYun_Host_GETIp2]) {
-                getIPSuccess = YES;
+                @synchronized(self) {
+                    getIPSuccess = YES;
+
+                }
             }
         }];
         
@@ -351,7 +358,8 @@ static NSString     * const KingSoftYun_Host_GETIp2      = @"http://123.59.35.94
         if (!_ksyIps.count) {
             [self getKSSIPList:KingSoftYun_Host_GETIp1];
             while (!getIPSuccess) {
-                [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
+                
+                [[NSRunLoop mainRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
             }
         }
     }
