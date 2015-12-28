@@ -25,6 +25,11 @@
 		0A2105E01AEF311800A8865C /* +-.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0A2105DD1AEF311800A8865C /* +-.jpg */; };
 		0A2105E11AEF311800A8865C /* bugDownload.txt in Resources */ = {isa = PBXBuildFile; fileRef = 0A2105DE1AEF311800A8865C /* bugDownload.txt */; };
 		0A2105E21AEF311800A8865C /* test.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0A2105DF1AEF311800A8865C /* test.jpg */; };
+		7CF7CF591C2D4186005EB522 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CF7CF581C2D4186005EB522 /* CoreTelephony.framework */; };
+		7CF7CF5B1C2D4195005EB522 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CF7CF5A1C2D4195005EB522 /* CoreData.framework */; };
+		7CF7CF5D1C2D41A8005EB522 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CF7CF5C1C2D41A8005EB522 /* SystemConfiguration.framework */; };
+		7CF7CF5F1C2D41B5005EB522 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CF7CF5E1C2D41B5005EB522 /* MobileCoreServices.framework */; };
+		7CF7CF611C2D41C2005EB522 /* libz.1.2.5.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CF7CF601C2D41C2005EB522 /* libz.1.2.5.tbd */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -95,6 +100,11 @@
 		0A2105DD1AEF311800A8865C /* +-.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "+-.jpg"; sourceTree = SOURCE_ROOT; };
 		0A2105DE1AEF311800A8865C /* bugDownload.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bugDownload.txt; sourceTree = SOURCE_ROOT; };
 		0A2105DF1AEF311800A8865C /* test.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = test.jpg; sourceTree = SOURCE_ROOT; };
+		7CF7CF581C2D4186005EB522 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		7CF7CF5A1C2D4195005EB522 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		7CF7CF5C1C2D41A8005EB522 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		7CF7CF5E1C2D41B5005EB522 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		7CF7CF601C2D41C2005EB522 /* libz.1.2.5.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.1.2.5.tbd; path = usr/lib/libz.1.2.5.tbd; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,6 +112,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7CF7CF611C2D41C2005EB522 /* libz.1.2.5.tbd in Frameworks */,
+				7CF7CF5F1C2D41B5005EB522 /* MobileCoreServices.framework in Frameworks */,
+				7CF7CF5D1C2D41A8005EB522 /* SystemConfiguration.framework in Frameworks */,
+				7CF7CF5B1C2D4195005EB522 /* CoreData.framework in Frameworks */,
+				7CF7CF591C2D4186005EB522 /* CoreTelephony.framework in Frameworks */,
 				0A2027881B207C7E008B1A58 /* KS3YunSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -127,6 +142,11 @@
 		0A2105421AEF2BC300A8865C = {
 			isa = PBXGroup;
 			children = (
+				7CF7CF601C2D41C2005EB522 /* libz.1.2.5.tbd */,
+				7CF7CF5E1C2D41B5005EB522 /* MobileCoreServices.framework */,
+				7CF7CF5C1C2D41A8005EB522 /* SystemConfiguration.framework */,
+				7CF7CF5A1C2D4195005EB522 /* CoreData.framework */,
+				7CF7CF581C2D4186005EB522 /* CoreTelephony.framework */,
 				0A20277F1B207C70008B1A58 /* KS3YunSDK.xcodeproj */,
 				0A21054D1AEF2BC300A8865C /* KS3SDKDemo-AKSK */,
 				0A2105671AEF2BC300A8865C /* KS3SDKDemo-AKSKTests */,

@@ -92,22 +92,29 @@
             /**
              *  如果是暂停下载，就需要把_downloadConnection的file做为参数传到download方法里面
              */
-            _downloader = [[KS3Client initialize] downloadObjectWithBucketName:kBucketName key:@"@#$%^&eourj ％  ％ %  %!!!~~~@)fkds.txt" downloadBeginBlock:^(KS3DownLoad *aDownload, NSURLResponse *responseHeaders) {
-                NSLog(@"1212221");
+            
+//            dispatch_queue_t concurrentQueue = dispatch_queue_create("my.concurrent.queue", DISPATCH_QUEUE_CONCURRENT);
+
+//            dispatch_sync(concurrentQueue, ^(){
+                _downloader = [[KS3Client initialize] downloadObjectWithBucketName:kBucketName key:@"@#$%^&eourj ％  ％ %  %!!!~~~@)fkds.txt" downloadBeginBlock:^(KS3DownLoad *aDownload, NSURLResponse *responseHeaders) {
+                    NSLog(@"1212221");
+                    
+                } downloadFileCompleteion:^(KS3DownLoad *aDownload, NSString *filePath) {
+                    NSLog(@"completed, file path: %@", filePath);
+                    
+                } downloadProgressChangeBlock:^(KS3DownLoad *aDownload, double newProgress) {
+                    progressView.progress = newProgress;
+                    NSLog(@"progress: %f", newProgress);
+                    
+                } failedBlock:^(KS3DownLoad *aDownload, NSError *error) {
+                    NSLog(@"failed: %@", error.description);
+                }];
+                //            _downloader.timeoutInterval = 10;
                 
-            } downloadFileCompleteion:^(KS3DownLoad *aDownload, NSString *filePath) {
-                NSLog(@"completed, file path: %@", filePath);
-                
-            } downloadProgressChangeBlock:^(KS3DownLoad *aDownload, double newProgress) {
-                progressView.progress = newProgress;
-                NSLog(@"progress: %f", newProgress);
-                
-            } failedBlock:^(KS3DownLoad *aDownload, NSError *error) {
-                NSLog(@"failed: %@", error.description);
-            }];
-//            _downloader.timeoutInterval = 10;
-   
-            [_downloader start];
+                [_downloader start];
+
+//            });
+            
 
 
             

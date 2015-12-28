@@ -15,6 +15,7 @@
 @interface KS3DownLoad : NSObject
 {
 
+    BOOL        _isFinished;
     BOOL       overwrite;
 	NSString      *url;
 	NSString   *fileName;

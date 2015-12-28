@@ -9,7 +9,7 @@
 
 #import "AppDelegate.h"
 #import <KS3YunSDK/KS3YunSDK.h>
-#import "Reachability.h"
+//#import "Reachability.h"
 
 // **** 用户的AK/SK
 NSString * const strAccessKey = @"lMQTr0hNlMpB0iOk/i+x";
@@ -36,12 +36,13 @@ NSString * const strSecretKey = @"D4CsYLs75JcWEjbiI22zR3P7kJ/+5B1qdEje7A7I";
 }
 
 - (BOOL)isWifi {
-    Reachability *r = [Reachability reachabilityWithHostName:@"www.apple.com"];
-    NetworkStatus status = r.currentReachabilityStatus;
-    if (status == ReachableViaWiFi) {
-        return YES;
-    }
-    return NO;
+//    Reachability *r = [Reachability reachabilityWithHostName:@"www.apple.com"];
+//    NetworkStatus status = r.currentReachabilityStatus;
+//    if (status == ReachableViaWiFi) {
+//        return YES;
+//    }
+//    return NO;
+    return YES;
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

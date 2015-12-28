@@ -93,24 +93,29 @@
             /**
              *  如果是暂停下载，就需要把_downloadConnection的file做为参数传到download方法里面
              */
-            _downloader = [[KS3Client initialize] downloadObjectWithBucketName:kBucketName key:@"@#$%^&eourj ％  ％ %  %!!!~~~@)fkds.txt" downloadBeginBlock:^(KS3DownLoad *aDownload, NSURLResponse *responseHeaders) {
-                NSLog(@"1212221");
+            dispatch_queue_t concurrentQueue = dispatch_queue_create("my.concurrent.queue", DISPATCH_QUEUE_SERIAL);
+
+            dispatch_async(concurrentQueue, ^(){
+                _downloader = [[KS3Client initialize] downloadObjectWithBucketName:kBucketName key:@"@#$%^&eourj ％  ％ %  %!!!~~~@)fkds.txt" downloadBeginBlock:^(KS3DownLoad *aDownload, NSURLResponse *responseHeaders) {
+                    NSLog(@"1212221");
+                    
+                } downloadFileCompleteion:^(KS3DownLoad *aDownload, NSString *filePath) {
+                    NSLog(@"completed, file path: %@", filePath);
+                    
+                } downloadProgressChangeBlock:^(KS3DownLoad *aDownload, double newProgress) {
+                    progressView.progress = newProgress;
+                    NSLog(@"progress: %f", newProgress);
+                    
+                } failedBlock:^(KS3DownLoad *aDownload, NSError *error) {
+                    NSLog(@"failed: %@", error.description);
+                }];
+            
+                // //使用token签名时从Appserver获取token后设置token，使用Ak sk则忽略，不需要调用
+                [_downloader setStrKS3Token:[KS3Util KSYAuthorizationWithHTTPVerb:strAccessKey secretKey:strSecretKey httpVerb:_downloader.httpMethod contentMd5:_downloader.contentMd5 contentType:_downloader.contentType date:_downloader.strDate canonicalizedKssHeader:_downloader.kSYHeader canonicalizedResource:_downloader.kSYResource]];
                 
-            } downloadFileCompleteion:^(KS3DownLoad *aDownload, NSString *filePath) {
-                NSLog(@"completed, file path: %@", filePath);
-                
-            } downloadProgressChangeBlock:^(KS3DownLoad *aDownload, double newProgress) {
-                progressView.progress = newProgress;
-                NSLog(@"progress: %f", newProgress);
-                
-            } failedBlock:^(KS3DownLoad *aDownload, NSError *error) {
-                NSLog(@"failed: %@", error.description);
-            }];
-           
-            // //使用token签名时从Appserver获取token后设置token，使用Ak sk则忽略，不需要调用
-           [_downloader setStrKS3Token:[KS3Util KSYAuthorizationWithHTTPVerb:strAccessKey secretKey:strSecretKey httpVerb:_downloader.httpMethod contentMd5:_downloader.contentMd5 contentType:_downloader.contentType date:_downloader.strDate canonicalizedKssHeader:_downloader.kSYHeader canonicalizedResource:_downloader.kSYResource]];
-   
-            [_downloader start];
+                [_downloader start];
+
+            });
 
 
             

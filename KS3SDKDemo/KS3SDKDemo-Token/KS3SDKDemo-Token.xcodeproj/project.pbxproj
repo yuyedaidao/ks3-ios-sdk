@@ -27,6 +27,11 @@
 		0AF0C4BA1B1F217100B87080 /* KS3YunSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AF0C4B71B1F1FA500B87080 /* KS3YunSDK.framework */; };
 		0AF0C4BB1B1F217100B87080 /* KS3YunSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0AF0C4B71B1F1FA500B87080 /* KS3YunSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		133AF8041B67A4C800500BFE /* android.txt in Resources */ = {isa = PBXBuildFile; fileRef = 133AF8031B67A4C800500BFE /* android.txt */; };
+		7CF0B9621C30CAF400B71DE5 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CF0B9611C30CAF400B71DE5 /* MobileCoreServices.framework */; };
+		7CF0B9641C30CAFB00B71DE5 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CF0B9631C30CAFB00B71DE5 /* CoreData.framework */; };
+		7CF0B9661C30CB1700B71DE5 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CF0B9651C30CB1700B71DE5 /* SystemConfiguration.framework */; };
+		7CF0B9681C30CB1C00B71DE5 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CF0B9671C30CB1C00B71DE5 /* CoreTelephony.framework */; };
+		7CF0B96C1C30CB4000B71DE5 /* libz.1.2.5.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CF0B96B1C30CB4000B71DE5 /* libz.1.2.5.tbd */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -100,6 +105,11 @@
 		0A2105D91AEF310B00A8865C /* test.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = test.jpg; sourceTree = SOURCE_ROOT; };
 		0AF0C4B11B1F1FA500B87080 /* KS3YunSDK.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = KS3YunSDK.xcodeproj; path = ../../KS3SDKIOS/KS3YunSDK/KS3YunSDK.xcodeproj; sourceTree = "<group>"; };
 		133AF8031B67A4C800500BFE /* android.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = android.txt; sourceTree = SOURCE_ROOT; };
+		7CF0B9611C30CAF400B71DE5 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		7CF0B9631C30CAFB00B71DE5 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		7CF0B9651C30CB1700B71DE5 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		7CF0B9671C30CB1C00B71DE5 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		7CF0B96B1C30CB4000B71DE5 /* libz.1.2.5.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.1.2.5.tbd; path = usr/lib/libz.1.2.5.tbd; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +117,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7CF0B96C1C30CB4000B71DE5 /* libz.1.2.5.tbd in Frameworks */,
+				7CF0B9681C30CB1C00B71DE5 /* CoreTelephony.framework in Frameworks */,
+				7CF0B9661C30CB1700B71DE5 /* SystemConfiguration.framework in Frameworks */,
+				7CF0B9641C30CAFB00B71DE5 /* CoreData.framework in Frameworks */,
+				7CF0B9621C30CAF400B71DE5 /* MobileCoreServices.framework in Frameworks */,
 				0AF0C4BA1B1F217100B87080 /* KS3YunSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -124,6 +139,11 @@
 		0A21058B1AEF2E0400A8865C = {
 			isa = PBXGroup;
 			children = (
+				7CF0B96B1C30CB4000B71DE5 /* libz.1.2.5.tbd */,
+				7CF0B9671C30CB1C00B71DE5 /* CoreTelephony.framework */,
+				7CF0B9651C30CB1700B71DE5 /* SystemConfiguration.framework */,
+				7CF0B9631C30CAFB00B71DE5 /* CoreData.framework */,
+				7CF0B9611C30CAF400B71DE5 /* MobileCoreServices.framework */,
 				0AF0C4B11B1F1FA500B87080 /* KS3YunSDK.xcodeproj */,
 				0A2105961AEF2E0400A8865C /* KS3SDKDemo-Token */,
 				0A2105B01AEF2E0400A8865C /* KS3SDKDemo-TokenTests */,
@@ -261,6 +281,7 @@
 					};
 					0A2105AC1AEF2E0400A8865C = {
 						CreatedOnToolsVersion = 6.3;
+						DevelopmentTeam = R5WW6M762K;
 						TestTargetID = 0A2105931AEF2E0400A8865C;
 					};
 				};
@@ -474,6 +495,8 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer: zhibo cui (3LK9B55BG9)";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -483,6 +506,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-licucore";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ksy.AMZPlayer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -492,6 +516,8 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer: zhibo cui (3LK9B55BG9)";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -500,6 +526,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-licucore";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ksy.AMZPlayer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -508,6 +535,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -519,6 +548,7 @@
 				INFOPLIST_FILE = "KS3SDKDemo-TokenTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/KS3SDKDemo-Token.app/KS3SDKDemo-Token";
 			};
 			name = Debug;
@@ -527,6 +557,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -534,6 +566,7 @@
 				INFOPLIST_FILE = "KS3SDKDemo-TokenTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/KS3SDKDemo-Token.app/KS3SDKDemo-Token";
 			};
 			name = Release;

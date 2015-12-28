@@ -213,7 +213,16 @@
         [request setValue:_strKS3Token forHTTPHeaderField:@"Authorization"];
     }
     [connection cancel];
-    connection = [[NSURLConnection alloc] initWithRequest:request delegate:self startImmediately:YES];
+    connection = [[NSURLConnection alloc] initWithRequest:request delegate:self startImmediately:NO];
+    [connection scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:KSYS3DefaultRunLoopMode];
+
+    [connection start];
+    
+    while (!_isFinished)
+    {
+        [[NSRunLoop currentRunLoop] runMode:KSYS3DefaultRunLoopMode beforeDate:[NSDate distantFuture]];
+    }
+
 }
 
 - (KS3Response *)startURLRequest:(NSMutableURLRequest *)urlRequest
@@ -295,6 +304,7 @@
 
 -(void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
+    _isFinished = YES;
     [fileHandle closeFile];
     [[NSFileManager defaultManager] moveItemAtPath:temporaryPath toPath:destinationPath error:nil];
     
