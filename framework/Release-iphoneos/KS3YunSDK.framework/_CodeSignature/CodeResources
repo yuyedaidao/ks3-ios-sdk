@@ -102,7 +102,7 @@
 		</data>
 		<key>Headers/KS3DownLoad.h</key>
 		<data>
-		yAZ1PmzOW+hxkiITVsbDcVyAOw0=
+		5O7a0qIJ3kIbMQdnweFyCZT8jO0=
 		</data>
 		<key>Headers/KS3ErrorHandler.h</key>
 		<data>
@@ -352,13 +352,9 @@
 		<data>
 		INuMdKQ4oXg1wRjbc5Qs2rj+nBE=
 		</data>
-		<key>Headers/RegexKitLite.h</key>
-		<data>
-		LJGEjHykDDf6LRwniYR3WfY8R6o=
-		</data>
 		<key>Info.plist</key>
 		<data>
-		2KioPjLGwYEA7SVP3JyHjA0HiVs=
+		UggFBV5rxi8Kkb8Hm/VMeMNMXIw=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -465,7 +461,7 @@
 		</data>
 		<key>Headers/KS3DownLoad.h</key>
 		<data>
-		yAZ1PmzOW+hxkiITVsbDcVyAOw0=
+		5O7a0qIJ3kIbMQdnweFyCZT8jO0=
 		</data>
 		<key>Headers/KS3ErrorHandler.h</key>
 		<data>
@@ -714,10 +710,6 @@
 		<key>Headers/KS3YunSDK.h</key>
 		<data>
 		INuMdKQ4oXg1wRjbc5Qs2rj+nBE=
-		</data>
-		<key>Headers/RegexKitLite.h</key>
-		<data>
-		LJGEjHykDDf6LRwniYR3WfY8R6o=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
