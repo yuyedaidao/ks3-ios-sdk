@@ -243,6 +243,7 @@
     connection = nil;
     [fileHandle closeFile];
     fileHandle = nil;
+    _isFinished = YES;
 }
 
 - (void)stopAndClear
