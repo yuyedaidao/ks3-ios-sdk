@@ -95,7 +95,7 @@
              */
             dispatch_queue_t concurrentQueue = dispatch_queue_create("my.concurrent.queue", DISPATCH_QUEUE_SERIAL);
 
-//            dispatch_async(concurrentQueue, ^(){
+            dispatch_async(concurrentQueue, ^(){
                 _downloader = [[KS3Client initialize] downloadObjectWithBucketName:kBucketName key:@"@#$%^&eourj ％  ％ %  %!!!~~~@)fkds.txt" downloadBeginBlock:^(KS3DownLoad *aDownload, NSURLResponse *responseHeaders) {
                     NSLog(@"1212221");
                     
@@ -115,7 +115,7 @@
                 
                 [_downloader start];
 
-//            });
+            });
 
 
             

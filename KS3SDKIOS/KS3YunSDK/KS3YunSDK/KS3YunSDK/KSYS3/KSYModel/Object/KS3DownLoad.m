@@ -99,6 +99,7 @@
 }
 - (void)start
 {
+    _isFinished = NO;
     if (!url)
     {
         if (delegate && [delegate respondsToSelector:@selector(downloadFaild:didFailWithError:)]) {
