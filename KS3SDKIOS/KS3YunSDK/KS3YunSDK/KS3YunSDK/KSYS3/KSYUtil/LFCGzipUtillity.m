@@ -7,7 +7,6 @@
 //
 
 #import "LFCGzipUtillity.h"
-
 @implementation LFCGzipUtillity
 
 + (NSData *)gzipData:(NSData *)pUncompressedData

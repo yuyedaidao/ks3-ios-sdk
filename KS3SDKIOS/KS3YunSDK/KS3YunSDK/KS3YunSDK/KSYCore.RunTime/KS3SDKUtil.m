@@ -9,6 +9,8 @@
 #import "KS3SDKUtil.h"
 #import <CommonCrypto/CommonDigest.h>
 #import "KS3Response.h"
+#import "AsyncSocket.h"
+#import "KSYHardwareInfo.h"
 static char        base64EncodingTable[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
 static const short base64DecodingTable[] =
@@ -34,12 +36,18 @@ NSString *const KSYS3DefaultRunLoopMode = @"com.ksyun.DefaultRunLoopMode";
 @implementation KS3SDKUtil
 + (BOOL)isDNSParseFaild:(KS3Response *)response
 {
-    if ([response.error code] == -1003) {
-        if ([[response.error localizedDescription] hasPrefix:@"A server with the specified hostname could not be found"]) {
-            return YES;
-        }
+    if (response.error) {
+        
+        NSLog(@"use reserved IP");
+        return YES;
     }
     return NO;
+//    if ([response.error code] == -1003 || [response.error code] == -1001) {
+//        if (![[response.error localizedDescription] hasPrefix:@"A server with the specified hostname could not be found"]) {
+//            return YES;
+//        }
+//    }
+//    return NO;
 }
 
 NSDate* getCurrentDate()

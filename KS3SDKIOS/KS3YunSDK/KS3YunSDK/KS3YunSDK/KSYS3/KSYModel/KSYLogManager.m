@@ -24,7 +24,7 @@
     request.logModel.Log_mobile_network_type = [KSYHardwareInfo getMobileNetworkInfo];
 }
 
-+ (void)sendLogData:(KS3LogModel *)logModel
++ (void)senNSLogData:(KS3LogModel *)logModel
 {
     NSMutableURLRequest *urlRequest = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:@"http://mlog.ksyun.com/"]];
     [urlRequest setValue:logModel.Log_source_ip forHTTPHeaderField:@"LogSourceIp"];

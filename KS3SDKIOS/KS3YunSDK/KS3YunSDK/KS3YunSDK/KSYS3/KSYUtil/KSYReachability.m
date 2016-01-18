@@ -53,8 +53,6 @@
 #import <CoreFoundation/CoreFoundation.h>
 
 #import "KSYReachability.h"
-
-
 NSString *KS3ReachabilityChangedNotification = @"KS3ReachabilityChangedNotification";
 
 

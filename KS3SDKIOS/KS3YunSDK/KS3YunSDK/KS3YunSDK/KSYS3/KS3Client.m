@@ -68,13 +68,14 @@
 #import "KSYLogManager.h"
 #import "KSYLogClient.h"
 
-static NSString     * const KingSoftYun_Host_Name      = @"http://kss.ksyun.com";
+
+static NSString     * const KingSoftYun_Host_Name      = @"http://kss.ksyun.com1";
 static NSTimeInterval const KingSoftYun_RequestTimeout = 60;
 
 static NSString     * const KingSoftYun_Host_GETIp1      = @"http://120.131.2.241";
 static NSString     * const KingSoftYun_Host_GETIp2      = @"http://123.59.35.94";
 
-@interface KS3Client () <NSURLConnectionDataDelegate>{
+@interface KS3Client () <NSURLConnectionDataDelegate,KS3ServiceResponseDelegate>{
     BOOL getIPSuccess;
 }
 
@@ -87,13 +88,17 @@ static NSString     * const KingSoftYun_Host_GETIp2      = @"http://123.59.35.94
 @end
 
 @implementation KS3Client
+
 - (instancetype)init
 {
     if (self == [super init]) {
         _recordRate = 1;
         _isSend = YES;
-        _sendTimer = [NSTimer scheduledTimerWithTimeInterval:3600 target:self selector:@selector(sendLog) userInfo:nil repeats:YES]; // **** 应该是 1小时 ＝ 3600秒 发一次
-        [_sendTimer setFireDate:[NSDate distantPast]]; // **** 立即执行
+        dispatch_async(dispatch_get_main_queue(), ^{
+            _sendTimer = [NSTimer scheduledTimerWithTimeInterval:15 * 60 target:self selector:@selector(sendLog) userInfo:nil repeats:YES]; // **** 应该是 1小时 ＝ 3600秒 发一次
+            [_sendTimer setFireDate:[NSDate distantPast]]; // **** 立即执行
+
+        });
     }
     return self;
 }
@@ -112,7 +117,9 @@ static NSString     * const KingSoftYun_Host_GETIp2      = @"http://123.59.35.94
 
 #pragma mark - DataBase
 
-- (void)sendLog {
+- (void)sendLog
+{
+    ClientLog(@"sendLog!!!");
     KSYLogClient *logClient = [[KSYLogClient alloc] init];
     [logClient sendData];
 }
@@ -261,6 +268,7 @@ static NSString     * const KingSoftYun_Host_GETIp2      = @"http://123.59.35.94
     id response = [[NSClassFromString(responseClassName) alloc] init];
     if (nil == response) {
         response = [[KS3Response alloc] init];
+
     }
     return response;
 }
@@ -366,6 +374,7 @@ static NSString     * const KingSoftYun_Host_GETIp2      = @"http://123.59.35.94
     NSString *message = nil;
     if ((_credentials.accessKey == nil || _credentials.secretKey == nil) && _credentials != nil) {
         NSLog(@"######### 使用本地AK/SK签名, 请正确配置本地AK/SK #############");
+
         message = @"请正确配置本地AK/SK";
     }
     
@@ -389,12 +398,25 @@ static NSString     * const KingSoftYun_Host_GETIp2      = @"http://123.59.35.94
     }
     
     KS3Response *response = [self startURLRequest:request token:request.strKS3Token];
-    NSLog(@"error=%@",[response.error description]);
+//    response.
+    if (response.error) {
+        NSLog(@"error=%@",[response.error description]);
+        NSString *code = [NSString stringWithFormat:@"errorCode is %@",@(response.error.code)];
+        ClientLog(code);
+        ClientLog([response.error description]);
+        
+        
+
+    }else {
+        ClientLog(@"no error");
+    }
     if ([request delegate] == nil) {
         if ([KS3SDKUtil isDNSParseFaild:response]) {
             if (!request.reTry) {
                 request.reTry = YES;
                 [request vHostToVPath:request.host withBucketName:request.bucket];
+
+                ClientLog(@"use reserved IP");
                 return [self startURLRequest:request token:request.strKS3Token];
             }
         }
@@ -405,6 +427,7 @@ static NSString     * const KingSoftYun_Host_GETIp2      = @"http://123.59.35.94
 
 - (KS3Response *)startURLRequest:(KS3Request *)request token:(NSString *)strToken {
     
+    ClientLog(@"startURLRequest");
     NSMutableURLRequest *urlRequest = [self signKSS3Request:request];
     [urlRequest setTimeoutInterval:[self getRequestTimeOut:request]];
     
@@ -413,9 +436,15 @@ static NSString     * const KingSoftYun_Host_GETIp2      = @"http://123.59.35.94
     }
     
     KS3Response *response = [KS3Client constructResponseFromRequest:request];
+    response.delegate = self;
     [response setRequest:request];
+    if ([self.delegate respondsToSelector:@selector(getOutsideIP)]) {
+        response.outsideIP = [self.delegate getOutsideIP];
+    }
+
     [KSYLogManager setLocalLogInfo:request];
     request.logModel.send_before_time = [KSYHardwareInfo getCurrentTime];
+    ClientLog(request.logModel.send_before_time);
     if ([request delegate] != nil) {
         NSURLConnection *urlConnection = [[NSURLConnection alloc] initWithRequest:urlRequest
                                                                          delegate:response
@@ -436,7 +465,7 @@ static NSString     * const KingSoftYun_Host_GETIp2      = @"http://123.59.35.94
     [urlConnection  scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:KSYS3DefaultRunLoopMode];
     request.urlConnection = urlConnection;
     [urlConnection start];
-    
+    ClientLog(@"request isAlready start");
     NSTimer *timeoutTimer = [NSTimer timerWithTimeInterval:[self getRequestTimeOut:request]
                                                     target:response
                                                   selector:@selector(timeout)
@@ -461,6 +490,8 @@ static NSString     * const KingSoftYun_Host_GETIp2      = @"http://123.59.35.94
 {
     if (!bucketName || !key) {
         NSLog(@"bucket 或 key 不能为空");
+        ClientLog(@"bucket 或 key 不能为空");
+
         return nil;
     }
     
@@ -469,6 +500,8 @@ static NSString     * const KingSoftYun_Host_GETIp2      = @"http://123.59.35.94
         return nil;
     }
     NSLog(@"====== downloadObjectWithBucketName ======");
+    ClientLog(@"downloadObjectWithBucketName");
+
     NSString *strHost = [NSString stringWithFormat:@"http://%@.kss.ksyun.com/%@", bucketName, key];
     KS3DownLoad *downLoad = [[KS3DownLoad alloc] initWithUrl:strHost credentials:_credentials :bucketName :key];
     downLoad.downloadBeginBlock = downloadBeginBlock;
@@ -484,5 +517,17 @@ static NSString     * const KingSoftYun_Host_GETIp2      = @"http://123.59.35.94
     return @"2014-12-17";
 }
 
+#pragma mark- resPonseDelegate
 
+- (void)responseLog:(NSString *)log
+{
+    ClientLog(log);
+}
+
+- (void)connectionFailWithError:(NSError *)error
+{
+    if ([self.delegate respondsToSelector:@selector(connectionFailWithError:)]) {
+        [self.delegate connectFailWithError:error];
+    }
+}
 @end

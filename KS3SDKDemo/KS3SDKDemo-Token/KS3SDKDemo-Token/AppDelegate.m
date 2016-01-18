@@ -15,16 +15,25 @@
 NSString * const strAccessKey = @"lMQTr0hNlMpB0iOk/i+x";
 NSString * const strSecretKey = @"D4CsYLs75JcWEjbiI22zR3P7kJ/+5B1qdEje7A7I";
 
-@interface AppDelegate ()
+@interface AppDelegate ()<KS3ClientDelegate>
 
 @end
 
 @implementation AppDelegate
 
-
+//- (void)clientLog:(NSString *)log
+//{
+//    NSLog(@"%@",log);
+//}
+//
+//- (NSString *)getOutsideIP
+//{
+//    return @"192.168.1.1";
+//}
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     [[KS3Client initialize] setRecordRate:3];
+    [KS3Client initialize].delegate = self;
     
     if ([self isWifi] == YES) {
         NSLog(@" ============= WIFI ===============");

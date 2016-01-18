@@ -201,6 +201,11 @@
 		13B9A7E01A5CDC25001E55BC /* KS3DownLoad.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B9A7DE1A5CDC25001E55BC /* KS3DownLoad.m */; };
 		7C5FDEEB1C10181B00C30401 /* libz.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C5FDEEA1C10181B00C30401 /* libz.1.dylib */; };
 		7C5FDEED1C10188500C30401 /* libicucore.A.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C5FDEEC1C10188500C30401 /* libicucore.A.dylib */; };
+		7CE9DD8B1C4CB730003E28C3 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CE9DD8A1C4CB730003E28C3 /* CFNetwork.framework */; };
+		7CE9DD9E1C4CCDF5003E28C3 /* AsyncSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 7CE9DD9A1C4CCDF5003E28C3 /* AsyncSocket.h */; };
+		7CE9DD9F1C4CCDF5003E28C3 /* AsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CE9DD9B1C4CCDF5003E28C3 /* AsyncSocket.m */; };
+		7CE9DDA01C4CCDF5003E28C3 /* AsyncUdpSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 7CE9DD9C1C4CCDF5003E28C3 /* AsyncUdpSocket.h */; };
+		7CE9DDA11C4CCDF5003E28C3 /* AsyncUdpSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CE9DD9D1C4CCDF5003E28C3 /* AsyncUdpSocket.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -409,6 +414,11 @@
 		7C1A2E721B7DDA74005E64D2 /* test.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = test.jpg; sourceTree = "<group>"; };
 		7C5FDEEA1C10181B00C30401 /* libz.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.dylib; path = ../../../../../../../usr/lib/libz.1.dylib; sourceTree = "<group>"; };
 		7C5FDEEC1C10188500C30401 /* libicucore.A.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.A.dylib; path = ../../../../../../../usr/lib/libicucore.A.dylib; sourceTree = "<group>"; };
+		7CE9DD8A1C4CB730003E28C3 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		7CE9DD9A1C4CCDF5003E28C3 /* AsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AsyncSocket.h; sourceTree = "<group>"; };
+		7CE9DD9B1C4CCDF5003E28C3 /* AsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AsyncSocket.m; sourceTree = "<group>"; };
+		7CE9DD9C1C4CCDF5003E28C3 /* AsyncUdpSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AsyncUdpSocket.h; sourceTree = "<group>"; };
+		7CE9DD9D1C4CCDF5003E28C3 /* AsyncUdpSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AsyncUdpSocket.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -416,6 +426,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7CE9DD8B1C4CB730003E28C3 /* CFNetwork.framework in Frameworks */,
 				7C5FDEED1C10188500C30401 /* libicucore.A.dylib in Frameworks */,
 				7C5FDEEB1C10181B00C30401 /* libz.1.dylib in Frameworks */,
 				132152DA1B5CF64800BAF8B6 /* CoreData.framework in Frameworks */,
@@ -450,6 +461,7 @@
 		0A6390781A42AF2200BA3A99 = {
 			isa = PBXGroup;
 			children = (
+				7CE9DD8A1C4CB730003E28C3 /* CFNetwork.framework */,
 				7C5FDEEC1C10188500C30401 /* libicucore.A.dylib */,
 				7C5FDEEA1C10181B00C30401 /* libz.1.dylib */,
 				132152D91B5CF64800BAF8B6 /* CoreData.framework */,
@@ -491,6 +503,7 @@
 		0A63909E1A42AFA800BA3A99 /* KS3YunSDK */ = {
 			isa = PBXGroup;
 			children = (
+				7CE9DD991C4CCDF5003E28C3 /* RunLoop */,
 				0A63909F1A42AFA800BA3A99 /* KSYCore.RunTime */,
 				0A6390BB1A42AFA800BA3A99 /* KSYS3 */,
 			);
@@ -741,6 +754,17 @@
 			path = Object;
 			sourceTree = "<group>";
 		};
+		7CE9DD991C4CCDF5003E28C3 /* RunLoop */ = {
+			isa = PBXGroup;
+			children = (
+				7CE9DD9A1C4CCDF5003E28C3 /* AsyncSocket.h */,
+				7CE9DD9B1C4CCDF5003E28C3 /* AsyncSocket.m */,
+				7CE9DD9C1C4CCDF5003E28C3 /* AsyncUdpSocket.h */,
+				7CE9DD9D1C4CCDF5003E28C3 /* AsyncUdpSocket.m */,
+			);
+			path = RunLoop;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -782,6 +806,7 @@
 				13B9A78B1A5CCF9D001E55BC /* KS3PutObjectResponse.h in Headers */,
 				13B9A7B71A5CD197001E55BC /* KS3MultipartUpload.h in Headers */,
 				13B9A7A51A5CD110001E55BC /* KS3InitiateMultipartUploadResult.h in Headers */,
+				7CE9DDA01C4CCDF5003E28C3 /* AsyncUdpSocket.h in Headers */,
 				13B9A7C31A5CD28C001E55BC /* KS3ObjectSummary.h in Headers */,
 				13B9A7261A5CCEDD001E55BC /* KS3ListObjectsRequest.h in Headers */,
 				13B9A7731A5CCF9D001E55BC /* KS3GetObjectACLResponse.h in Headers */,
@@ -815,6 +840,7 @@
 				13B9A77D1A5CCF9D001E55BC /* KS3InitiateMultipartUploadRequest.h in Headers */,
 				13B9A7201A5CCEDD001E55BC /* KS3GetBucketLoggingResponse.h in Headers */,
 				13B9A7971A5CCF9D001E55BC /* KS3UploadPartResponse.h in Headers */,
+				7CE9DD9E1C4CCDF5003E28C3 /* AsyncSocket.h in Headers */,
 				13B9A78F1A5CCF9D001E55BC /* KS3SetObjectACLResponse.h in Headers */,
 				13B9A6E51A5CCE94001E55BC /* KS3ListBucketsResponse.h in Headers */,
 				13B9A76B1A5CCF9D001E55BC /* KS3AbortMultipartUploadResponse.h in Headers */,
@@ -930,6 +956,7 @@
 				0A6391361A42AFA800BA3A99 /* KS3AuthUtils.m in Sources */,
 				13B9A71B1A5CCEDD001E55BC /* KS3GetACLRequest.m in Sources */,
 				13B9A7B41A5CD180001E55BC /* KS3ListPartsResultXMLParser.m in Sources */,
+				7CE9DD9F1C4CCDF5003E28C3 /* AsyncSocket.m in Sources */,
 				13B9A7941A5CCF9D001E55BC /* KS3SetObjectGrantACLResponse.m in Sources */,
 				13B9A78A1A5CCF9D001E55BC /* KS3PutObjectRequest.m in Sources */,
 				13B9A7A81A5CD110001E55BC /* KS3InitiateMultipartUploadXMLParser.m in Sources */,
@@ -988,6 +1015,7 @@
 				0A6391AB1A42AFA800BA3A99 /* KS3Owner.m in Sources */,
 				13B9A7231A5CCEDD001E55BC /* KS3HeadBucketRequest.m in Sources */,
 				13B9A7CC1A5CD2BA001E55BC /* KS3DeleteObjectResponse.m in Sources */,
+				7CE9DDA11C4CCDF5003E28C3 /* AsyncUdpSocket.m in Sources */,
 				13B9A72F1A5CCEDD001E55BC /* KS3SetACLResponse.m in Sources */,
 				13B9A7961A5CCF9D001E55BC /* KS3UploadPartRequest.m in Sources */,
 				13B9A7721A5CCF9D001E55BC /* KS3GetObjectACLRequest.m in Sources */,
@@ -1121,6 +1149,8 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_BITCODE = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
 				INFOPLIST_FILE = KS3YunSDK/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -1145,6 +1175,8 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_BITCODE = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
 				INFOPLIST_FILE = KS3YunSDK/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";

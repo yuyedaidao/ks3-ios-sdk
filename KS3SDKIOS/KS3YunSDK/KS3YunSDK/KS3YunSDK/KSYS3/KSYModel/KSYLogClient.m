@@ -11,10 +11,9 @@
 #import "KSYLog.h"
 #import "LFCGzipUtillity.h"
 #import <CoreData/CoreData.h>
-
 #define kTableName @"KSYLog"
 #define kDataRow 120
-
+#define kEveryCount    4
 @interface KSYLogClient ()
 
 @property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
@@ -29,6 +28,7 @@
 @synthesize managedObjectModel = _managedObjectModel;
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
 
+
 - (void)saveContext
 {
     NSError *error = nil;
@@ -37,7 +37,8 @@
         if ([managedObjectContext hasChanges] && ![managedObjectContext save:&error]) {
             // Replace this implementation with code to handle the error appropriately.
             // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+//            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+            NSLog(@"123");
             abort();
         }
     }
@@ -136,9 +137,11 @@
 #pragma mark - CRUD
 
 - (void)insertLog:(KS3LogModel *)logInfo {
+    NSLog(@"insertLog");
+    LogClientLog(@"insertLog");
     NSManagedObjectContext *context = [self managedObjectContext];
     KSYLog *log = [NSEntityDescription insertNewObjectForEntityForName:@"KSYLog" inManagedObjectContext:context];
-    log.source_ip = logInfo.Log_source_ip;
+    log.source_ip = [NSString stringWithFormat:@"%@-%@",logInfo.Log_source_ip,self.outsideIP];
     log.target_ip = logInfo.Log_target_ip;
     log.model = logInfo.Log_model;
     log.manufacturer = logInfo.Log_manufacturer;
@@ -151,7 +154,7 @@
     log.response_size = [NSNumber numberWithDouble:logInfo.Log_response_size];
     
     log.client_state = [NSNumber numberWithInteger:logInfo.Log_client_state];
-    log.mobile_network_type = logInfo.Log_mobile_network_type;
+    log.mobile_network_type = [NSString stringWithFormat:@"%@-%@",logInfo.Log_mobile_network_type,@"iOS"];
     log.ksy_error_code = [NSNumber numberWithInteger:logInfo.ksyErrorcode];
     log.send_before_time = logInfo.send_before_time;
     log.request_id = logInfo.log_RequestId;
@@ -159,25 +162,34 @@
     NSError *error;
     if(![context save:&error])
     {
+        NSString *message = [NSString stringWithFormat:@"KS3 SDK 日志记录失败: %@",error];
+        LogClientLog(message);
+
         NSLog(@"KS3 SDK 日志记录失败：%@",[error localizedDescription]);
     }
     
     // **** 超过1200条后，从最前面第一条开始往后开始删除以前的数据
-    NSInteger count = [self dataCount];
-    if (count > 1200) {
-        [self deleteFirstRecord];
-    }
+//    NSInteger count = [self dataCount];
+//    if (count > 1200) {
+//        LogClientLog(@"超过1200条日志，从最后一条开始往前删除")
+//        [self deleteFirstRecord];
+//    }
 }
 
 - (void)deleteLog:(NSArray *)arrData {
-    NSManagedObjectContext *context = [self managedObjectContext];
-    for (NSManagedObject *obj in arrData) {
-        [context deleteObject:obj];
-    }
-    NSError *error = nil;
-    if ([context save:&error] == NO) {
-        NSLog(@"KS3 SDK 删除日志失败: %@", error);
-    }
+//    LogClientLog(@"deleteLog");
+//    NSManagedObjectContext *context = [self managedObjectContext];
+//    for (NSManagedObject *obj in arrData) {
+//        [context deleteObject:obj];
+//    }
+//    NSError *error = nil;
+//    if ([context save:&error] == NO) {
+//        NSString *message = [NSString stringWithFormat:@"KS3 SDK 删除日志失败: %@",error];
+//        LogClientLog(message);
+//    }else {
+//        LogClientLog(@"删除日志成功");
+//
+//    }
 //    NSEntityDescription *entity = [NSEntityDescription entityForName:kTableName inManagedObjectContext:context];
 //    
 //    NSFetchRequest *request = [[NSFetchRequest alloc] init];
@@ -199,6 +211,7 @@
 }
 
 - (void)updateData:(NSString*)request_id  withIsLook:(NSString*)islook {
+    NSLog(@"updateData");
     NSManagedObjectContext *context = [self managedObjectContext];
     
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"request_id like[cd] %@", request_id];
@@ -259,7 +272,8 @@
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"KSYLog" inManagedObjectContext:context];
     [fetchRequest setEntity:entity];
     NSError *error;
-    NSLog(@"context is %@,\nentity is %@",context,entity);
+//    NSLog(@"context is %@,\nentity is %@",context,entity);
+
     if (entity != nil) {
         NSArray *fetchedObjects = [context executeFetchRequest:fetchRequest error:&error];
         //    for (NSInteger i = 0; i < fetchedObjects.count; i ++) {
@@ -268,33 +282,47 @@
         //        NSLog(@"request_id:%@", log.request_id);
         //        NSLog(@"ksy_error_code:%@", log.ksy_error_code);
         //    }
+        NSLog(@"fetchedObjects.count is %@",@(fetchedObjects.count));
         return fetchedObjects.count;
 
     }
     return 0;
 }
 
-- (void)deleteFirstRecord {
-    NSArray *arrData = [self selectData:1 andOffset:0];
-    [self deleteLog:arrData];
-}
+//- (void)deleteFirstRecord {
+//    LogClientLog(@"删除一条最上层的日志")
+//    NSArray *arrData = [self selectData:1 andOffset:0];
+//    [self deleteLog:arrData];
+//}
 
 #pragma mark - Send data
 
 - (void)sendData {
-    NSInteger count = [self dataCount] / kDataRow + 1;
-    if ([self dataCount] == 0) {
-        count = 0;
-    }
-    for (NSInteger i = 0; i < count; i ++) {
-        NSArray *arrData = [self selectData:kDataRow andOffset:i * kDataRow];
-        if ([self isWifi] == YES) {
+    
+    dispatch_sync(dispatch_queue_create("my.concurrent.queue2", DISPATCH_QUEUE_CONCURRENT), ^(){
+    
+        NSLog(@"sendData");
+        LogClientLog(@"sendData")
+        NSInteger count = [self dataCount] / kDataRow + 1;
+        
+        
+        NSString *dataCountMessage = [NSString stringWithFormat:@"dataCount is %@ count is %@",@([self dataCount]),@(count)];
+        NSLog(@"%@",dataCountMessage);
+        LogClientLog(dataCountMessage);
+        if ([self dataCount] == 0) {
+            count = 0;
+        }
+        for (NSInteger i = 0; i < count; i ++) {
+            NSArray *arrData = [self selectData:kDataRow andOffset:i * kDataRow];
+            NSLog(@"will sendOnce");
+            LogClientLog(@"will sendOnce")
+
             [self sendOnce:arrData];
+            
         }
-        else {
-            break;
-        }
-    }
+
+    });
+
 }
 
 - (NSData *)generateStrLogWithDataCollection:(NSArray *)arrData {
@@ -327,6 +355,8 @@
     str = [str stringByReplacingOccurrencesOfString:@"  " withString:@""];
     str = [str stringByReplacingOccurrencesOfString:@"\"{" withString:@"{"];
     str = [str stringByReplacingOccurrencesOfString:@"}\"" withString:@"}"];
+    
+    NSLog(@"jsonString is %@",str);
 //    NSLog(@"===== str: %@ =====", str);
     data = [str dataUsingEncoding:NSUTF8StringEncoding];
     NSData *gzipData = [LFCGzipUtillity gzipData:data];
@@ -334,18 +364,31 @@
 }
 
 - (void)sendOnce:(NSArray *)arrData {
+    NSString *dataCount = [NSString stringWithFormat:@"send dataCount is %@",@(arrData.count)];
+    LogClientLog(dataCount);
+    NSLog(@"arrData is %@",arrData);
+    NSLog(@"arrdata dict is %@",[arrData objectAtIndex:0]);
     NSData *dataLog = [self generateStrLogWithDataCollection:arrData];
     NSMutableURLRequest *urlRequest = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:@"http://mlog.ksyun.com"]];
     [urlRequest setHTTPMethod:@"POST"];
     [urlRequest setValue:@"application/octet-stream" forHTTPHeaderField:@"Content-Type"];
     [urlRequest setValue:@"gzip, deflate" forHTTPHeaderField:@"Accept-Encoding"]; // **** for gzip
     [urlRequest setHTTPBody:dataLog];
+    NSLog(@"will send log Request");
+    LogClientLog(@"log will send Reauest");
     [NSURLConnection sendAsynchronousRequest:urlRequest queue:[NSOperationQueue currentQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+        NSLog(@"log request is Responsed!");
+        LogClientLog(@"log request is Responsed!");
+
         NSInteger responseCode = [(NSHTTPURLResponse *)response statusCode];
         NSLog(@"Log send request code: ----- %ld",(long)responseCode);
         if (responseCode == 200) {
-            NSLog(@"success 111");
-            [self deleteLog:arrData]; // **** 发送成功就删除
+            NSLog(@"log send success");
+            LogClientLog(@"log send success");
+
+//            [self deleteLog:arrData]; // **** 发送成功就删除
+        }else {
+            LogClientLog(@"log send fail");
         }
     }];
 }

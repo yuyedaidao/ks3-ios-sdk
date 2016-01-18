@@ -170,8 +170,10 @@
                 putObjRequest.filename = @"20150404视频云&标准存储服务产品规划-07.pptx";//@"testtoken-01&.jpg";//[fileName lastPathComponent];
                 putObjRequest.contentMd5 = [KS3SDKUtil base64md5FromData:putObjRequest.data];
                 [putObjRequest setCompleteRequest];
+                NSLog(@"url is %@,host is %@",putObjRequest.url,putObjRequest.host);
                 //使用token签名时从Appserver获取token后设置token，使用Ak sk则忽略，不需要调用
                 [putObjRequest setStrKS3Token:[KS3Util getAuthorization:putObjRequest]];
+                NSLog(@"request token is %@",[KS3Util getAuthorization:putObjRequest]);
                 KS3PutObjectResponse *response = [[KS3Client initialize] putObject:putObjRequest];
                 NSLog(@"%@",[[NSString alloc] initWithData:response.body encoding:NSUTF8StringEncoding]);
                 if (response.httpStatusCode == 200) {

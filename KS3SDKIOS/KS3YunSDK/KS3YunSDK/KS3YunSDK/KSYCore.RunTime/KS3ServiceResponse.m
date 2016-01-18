@@ -20,8 +20,22 @@
 #import "KS3CompleteMultipartUploadRequest.h"
 #import "KS3AbortMultipartUploadRequest.h"
 #import "KSYMacroDefinition.h"
-#import "KSYLogClient.h"
+#import "AsyncSocket.h"
+#import <resolv.h>
+#include <arpa/inet.h>
 
+
+#include <netdb.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <ifaddrs.h>
+#include <net/if.h>
+
+@interface KS3ServiceResponse ()<KS3ServiceResponseDelegate,KSYLogClientDelegate,AsyncSocketDelegate>
+{
+    NSTimeInterval _startTime;
+}
+@end
 @implementation KS3ServiceResponse
 
 -(NSData *)body
@@ -31,6 +45,7 @@
 
 -(void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
+    ReponseLog(@"didReceiveResponse");
     if (self.request.logModel.Log_first_data_time == nil) {
         self.request.logModel.Log_first_data_time = [KSYHardwareInfo getCurrentTime];
     }
@@ -42,6 +57,8 @@
 //        NSLog(@"%@ = [%@]", header, [[httpResponse allHeaderFields] valueForKey:header]);
 //    }
     self.httpStatusCode = (int32_t)[httpResponse statusCode];
+    NSString *code = [NSString stringWithFormat:@"httpCode is %@",@(self.httpStatusCode)];
+    ReponseLog(code);
     [body setLength:0];
     if ([self.request.delegate respondsToSelector:@selector(request:didReceiveResponse:)]) {
         [self.request.delegate request:self.request didReceiveResponse:response];
@@ -50,7 +67,8 @@
 
 -(void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
 {
-    
+    ReponseLog(@"didReceiveData");
+
     if (nil == body) {
         body = [NSMutableData data] ;
     }
@@ -62,6 +80,13 @@
 
 -(void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
+    ReponseLog(@"connectionDidFinishLoading");
+    NSLog(@"host is %@",self.request.host);
+    NSString *host  = [NSString stringWithFormat:@"host is %@",self.request.host];
+    NSString *requestId = [NSString stringWithFormat:@"request_id is %@",_responseHeader[@"x-kss-request-id"]];
+    ReponseLog(host);
+    ReponseLog(requestId);
+
     self.request.logModel.Log_response_time = [KSYHardwareInfo getCurrentTime];
     self.request.logModel.Log_response_size = body.length;
     self.request.logModel.log_RequestId = _responseHeader[@"x-kss-request-id"];
@@ -71,30 +96,61 @@
         [_request.delegate request:self.request didCompleteWithResponse:nil];
     }
     
+    KS3ErrorHandler *errorHandler = [[KS3ErrorHandler alloc] initWithStatusCode:self.httpStatusCode];
+
     if (self.httpStatusCode == 301 || self.httpStatusCode >= 400) {
         NSXMLParser *parse = [[NSXMLParser alloc] initWithData:self.body];
-        KS3ErrorHandler *errorHandler = [[KS3ErrorHandler alloc] initWithStatusCode:self.httpStatusCode];
         [parse setDelegate:errorHandler];
         [parse parse];
         [errorHandler exception];
         [errorHandler convertKS3Error];
         self.exception = errorHandler.exception;
-        self.request.logModel.ksyErrorcode = errorHandler.exception.statusCode;
-        
+        ReponseLog(errorHandler.exception.message);
     }
- 
- 
-    
+    self.request.logModel.ksyErrorcode = errorHandler.exception.statusCode;
+    NSString *code = [NSString stringWithFormat:@"httpCode is %@",@(self.httpStatusCode)];
+    ReponseLog(code);
+
+    NSString *ip = [NSString stringWithFormat:@"ip address is %@",self.request.logModel.Log_target_ip];
+    ReponseLog(ip);
+
+
     if (([KS3Client initialize].totalRequestCount%[KS3Client initialize].recordRate) == 0 || [KS3Client initialize].totalRequestCount == 1) {
-//        [KSYLogManager sendLogData:self.request.logModel];
+//        [KSYLogManager senNSLogData:self.request.logModel];
         
         KSYLogClient *logClient = [[KSYLogClient alloc] init];
+        logClient.delegate = self;
+        logClient.outsideIP = self.outsideIP;
         [logClient insertLog:self.request.logModel];
     }
 }
 
 -(void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)theError
 {
+    ReponseLog(@"connection didFail");
+
+    AsyncSocket *asyncSocket = [[AsyncSocket alloc] initWithDelegate:self];
+    NSError *err = nil;
+    NSString *ip = [NSString stringWithFormat:@"ip address is %@",self.request.logModel.Log_target_ip];
+    if(![asyncSocket connectToHost:self.request.logModel.Log_target_ip onPort:80 error:&err])
+    {
+        NSString *errorMsg = [NSString stringWithFormat:@"connection fial error is %@",err];
+        ReponseLog(errorMsg);
+        ReponseLog(@"重连ip失败");
+
+    }else {
+        ReponseLog(@"重连ip成功");
+
+    }
+
+
+    if ([self.delegate respondsToSelector:@selector(connectionFailWithError:)]) {
+        [self.delegate connectionFailWithError:theError];
+    }
+    NSString *errorCode = [NSString stringWithFormat:@"error code is %@",@(theError.code)];
+    ReponseLog(ip);
+    ReponseLog(errorCode);
+
     self.request.logModel.log_RequestId = _responseHeader[@"x-kss-request-id"];
     self.request.logModel.Log_response_time = [KSYHardwareInfo getCurrentTime];
     self.request.logModel.Log_response_size = body.length;
@@ -102,13 +158,18 @@
     _isFinishedLoading = YES;
     NSDictionary *info = [theError userInfo];
     NSLog(@"[theError userInfo] -----%@",info);
+    NSString *errorInfo = [NSString stringWithFormat:@"errorInfo is %@",[theError userInfo]];
+    ReponseLog(errorInfo);
+
     self.request.logModel.ksyErrorcode = [theError code];
     self.error = theError;
     if (self.request.delegate) { // **** 如果人为的为除了Put object, multipart upload object之外的API请求设置了delegate，也不会重试，这只针对这几个特定的请求有效
-        if ([theError code] == -1003) {
-            if ([[theError localizedDescription] hasPrefix:@"A server with the specified hostname could not be found"]) {
+        if ([theError code] == -1003 || [theError code] == -1001 || [theError code] == -1006) {
+            if (1) {
                 if ([self.request isMemberOfClass:[KS3PutObjectRequest class]]) {
                     if (!self.request.reTry) {
+                        ReponseLog(@"KS3PutObjectRequest 自己设定delegate，并重试");
+
                         KS3ServiceRequest *reTryRequest = self.request;
                         [reTryRequest vHostToVPath:reTryRequest.host withBucketName:[(KS3PutObjectRequest *)reTryRequest bucket]];
                         [[KS3Client initialize] putObject:(KS3PutObjectRequest *)reTryRequest];
@@ -120,6 +181,8 @@
                     }
                 }else if ([self.request isMemberOfClass:[KS3InitiateMultipartUploadRequest class]]){
                     if (!self.request.reTry) {
+                        ReponseLog(@"KS3InitiateMultipartUploadRequest 自己设定delegate，并重试");
+
                         KS3ServiceRequest *reTryRequest = self.request;
                         [reTryRequest vHostToVPath:reTryRequest.host withBucketName:[(KS3InitiateMultipartUploadRequest *)reTryRequest bucket]];
                         [[KS3Client initialize] initiateMultipartUploadWithRequest:(KS3InitiateMultipartUploadRequest *)reTryRequest];
@@ -132,6 +195,8 @@
                     
                 }else if ([self.request isMemberOfClass:[KS3UploadPartRequest class]]){
                     if (!self.request.reTry) {
+                        ReponseLog(@"KS3UploadPartRequest 自己设定delegate，并重试");
+
                         KS3ServiceRequest *reTryRequest = self.request;
                         [reTryRequest vHostToVPath:reTryRequest.host withBucketName:[(KS3UploadPartRequest *)reTryRequest bucket]];
                         [[KS3Client initialize] uploadPart:(KS3UploadPartRequest *)reTryRequest];
@@ -144,6 +209,8 @@
                     
                 }else if ([self.request isMemberOfClass:[KS3ListPartsRequest class]]){
                     if (!self.request.reTry) {
+                        ReponseLog(@"KS3ListPartsRequest 自己设定delegate，并重试");
+
                         KS3ServiceRequest *reTryRequest = self.request;
                         [reTryRequest vHostToVPath:reTryRequest.host withBucketName:[(KS3ListPartsRequest *)reTryRequest bucket]];
                         [[KS3Client initialize] listParts:(KS3ListPartsRequest *)reTryRequest];
@@ -156,6 +223,8 @@
                     
                 }else if ([self.request isMemberOfClass:[KS3CompleteMultipartUploadRequest class]]){
                     if (!self.request.reTry) {
+                        ReponseLog(@"KS3CompleteMultipartUploadRequest 自己设定delegate，并重试");
+
                         KS3ServiceRequest *reTryRequest = self.request;
                         [reTryRequest vHostToVPath:reTryRequest.host withBucketName:[(KS3CompleteMultipartUploadRequest *)reTryRequest bucket]];
                         [[KS3Client initialize] completeMultipartUpload:(KS3CompleteMultipartUploadRequest *)reTryRequest];
@@ -168,6 +237,8 @@
                     
                 }else if ([self.request isMemberOfClass:[KS3AbortMultipartUploadRequest class]]){
                     if (!self.request.reTry) {
+                        ReponseLog(@"KS3AbortMultipartUploadRequest 自己设定delegate，并重试");
+
                         KS3ServiceRequest *reTryRequest = self.request;
                         [reTryRequest vHostToVPath:reTryRequest.host withBucketName:[(KS3AbortMultipartUploadRequest *)reTryRequest bucket]];
                         [[KS3Client initialize] abortMultipartUpload:(KS3AbortMultipartUploadRequest *)reTryRequest];
@@ -204,9 +275,11 @@
     
     if (([KS3Client initialize].totalRequestCount%[KS3Client initialize].recordRate) == 0 || [KS3Client initialize].totalRequestCount == 1) {
         
-//        [KSYLogManager sendLogData:self.request.logModel];
+//        [KSYLogManager senNSLogData:self.request.logModel];
         
         KSYLogClient *logClient = [[KSYLogClient alloc] init];
+        logClient.delegate = self;
+        logClient.outsideIP = self.outsideIP;
         [logClient insertLog:self.request.logModel];
     }
     
@@ -214,6 +287,8 @@
 
 -(void)connection:(NSURLConnection *)connection didSendBodyData:(NSInteger)bytesWritten totalBytesWritten:(NSInteger)totalBytesWritten totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite
 {
+    ReponseLog(@"didSendBodyData");
+
     if ([self.request.delegate respondsToSelector:@selector(request:didSendData:totalBytesWritten:totalBytesExpectedToWrite:)]) {
         [self.request.delegate request:self.request
                            didSendData:(long long)bytesWritten
@@ -227,6 +302,8 @@
 // the appropriate method if necessary
 -(NSURLRequest *)connection:(NSURLConnection *)connection willSendRequest:(NSURLRequest *)proposedRequest redirectResponse:(NSURLResponse *)redirectResponse
 {
+    ReponseLog(@"willSendRequest");
+
     return proposedRequest;
 }
 
@@ -244,4 +321,18 @@
     NSLog(@"timeout!!!");
 }
 
+#pragma mark- logClientDelegate
+
+- (void)logCilentLog:(NSString *)log
+{
+    ReponseLog(log);
+
+}
+
+- (void)onSocketDidDisconnect:(AsyncSocket *)sock{
+    NSTimeInterval end = [[NSDate date] timeIntervalSince1970];
+    NSString *useTime = [NSString stringWithFormat:@"重新连接iP时间%f",end - _startTime];
+    ReponseLog(useTime);
+
+}
 @end
