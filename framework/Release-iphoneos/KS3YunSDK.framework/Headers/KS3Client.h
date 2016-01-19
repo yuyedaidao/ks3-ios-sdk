@@ -73,16 +73,29 @@ typedef void(^kSS3DownloadFileCompleteionBlock)(KS3DownLoad *aDownload, NSString
 @class KS3InitiateMultipartUploadRequest;
 @class KS3GetBucketLoggingRequest;
 
+
+#define ClientLog(log)	    if ([self.delegate respondsToSelector:@selector(clientLog:)]) {\
+                            [self.delegate clientLog:log];\
+                            }
+
+
+
+@protocol KS3ClientDelegate <NSObject>
+
+- (void)clientLog:(NSString *)log;
+
+- (void)connectFailWithError:(NSError *)error;
+
+- (NSString *)getOutsideIP;
+@end
+
 @interface KS3Client : KS3WebServiceClient
 
-/**
- *  <#Description#>
- */
 @property (nonatomic)  NSInteger totalRequestCount;
 
 @property (nonatomic)  NSInteger recordRate;
 @property (strong, nonatomic, readonly) NSArray *ksyIps;
-
+@property (nonatomic, weak)id <KS3ClientDelegate> delegate;
 /**
  *  初始化
  *

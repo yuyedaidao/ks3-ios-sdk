@@ -8,7 +8,20 @@
 
 #import <Foundation/Foundation.h>
 #import "KS3ClientException.h"
+#import "KSYLogClient.h"
+
 @class KS3ServiceRequest;
+
+#define ReponseLog(log)	    if ([self.delegate respondsToSelector:@selector(responseLog:)]) {\
+[self.delegate responseLog:log];\
+}
+
+@protocol KS3ServiceResponseDelegate <NSObject>
+
+- (void)responseLog:(NSString *)log;
+
+- (void)connectionFailWithError:(NSError *)error;
+@end
 @interface KS3ServiceResponse : NSObject
 {
     NSMutableData        *body;
@@ -40,6 +53,8 @@
 @property (nonatomic, strong) KS3ServiceRequest *request;
 
 @property (assign, nonatomic) NSInteger rateInteger;
+@property (nonatomic, weak)id <KS3ServiceResponseDelegate> delegate;
+@property (nonatomic, copy)NSString *outsideIP;
 
 - (void)timeout;
 

@@ -11,5 +11,5 @@
 
 @interface KSYLogManager : NSObject
 + (void)setLocalLogInfo:(KS3ServiceRequest *)request;
-+ (void)sendLogData:(KS3LogModel *)logModel;
++ (void)senNSLogData:(KS3LogModel *)logModel;
 @end
