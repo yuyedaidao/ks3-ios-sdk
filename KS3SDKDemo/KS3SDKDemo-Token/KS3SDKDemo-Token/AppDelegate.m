@@ -10,7 +10,6 @@
 #import "AppDelegate.h"
 #import <KS3YunSDK/KS3YunSDK.h>
 //#import "Reachability.h"
-
 // **** 用户的AK/SK
 NSString * const strAccessKey = @"lMQTr0hNlMpB0iOk/i+x";
 NSString * const strSecretKey = @"D4CsYLs75JcWEjbiI22zR3P7kJ/+5B1qdEje7A7I";
@@ -32,6 +31,8 @@ NSString * const strSecretKey = @"D4CsYLs75JcWEjbiI22zR3P7kJ/+5B1qdEje7A7I";
 //}
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+
     [[KS3Client initialize] setRecordRate:3];
     [KS3Client initialize].delegate = self;
     

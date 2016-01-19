@@ -67,7 +67,7 @@
 #import "KSYHardwareInfo.h"
 #import "KSYLogManager.h"
 #import "KSYLogClient.h"
-
+#import "LGSocketServe.h"
 
 static NSString     * const KingSoftYun_Host_Name      = @"http://kss.ksyun.com1";
 static NSTimeInterval const KingSoftYun_RequestTimeout = 60;
@@ -92,6 +92,7 @@ static NSString     * const KingSoftYun_Host_GETIp2      = @"http://123.59.35.94
 - (instancetype)init
 {
     if (self == [super init]) {
+        
         _recordRate = 1;
         _isSend = YES;
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -412,6 +413,21 @@ static NSString     * const KingSoftYun_Host_GETIp2      = @"http://123.59.35.94
     }
     if ([request delegate] == nil) {
         if ([KS3SDKUtil isDNSParseFaild:response]) {
+            
+//            dispatch_async(dispatch_get_main_queue(), ^{
+//
+//                LGSocketServe *socketServe = [LGSocketServe sharedSocketServe];
+//                //socket连接前先断开连接以免之前socket连接没有断开导致闪退
+//                [socketServe cutOffSocket];
+//                socketServe.socket.userData = SocketOfflineByServer;
+//                [socketServe startConnectSocket];
+//                
+//                //发送消息 @"hello world"只是举个列子，具体根据服务端的消息格式
+//                [socketServe sendMessage:@"hello world"];
+//
+//            });
+//
+
             if (!request.reTry) {
                 request.reTry = YES;
                 [request vHostToVPath:request.host withBucketName:request.bucket];
@@ -524,10 +540,10 @@ static NSString     * const KingSoftYun_Host_GETIp2      = @"http://123.59.35.94
     ClientLog(log);
 }
 
-- (void)connectionFailWithError:(NSError *)error
+- (void)connectionFailWithError:(NSError *)error url:(NSString *)url
 {
-    if ([self.delegate respondsToSelector:@selector(connectionFailWithError:)]) {
-        [self.delegate connectFailWithError:error];
+    if ([self.delegate respondsToSelector:@selector(connectionFailWithError:url:)]) {
+        [self.delegate connectFailWithError:error url:url];
     }
 }
 @end

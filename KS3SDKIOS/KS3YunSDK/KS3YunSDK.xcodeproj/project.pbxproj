@@ -206,6 +206,8 @@
 		7CE9DD9F1C4CCDF5003E28C3 /* AsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CE9DD9B1C4CCDF5003E28C3 /* AsyncSocket.m */; };
 		7CE9DDA01C4CCDF5003E28C3 /* AsyncUdpSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 7CE9DD9C1C4CCDF5003E28C3 /* AsyncUdpSocket.h */; };
 		7CE9DDA11C4CCDF5003E28C3 /* AsyncUdpSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CE9DD9D1C4CCDF5003E28C3 /* AsyncUdpSocket.m */; };
+		7CE9DDA91C4E723A003E28C3 /* LGSocketServe.h in Headers */ = {isa = PBXBuildFile; fileRef = 7CE9DDA71C4E723A003E28C3 /* LGSocketServe.h */; };
+		7CE9DDAA1C4E723A003E28C3 /* LGSocketServe.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CE9DDA81C4E723A003E28C3 /* LGSocketServe.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -419,6 +421,8 @@
 		7CE9DD9B1C4CCDF5003E28C3 /* AsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AsyncSocket.m; sourceTree = "<group>"; };
 		7CE9DD9C1C4CCDF5003E28C3 /* AsyncUdpSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AsyncUdpSocket.h; sourceTree = "<group>"; };
 		7CE9DD9D1C4CCDF5003E28C3 /* AsyncUdpSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AsyncUdpSocket.m; sourceTree = "<group>"; };
+		7CE9DDA71C4E723A003E28C3 /* LGSocketServe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LGSocketServe.h; sourceTree = "<group>"; };
+		7CE9DDA81C4E723A003E28C3 /* LGSocketServe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LGSocketServe.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -757,6 +761,8 @@
 		7CE9DD991C4CCDF5003E28C3 /* RunLoop */ = {
 			isa = PBXGroup;
 			children = (
+				7CE9DDA71C4E723A003E28C3 /* LGSocketServe.h */,
+				7CE9DDA81C4E723A003E28C3 /* LGSocketServe.m */,
 				7CE9DD9A1C4CCDF5003E28C3 /* AsyncSocket.h */,
 				7CE9DD9B1C4CCDF5003E28C3 /* AsyncSocket.m */,
 				7CE9DD9C1C4CCDF5003E28C3 /* AsyncUdpSocket.h */,
@@ -788,6 +794,7 @@
 				13B9A7811A5CCF9D001E55BC /* KS3ListPartsRequest.h in Headers */,
 				13B9A79F1A5CD0EF001E55BC /* KS3BucketACLXMLParser.h in Headers */,
 				13B9A7BB1A5CD1E9001E55BC /* KS3Part.h in Headers */,
+				7CE9DDA91C4E723A003E28C3 /* LGSocketServe.h in Headers */,
 				13B9A7361A5CCEDD001E55BC /* KS3SetGrantACLResponse.h in Headers */,
 				13B9A7221A5CCEDD001E55BC /* KS3HeadBucketRequest.h in Headers */,
 				13B9A71E1A5CCEDD001E55BC /* KS3GetBucketLoggingRequest.h in Headers */,
@@ -1005,6 +1012,7 @@
 				13B9A7AC1A5CD15F001E55BC /* KS3ListObjectsXMLPrarser.m in Sources */,
 				13B9A77A1A5CCF9D001E55BC /* KS3HeadObjectRequest.m in Sources */,
 				13B9A7D81A5CD334001E55BC /* KS3Bucket.m in Sources */,
+				7CE9DDAA1C4E723A003E28C3 /* LGSocketServe.m in Sources */,
 				0A8727291A48184800A3AAC5 /* KS3ClientException.m in Sources */,
 				13B9A77E1A5CCF9D001E55BC /* KS3InitiateMultipartUploadRequest.m in Sources */,
 				0A6391B31A42AFA800BA3A99 /* KS3ResponseHeaderOverrides.m in Sources */,

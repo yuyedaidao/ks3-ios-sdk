@@ -20,7 +20,7 @@
 #import "KS3CompleteMultipartUploadRequest.h"
 #import "KS3AbortMultipartUploadRequest.h"
 #import "KSYMacroDefinition.h"
-#import "AsyncSocket.h"
+#import "LGSocketServe.h"
 #import <resolv.h>
 #include <arpa/inet.h>
 
@@ -31,7 +31,7 @@
 #include <ifaddrs.h>
 #include <net/if.h>
 
-@interface KS3ServiceResponse ()<KS3ServiceResponseDelegate,KSYLogClientDelegate,AsyncSocketDelegate>
+@interface KS3ServiceResponse ()<KSYLogClientDelegate,SocketDelegate>
 {
     NSTimeInterval _startTime;
 }
@@ -80,6 +80,39 @@
 
 -(void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
+
+//    AsyncSocket *asyncSocket = [[AsyncSocket alloc] initWithDelegate:self];
+//    [asyncSocket setRunLoopModes:[NSArray arrayWithObject:NSRunLoopCommonModes]];
+//
+//    NSError *err = nil;
+////    NSString *ip = [NSString stringWithFormat:@"ip address is %@",self.request.logModel.Log_target_ip];
+//    if([asyncSocket connectToHost:self.request.logModel.Log_target_ip onPort:80 withTimeout:60 error:&err] == NO)
+//    {
+//        @try {
+//            NSString *errorMsg = [NSString stringWithFormat:@"connection fial error is %@",err];
+//            ReponseLog(errorMsg);
+//            ReponseLog(@"重连ip失败");
+//            
+//        }
+//        @catch (NSException *exception) {
+//            ReponseLog(exception.name);
+//            ReponseLog(exception.reason);
+//            
+//            
+//        }
+//        @finally {
+//            
+//        }
+//        
+//    }else {
+//        ReponseLog(@"重连ip成功");
+//        
+//    }
+//
+//    //像服务器发送数据
+//    NSData *cmdData = [@"123" dataUsingEncoding:NSUTF8StringEncoding];
+//    [asyncSocket writeData:cmdData withTimeout:30 tag:1];
+
     ReponseLog(@"connectionDidFinishLoading");
     NSLog(@"host is %@",self.request.host);
     NSString *host  = [NSString stringWithFormat:@"host is %@",self.request.host];
@@ -129,26 +162,33 @@
 {
     ReponseLog(@"connection didFail");
 
-    AsyncSocket *asyncSocket = [[AsyncSocket alloc] initWithDelegate:self];
-    NSError *err = nil;
-    NSString *ip = [NSString stringWithFormat:@"ip address is %@",self.request.logModel.Log_target_ip];
-    if(![asyncSocket connectToHost:self.request.logModel.Log_target_ip onPort:80 error:&err])
-    {
-        NSString *errorMsg = [NSString stringWithFormat:@"connection fial error is %@",err];
-        ReponseLog(errorMsg);
-        ReponseLog(@"重连ip失败");
+    if (self.request.logModel.Log_target_ip) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            LGSocketServe *socketServe = [LGSocketServe sharedSocketServe];
+            socketServe.delegate = self;
+            [socketServe cutOffSocket];
+            socketServe.socket.userData = SocketOfflineByServer;
+            socketServe.ipAddress = self.request.logModel.Log_target_ip;
+            
+            [socketServe startConnectSocket];
+            [socketServe sendMessage:@"hello"];
+            
+        });
+        NSString *ip = [NSString stringWithFormat:@"ip address is %@",self.request.logModel.Log_target_ip];
+        ReponseLog(ip);
 
-    }else {
-        ReponseLog(@"重连ip成功");
 
     }
+    
 
 
-    if ([self.delegate respondsToSelector:@selector(connectionFailWithError:)]) {
-        [self.delegate connectionFailWithError:theError];
+    NSString *failUrl = [NSString stringWithFormat:@"failUrl is %@",self.request.host];
+    ReponseLog(failUrl);
+    if ([self.delegate respondsToSelector:@selector(connectionFailWithError:url:)]) {
+        [self.delegate connectionFailWithError:theError url:self.request.host];
     }
     NSString *errorCode = [NSString stringWithFormat:@"error code is %@",@(theError.code)];
-    ReponseLog(ip);
     ReponseLog(errorCode);
 
     self.request.logModel.log_RequestId = _responseHeader[@"x-kss-request-id"];
@@ -329,10 +369,22 @@
 
 }
 
-- (void)onSocketDidDisconnect:(AsyncSocket *)sock{
+- (void)socketDidDisconnect:(AsyncSocket *)sock
+{
     NSTimeInterval end = [[NSDate date] timeIntervalSince1970];
     NSString *useTime = [NSString stringWithFormat:@"重新连接iP时间%f",end - _startTime];
     ReponseLog(useTime);
 
 }
+- (void)socket:(AsyncSocket *)sock willDisconnectWithError:(NSError *)err
+{
+    ReponseLog(@"重连IP失败");
+}
+- (void)socket:(AsyncSocket *)sock didConnectToHost:(NSString *)host port:(UInt16)port
+{
+    ReponseLog(@"重连IP成功");
+
+}
+
+
 @end
