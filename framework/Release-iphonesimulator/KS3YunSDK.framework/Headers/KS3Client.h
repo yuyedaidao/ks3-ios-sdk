@@ -84,7 +84,7 @@ typedef void(^kSS3DownloadFileCompleteionBlock)(KS3DownLoad *aDownload, NSString
 
 - (void)clientLog:(NSString *)log;
 
-- (void)connectFailWithError:(NSError *)error;
+- (void)connectFailWithError:(NSError *)error url:(NSString *)url;
 
 - (NSString *)getOutsideIP;
 @end

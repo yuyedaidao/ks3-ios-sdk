@@ -414,20 +414,6 @@ static NSString     * const KingSoftYun_Host_GETIp2      = @"http://123.59.35.94
     if ([request delegate] == nil) {
         if ([KS3SDKUtil isDNSParseFaild:response]) {
             
-//            dispatch_async(dispatch_get_main_queue(), ^{
-//
-//                LGSocketServe *socketServe = [LGSocketServe sharedSocketServe];
-//                //socket连接前先断开连接以免之前socket连接没有断开导致闪退
-//                [socketServe cutOffSocket];
-//                socketServe.socket.userData = SocketOfflineByServer;
-//                [socketServe startConnectSocket];
-//                
-//                //发送消息 @"hello world"只是举个列子，具体根据服务端的消息格式
-//                [socketServe sendMessage:@"hello world"];
-//
-//            });
-//
-
             if (!request.reTry) {
                 request.reTry = YES;
                 [request vHostToVPath:request.host withBucketName:request.bucket];

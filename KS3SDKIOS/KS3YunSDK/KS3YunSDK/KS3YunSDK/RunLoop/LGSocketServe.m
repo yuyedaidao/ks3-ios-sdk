@@ -8,20 +8,6 @@
 
 #import "LGSocketServe.h"
 
-#define PORT 8080
-
-//设置连接超时
-#define TIME_OUT 20
-
-//设置读取超时 -1 表示不会使用超时
-#define READ_TIME_OUT -1
-
-//设置写入超时 -1 表示不会使用超时
-#define WRITE_TIME_OUT -1
-
-//每次最多读取多少
-#define MAX_BUFFER 1024
-
 
 @implementation LGSocketServe
 
@@ -59,7 +45,7 @@ static LGSocketServe *socketServe = nil;
 {
     self.socket = [[AsyncSocket alloc] initWithDelegate:self];
     [self.socket setRunLoopModes:[NSArray arrayWithObject:NSRunLoopCommonModes]];
-    if ( ![self SocketOpen:self.ipAddress port:PORT] )
+    if ( ![self SocketOpen:self.ipAddress port:80] )
     {
         
     }
@@ -72,7 +58,7 @@ static LGSocketServe *socketServe = nil;
     if (![self.socket isConnected])
     {
         NSError *error = nil;
-        [self.socket connectToHost:addr onPort:port withTimeout:TIME_OUT error:&error];
+        [self.socket connectToHost:addr onPort:port withTimeout:20 error:&error];
     }
     
     return 0;
@@ -90,7 +76,7 @@ static LGSocketServe *socketServe = nil;
 {
     //像服务器发送数据
     NSData *cmdData = [message dataUsingEncoding:NSUTF8StringEncoding];
-    [self.socket writeData:cmdData withTimeout:WRITE_TIME_OUT tag:1];
+    [self.socket writeData:cmdData withTimeout:20 tag:1];
 }
 
 

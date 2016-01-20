@@ -80,39 +80,6 @@
 
 -(void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
-
-//    AsyncSocket *asyncSocket = [[AsyncSocket alloc] initWithDelegate:self];
-//    [asyncSocket setRunLoopModes:[NSArray arrayWithObject:NSRunLoopCommonModes]];
-//
-//    NSError *err = nil;
-////    NSString *ip = [NSString stringWithFormat:@"ip address is %@",self.request.logModel.Log_target_ip];
-//    if([asyncSocket connectToHost:self.request.logModel.Log_target_ip onPort:80 withTimeout:60 error:&err] == NO)
-//    {
-//        @try {
-//            NSString *errorMsg = [NSString stringWithFormat:@"connection fial error is %@",err];
-//            ReponseLog(errorMsg);
-//            ReponseLog(@"重连ip失败");
-//            
-//        }
-//        @catch (NSException *exception) {
-//            ReponseLog(exception.name);
-//            ReponseLog(exception.reason);
-//            
-//            
-//        }
-//        @finally {
-//            
-//        }
-//        
-//    }else {
-//        ReponseLog(@"重连ip成功");
-//        
-//    }
-//
-//    //像服务器发送数据
-//    NSData *cmdData = [@"123" dataUsingEncoding:NSUTF8StringEncoding];
-//    [asyncSocket writeData:cmdData withTimeout:30 tag:1];
-
     ReponseLog(@"connectionDidFinishLoading");
     NSLog(@"host is %@",self.request.host);
     NSString *host  = [NSString stringWithFormat:@"host is %@",self.request.host];
@@ -177,7 +144,6 @@
         });
         NSString *ip = [NSString stringWithFormat:@"ip address is %@",self.request.logModel.Log_target_ip];
         ReponseLog(ip);
-
 
     }
     

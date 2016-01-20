@@ -20,7 +20,7 @@
 
 - (void)responseLog:(NSString *)log;
 
-- (void)connectionFailWithError:(NSError *)error;
+- (void)connectionFailWithError:(NSError *)error url:(NSString *)url;
 @end
 @interface KS3ServiceResponse : NSObject
 {

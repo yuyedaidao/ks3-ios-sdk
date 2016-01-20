@@ -9,60 +9,12 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "../KS3SDKIOS/KS3YunSDK/KS3YunSDK/KS3YunSDK/RunLoop/LGSocketServe.m"
-            timestampString = "474905093.477656"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "106"
-            endingLineNumber = "106"
-            landmarkName = "-onSocketDidDisconnect:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "../KS3SDKIOS/KS3YunSDK/KS3YunSDK/KS3YunSDK/RunLoop/LGSocketServe.m"
-            timestampString = "474905093.477656"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "116"
-            endingLineNumber = "116"
-            landmarkName = "-onSocket:willDisconnectWithError:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "../KS3SDKIOS/KS3YunSDK/KS3YunSDK/KS3YunSDK/RunLoop/LGSocketServe.m"
-            timestampString = "474905093.477656"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "126"
-            endingLineNumber = "126"
-            landmarkName = "-onSocket:didConnectToHost:port:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "../KS3SDKIOS/KS3YunSDK/KS3YunSDK/KS3YunSDK/KSYCore.RunTime/KS3ServiceResponse.m"
-            timestampString = "474905236.383115"
+            timestampString = "474945425.426266"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "371"
-            endingLineNumber = "371"
+            startingLineNumber = "359"
+            endingLineNumber = "359"
             landmarkName = "-socketDidDisconnect:"
             landmarkType = "5">
          </BreakpointContent>
@@ -74,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../KS3SDKIOS/KS3YunSDK/KS3YunSDK/KS3YunSDK/KSYCore.RunTime/KS3ServiceResponse.m"
-            timestampString = "474905236.383115"
+            timestampString = "474945425.426266"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "379"
-            endingLineNumber = "379"
+            startingLineNumber = "366"
+            endingLineNumber = "366"
             landmarkName = "-socket:willDisconnectWithError:"
             landmarkType = "5">
          </BreakpointContent>
@@ -90,28 +42,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../KS3SDKIOS/KS3YunSDK/KS3YunSDK/KS3YunSDK/KSYCore.RunTime/KS3ServiceResponse.m"
-            timestampString = "474905236.383115"
+            timestampString = "474945425.426266"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "383"
-            endingLineNumber = "383"
+            startingLineNumber = "370"
+            endingLineNumber = "370"
             landmarkName = "-socket:didConnectToHost:port:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "../KS3SDKIOS/KS3YunSDK/KS3YunSDK/KS3YunSDK/RunLoop/LGSocketServe.m"
-            timestampString = "474905163.40223"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "62"
-            endingLineNumber = "62"
-            landmarkName = "-startConnectSocket"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
