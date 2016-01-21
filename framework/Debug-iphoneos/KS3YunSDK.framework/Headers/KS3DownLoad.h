@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "KS3Client.h"
+#import "KS3LogModel.h"
 
 @class KS3Credentials;
 
@@ -73,6 +74,9 @@
 @property (copy, nonatomic) kSS3DownloadFileCompleteionBlock downloadFileCompleteionBlock;
 
 @property (copy, nonatomic) KSS3DownloadBeginBlock downloadBeginBlock;
+@property (assign, nonatomic)int32_t httpStatusCode;
+@property (nonatomic, copy)NSString *outsideIP;
+@property (strong ,nonatomic) KS3LogModel *logModel;
 
 - (void)start;
 

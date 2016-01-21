@@ -12,16 +12,16 @@
 #import "KSYMacroDefinition.h"
 @implementation KSYLogManager
 
-+ (void)setLocalLogInfo:(KS3ServiceRequest *)request
++ (void)setLocalLogInfo:(KS3LogModel *)logModel
 {
-    request.logModel.Log_source_ip = [KSYHardwareInfo getDeviceIPAddress];
-    request.logModel.Log_target_ip = [KSYHardwareInfo getIPAddressByHostName:[NSURL URLWithString:@"http://kss.ksyun.com"]];
-    request.logModel.Log_model = [KSYHardwareInfo systemDeviceTypeFormatted:YES];
-    request.logModel.Log_manufacturer = [KSYHardwareInfo getManufacturer];
-    request.logModel.Log_build_version = [KSYHardwareInfo getSystemVersion];
-    request.logModel.Log_device_id = [KSYHardwareInfo getUniqueForDevice];
-    request.logModel.Log_network_type = [KSYHardwareInfo checkNetworkType];
-    request.logModel.Log_mobile_network_type = [KSYHardwareInfo getMobileNetworkInfo];
+    logModel.Log_source_ip = [KSYHardwareInfo getDeviceIPAddress];
+    logModel.Log_target_ip = [KSYHardwareInfo getIPAddressByHostName:[NSURL URLWithString:@"http://kss.ksyun.com"]];
+    logModel.Log_model = [KSYHardwareInfo systemDeviceTypeFormatted:YES];
+    logModel.Log_manufacturer = [KSYHardwareInfo getManufacturer];
+    logModel.Log_build_version = [KSYHardwareInfo getSystemVersion];
+    logModel.Log_device_id = [KSYHardwareInfo getUniqueForDevice];
+    logModel.Log_network_type = [KSYHardwareInfo checkNetworkType];
+    logModel.Log_mobile_network_type = [KSYHardwareInfo getMobileNetworkInfo];
 }
 
 + (void)senNSLogData:(KS3LogModel *)logModel

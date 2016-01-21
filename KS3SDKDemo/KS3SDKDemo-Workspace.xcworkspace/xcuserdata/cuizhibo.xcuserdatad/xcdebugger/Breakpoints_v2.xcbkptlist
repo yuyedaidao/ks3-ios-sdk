@@ -9,45 +9,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "../KS3SDKIOS/KS3YunSDK/KS3YunSDK/KS3YunSDK/KSYCore.RunTime/KS3ServiceResponse.m"
-            timestampString = "474945425.426266"
+            filePath = "../KS3SDKIOS/KS3YunSDK/KS3YunSDK/KS3YunSDK/KSYS3/KSYModel/Object/KS3DownLoad.m"
+            timestampString = "475056568.782719"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "359"
-            endingLineNumber = "359"
-            landmarkName = "-socketDidDisconnect:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "../KS3SDKIOS/KS3YunSDK/KS3YunSDK/KS3YunSDK/KSYCore.RunTime/KS3ServiceResponse.m"
-            timestampString = "474945425.426266"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "366"
-            endingLineNumber = "366"
-            landmarkName = "-socket:willDisconnectWithError:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "../KS3SDKIOS/KS3YunSDK/KS3YunSDK/KS3YunSDK/KSYCore.RunTime/KS3ServiceResponse.m"
-            timestampString = "474945425.426266"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "370"
-            endingLineNumber = "370"
-            landmarkName = "-socket:didConnectToHost:port:"
+            startingLineNumber = "353"
+            endingLineNumber = "353"
+            landmarkName = "-connection:didFailWithError:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

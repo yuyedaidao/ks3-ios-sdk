@@ -444,7 +444,7 @@ static NSString     * const KingSoftYun_Host_GETIp2      = @"http://123.59.35.94
         response.outsideIP = [self.delegate getOutsideIP];
     }
 
-    [KSYLogManager setLocalLogInfo:request];
+    [KSYLogManager setLocalLogInfo:request.logModel];
     request.logModel.send_before_time = [KSYHardwareInfo getCurrentTime];
     ClientLog(request.logModel.send_before_time);
     if ([request delegate] != nil) {
@@ -503,14 +503,18 @@ static NSString     * const KingSoftYun_Host_GETIp2      = @"http://123.59.35.94
     }
     NSLog(@"====== downloadObjectWithBucketName ======");
     ClientLog(@"downloadObjectWithBucketName");
-
     NSString *strHost = [NSString stringWithFormat:@"http://%@.kss.ksyun.com/%@", bucketName, key];
     KS3DownLoad *downLoad = [[KS3DownLoad alloc] initWithUrl:strHost credentials:_credentials :bucketName :key];
     downLoad.downloadBeginBlock = downloadBeginBlock;
     downLoad.downloadFileCompleteionBlock = downloadFileCompleteion;
     downLoad.downloadProgressChangeBlock = downloadProgressChangeBlock;
     downLoad.failedBlock = failedBlock;
-    
+    [KSYLogManager setLocalLogInfo:downLoad.logModel];
+
+    if ([self.delegate respondsToSelector:@selector(getOutsideIP)]) {
+        downLoad.outsideIP = [self.delegate getOutsideIP];
+    }
+
     return downLoad;
 }
 

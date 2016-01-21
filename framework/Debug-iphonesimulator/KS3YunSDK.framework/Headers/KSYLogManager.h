@@ -10,6 +10,6 @@
 #import "KS3ServiceRequest.h"
 
 @interface KSYLogManager : NSObject
-+ (void)setLocalLogInfo:(KS3ServiceRequest *)request;
++ (void)setLocalLogInfo:(KS3LogModel *)logmodel;
 + (void)senNSLogData:(KS3LogModel *)logModel;
 @end

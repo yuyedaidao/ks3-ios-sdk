@@ -14,9 +14,16 @@
 #import "KS3Response.h"
 #import "KS3Constants.h"
 #import "KSYMacroDefinition.h"
+#import "KS3ErrorHandler.h"
+#import "KSYHardwareInfo.h"
 @interface KS3DownLoad ()
+{
+    NSMutableData        *body;
+}
 
 @property (strong, nonatomic) KS3Credentials *credentials;
+@property (nonatomic, strong) NSDictionary *responseHeader;
+
 @end
 
 @implementation KS3DownLoad {
@@ -28,6 +35,12 @@
 @synthesize fileName;
 @synthesize filePath;
 @synthesize fileSize;
+
+
+-(NSData *)body
+{
+    return [NSData dataWithData:body];
+}
 
 - (id)initWithUrl:(NSString *)aUrl credentials:(KS3Credentials *)credentials :(NSString *)bucketName :(NSString *)objectKey
 {
@@ -47,6 +60,8 @@
         _bucketName = [self URLEncodedString:bucketName];
         _key = [self URLEncodedString:objectKey];
         _kSYResource = [NSString stringWithFormat:@"/%@/%@", _bucketName,_key];
+        _logModel = [KS3LogModel new];
+        _logModel.ksyErrorcode = -2;
         
     }
     return self;
@@ -168,6 +183,8 @@
         }
     }
     
+    self.logModel.send_before_time = [KSYHardwareInfo getCurrentTime];
+
     [fileHandle closeFile];
     fileHandle = [NSFileHandle fileHandleForWritingAtPath:temporaryPath];
     offset = [fileHandle seekToEndOfFile];
@@ -213,6 +230,7 @@
 //                                   @"",     @"resource", nil];
         [request setValue:_strKS3Token forHTTPHeaderField:@"Authorization"];
     }
+
     [connection cancel];
     connection = [[NSURLConnection alloc] initWithRequest:request delegate:self startImmediately:NO];
     [connection scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:KSYS3DefaultRunLoopMode];
@@ -268,6 +286,15 @@
 
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
+    
+    if (self.logModel.Log_first_data_time == nil) {
+        self.logModel.Log_first_data_time = [KSYHardwareInfo getCurrentTime];
+    }
+
+    NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+    self.httpStatusCode = (int32_t)[httpResponse statusCode];
+    self.responseHeader = [httpResponse allHeaderFields];
+
     if ([response expectedContentLength] != NSURLResponseUnknownLength)
         fileSize = (unsigned long long)[response expectedContentLength]+offset;
     if (delegate && [delegate respondsToSelector:@selector(downloadBegin:didReceiveResponseHeaders:)]) {
@@ -276,25 +303,56 @@
     if (_downloadBeginBlock) {
         _downloadBeginBlock(self, response);
     }
-    
+    [body setLength:0];
 }
 
 -(void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)aData
 {
-    [fileHandle writeData:aData];
-    offset = [fileHandle offsetInFile];
-    double progress = offset*1.0/fileSize;
-    if (_downloadProgressChangeBlock) {
-        _downloadProgressChangeBlock(self,progress);
-    }
-    if (delegate && [delegate respondsToSelector:@selector(downloadProgressChange:progress:)]) {
-        [delegate downloadProgressChange:self progress:progress];
+
+    KS3ErrorHandler *errorHandler = [[KS3ErrorHandler alloc] initWithStatusCode:self.httpStatusCode];
+    
+    if (self.httpStatusCode == 301 || self.httpStatusCode >= 400) {
+        NSXMLParser *parse = [[NSXMLParser alloc] initWithData:aData];
+        [parse setDelegate:errorHandler];
+        [parse parse];
+        [errorHandler exception];
+        [errorHandler convertKS3Error];
+        NSError *error = [NSError errorWithDomain:errorHandler.exception.message code:self.httpStatusCode userInfo:nil];
+        if (_failedBlock) {
+            _failedBlock(self, error);
+        }
+
+        self.logModel.ksyErrorcode = errorHandler.exception.statusCode;
+
+    }else {
+        [fileHandle writeData:aData];
+        offset = [fileHandle offsetInFile];
+        double progress = offset*1.0/fileSize;
+        if (_downloadProgressChangeBlock) {
+            _downloadProgressChangeBlock(self,progress);
+        }
+        if (delegate && [delegate respondsToSelector:@selector(downloadProgressChange:progress:)]) {
+            [delegate downloadProgressChange:self progress:progress];
+        }
+
+        if (body == nil) {
+            body = [NSMutableData data];
+        }
+        [body appendData:aData];
     }
 }
 
 -(void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
 {
+    
+    self.logModel.log_RequestId = _responseHeader[@"x-kss-request-id"];
+    self.logModel.Log_response_time = [KSYHardwareInfo getCurrentTime];
+    self.logModel.Log_response_size = body.length;
+    self.logModel.ksyErrorcode = [error code];
+
     [fileHandle closeFile];
+    
+
     if (_failedBlock) {
         _failedBlock(self, error);
     }
@@ -302,20 +360,51 @@
        [delegate downloadFaild:self didFailWithError:error];
     }
    
+    if (([KS3Client initialize].totalRequestCount%[KS3Client initialize].recordRate) == 0 || [KS3Client initialize].totalRequestCount == 1) {
+        
+        //        [KSYLogManager senNSLogData:self.request.logModel];
+        
+        KSYLogClient *logClient = [[KSYLogClient alloc] init];
+        logClient.outsideIP = self.outsideIP;
+        [logClient insertLog:self.logModel];
+    }
+
 }
 
 -(void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
+    
+    self.logModel.Log_response_time = [KSYHardwareInfo getCurrentTime];
+    self.logModel.Log_response_size = body.length;
+    self.logModel.log_RequestId = _responseHeader[@"x-kss-request-id"];
+
     _isFinished = YES;
     [fileHandle closeFile];
-    [[NSFileManager defaultManager] moveItemAtPath:temporaryPath toPath:destinationPath error:nil];
+    if (self.httpStatusCode != 301 && self.httpStatusCode < 400) {
+        NSData *fileData = [NSData dataWithContentsOfFile:filePath];
+        NSString *finishString = [[NSString alloc] initWithData:fileData encoding:NSUTF8StringEncoding];
+        NSLog(@"finishString is %@",finishString);
+        
+        [[NSFileManager defaultManager] moveItemAtPath:temporaryPath toPath:destinationPath error:nil];
+        
+        if (_downloadFileCompleteionBlock) {
+            _downloadFileCompleteionBlock(self, destinationPath);
+        }
+        if (delegate && [delegate respondsToSelector:@selector(downloadFinished:filePath:)]) {
+            [delegate downloadFinished:self filePath:destinationPath];
+        }
+
+    }
     
-    if (_downloadFileCompleteionBlock) {
-        _downloadFileCompleteionBlock(self, destinationPath);
+    if (([KS3Client initialize].totalRequestCount%[KS3Client initialize].recordRate) == 0 || [KS3Client initialize].totalRequestCount == 1) {
+        
+        //        [KSYLogManager senNSLogData:self.request.logModel];
+        
+        KSYLogClient *logClient = [[KSYLogClient alloc] init];
+        logClient.outsideIP = self.outsideIP;
+        [logClient insertLog:self.logModel];
     }
-    if (delegate && [delegate respondsToSelector:@selector(downloadFinished:filePath:)]) {
-        [delegate downloadFinished:self filePath:destinationPath];
-    }
+
 }
 
 @end

@@ -97,7 +97,7 @@
 
             dispatch_async(concurrentQueue, ^(){
                 _downloader = [[KS3Client initialize] downloadObjectWithBucketName:kBucketName key:@"@#$%^&eourj ％  ％ %  %!!!~~~@)fkds.txt" downloadBeginBlock:^(KS3DownLoad *aDownload, NSURLResponse *responseHeaders) {
-                    NSLog(@"1212221");
+                    NSLog(@"开始下载");
                     
                 } downloadFileCompleteion:^(KS3DownLoad *aDownload, NSString *filePath) {
                     NSLog(@"completed, file path: %@", filePath);
