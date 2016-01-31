@@ -337,7 +337,7 @@
     req.contentLength = data.length;
     req.contentMd5 = [KS3SDKUtil base64md5FromData:data];
     [req setCompleteRequest];
-
+//    [req setEndPointWith:@"kssws.ks-cdn.com"];
     [[KS3Client initialize] uploadPart:req];
 }
 

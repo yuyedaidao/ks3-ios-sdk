@@ -24,7 +24,7 @@
         self.contentType = @"";
         self.kSYHeader = @"";
         self.kSYResource = [NSString stringWithFormat:@"/%@", self.bucket];
-        self.host = @"";
+//        self.host = @"";
         
         //
         self.kSYResource = [NSString stringWithFormat:@"%@/%@?acl", self.kSYResource, _key];
@@ -33,7 +33,7 @@
         self.kSYHeader = [_acl.accessGrantACL stringByAppendingString:@":"];
         self.kSYHeader = [self.kSYHeader stringByAppendingString:strValue];
         self.kSYHeader = [self.kSYHeader stringByAppendingString:@"\n"];
-        self.host = [NSString stringWithFormat:@"http://%@.kss.ksyun.com/%@?acl", self.bucket, _key];
+        self.host = [NSMutableString stringWithFormat:@"http://%@.kss.ksyun.com/%@?acl", self.bucket, _key];
     }
     return self;
 }

@@ -239,7 +239,11 @@ static NSString     * const KingSoftYun_Host_GETIp2      = @"http://123.59.35.94
 - (KS3MultipartUpload *)initiateMultipartUploadWithRequest:(KS3InitiateMultipartUploadRequest *)request
 {
     KS3InitiateMultipartUploadResponse *response = (KS3InitiateMultipartUploadResponse *)[self invoke:request];
-    return response.multipartUpload;
+    if ([response isKindOfClass:[KS3InitiateMultipartUploadResponse class]]) {
+        return response.multipartUpload;
+
+    }
+    return nil;
 }
 
 - (KS3UploadPartResponse *)uploadPart:(KS3UploadPartRequest *)uploadPartRequest

@@ -27,7 +27,7 @@
         self.acl = acl;
         self.arrGrantAcl = arrGrantAcl;
         self.kSYResource =  [NSString stringWithFormat:@"/%@", self.bucket];
-        self.host = [NSString stringWithFormat:@"http://%@.kss.ksyun.com", self.bucket];
+        self.host = [NSMutableString stringWithFormat:@"http://%@.kss.ksyun.com", self.bucket];
         if (_acl != nil) {
             self.kSYHeader = [@"x-kss-acl:" stringByAppendingString:_acl.accessACL];
             self.kSYHeader = [NSString stringWithFormat:@"%@\n",self.kSYHeader];
@@ -116,7 +116,7 @@
     
     _filename = [self URLEncodedString:_filename];
     self.kSYResource = [NSString stringWithFormat:@"%@/%@",self.kSYResource,_filename];
-    self.host = [NSString stringWithFormat:@"%@/%@",self.host,_filename];
+    self.host = [NSMutableString stringWithFormat:@"%@/%@",self.host,_filename];
     
     if (![self.kSYHeader isEqualToString:@""]) {
         NSArray *componentsArray = [self.kSYHeader componentsSeparatedByString:@"\n"];

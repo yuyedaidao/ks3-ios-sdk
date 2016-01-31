@@ -169,33 +169,33 @@
     }
     
     // **** 超过1200条后，从最前面第一条开始往后开始删除以前的数据
-//    NSInteger count = [self dataCount];
-//    if (count > 1200) {
-//        LogClientLog(@"超过1200条日志，从最后一条开始往前删除")
-//        [self deleteFirstRecord];
-//    }
+    NSInteger count = [self dataCount];
+    if (count > 1200) {
+        LogClientLog(@"超过1200条日志，从最后一条开始往前删除")
+        [self deleteFirstRecord];
+    }
 }
 
 - (void)deleteLog:(NSArray *)arrData {
-//    LogClientLog(@"deleteLog");
-//    NSManagedObjectContext *context = [self managedObjectContext];
-//    for (NSManagedObject *obj in arrData) {
-//        [context deleteObject:obj];
-//    }
-//    NSError *error = nil;
-//    if ([context save:&error] == NO) {
-//        NSString *message = [NSString stringWithFormat:@"KS3 SDK 删除日志失败: %@",error];
-//        LogClientLog(message);
-//    }else {
-//        LogClientLog(@"删除日志成功");
-//
-//    }
+    LogClientLog(@"deleteLog");
+    NSManagedObjectContext *context = [self managedObjectContext];
+    for (NSManagedObject *obj in arrData) {
+        [context deleteObject:obj];
+    }
+    NSError *error = nil;
+    if ([context save:&error] == NO) {
+        NSString *message = [NSString stringWithFormat:@"KS3 SDK 删除日志失败: %@",error];
+        LogClientLog(message);
+    }else {
+        NSLog(@"删除日志成功");
+
+    }
 //    NSEntityDescription *entity = [NSEntityDescription entityForName:kTableName inManagedObjectContext:context];
 //    
 //    NSFetchRequest *request = [[NSFetchRequest alloc] init];
 //    [request setIncludesPropertyValues:NO];
 //    [request setEntity:entity];
-//    NSError *error = nil;
+////    NSError *error = nil;
 //    NSArray *logs = [context executeFetchRequest:request error:&error];
 //    if (!error && logs && [logs count])
 //    {
@@ -289,11 +289,11 @@
     return 0;
 }
 
-//- (void)deleteFirstRecord {
-//    LogClientLog(@"删除一条最上层的日志")
-//    NSArray *arrData = [self selectData:1 andOffset:0];
-//    [self deleteLog:arrData];
-//}
+- (void)deleteFirstRecord {
+    LogClientLog(@"删除一条最上层的日志")
+    NSArray *arrData = [self selectData:1 andOffset:0];
+    [self deleteLog:arrData];
+}
 
 #pragma mark - Send data
 
@@ -386,7 +386,7 @@
             NSLog(@"log send success");
             LogClientLog(@"log send success");
 
-//            [self deleteLog:arrData]; // **** 发送成功就删除
+            [self deleteLog:arrData]; // **** 发送成功就删除
         }else {
             LogClientLog(@"log send fail");
         }

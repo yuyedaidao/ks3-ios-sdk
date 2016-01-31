@@ -31,7 +31,7 @@
 }
 - (void)setCompleteRequest
 {
-    self.host = [NSString stringWithFormat:@"http://%@.kss.ksyun.com/%@?uploadId=%@", self.bucket, self.key, self.uploadId];
+    self.host = [NSMutableString stringWithFormat:@"http://%@.kss.ksyun.com/%@?uploadId=%@", self.bucket, self.key, self.uploadId];
     NSMutableString *subresource = [NSMutableString stringWithCapacity:512];
     if (self.maxParts != 1000) { // **** default is 1000
         [subresource appendFormat:@"&%@=%d", kKS3QueryParamMaxParts, self.maxParts];
@@ -46,7 +46,7 @@
         [subresource appendFormat:@"%@=%@", kKS3QueryParamEncodingType, _encodingType];
     }
     if (subresource.length > 0) {
-        self.host = [NSString stringWithFormat:@"%@%@", self.host, subresource];
+        self.host = [NSMutableString stringWithFormat:@"%@%@", self.host, subresource];
     }
 }
 

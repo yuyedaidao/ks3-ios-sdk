@@ -77,7 +77,7 @@
 @property (assign, nonatomic)int32_t httpStatusCode;
 @property (nonatomic, copy)NSString *outsideIP;
 @property (strong ,nonatomic) KS3LogModel *logModel;
-
+@property (nonatomic,strong)NSString *endPoint;
 - (void)start;
 
 

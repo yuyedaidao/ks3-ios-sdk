@@ -33,7 +33,7 @@
         self.contentType = @"binary/octet-stream";
         self.kSYHeader = @"";
         self.httpMethod = kHttpMethodPut;
-        self.host = [NSString stringWithFormat:@"http://%@.kss.ksyun.com/%@?partNumber=%d&uploadId=%@", self.bucket, _key, _partNumber, _multipartUpload.uploadId];
+        self.host = [NSMutableString stringWithFormat:@"http://%@.kss.ksyun.com/%@?partNumber=%d&uploadId=%@", self.bucket, _key, _partNumber, _multipartUpload.uploadId];
         
         if (nil == self.contentMd5 && YES == self.generateMD5 && self.data != nil) {
             self.contentMd5 = [KS3SDKUtil base64md5FromData:self.data];

@@ -22,10 +22,10 @@
         self.contentType = @"";
         self.kSYHeader = @"";
         self.kSYResource =  [NSString stringWithFormat:@"/%@", self.bucket];
-        self.host = [NSString stringWithFormat:@"http://%@.kss.ksyun.com", self.bucket];
+        self.host = [NSMutableString stringWithFormat:@"http://%@.kss.ksyun.com", self.bucket];
         
         //
-        self.host = [NSString stringWithFormat:@"%@/%@",self.host,_key];
+        self.host = [NSMutableString stringWithFormat:@"%@/%@",self.host,_key];
         self.kSYResource = [NSString stringWithFormat:@"%@/%@",self.kSYResource,_key];
     }
     return self;

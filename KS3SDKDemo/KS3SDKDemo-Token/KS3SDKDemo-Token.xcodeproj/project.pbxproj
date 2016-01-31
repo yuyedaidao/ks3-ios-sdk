@@ -27,6 +27,7 @@
 		0AF0C4BA1B1F217100B87080 /* KS3YunSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AF0C4B71B1F1FA500B87080 /* KS3YunSDK.framework */; };
 		0AF0C4BB1B1F217100B87080 /* KS3YunSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0AF0C4B71B1F1FA500B87080 /* KS3YunSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		133AF8041B67A4C800500BFE /* android.txt in Resources */ = {isa = PBXBuildFile; fileRef = 133AF8031B67A4C800500BFE /* android.txt */; };
+		7C488B5C1C5B10B4001C2C48 /* 1.1M_Alpha.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C488B5B1C5B10B4001C2C48 /* 1.1M_Alpha.png */; };
 		7CF0B9621C30CAF400B71DE5 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CF0B9611C30CAF400B71DE5 /* MobileCoreServices.framework */; };
 		7CF0B9641C30CAFB00B71DE5 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CF0B9631C30CAFB00B71DE5 /* CoreData.framework */; };
 		7CF0B9661C30CB1700B71DE5 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CF0B9651C30CB1700B71DE5 /* SystemConfiguration.framework */; };
@@ -105,6 +106,7 @@
 		0A2105D91AEF310B00A8865C /* test.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = test.jpg; sourceTree = SOURCE_ROOT; };
 		0AF0C4B11B1F1FA500B87080 /* KS3YunSDK.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = KS3YunSDK.xcodeproj; path = ../../KS3SDKIOS/KS3YunSDK/KS3YunSDK.xcodeproj; sourceTree = "<group>"; };
 		133AF8031B67A4C800500BFE /* android.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = android.txt; sourceTree = SOURCE_ROOT; };
+		7C488B5B1C5B10B4001C2C48 /* 1.1M_Alpha.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1.1M_Alpha.png; sourceTree = "<group>"; };
 		7CF0B9611C30CAF400B71DE5 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		7CF0B9631C30CAFB00B71DE5 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		7CF0B9651C30CB1700B71DE5 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
@@ -163,6 +165,7 @@
 		0A2105961AEF2E0400A8865C /* KS3SDKDemo-Token */ = {
 			isa = PBXGroup;
 			children = (
+				7C488B5B1C5B10B4001C2C48 /* 1.1M_Alpha.png */,
 				133AF8031B67A4C800500BFE /* android.txt */,
 				0A2105D71AEF310B00A8865C /* +-.jpg */,
 				0A2105D81AEF310B00A8865C /* bugDownload.txt */,
@@ -329,6 +332,7 @@
 				0A2105A31AEF2E0400A8865C /* Main.storyboard in Resources */,
 				0A2105DC1AEF310B00A8865C /* test.jpg in Resources */,
 				0A2105DA1AEF310B00A8865C /* +-.jpg in Resources */,
+				7C488B5C1C5B10B4001C2C48 /* 1.1M_Alpha.png in Resources */,
 				0A2105DB1AEF310B00A8865C /* bugDownload.txt in Resources */,
 				0A2105A81AEF2E0400A8865C /* LaunchScreen.xib in Resources */,
 				0A2105A51AEF2E0400A8865C /* Images.xcassets in Resources */,
@@ -446,6 +450,10 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = (
+					"-all_load",
+					"-ObjC",
+				);
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -484,6 +492,10 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = (
+					"-all_load",
+					"-ObjC",
+				);
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -505,7 +517,10 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				ONLY_ACTIVE_ARCH = NO;
-				OTHER_LDFLAGS = "-licucore";
+				OTHER_LDFLAGS = (
+					"-licucore",
+					"-all_load",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.ksy.AMZPlayer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -525,7 +540,10 @@
 				INFOPLIST_FILE = "KS3SDKDemo-Token/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				OTHER_LDFLAGS = "-licucore";
+				OTHER_LDFLAGS = (
+					"-licucore",
+					"-all_load",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.ksy.AMZPlayer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};

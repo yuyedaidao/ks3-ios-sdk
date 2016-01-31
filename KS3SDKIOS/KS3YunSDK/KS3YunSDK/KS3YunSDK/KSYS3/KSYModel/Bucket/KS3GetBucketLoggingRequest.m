@@ -21,7 +21,7 @@
         self.contentType = @"";
         self.kSYHeader = @"";
         self.kSYResource =  [NSString stringWithFormat:@"/%@/?logging", self.bucket];
-        self.host = [NSString stringWithFormat:@"http://%@.kss.ksyun.com/?logging", self.bucket];
+        self.host = [NSMutableString stringWithFormat:@"http://%@.kss.ksyun.com/?logging", self.bucket];
     }
     return self;
 }
@@ -52,7 +52,7 @@
     }
     
     if ([queryString length] > 0) {
-        self.host = [NSString stringWithFormat:@"%@?%@",self.host,queryString];
+        self.host = [NSMutableString stringWithFormat:@"%@?%@",self.host,queryString];
     }
 
     

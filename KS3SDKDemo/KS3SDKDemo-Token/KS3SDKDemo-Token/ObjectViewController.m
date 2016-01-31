@@ -112,7 +112,7 @@
             
                 // //使用token签名时从Appserver获取token后设置token，使用Ak sk则忽略，不需要调用
                 [_downloader setStrKS3Token:[KS3Util KSYAuthorizationWithHTTPVerb:strAccessKey secretKey:strSecretKey httpVerb:_downloader.httpMethod contentMd5:_downloader.contentMd5 contentType:_downloader.contentType date:_downloader.strDate canonicalizedKssHeader:_downloader.kSYHeader canonicalizedResource:_downloader.kSYResource]];
-                
+//                [_downloader setEndPoint:@"kssws.ks-cdn.com"];
                 [_downloader start];
 
             });
@@ -173,7 +173,9 @@
                 NSLog(@"url is %@,host is %@",putObjRequest.url,putObjRequest.host);
                 //使用token签名时从Appserver获取token后设置token，使用Ak sk则忽略，不需要调用
                 [putObjRequest setStrKS3Token:[KS3Util getAuthorization:putObjRequest]];
+                NSLog(@"host is %@",putObjRequest.host);
                 NSLog(@"request token is %@",[KS3Util getAuthorization:putObjRequest]);
+//                [putObjRequest setEndPointWith:@"kssws.ks-cdn.com"];
                 KS3PutObjectResponse *response = [[KS3Client initialize] putObject:putObjRequest];
                 NSLog(@"%@",[[NSString alloc] initWithData:response.body encoding:NSUTF8StringEncoding]);
                 if (response.httpStatusCode == 200) {
@@ -298,6 +300,8 @@
             [initMultipartUploadReq setCompleteRequest];
              //使用token签名时从Appserver获取token后设置token，使用Ak sk则忽略，不需要调用
             [initMultipartUploadReq setStrKS3Token:[KS3Util getAuthorization:initMultipartUploadReq]];
+//            [initMultipartUploadReq setEndPointWith:@"kssws.ks-cdn.com"];
+
             _muilt = [[KS3Client initialize] initiateMultipartUploadWithRequest:initMultipartUploadReq];
             if (_muilt == nil) {
                 NSLog(@"####Init upload failed, please check access key, secret key and bucket name!####");

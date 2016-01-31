@@ -22,7 +22,7 @@
         _contentType = @"";
         _kSYHeader = @"";
         _kSYResource = @"";
-        _host = @"";
+        _host = [[NSMutableString alloc] initWithString:@""];
         _requestDate = [NSDate date];
         _strDate = [KS3AuthUtils strDateWithDate:_requestDate andType:@"GMT"];
         _strKS3Token = nil;
@@ -59,6 +59,23 @@
     [self.urlConnection cancel];
 }
 
+- (void)setEndPointWith:(NSString *)endPoint
+{
+    
+    NSLog(@"old host is %@",self.host);
+    NSRange range = [self.host rangeOfString:@"kss.ksyun.com"];
+    if (range.length > 0) {
+        [self.host replaceCharactersInRange:range withString:endPoint];
+        
+        NSLog(@"new host is %@",self.host);
+
+    }else {
+        NSLog(@"end point can be change only onece,zhis request will use old host");
+
+    }
+    
+    
+}
 - (NSString *)vHostToVPath:(NSString *)vHost withBucketName:(NSString *)strBucketName
 {
     NSString *vPath = @"";

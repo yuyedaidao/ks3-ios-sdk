@@ -43,7 +43,7 @@
         self.acl = acl;
         self.arrGrantAcl = arrGrantAcl;
         self.kSYResource = [NSString stringWithFormat:@"/%@", self.bucket];
-        self.host = [NSString stringWithFormat:@"http://%@.kss.ksyun.com/%@?uploads", self.bucket, self.key];
+        self.host = [NSMutableString stringWithFormat:@"http://%@.kss.ksyun.com/%@?uploads", self.bucket, self.key];
         
         //
         self.kSYResource = [NSString stringWithFormat:@"%@/%@?uploads",self.kSYResource,_key];

@@ -20,7 +20,7 @@
         self.contentType = @"";
         self.kSYHeader = @"";
         self.kSYResource =  [NSString stringWithFormat:@"/%@/", self.bucket];
-        self.host = [NSString stringWithFormat:@"http://%@.kss.ksyun.com", self.bucket];
+        self.host = [NSMutableString stringWithFormat:@"http://%@.kss.ksyun.com", self.bucket];
     }
     return self;
 }
@@ -56,7 +56,7 @@
         [queryString appendFormat:@"%@=%d", kKS3QueryParamMaxKeys, self.maxKeys];
     }
     if ([queryString length] > 0) {
-        self.host = [NSString stringWithFormat:@"%@/?%@",self.host,queryString];
+        self.host = [NSMutableString stringWithFormat:@"%@/?%@",self.host,queryString];
     }
     [super configureURLRequest];
     return self.urlRequest;

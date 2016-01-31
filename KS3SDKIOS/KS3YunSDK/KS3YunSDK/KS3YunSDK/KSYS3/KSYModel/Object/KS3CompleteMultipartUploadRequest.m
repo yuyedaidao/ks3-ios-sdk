@@ -56,7 +56,7 @@
     }
     
     [self setKSYResource:[NSString stringWithFormat:@"%@/%@?%@=%@", self.kSYResource,_key, kKS3QueryParamUploadId, self.uploadId]];
-    self.host = [NSString stringWithFormat:@"http://%@.kss.ksyun.com/%@?uploadId=%@", self.bucket, self.key, self.uploadId];
+    self.host = [NSMutableString stringWithFormat:@"http://%@.kss.ksyun.com/%@?uploadId=%@", self.bucket, self.key, self.uploadId];
     
     if (![self.kSYHeader isEqualToString:@""]) {
         

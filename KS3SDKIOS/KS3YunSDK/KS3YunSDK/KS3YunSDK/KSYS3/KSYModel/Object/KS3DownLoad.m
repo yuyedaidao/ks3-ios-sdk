@@ -189,7 +189,12 @@
     fileHandle = [NSFileHandle fileHandleForWritingAtPath:temporaryPath];
     offset = [fileHandle seekToEndOfFile];
     NSString *range = [NSString stringWithFormat:@"bytes=%llu-",offset];
-    NSString *strHost = [NSString stringWithFormat:@"http://%@.kss.ksyun.com/%@", _bucketName, _key];
+    
+    if (self.endPoint == nil) {
+        self.endPoint = @"kss.ksyun.com";
+    }
+    NSString *strHost = [NSString stringWithFormat:@"http://%@.%@/%@", _bucketName,self.endPoint, _key];
+    NSLog(@"strHost is %@",strHost);
   
     
     NSString *strAuthorization = @"";

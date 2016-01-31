@@ -19,7 +19,7 @@
 @property (strong, nonatomic) NSString *httpMethod;
 @property (strong, nonatomic) NSURLConnection *urlConnection;
 @property (strong, readonly, nonatomic) NSURL  *url;
-@property (strong, nonatomic) NSString *host;
+@property (strong, nonatomic) NSMutableString *host;
 @property (strong, nonatomic) NSString *contentMd5;
 @property (strong, nonatomic) NSString *contentType;
 @property (strong, nonatomic) NSString *kSYHeader;
@@ -41,6 +41,8 @@
 - (void)setCompleteRequest;
 
 - (NSString *)vHostToVPath:(NSString *)vHost withBucketName:(NSString *)strBucketName;
+
+- (void)setEndPointWith:(NSString *)endPoint;
 @end
 
 @protocol KingSoftServiceRequestDelegate <NSObject>

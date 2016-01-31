@@ -20,7 +20,7 @@
         self.contentType = @"";
         self.kSYHeader = @"";
         self.kSYResource = @"/";
-        self.host = @"http://kss.ksyun.com";
+        self.host = [[NSMutableString alloc] initWithString:@"http://kss.ksyun.com"];
     }
     return self;
 }
