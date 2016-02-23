@@ -266,35 +266,7 @@
             break;
         case 9:
         {
-            NSString *strKey = @"n-----1.text";//@"+-.txt";
-            NSString *strFilePath = [[NSBundle mainBundle] pathForResource:@"bugDownload" ofType:@"txt"];
-            _partSize = 5;
-            _fileHandle = [NSFileHandle fileHandleForReadingAtPath:strFilePath];
-            _fileSize = [_fileHandle availableData].length;
-            if (_fileSize <= 0) {
-                NSLog(@"####This file is not exist!####");
-                return ;
-            }
-            if (!(_partSize > 0 || _partSize != 0)) {
-                _partLength = _fileSize;
-            }else{
-                _partLength = _partSize * 1024.0 * 1024.0;
-            }
-            _totalNum = (ceilf((float)_fileSize / (float)_partLength));
-            [_fileHandle seekToFileOffset:0];
-            
-            KS3AccessControlList *acl = [[KS3AccessControlList alloc] init];
-            [acl setContronAccess:KingSoftYun_Permission_Private];
-            KS3InitiateMultipartUploadRequest *initMultipartUploadReq = [[KS3InitiateMultipartUploadRequest alloc] initWithKey:strKey inBucket:kBucketName acl:acl grantAcl:nil];
-            [initMultipartUploadReq setCompleteRequest];
-            _muilt = [[KS3Client initialize] initiateMultipartUploadWithRequest:initMultipartUploadReq];
-            if (_muilt == nil) {
-                NSLog(@"####Init upload failed, please check access key, secret key and bucket name!####");
-                return ;
-            }
-            
-            _uploadNum = 1;
-            [self uploadWithPartNumber:_uploadNum];
+       [self b]
         }
             break;
         case 10:
