@@ -30,4 +30,5 @@
 
 @property (nonatomic, strong) NSDate *initiated;
 
+@property (nonatomic, assign) BOOL isCanceled;
 @end

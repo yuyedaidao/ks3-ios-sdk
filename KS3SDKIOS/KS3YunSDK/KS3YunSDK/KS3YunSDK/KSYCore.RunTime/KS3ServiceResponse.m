@@ -324,7 +324,8 @@
 }
 - (void)timeout
 {
-    NSLog(@"timeout!!!");
+//    NSLog(@"timeout!!!");
+    
 }
 
 #pragma mark- logClientDelegate

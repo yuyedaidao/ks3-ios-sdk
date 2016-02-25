@@ -8,9 +8,12 @@
 
 #warning Please set correct bucket and object name
 
-
+//Demo下载文件的地址：http://ecloud.kssws.ks-cdn.com/test2/Test.pdf
 
 #define kBucketName @"kssjw"//@"alert1"//@"bucketcors"//@"alert1"
+#define kDownloadBucketName @"ecloud"//@"alert1"//@"bucketcors"//@"alert1"  //上传所用的bucketName
+#define kDownloadBucketKey @"test2/Test.pdf"   //下载的地址拼接
+#define kDownloadSize 21131496   //Demo下载文件的大小，根据业务需求，需要记录
 #define kObjectName @"Count_1.txt"//@"test_download.txt"//@"bug.txt"
 #define kDesBucketName @"kssjw2"//@"ggg"//
 #define kDesObjectName @"bug_copy.txt"
@@ -30,6 +33,8 @@
 #define kTestSpecial9 @"％ 1 a b + - * ~ ! @  # ^ & :\"中 ～ 文"
 #define kTestSpecial10 @"中 ～ 文—— 1 a b  + - * ~ ! @  # ^ & :\"中 ～ 文"
 
+#define mScreenWidth          ([UIScreen mainScreen].bounds.size.width)
+#define mScreenHeight         ([UIScreen mainScreen].bounds.size.height)
 #import "ObjectViewController.h"
 #import <KS3YunSDK/KS3YunSDK.h>
 #import "AppDelegate.h"
@@ -58,6 +63,139 @@
                  @"Get Object ACL",   @"Set Object ACL", @"Set Object Grant ACL",
                  @"Multipart Upload", @"Pause Download", @"Abort Upload", nil];
 }
+#pragma mark TouchEvents
+- (void)stopBtnClicked:(UIButton *)btn
+{
+    btn.selected =! btn.selected;
+    if (btn.selected ) {
+        [btn setTitle:@"暂停 " forState:UIControlStateNormal];
+        [self beginDownload];
+        
+    }else
+    {
+        [btn setTitle:@"继续 " forState:UIControlStateNormal];
+        [self stopDownload];
+    }
+}
+
+/*开始下载，
+ 1.如果本地文件已存在，则下载完成
+ 2.本地文件不存在，从0下载
+ 3.本地有临时下载文件，则从原先进度继续下载
+ */
+- (void)beginDownload
+{
+    UIProgressView *progressView = (UIProgressView *)[self.view viewWithTag:99];
+    UIButton *stopBtn = (UIButton *)[self.view viewWithTag:100];
+    /**
+     *  如果是暂停下载，就需要把_downloadConnection的file做为参数传到download方法里面
+     */
+    
+    dispatch_queue_t concurrentQueue = dispatch_queue_create("my.concurrent.queue", DISPATCH_QUEUE_SERIAL);
+
+    dispatch_sync(concurrentQueue, ^(){
+    _downloader = [[KS3Client initialize] downloadObjectWithBucketName:kDownloadBucketName key:kDownloadBucketKey downloadBeginBlock:^(KS3DownLoad *aDownload, NSURLResponse *responseHeaders) {
+        NSLog(@"begin downloading");
+        
+    } downloadFileCompleteion:^(KS3DownLoad *aDownload, NSString *filePath) {
+//        dispatch_async(dispatch_get_main_queue(), ^{
+            [stopBtn setTitle:@"完成" forState:UIControlStateNormal];
+            NSLog(@"completed, file path: %@", filePath);
+//        });
+        
+    } downloadProgressChangeBlock:^(KS3DownLoad *aDownload, double newProgress) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            progressView.progress = newProgress;
+            NSLog(@"progress: %f", newProgress);
+        });
+
+    } failedBlock:^(KS3DownLoad *aDownload, NSError *error) {
+        NSLog(@"failed: %@", error.description);
+    }];
+    //            _downloader.timeoutInterval = 10;
+    
+    [_downloader start];
+    
+                });
+    
+    
+    
+    
+    
+}
+
+//暂停下载，支持断点续传，下次开启程序，进度条的恢复需要计算一下，demo里define kDownloadSize了文件大小
+- (void)stopDownload
+{
+    [_downloader stop];
+}
+
+- (void)uploadBtnClicked:(UIButton *)btn
+{
+    btn.selected =! btn.selected;
+    if (btn.selected) {
+        [btn setTitle:@"取消" forState:UIControlStateNormal];
+        [self beginUpload];
+    }else
+    {
+        [btn setTitle:@"开始" forState:UIControlStateNormal];
+        [self cancelUpload];
+    }
+}
+
+//开始上传
+- (void)beginUpload
+{
+    NSString *strKey = @"n-----1.text";//@"+-.txt";
+    NSString *strFilePath = [[NSBundle mainBundle] pathForResource:@"bugDownload" ofType:@"txt"];
+    _partSize = 5;
+    _fileHandle = [NSFileHandle fileHandleForReadingAtPath:strFilePath];
+    _fileSize = [_fileHandle availableData].length;
+    if (_fileSize <= 0) {
+        NSLog(@"####This file is not exist!####");
+        return ;
+    }
+    if (!(_partSize > 0 || _partSize != 0)) {
+        _partLength = _fileSize;
+    }else{
+        _partLength = _partSize * 1024.0 * 1024.0;
+    }
+    _totalNum = (ceilf((float)_fileSize / (float)_partLength));
+    [_fileHandle seekToFileOffset:0];
+    
+    KS3AccessControlList *acl = [[KS3AccessControlList alloc] init];
+    [acl setContronAccess:KingSoftYun_Permission_Private];
+    KS3InitiateMultipartUploadRequest *initMultipartUploadReq = [[KS3InitiateMultipartUploadRequest alloc] initWithKey:strKey inBucket:kBucketName acl:acl grantAcl:nil];
+    [initMultipartUploadReq setCompleteRequest];
+    _muilt = [[KS3Client initialize] initiateMultipartUploadWithRequest:initMultipartUploadReq];
+    if (_muilt == nil) {
+        NSLog(@"####Init upload failed, please check access key, secret key and bucket name!####");
+        return ;
+    }
+    
+    _uploadNum = 1;
+    [self uploadWithPartNumber:_uploadNum];
+}
+
+//取消上传，调用abort 接口，终止上传，修改进度条即可
+- (void)cancelUpload
+{
+    
+    _muilt.isCanceled = YES;
+       UIProgressView *progressView = (UIProgressView *)[self.view viewWithTag:199];
+    progressView.progress = 0;
+    KS3AbortMultipartUploadRequest *request = [[KS3AbortMultipartUploadRequest alloc] initWithMultipartUpload:_muilt];
+    [request setCompleteRequest];
+    KS3AbortMultipartUploadResponse *response = [[KS3Client initialize] abortMultipartUpload:request];
+    NSString *str = [[NSString alloc] initWithData:response.body encoding:NSUTF8StringEncoding];
+    if (response.httpStatusCode == 204) {
+        NSLog(@"Abort multipart upload success!");
+    }
+    else {
+        NSLog(@"error: %@", response.error.description);
+    }}
+
+
 #pragma mark - UITableView datasource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -71,10 +209,42 @@
     if (nil == cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:strIdentifier];
         if (indexPath.row == 0) {
-            UIProgressView *progressView = [[UIProgressView alloc] initWithFrame:CGRectMake(200, 12, 100, 20)];
+            UIProgressView *progressView = [[UIProgressView alloc] initWithFrame:CGRectMake(mScreenWidth * .35 , 20, mScreenWidth * .5, 20)];
             progressView.progressViewStyle = UIProgressViewStyleDefault;
             progressView.tag = 99;
+            
+            //计算下载临时文件的大小,临时文件是经过MD5Hash的文件名
+            NSString *strHost = [NSString stringWithFormat:@"http://%@.kss.ksyun.com/%@", kBucketName, kDownloadBucketKey];
+            NSString  *filePath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];;
+            //文件临时文件地址，计算百分比
+            NSString *  temporaryPath=[filePath stringByAppendingPathComponent: [strHost MD5Hash]];
+            NSFileHandle * fileHandle = [NSFileHandle fileHandleForWritingAtPath:temporaryPath];
+            unsigned long long   offset = [fileHandle seekToEndOfFile];
+            progressView.progress = offset * 1.0 / kDownloadSize;
             [cell.contentView addSubview:progressView];
+            
+            UIButton *stopBtn = [[UIButton alloc]initWithFrame:CGRectMake(mScreenWidth - 50, 10, 40, 20)];
+            [stopBtn setTitle:@"开始" forState:UIControlStateNormal];
+            stopBtn.titleLabel.font  = [UIFont systemFontOfSize:14];
+            [stopBtn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+            stopBtn .tag = 100;
+            [stopBtn addTarget:self action:@selector(stopBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+            [cell.contentView addSubview:stopBtn];
+            
+        }
+        if (indexPath.row == 9) {
+            UIProgressView *progressView = [[UIProgressView alloc] initWithFrame:CGRectMake(mScreenWidth * .4 , 20, mScreenWidth * .45, 20)];
+            progressView.progressViewStyle = UIProgressViewStyleDefault;
+            progressView.tag = 199;
+            [cell.contentView addSubview:progressView];
+            
+            UIButton *uploadBtn = [[UIButton alloc]initWithFrame:CGRectMake(mScreenWidth - 50, 10, 40, 20)];
+            [uploadBtn setTitle:@"开始" forState:UIControlStateNormal];
+            uploadBtn.titleLabel.font  = [UIFont systemFontOfSize:14];
+            [uploadBtn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+            uploadBtn .tag = 200;
+            [uploadBtn addTarget:self action:@selector(uploadBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+            [cell.contentView addSubview:uploadBtn];
         }
     }
     cell.textLabel.text = _arrItems[indexPath.row];
@@ -87,39 +257,6 @@
     switch (indexPath.row) {
         case 0:
         {
-            UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-            UIProgressView *progressView = (UIProgressView *)[cell.contentView viewWithTag:99];
-            /**
-             *  如果是暂停下载，就需要把_downloadConnection的file做为参数传到download方法里面
-             */
-            
-//            dispatch_queue_t concurrentQueue = dispatch_queue_create("my.concurrent.queue", DISPATCH_QUEUE_CONCURRENT);
-
-//            dispatch_sync(concurrentQueue, ^(){
-                _downloader = [[KS3Client initialize] downloadObjectWithBucketName:kBucketName key:@"@#$%^&eourj ％  ％ %  %!!!~~~@)fkds.txt" downloadBeginBlock:^(KS3DownLoad *aDownload, NSURLResponse *responseHeaders) {
-                    NSLog(@"1212221");
-                    
-                } downloadFileCompleteion:^(KS3DownLoad *aDownload, NSString *filePath) {
-                    NSLog(@"completed, file path: %@", filePath);
-                    
-                } downloadProgressChangeBlock:^(KS3DownLoad *aDownload, double newProgress) {
-                    progressView.progress = newProgress;
-                    NSLog(@"progress: %f", newProgress);
-                    
-                } failedBlock:^(KS3DownLoad *aDownload, NSError *error) {
-                    NSLog(@"failed: %@", error.description);
-                }];
-                //            _downloader.timeoutInterval = 10;
-                
-                [_downloader start];
-
-//            });
-            
-
-
-            
-            
-            
             
         }
             break;
@@ -266,7 +403,36 @@
             break;
         case 9:
         {
-       [self b]
+            NSString *strKey = @"n-----1.text";//@"+-.txt";
+            NSString *strFilePath = [[NSBundle mainBundle] pathForResource:@"bugDownload" ofType:@"txt"];
+            _partSize = 5;
+            _fileHandle = [NSFileHandle fileHandleForReadingAtPath:strFilePath];
+            _fileSize = [_fileHandle availableData].length;
+            if (_fileSize <= 0) {
+                NSLog(@"####This file is not exist!####");
+                return ;
+            }
+            if (!(_partSize > 0 || _partSize != 0)) {
+                _partLength = _fileSize;
+            }else{
+                _partLength = _partSize * 1024.0 * 1024.0;
+            }
+            _totalNum = (ceilf((float)_fileSize / (float)_partLength));
+            [_fileHandle seekToFileOffset:0];
+            
+            KS3AccessControlList *acl = [[KS3AccessControlList alloc] init];
+            [acl setContronAccess:KingSoftYun_Permission_Private];
+            KS3InitiateMultipartUploadRequest *initMultipartUploadReq = [[KS3InitiateMultipartUploadRequest alloc] initWithKey:strKey inBucket:kBucketName acl:acl grantAcl:nil];
+            [initMultipartUploadReq setCompleteRequest];
+            _muilt = [[KS3Client initialize] initiateMultipartUploadWithRequest:initMultipartUploadReq];
+            if (_muilt == nil) {
+                NSLog(@"####Init upload failed, please check access key, secret key and bucket name!####");
+                return ;
+            }
+            
+            _uploadNum = 1;
+            [self uploadWithPartNumber:_uploadNum];
+
         }
             break;
         case 10:
@@ -276,16 +442,7 @@
             break;
         case 11:
         {
-            KS3AbortMultipartUploadRequest *request = [[KS3AbortMultipartUploadRequest alloc] initWithMultipartUpload:_muilt];
-            [request setCompleteRequest];
-            KS3AbortMultipartUploadResponse *response = [[KS3Client initialize] abortMultipartUpload:request];
-              NSString *str = [[NSString alloc] initWithData:response.body encoding:NSUTF8StringEncoding];
-            if (response.httpStatusCode == 204) {
-                NSLog(@"Abort multipart upload success!");
-            }
-            else {
-                NSLog(@"error: %@", response.error.description);
-            }
+            [self cancelUpload];
         }
             break;
         default:
@@ -370,9 +527,22 @@
 
 -(void)request:(KS3Request *)request didSendData:(long long)bytesWritten totalBytesWritten:(long long)totalBytesWritten totalBytesExpectedToWrite:(long long)totalBytesExpectedToWrite
 {
+    UIProgressView *progressView = (UIProgressView *)[self.view viewWithTag:199];
+    if (_muilt.isCanceled ) {
+        [request cancel];
+        
+        progressView.progress = 0;
+        return;
+    }
+    
     long long alreadyTotalWriten = (_uploadNum - 1) * _partLength + totalBytesWritten;
     double progress = alreadyTotalWriten / (float)_fileSize;
     NSLog(@"upload progress: %f", progress);
+#warning upload progress Callback
+    progressView.progress = progress;
+    if (progress == 1) {
+        [_fileHandle closeFile];
+    }
 }
 
 @end

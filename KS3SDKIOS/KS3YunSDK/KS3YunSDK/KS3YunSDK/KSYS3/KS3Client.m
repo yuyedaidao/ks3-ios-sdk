@@ -439,6 +439,7 @@ static NSString     * const KingSoftYun_Host_GETIp2      = @"http://123.59.35.94
     
     if (strToken != nil) {
         [urlRequest setValue:strToken forHTTPHeaderField:@"Authorization"];
+        [urlRequest setValue:@"NO" forHTTPHeaderField:@"keep-alive"];
     }
     
     KS3Response *response = [KS3Client constructResponseFromRequest:request];
@@ -524,7 +525,7 @@ static NSString     * const KingSoftYun_Host_GETIp2      = @"http://123.59.35.94
 
 + (NSString *)apiVersion
 {
-    return @"2014-12-17";
+    return @"2015-2-25";
 }
 
 #pragma mark- resPonseDelegate

@@ -1,5 +1,10 @@
 ## KS3 SDK for iOS使用指南
 ---
+### V1.8.0 改动日志 2016-02-25
+
+* 增加下载的断点续传，用法可见KS3SDKDemo-Token
+* 增加上传进度回调，取消上传，用法可见KS3SDKDemo-Token
+* http请求禁用keep-alive
 
 ### V1.7.0 改动日志 2016-01-31
 
