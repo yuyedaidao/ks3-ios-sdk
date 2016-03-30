@@ -38,6 +38,14 @@
      目前提供了三种预设的ACL.分别是private、public-read和public-read-write。public-read表示为所有用户授予READ权限，public-read-write表示为所有用户授予WRITE权限.使用的时候通过在header中添加x-kss-acl实现。
      对于BUCKET来说，READ是指罗列Bucket中的文件、罗列Bucket中正在进行的分块上传、罗列某个分块上传已经上传的块。WRITE是指可以上传，删除BUCKET中文件的功能。FULL_CONTROL则包含所有操作。可以通过PUT Bucket acl接口设置。
      对于Object来说，READ是指查看或者下载文件的功能。WRITE无意义。FULL_CONTROL则包含所有操作。可以通过PUT Object acl设置。
+ 
+ * 创建bucket时需要选择Region,如遇到上传卡住或超时，请修改替换工程中对应的外网域名，SDK默认杭州
+     Region中文名称	           外网域名	                                      内网域名
+     中国（杭州）	        kss.ksyun.com	                             kss-internal.ksyun.com
+     中国（北京）	        ks3-cn-beijing.ksyun.com	         ks3-cn-beijing-internal.ksyun.com
+     美国（圣克拉拉）	ks3-us-west-1.ksyun.com           ks3-us-west-1-internal.ksyun.com
+     中国（香港）	        ks3-cn-hk-1.ksyun.com	             ks3-cn-hk-1-internal.ksyun.com
+ 
  */
 
 #warning Please set correct bucket and object name

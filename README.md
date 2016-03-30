@@ -6,12 +6,7 @@
 * 增加上传类型：从相册上传，增加相册视频文件分块上传，可见Token-Demo
 * 增加相应注释，客户端建议使用Token方式上传，获取Token，应由App Server 计算后返回，上传下载请直接看KS3SDKDemo-Token工程下ObjectViewController.m
 * Demo所用为测试账号，如需测试，请使用自身账号，更改AKSK与BucketName，BucketKey后测试
-* 创建bucket时需要选择Region,如遇到上传卡住或超时，请修改替换工程中对应的外网域名，SDK默认杭州
-    Region中文名称	           外网域名	                                      内网域名
-    中国（杭州）	        kss.ksyun.com	                             kss-internal.ksyun.com
-    中国（北京）	        ks3-cn-beijing.ksyun.com	         ks3-cn-beijing-internal.ksyun.com
-    美国（圣克拉拉）	ks3-us-west-1.ksyun.com           ks3-us-west-1-internal.ksyun.com
-    中国（香港）	        ks3-cn-hk-1.ksyun.com	             ks3-cn-hk-1-internal.ksyun.com
+
 * 如需更多帮助，请看KS3 API文档  ： http://ks3.ksyun.com/doc/index.html
 
 ### v1.3.0 改动日志 2016-02-25
