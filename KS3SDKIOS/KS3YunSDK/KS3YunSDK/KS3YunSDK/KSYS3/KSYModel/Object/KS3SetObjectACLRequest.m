@@ -28,7 +28,7 @@
         self.kSYHeader = [@"x-kss-acl:" stringByAppendingString:_acl.accessACL];
         self.kSYHeader = [NSString stringWithFormat:@"%@\n",self.kSYHeader];
         self.kSYResource = [NSString stringWithFormat:@"%@/%@?acl", self.kSYResource,_key];
-        self.host = [NSString stringWithFormat:@"http://%@.kss.ksyun.com/%@?acl", self.bucket, _key];
+        self.host = [NSString stringWithFormat:@"http://%@.ks3-cn-beijing.ksyun.com/%@?acl", self.bucket, _key];
     }
     return self;
 }

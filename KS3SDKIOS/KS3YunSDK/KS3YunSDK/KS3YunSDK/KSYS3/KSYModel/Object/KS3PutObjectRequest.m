@@ -27,7 +27,7 @@
         self.acl = acl;
         self.arrGrantAcl = arrGrantAcl;
         self.kSYResource =  [NSString stringWithFormat:@"/%@", self.bucket];
-        self.host = [NSString stringWithFormat:@"http://%@.kss.ksyun.com", self.bucket]; // **** 线上版本，无callback
+        self.host = [NSString stringWithFormat:@"http://%@.ks3-cn-beijing.ksyun.com", self.bucket]; // **** 线上版本，无callback
 //        self.host = [NSString stringWithFormat:@"http://115.231.96.27:8080/%@", bucketName]; // **** 线上测试callback
 //        self.host = [NSString stringWithFormat:@"http://192.168.135.79/%@", bucketName];// **** 旷余健主机
         

@@ -133,6 +133,7 @@
             [[NSFileManager defaultManager] removeItemAtPath:destinationPath error:nil];
         }else
         {
+            NSLog(@"本地已存在");
             if (delegate && [delegate respondsToSelector:@selector(downloadProgressChange:progress:)]) {
                 [delegate downloadProgressChange:self progress:1.0];
             }
@@ -170,7 +171,7 @@
     fileHandle = [NSFileHandle fileHandleForWritingAtPath:temporaryPath];
     offset = [fileHandle seekToEndOfFile];
     NSString *range = [NSString stringWithFormat:@"bytes=%llu-",offset];
-    NSString *strHost = [NSString stringWithFormat:@"http://%@.kss.ksyun.com/%@", _bucketName, _key];
+    NSString *strHost = [NSString stringWithFormat:@"http://%@.ks3-cn-beijing.ksyun.com/%@", _bucketName, _key];
   
     
     NSString *strAuthorization = @"";

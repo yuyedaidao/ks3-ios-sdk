@@ -20,7 +20,7 @@
         self.contentType = @"";
         self.kSYHeader = @"";
         self.kSYResource = @"/";
-        self.host = @"http://kss.ksyun.com";
+        self.host = @"http://ks3-cn-beijing.ksyun.com";
     }
     return self;
 }

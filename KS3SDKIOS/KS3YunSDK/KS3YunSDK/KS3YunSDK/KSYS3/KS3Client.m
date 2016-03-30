@@ -64,7 +64,7 @@
 #import "KS3PutObjectCopyResponse.h"
 #import "KS3PutObjectCopyRequest.h"
 
-static NSString     * const KingSoftYun_Host_Name      = @"http://kss.ksyun.com";
+static NSString     * const KingSoftYun_Host_Name      = @"http://ks3-cn-beijing.ksyun.com";
 static NSTimeInterval const KingSoftYun_RequestTimeout = 60;
 
 @interface KS3Client () <NSURLConnectionDataDelegate>
@@ -341,7 +341,7 @@ static NSTimeInterval const KingSoftYun_RequestTimeout = 60;
         return nil;
     }
     NSLog(@"====== downloadObjectWithBucketName ======");
-    NSString *strHost = [NSString stringWithFormat:@"http://%@.kss.ksyun.com/%@", bucketName, key];
+    NSString *strHost = [NSString stringWithFormat:@"http://%@.ks3-cn-beijing.ksyun.com/%@", bucketName, key];
     KS3DownLoad *downLoad = [[KS3DownLoad alloc] initWithUrl:strHost credentials:_credentials :bucketName :key];
     downLoad.downloadBeginBlock = downloadBeginBlock;
     downLoad.downloadFileCompleteionBlock = downloadFileCompleteion;

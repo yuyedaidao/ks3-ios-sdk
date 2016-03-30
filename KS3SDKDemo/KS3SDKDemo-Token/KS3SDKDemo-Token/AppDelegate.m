@@ -9,9 +9,10 @@
 
 #import "AppDelegate.h"
 
-// **** 用户的AK/SK
-NSString * const strAccessKey = @"IYh4GQWndtnQvmCJWFL4";
-NSString * const strSecretKey = @"1+RBTrWaeT6LaixUV5SGPFpeTa/wZEeZlGzYaZfr";
+#warning AK/SK Setting
+// **** 设置用户的AK/SK以获取token，用于模拟从app服务器端获取token，真实使用场景为，app服务器返回token
+NSString * const strAccessKey = @"cTl1EhCYao7kOogU1949";
+NSString * const strSecretKey = @"44YIaewtRdfj7zl5ZnXymGnp3N1oSsKTaIQZx1av";
 
 @interface AppDelegate ()
 

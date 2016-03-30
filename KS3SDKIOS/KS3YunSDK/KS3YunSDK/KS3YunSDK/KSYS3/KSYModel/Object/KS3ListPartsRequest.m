@@ -31,7 +31,7 @@
 
 - (NSMutableURLRequest *)configureURLRequest
 {
-    self.host = [NSString stringWithFormat:@"http://%@.kss.ksyun.com/%@?uploadId=%@", self.bucket, self.key, self.uploadId];
+    self.host = [NSString stringWithFormat:@"http://%@.ks3-cn-beijing.ksyun.com/%@?uploadId=%@", self.bucket, self.key, self.uploadId];
 
     NSMutableString *subresource = [NSMutableString stringWithCapacity:512];
     if (self.maxParts != 1000) { // **** default is 1000

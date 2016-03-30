@@ -20,7 +20,7 @@
         self.contentType = @"";
         self.kSYHeader = @"";
         self.kSYResource =  [NSString stringWithFormat:@"/%@/?logging", self.bucket];
-        self.host = [NSString stringWithFormat:@"http://%@.kss.ksyun.com/?logging", self.bucket];
+        self.host = [NSString stringWithFormat:@"http://%@.ks3-cn-beijing.ksyun.com/?logging", self.bucket];
     }
     return self;
 }

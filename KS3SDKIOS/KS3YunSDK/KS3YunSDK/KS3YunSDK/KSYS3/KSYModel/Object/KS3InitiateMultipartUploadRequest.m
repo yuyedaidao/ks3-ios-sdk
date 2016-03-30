@@ -94,7 +94,7 @@
 
 -(NSMutableURLRequest *)configureURLRequest
 {
-    self.host = [NSString stringWithFormat:@"http://%@.kss.ksyun.com/%@?uploads", self.bucket, self.key];
+    self.host = [NSString stringWithFormat:@"http://%@.ks3-cn-beijing.ksyun.com/%@?uploads", self.bucket, self.key];
     
     if (_acl != nil) {
         [self.urlRequest setValue:_acl.accessACL forHTTPHeaderField:@"x-kss-acl"];

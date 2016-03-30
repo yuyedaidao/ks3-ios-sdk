@@ -33,7 +33,7 @@
         self.kSYHeader = [_acl.accessGrantACL stringByAppendingString:@":"];
         self.kSYHeader = [self.kSYHeader stringByAppendingString:strValue];
         self.kSYHeader = [self.kSYHeader stringByAppendingString:@"\n"];
-        self.host = [NSString stringWithFormat:@"http://%@.kss.ksyun.com/%@?acl", self.bucket, _key];
+        self.host = [NSString stringWithFormat:@"http://%@.ks3-cn-beijing.ksyun.com/%@?acl", self.bucket, _key];
     }
     return self;
 }
