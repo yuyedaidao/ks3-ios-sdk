@@ -54,7 +54,7 @@
 
 //上传
 #define kBucketName @"acc"//@"alert1"//@"bucketcors"//@"alert1"
-#define kUploadBucketName @"ks3testupload"   //上传所用的bucketName
+#define kUploadBucketName @"bjtest"   //上传所用的bucketName
 #define kUploadBucketKey @"7.6M.mov"  //上传时用到的bucket里文件的路径，此为在根目录下7.6M.mov
 
 //下载

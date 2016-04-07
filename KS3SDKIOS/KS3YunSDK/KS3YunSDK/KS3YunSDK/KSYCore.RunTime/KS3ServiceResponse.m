@@ -46,8 +46,8 @@
 -(void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
     _isFinishedLoading = YES;
-//    NSString *tmpStr = [[NSString alloc] initWithData:body encoding:NSUTF8StringEncoding];
-//    NSLog(@"Response Body:\n%@", tmpStr);
+    NSString *tmpStr = [[NSString alloc] initWithData:body encoding:NSUTF8StringEncoding];
+    NSLog(@"Response Body:\n%@", tmpStr);
     [self processBody];
     if (_request.delegate && [_request.delegate respondsToSelector:@selector(request:didCompleteWithResponse:)]) {
         [_request.delegate request:self.request didCompleteWithResponse:nil];

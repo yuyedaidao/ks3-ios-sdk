@@ -11,8 +11,8 @@
 
 #warning AK/SK Setting
 // **** 设置用户的AK/SK以获取token，用于模拟从app服务器端获取token，真实使用场景为，app服务器返回token
-NSString * const strAccessKey = @"cTl1EhCYao7kOogU1949";
-NSString * const strSecretKey = @"44YIaewtRdfj7zl5ZnXymGnp3N1oSsKTaIQZx1av";
+NSString * const strAccessKey = @"S1guCl0KF/r3cvqa5YHG";
+NSString * const strSecretKey = @"CVpFTtt+tMlxwkg1PtzmD9p1rxHxAu0enzNBbk3F";
 
 @interface AppDelegate ()
 

@@ -169,7 +169,7 @@ resource 表示用户访问的资源
 - 申请AccessKeyID、AccessKeySecret
 
 ####SDK配置
-SDK以动态库的形式呈现。请将*KS3iOSSDK.framework*添加到项目工程中。如果开发工具是Xcode6+，请在*project->target->General*中的‘Embedded Binaries‘中添加*KS3iOSSDK.framework*
+SDK以动态库的形式呈现。请将*KS3YunSDK.framework*添加到项目工程中。如果开发工具是Xcode6+，请在*project->target->General*中的‘Embedded Binaries‘中添加*KS3YunSDK.framework*
 
 ####运行环境
 支持iOS5及以上版本

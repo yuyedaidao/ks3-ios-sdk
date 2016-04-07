@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		043B1C2B1CAB87F400EC7C32 /* 7.6M.mov in Resources */ = {isa = PBXBuildFile; fileRef = 043B1C2A1CAB87F400EC7C32 /* 7.6M.mov */; };
 		0465D2FD1CABC25900B13B18 /* Token使用场景.png in Resources */ = {isa = PBXBuildFile; fileRef = 0465D2FC1CABC25900B13B18 /* Token使用场景.png */; };
+		047A9FC71CB65C420096E1C9 /* KS3YunSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 047A9FC61CB65C420096E1C9 /* KS3YunSDK.framework */; };
 		0A21059A1AEF2E0400A8865C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A2105991AEF2E0400A8865C /* main.m */; };
 		0A21059D1AEF2E0400A8865C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A21059C1AEF2E0400A8865C /* AppDelegate.m */; };
 		0A2105A01AEF2E0400A8865C /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A21059F1AEF2E0400A8865C /* ViewController.m */; };
@@ -16,8 +17,6 @@
 		0A2105A51AEF2E0400A8865C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0A2105A41AEF2E0400A8865C /* Images.xcassets */; };
 		0A2105A81AEF2E0400A8865C /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0A2105A61AEF2E0400A8865C /* LaunchScreen.xib */; };
 		0A2105B41AEF2E0400A8865C /* KS3SDKDemo_TokenTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A2105B31AEF2E0400A8865C /* KS3SDKDemo_TokenTests.m */; };
-		0A2105BF1AEF2ECB00A8865C /* KS3YunSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A2105BD1AEF2EBF00A8865C /* KS3YunSDK.framework */; };
-		0A2105C01AEF2ECB00A8865C /* KS3YunSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0A2105BD1AEF2EBF00A8865C /* KS3YunSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		0A2105D01AEF2F1E00A8865C /* BucketViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A2105C31AEF2F1E00A8865C /* BucketViewController.m */; };
 		0A2105D11AEF2F1E00A8865C /* CreateBucketViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A2105C51AEF2F1E00A8865C /* CreateBucketViewController.m */; };
 		0A2105D21AEF2F1E00A8865C /* GetAllObjectsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A2105C71AEF2F1E00A8865C /* GetAllObjectsViewController.m */; };
@@ -31,6 +30,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		047A9FC21CB64C740096E1C9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 047A9FBE1CB64C740096E1C9 /* KS3YunSDK.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 0A6390821A42AF2200BA3A99;
+			remoteInfo = KS3YunSDK;
+		};
 		0A2105AE1AEF2E0400A8865C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 0A21058C1AEF2E0400A8865C /* Project object */;
@@ -47,7 +53,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				0A2105C01AEF2ECB00A8865C /* KS3YunSDK.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -57,6 +62,8 @@
 /* Begin PBXFileReference section */
 		043B1C2A1CAB87F400EC7C32 /* 7.6M.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = 7.6M.mov; sourceTree = "<group>"; };
 		0465D2FC1CABC25900B13B18 /* Token使用场景.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Token使用场景.png"; sourceTree = "<group>"; };
+		047A9FBE1CB64C740096E1C9 /* KS3YunSDK.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = KS3YunSDK.xcodeproj; path = ../../KS3SDKIOS/KS3YunSDK/KS3YunSDK.xcodeproj; sourceTree = "<group>"; };
+		047A9FC61CB65C420096E1C9 /* KS3YunSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = KS3YunSDK.framework; sourceTree = "<group>"; };
 		0A2105941AEF2E0400A8865C /* KS3SDKDemo-Token.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "KS3SDKDemo-Token.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A2105981AEF2E0400A8865C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0A2105991AEF2E0400A8865C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -70,7 +77,6 @@
 		0A2105AD1AEF2E0400A8865C /* KS3SDKDemo-TokenTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "KS3SDKDemo-TokenTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A2105B21AEF2E0400A8865C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0A2105B31AEF2E0400A8865C /* KS3SDKDemo_TokenTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KS3SDKDemo_TokenTests.m; sourceTree = "<group>"; };
-		0A2105BD1AEF2EBF00A8865C /* KS3YunSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = KS3YunSDK.framework; sourceTree = SOURCE_ROOT; };
 		0A2105C21AEF2F1E00A8865C /* BucketViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BucketViewController.h; sourceTree = "<group>"; };
 		0A2105C31AEF2F1E00A8865C /* BucketViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BucketViewController.m; sourceTree = "<group>"; };
 		0A2105C41AEF2F1E00A8865C /* CreateBucketViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateBucketViewController.h; sourceTree = "<group>"; };
@@ -95,7 +101,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0A2105BF1AEF2ECB00A8865C /* KS3YunSDK.framework in Frameworks */,
+				047A9FC71CB65C420096E1C9 /* KS3YunSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -109,9 +115,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		047A9FBF1CB64C740096E1C9 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				047A9FC31CB64C740096E1C9 /* KS3YunSDK.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		0A21058B1AEF2E0400A8865C = {
 			isa = PBXGroup;
 			children = (
+				047A9FBE1CB64C740096E1C9 /* KS3YunSDK.xcodeproj */,
 				0A2105961AEF2E0400A8865C /* KS3SDKDemo-Token */,
 				0A2105B01AEF2E0400A8865C /* KS3SDKDemo-TokenTests */,
 				0A2105951AEF2E0400A8865C /* Products */,
@@ -130,12 +145,12 @@
 		0A2105961AEF2E0400A8865C /* KS3SDKDemo-Token */ = {
 			isa = PBXGroup;
 			children = (
+				047A9FC61CB65C420096E1C9 /* KS3YunSDK.framework */,
 				043B1C2A1CAB87F400EC7C32 /* 7.6M.mov */,
 				0A2105D71AEF310B00A8865C /* +-.jpg */,
 				0A2105D81AEF310B00A8865C /* Test.txt */,
 				0465D2FC1CABC25900B13B18 /* Token使用场景.png */,
 				0A2105D91AEF310B00A8865C /* test.jpg */,
-				0A2105BD1AEF2EBF00A8865C /* KS3YunSDK.framework */,
 				0A2105C21AEF2F1E00A8865C /* BucketViewController.h */,
 				0A2105C31AEF2F1E00A8865C /* BucketViewController.m */,
 				0A2105C41AEF2F1E00A8865C /* CreateBucketViewController.h */,
@@ -256,6 +271,12 @@
 			mainGroup = 0A21058B1AEF2E0400A8865C;
 			productRefGroup = 0A2105951AEF2E0400A8865C /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 047A9FBF1CB64C740096E1C9 /* Products */;
+					ProjectRef = 047A9FBE1CB64C740096E1C9 /* KS3YunSDK.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				0A2105931AEF2E0400A8865C /* KS3SDKDemo-Token */,
@@ -263,6 +284,16 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		047A9FC31CB64C740096E1C9 /* KS3YunSDK.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = KS3YunSDK.framework;
+			remoteRef = 047A9FC21CB64C740096E1C9 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		0A2105921AEF2E0400A8865C /* Resources */ = {
@@ -436,6 +467,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/KS3SDKDemo-Token",
 				);
 				INFOPLIST_FILE = "KS3SDKDemo-Token/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
@@ -452,6 +484,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/KS3SDKDemo-Token",
 				);
 				INFOPLIST_FILE = "KS3SDKDemo-Token/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
