@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		043B1C2B1CAB87F400EC7C32 /* 7.6M.mov in Resources */ = {isa = PBXBuildFile; fileRef = 043B1C2A1CAB87F400EC7C32 /* 7.6M.mov */; };
 		0465D2FD1CABC25900B13B18 /* Token使用场景.png in Resources */ = {isa = PBXBuildFile; fileRef = 0465D2FC1CABC25900B13B18 /* Token使用场景.png */; };
-		047A9FC71CB65C420096E1C9 /* KS3YunSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 047A9FC61CB65C420096E1C9 /* KS3YunSDK.framework */; };
+		04D6736A1CB7C81D002F2A3B /* KS3YunSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04D673691CB7C81D002F2A3B /* KS3YunSDK.framework */; };
 		0A21059A1AEF2E0400A8865C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A2105991AEF2E0400A8865C /* main.m */; };
 		0A21059D1AEF2E0400A8865C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A21059C1AEF2E0400A8865C /* AppDelegate.m */; };
 		0A2105A01AEF2E0400A8865C /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A21059F1AEF2E0400A8865C /* ViewController.m */; };
@@ -63,7 +63,7 @@
 		043B1C2A1CAB87F400EC7C32 /* 7.6M.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = 7.6M.mov; sourceTree = "<group>"; };
 		0465D2FC1CABC25900B13B18 /* Token使用场景.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Token使用场景.png"; sourceTree = "<group>"; };
 		047A9FBE1CB64C740096E1C9 /* KS3YunSDK.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = KS3YunSDK.xcodeproj; path = ../../KS3SDKIOS/KS3YunSDK/KS3YunSDK.xcodeproj; sourceTree = "<group>"; };
-		047A9FC61CB65C420096E1C9 /* KS3YunSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = KS3YunSDK.framework; sourceTree = "<group>"; };
+		04D673691CB7C81D002F2A3B /* KS3YunSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = KS3YunSDK.framework; sourceTree = "<group>"; };
 		0A2105941AEF2E0400A8865C /* KS3SDKDemo-Token.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "KS3SDKDemo-Token.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A2105981AEF2E0400A8865C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0A2105991AEF2E0400A8865C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -101,7 +101,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				047A9FC71CB65C420096E1C9 /* KS3YunSDK.framework in Frameworks */,
+				04D6736A1CB7C81D002F2A3B /* KS3YunSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -145,7 +145,7 @@
 		0A2105961AEF2E0400A8865C /* KS3SDKDemo-Token */ = {
 			isa = PBXGroup;
 			children = (
-				047A9FC61CB65C420096E1C9 /* KS3YunSDK.framework */,
+				04D673691CB7C81D002F2A3B /* KS3YunSDK.framework */,
 				043B1C2A1CAB87F400EC7C32 /* 7.6M.mov */,
 				0A2105D71AEF310B00A8865C /* +-.jpg */,
 				0A2105D81AEF310B00A8865C /* Test.txt */,

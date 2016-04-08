@@ -14,7 +14,7 @@
 
 @class KingSoftURLConnection;
 @class KS3DownLoad;
-
+@class ALAsset;
 #pragma mark - Download block
 
 typedef void(^KSS3GetTokenSuccessBlock)(NSString *strToken);
@@ -73,6 +73,15 @@ typedef void(^kSS3DownloadFileCompleteionBlock)(KS3DownLoad *aDownload, NSString
 @class KS3InitiateMultipartUploadRequest;
 @class KS3GetBucketLoggingRequest;
 
+typedef enum
+{
+    KS3BucketBeijing                  =0,
+    KS3BucketHangzhou,
+    KS3BucketAmerica,
+    KS3BucketHongkong,
+} KS3BucketDomainRegion;  //bucket所在地区
+
+
 @interface KS3Client : KS3WebServiceClient
 
 /**
@@ -89,7 +98,18 @@ typedef void(^kSS3DownloadFileCompleteionBlock)(KS3DownLoad *aDownload, NSString
  *  注释：这个接口必须实现（这个是使用下面API的（前提））建议在工程的delegate里面实现
  */
 - (void)connectWithAccessKey:(NSString *)accessKey withSecretKey:(NSString *)secretKey;
-
+/**
+ *  设置KS3Bucket所在的地区，默认北京
+ 
+ *  @param 共有北京，杭州，美国圣克拉拉，香港四个
+ *  注释：建议在工程的delegate里面实现
+  */
+- (void)setBucketDomainWithRegion:(KS3BucketDomainRegion)domainRegion;
+/**
+ *  获取当前bucket所在地区，默认北京
+    共有北京，杭州，美国圣克拉拉，香港四个
+ */
+- (NSString *)getBucketDomain;
 /**
  *  列出客户所有的Bucket信息
  *
@@ -249,6 +269,38 @@ typedef void(^kSS3DownloadFileCompleteionBlock)(KS3DownLoad *aDownload, NSString
  *  @return 返回resonse对象（里边有服务返回的数据（具体的参照demo））
  */
 - (KS3UploadPartResponse *)uploadPart:(KS3UploadPartRequest *)uploadPartRequest;
+/**
+ *  获取相册分块数据
+ *
+ *  @param partNum 从1开始计数，第一块partNum = 1
+ *  @param partLength 每一块数据的大小，单位为字节
+ *  @param alassetURL 形如assets-library://asset/asset.mov?
+ id=25A47CAE-87CF-47A3-8834-592D60841DDB&ext=mov 的相册地址  ，
+ *
+ *  @return
+ */
+- (NSData *)getUploadPartDataWithPartNum:(NSInteger)partNum
+                              partLength:(NSInteger)partlength
+                              alassetURL:(NSURL *)alassetURL;
+/**
+ *  获取相册分块数据
+ *
+ *  @param partNum 从1开始计数，第一块partNum = 1
+ *  @param partLength 每一块数据的大小，单位为字节
+ *  @param alassetURL Alasset对象，是获取视频数据的类 ，
+ *
+ *  @return
+ */
+- (NSData *)getUploadPartDataWithPartNum:(NSInteger)partNum
+                              partLength:(NSInteger)partlength
+                                 Alasset:(ALAsset *)assets;
+/**
+ *  获取相册类
+ *  @param alassetURL 开头是assets-library://标识Alasset类的相册地址
+ *
+ *  @return
+ */
+- (ALAsset *)getAlassetFromAlassetURL:(NSURL *)alassetURL;
 /**
  *  罗列出已经上传的块
  *
