@@ -9,6 +9,7 @@
 #import "KS3SetACLRequest.h"
 #import "KS3AccessControlList.h"
 #import "KS3Constants.h"
+#import "KS3Client.h"
 @implementation KS3SetACLRequest
 
 - (instancetype)initWithName:(NSString *)bucketName accessACL:(KS3AccessControlList *)accessACL
@@ -21,7 +22,7 @@
         self.contentType = @"";
         self.kSYHeader = @"";
         self.kSYResource =  [NSString stringWithFormat:@"/%@/?acl", self.bucket];
-        self.host = [NSString stringWithFormat:@"http://%@.ks3-cn-beijing.ksyun.com/?acl", self.bucket];
+        self.host = [NSString stringWithFormat:@"http://%@.%@/?acl", self.bucket,[[KS3Client initialize]getBucketDomain]];
         _acl = accessACL;
         if (accessACL) {
             self.kSYHeader = [@"x-kss-acl:" stringByAppendingString:_acl.accessACL];

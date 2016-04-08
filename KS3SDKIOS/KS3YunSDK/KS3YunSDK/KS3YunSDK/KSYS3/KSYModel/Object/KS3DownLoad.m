@@ -13,6 +13,7 @@
 #import "KS3Request.h"
 #import "KS3Response.h"
 #import "KS3Constants.h"
+#import "KS3Client.h"
 @interface KS3DownLoad ()
 
 @property (strong, nonatomic) KS3Credentials *credentials;
@@ -171,7 +172,7 @@
     fileHandle = [NSFileHandle fileHandleForWritingAtPath:temporaryPath];
     offset = [fileHandle seekToEndOfFile];
     NSString *range = [NSString stringWithFormat:@"bytes=%llu-",offset];
-    NSString *strHost = [NSString stringWithFormat:@"http://%@.ks3-cn-beijing.ksyun.com/%@", _bucketName, _key];
+    NSString *strHost = [NSString stringWithFormat:@"http://%@.%@/%@", _bucketName,[[KS3Client initialize]getBucketDomain], _key];
   
     
     NSString *strAuthorization = @"";

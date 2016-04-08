@@ -8,7 +8,7 @@
 
 #import "KS3ListBucketsRequest.h"
 #import "KS3Constants.h"
-
+#import "KS3Client.h"
 @implementation KS3ListBucketsRequest
 
 - (instancetype)init
@@ -20,7 +20,7 @@
         self.contentType = @"";
         self.kSYHeader = @"";
         self.kSYResource = @"/";
-        self.host = @"http://ks3-cn-beijing.ksyun.com";
+        self.host =  [NSString stringWithFormat:@"http://%@",[[KS3Client initialize]getBucketDomain]] ;
     }
     return self;
 }

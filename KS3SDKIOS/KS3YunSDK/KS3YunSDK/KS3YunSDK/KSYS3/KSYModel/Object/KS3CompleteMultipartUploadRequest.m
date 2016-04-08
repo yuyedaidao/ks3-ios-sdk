@@ -8,7 +8,7 @@
 
 #import "KS3CompleteMultipartUploadRequest.h"
 #import "KS3Constants.h"
-
+#import "KS3Client.h"
 @interface KS3CompleteMultipartUploadRequest ()
 @property (strong, nonatomic) NSMutableDictionary *parts;
 @end
@@ -56,7 +56,7 @@
     }
     
     [self setKSYResource:[NSString stringWithFormat:@"%@/%@?%@=%@", self.kSYResource,_key, kKS3QueryParamUploadId, self.uploadId]];
-    self.host = [NSString stringWithFormat:@"http://%@.ks3-cn-beijing.ksyun.com/%@?uploadId=%@", self.bucket, self.key, self.uploadId];
+    self.host = [NSString stringWithFormat:@"http://%@.%@/%@?uploadId=%@", self.bucket,[[KS3Client initialize]getBucketDomain], self.key, self.uploadId];
     
     if (![self.kSYHeader isEqualToString:@""]) {
         

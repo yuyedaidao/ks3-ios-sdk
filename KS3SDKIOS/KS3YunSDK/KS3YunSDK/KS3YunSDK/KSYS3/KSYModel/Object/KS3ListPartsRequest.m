@@ -8,6 +8,7 @@
 
 #import "KS3ListPartsRequest.h"
 #import "KS3Constants.h"
+#import "KS3Client.h"
 
 @implementation KS3ListPartsRequest
 
@@ -31,7 +32,7 @@
 
 - (NSMutableURLRequest *)configureURLRequest
 {
-    self.host = [NSString stringWithFormat:@"http://%@.ks3-cn-beijing.ksyun.com/%@?uploadId=%@", self.bucket, self.key, self.uploadId];
+    self.host = [NSString stringWithFormat:@"http://%@.%@/%@?uploadId=%@", self.bucket,[[KS3Client initialize]getBucketDomain], self.key, self.uploadId];
 
     NSMutableString *subresource = [NSMutableString stringWithCapacity:512];
     if (self.maxParts != 1000) { // **** default is 1000

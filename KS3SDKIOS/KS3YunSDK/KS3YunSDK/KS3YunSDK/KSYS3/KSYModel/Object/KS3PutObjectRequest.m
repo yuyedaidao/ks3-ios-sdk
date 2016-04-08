@@ -11,7 +11,7 @@
 #import "KS3SDKUtil.h"
 #import "KS3AccessControlList.h"
 #import "KS3GrantAccessControlList.h"
-
+#import "KS3Client.h"
 @implementation KS3PutObjectRequest
 
 - (instancetype)initWithName:(NSString *)bucketName withAcl:(KS3AccessControlList *)acl grantAcl:(NSArray *)arrGrantAcl
@@ -27,7 +27,7 @@
         self.acl = acl;
         self.arrGrantAcl = arrGrantAcl;
         self.kSYResource =  [NSString stringWithFormat:@"/%@", self.bucket];
-        self.host = [NSString stringWithFormat:@"http://%@.ks3-cn-beijing.ksyun.com", self.bucket]; // **** 线上版本，无callback
+        self.host = [NSString stringWithFormat:@"http://%@.%@", self.bucket,[[KS3Client initialize]getBucketDomain]]; // **** 线上版本，无callback
 //        self.host = [NSString stringWithFormat:@"http://115.231.96.27:8080/%@", bucketName]; // **** 线上测试callback
 //        self.host = [NSString stringWithFormat:@"http://192.168.135.79/%@", bucketName];// **** 旷余健主机
         

@@ -9,7 +9,7 @@
 #import "KS3UploadPartRequest.h"
 #import "KS3SDKUtil.h"
 #import "KS3Constants.h"
-
+#import "KS3Client.h"
 @interface KS3UploadPartRequest ()
 
 @property (strong, nonatomic) KS3MultipartUpload *multipartUpload;
@@ -33,7 +33,7 @@
         self.contentType = @"binary/octet-stream";
         self.kSYHeader = @"";
         self.httpMethod = kHttpMethodPut;
-        self.host = [NSString stringWithFormat:@"http://%@.ks3-cn-beijing.ksyun.com/%@?partNumber=%d&uploadId=%@", self.bucket, _key, _partNumber, _multipartUpload.uploadId];
+        self.host = [NSString stringWithFormat:@"http://%@.%@.com/%@?partNumber=%d&uploadId=%@", self.bucket, [[KS3Client initialize]getBucketDomain],_key, _partNumber, _multipartUpload.uploadId];
         
         if (nil == self.contentMd5 && YES == self.generateMD5 && self.data != nil) {
             self.contentMd5 = [KS3SDKUtil base64md5FromData:self.data];

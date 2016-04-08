@@ -63,7 +63,7 @@
 #import "KS3ClientException.h"
 #import "KS3PutObjectCopyResponse.h"
 #import "KS3PutObjectCopyRequest.h"
-
+#import <AssetsLibrary/AssetsLibrary.h>
 static NSString     * const KingSoftYun_Host_Name      = @"http://ks3-cn-beijing.ksyun.com";
 static NSTimeInterval const KingSoftYun_RequestTimeout = 60;
 
@@ -72,6 +72,8 @@ static NSTimeInterval const KingSoftYun_RequestTimeout = 60;
 @property (strong, nonatomic) KS3Credentials *credentials;
 @property (strong, nonatomic) KSS3GetTokenSuccessBlock tokenBlock;
 @property (strong, nonatomic) NSMutableData *tokenData;
+@property (assign, nonatomic) KS3BucketDomainRegion bucketDomainRegion;
+@property (copy, nonatomic) NSString*bucketDomainIp;
 
 @end
 
@@ -83,6 +85,8 @@ static NSTimeInterval const KingSoftYun_RequestTimeout = 60;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         shareObj = [[self alloc] init];
+        shareObj.bucketDomainRegion = KS3BucketBeijing;
+        shareObj.bucketDomainIp = @"ks3-cn-beijing.ksyun.com";
     });
     return shareObj;
 }
@@ -96,6 +100,28 @@ static NSTimeInterval const KingSoftYun_RequestTimeout = 60;
     }
 }
 
+- (void)setBucketDomainWithRegion:(KS3BucketDomainRegion)domainRegion
+{
+    _bucketDomainRegion = domainRegion;
+
+}
+
+- (NSString *)getBucketDomain
+{
+    if (_bucketDomainRegion == KS3BucketBeijing) {
+        return  @"ks3-cn-beijing.ksyun.com";
+    }
+    if (_bucketDomainRegion == KS3BucketHangzhou) {
+         return   @"kss.ksyun.com";
+    }
+    if (_bucketDomainRegion == KS3BucketAmerica) {
+        return   @"ks3-us-west-1.ksyun.com";
+    }
+    if (_bucketDomainRegion == KS3BucketHongkong) {
+        return   @"ks3-cn-hk-1.ksyun.com";
+    }
+    return  @"ks3-cn-beijing.ksyun.com";
+}
 #pragma mark - Buckets
 
 - (NSArray *)listBuckets:(KS3ListBucketsRequest *)listBucketsRequest
@@ -211,6 +237,93 @@ static NSTimeInterval const KingSoftYun_RequestTimeout = 60;
     return (KS3UploadPartResponse *)[self invoke:uploadPartRequest];
 }
 
+- (NSData *)getUploadPartDataWithPartNum:(NSInteger)partNum
+                              partLength:(NSInteger)partlength
+                              alassetURL:(NSURL *)alassetURL
+{
+    if (alassetURL == nil || alassetURL.absoluteString.length == 0 ) {
+        NSLog(@"请检查AlassetURL");
+        return nil;
+    }
+    if (partlength < 5* 1024 * 1024) {
+        NSLog(@"分块上传最小块为5MB");
+        return nil;
+    }
+    if (partNum < 0) {
+        NSLog(@"partNum不合法，请检查");
+        return nil;
+    }
+        
+    ALAsset *alasset = [self getAlassetFromAlassetURL:alassetURL];
+    return  [self getUploadPartDataWithPartNum:partNum partLength:partlength Alasset:alasset];
+}
+
+- (NSData *)getUploadPartDataWithPartNum:(NSInteger)partNum partLength:(NSInteger)partlength Alasset:(ALAsset *)assets
+{
+    
+    if (assets == nil  ) {
+        NSLog(@"请检查Alasset");
+        return nil;
+    }
+    if (partlength < 5* 1024 * 1024) {
+        NSLog(@"分块上传最小块为5MB");
+        return nil;
+    }
+    if (partNum < 1) {
+        NSLog(@"partNum不合法，请检查");
+        return nil;
+    }
+    BOOL endOfStreamReached = NO;
+    NSUInteger currentOffset = (partNum - 1 )* partlength;   //当前偏移量
+    NSError    *error;
+    NSMutableData *mData = [[NSMutableData alloc]init];
+    while (! endOfStreamReached)
+    {
+        NSInteger maxLength = 256*1024;
+        uint8_t readBuffer [maxLength];
+        NSInteger bytesRead = [assets.defaultRepresentation getBytes:readBuffer fromOffset:currentOffset  length:maxLength error:&error];
+        if (bytesRead <= 0)
+        {
+            //读取完了或者读取地址不正确，导致读取为空
+            endOfStreamReached = YES;
+            if (mData.length > 0) {
+                return mData;
+            }
+        } else
+        {
+            [mData appendBytes:readBuffer length:bytesRead];
+            currentOffset += bytesRead;
+            //正在读取,满5M则本地存储分块
+            if (mData.length >= partlength)
+            {
+                return mData;
+            }
+        }
+    }
+    return mData;
+}
+
+- (ALAsset *)getAlassetFromAlassetURL:(NSURL *)alassetURL
+{
+    ALAssetsLibrary *assetsLibrary = [[ALAssetsLibrary alloc]init];
+    __block ALAsset *assets ;
+    dispatch_semaphore_t sem= dispatch_semaphore_create(0);
+    dispatch_queue_t concurrentQueue = dispatch_queue_create("my.concurrent.queue", DISPATCH_QUEUE_SERIAL);
+    dispatch_async(concurrentQueue, ^{
+        
+        [assetsLibrary assetForURL:alassetURL resultBlock:^(ALAsset *asset) {
+            //本地存储的上传文件
+            assets = asset;
+            dispatch_semaphore_signal(sem);
+        } failureBlock:^(NSError *error) {
+            NSLog(@"读取AssetURL出错,%@",error.localizedDescription);
+            dispatch_semaphore_signal(sem);
+        }];
+        
+    });
+    dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER);
+    return assets;
+}
 - (KS3ListPartsResponse *)listParts:(KS3ListPartsRequest *)listPartsRequest
 {
     return (KS3ListPartsResponse *)[self invoke:listPartsRequest];
@@ -341,7 +454,7 @@ static NSTimeInterval const KingSoftYun_RequestTimeout = 60;
         return nil;
     }
     NSLog(@"====== downloadObjectWithBucketName ======");
-    NSString *strHost = [NSString stringWithFormat:@"http://%@.ks3-cn-beijing.ksyun.com/%@", bucketName, key];
+    NSString *strHost = [NSString stringWithFormat:@"http://%@.%@/%@", bucketName,[[KS3Client initialize]getBucketDomain], key];
     KS3DownLoad *downLoad = [[KS3DownLoad alloc] initWithUrl:strHost credentials:_credentials :bucketName :key];
     downLoad.downloadBeginBlock = downloadBeginBlock;
     downLoad.downloadFileCompleteionBlock = downloadFileCompleteion;

@@ -8,7 +8,7 @@
 
 #import "KS3PutObjectCopyRequest.h"
 #import "KS3Constants.h"
-
+#import "KS3Client.h"
 @implementation KS3PutObjectCopyRequest
 
 - (instancetype)initWithName:(KS3BucketObject *)destBucketObj sourceBucketObj:(KS3BucketObject *)sourBucketObj
@@ -22,7 +22,7 @@
         self.contentType = @"";
         self.kSYHeader = @"";
         self.kSYResource =  [NSString stringWithFormat:@"/%@", self.bucket];
-        self.host = [NSString stringWithFormat:@"http://%@.ks3-cn-beijing.ksyun.com", self.bucket];
+        self.host = [NSString stringWithFormat:@"http://%@.%@", self.bucket,[[KS3Client initialize]getBucketDomain]];
         
         // ****
         self.strSourceBucket = [self URLEncodedString:sourBucketObj.bucketName];

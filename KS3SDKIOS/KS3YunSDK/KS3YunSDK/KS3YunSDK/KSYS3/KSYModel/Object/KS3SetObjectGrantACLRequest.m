@@ -9,6 +9,7 @@
 #import "KS3SetObjectGrantACLRequest.h"
 #import "KS3GrantAccessControlList.h"
 #import "KS3Constants.h"
+#import "KS3Client.h"
 
 @implementation KS3SetObjectGrantACLRequest
 
@@ -33,7 +34,7 @@
         self.kSYHeader = [_acl.accessGrantACL stringByAppendingString:@":"];
         self.kSYHeader = [self.kSYHeader stringByAppendingString:strValue];
         self.kSYHeader = [self.kSYHeader stringByAppendingString:@"\n"];
-        self.host = [NSString stringWithFormat:@"http://%@.ks3-cn-beijing.ksyun.com/%@?acl", self.bucket, _key];
+        self.host = [NSString stringWithFormat:@"http://%@.%@/%@?acl", self.bucket,[[KS3Client initialize]getBucketDomain], _key];
     }
     return self;
 }

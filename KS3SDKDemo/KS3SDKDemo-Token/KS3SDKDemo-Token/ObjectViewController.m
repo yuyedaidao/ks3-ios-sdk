@@ -126,7 +126,7 @@
 
 - (void)deleteFinishedFile
 {
-    NSString *strHost = [NSString stringWithFormat:@"http://%@.ks3-cn-beijing.ksyun.com/%@", kDownloadBucketName, kDownloadBucketKey];
+    NSString *strHost = [NSString stringWithFormat:@"http://%@.%@/%@", kDownloadBucketName,[[KS3Client initialize]getBucketDomain],kDownloadBucketKey];
     NSString  *filePath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];;
     //文件临时文件地址，计算百分比
     NSString *  temporaryPath = [filePath stringByAppendingPathComponent: [NSString stringWithFormat:@"%@.%@",[strHost MD5Hash],@"pdf"]];
@@ -181,35 +181,20 @@
 
 #pragma mark 相册方法
 
-/*获取alasset的方法
- 
-      url:相册URL开头是alasset-的地址，由Alasset类里defaultRepresentation属性的url获得;
- */
-- (ALAsset *)getAlassetFromAlassetURL:(NSURL *)url
-{
-    ALAssetsLibrary *assetsLibrary = [[ALAssetsLibrary alloc]init];
-    __block ALAsset *assets ;
-    dispatch_semaphore_t sem= dispatch_semaphore_create(0);
-    dispatch_queue_t concurrentQueue = dispatch_queue_create("my.concurrent.queue", DISPATCH_QUEUE_SERIAL);
-    dispatch_async(concurrentQueue, ^{
-        
-        [assetsLibrary assetForURL:url resultBlock:^(ALAsset *asset) {
-            //本地存储的上传文件
-            assets = asset;
-            dispatch_semaphore_signal(sem);
-        } failureBlock:^(NSError *error) {
-            NSLog(@"读取AssetURL出错,%@",error.localizedDescription);
-            dispatch_semaphore_signal(sem);
-        }];
-
-    });
-    dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER);
-    return assets;
-}
-
 /*
  这里，枚举模拟器相册所有的视频，模拟器只有一个只能获得开头传入的7.6M视频，
 具体工程使用时根据具体逻辑，获取到Alasset即可
+KS3Client 方法：
+ - (NSData *)getUploadPartDataWithPartNum:(NSInteger)partNum
+ partLength:(NSInteger)partlength
+ alassetURL:(NSURL *)alassetURL;
+ 
+- (NSData *)getUploadPartDataWithPartNum:(NSInteger)partNum
+                              partLength:(NSInteger)partlength
+                                 Alasset:(ALAsset *)assets;
+
+- (ALAsset *)getAlassetFromAlassetURL:(NSURL *)alassetURL;
+
  */
 - (ALAsset *)getAlasset
 {
@@ -246,39 +231,6 @@
     return assets;
 }
 
-//从相册获取分块数据用于上传，bid 是_partNum - 1
-- (NSData *)getAlassetBlockData:(NSInteger)bid  withAlasset:(ALAsset *)assets{
-    @autoreleasepool {
-        BOOL endOfStreamReached = NO;
-        NSUInteger currentOffset = bid * FileBlockSize;   //当前偏移量
-        NSError    *error;
-        NSMutableData *mData = [[NSMutableData alloc]init];
-        while (! endOfStreamReached)
-        {
-            NSInteger maxLength = 256*1024;
-            uint8_t readBuffer [maxLength];
-            NSInteger bytesRead = [assets.defaultRepresentation getBytes:readBuffer fromOffset:currentOffset  length:maxLength error:&error];
-            if (bytesRead <= 0)
-            {
-                //读取完了或者读取地址不正确，导致读取为空
-                endOfStreamReached = YES;
-                if (mData.length > 0) {
-                    return mData;
-                }
-            } else
-            {
-                [mData appendBytes:readBuffer length:bytesRead];
-                currentOffset += bytesRead;
-                //正在读取,满5M则本地存储分块
-                if (mData.length >= FileBlockSize)
-                {
-                    return mData;
-                }
-            }
-        }
-        return mData;
-    }
-}
 
 #pragma mark 上传方法
 //开始分块上传文件
@@ -347,7 +299,7 @@
         NSData *data = nil;
         if (_muilt.uploadType == kUploadAlasset) {
             //相册信息
-            data = [self getAlassetBlockData:partNumber - 1 withAlasset:[self getAlasset]];
+            data = [[KS3Client initialize] getUploadPartDataWithPartNum:partNumber partLength:FileBlockSize Alasset:[self getAlasset]];
         }else
         {
             //沙盒路径
@@ -360,7 +312,7 @@
             }
         }
         
-        KS3UploadPartRequest *req = [[KS3UploadPartRequest alloc] initWithMultipartUpload:_muilt partNumber:(int32_t)partNumber data:data generateMD5:NO];
+        KS3UploadPartRequest *req = [[KS3UploadPartRequest alloc] initWithMultipartUpload:_muilt partNumber:(int32_t)partNumber  data:data generateMD5:NO];
         req.delegate = self;
         req.contentLength = data.length;
         req.contentMd5 = [KS3SDKUtil base64md5FromData:data];
@@ -465,7 +417,7 @@
             progressView.tag = 99;
             
             //计算下载临时文件的大小,临时文件是经过MD5Hash的文件名
-            NSString *strHost = [NSString stringWithFormat:@"http://%@.ks3-cn-beijing.ksyun.com/%@", kDownloadBucketName, kDownloadBucketKey];
+            NSString *strHost = [NSString stringWithFormat:@"http://%@.%@/%@", kDownloadBucketName, [[KS3Client initialize]getBucketDomain],kDownloadBucketKey];
             NSString  *filePath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];;
             //文件临时文件地址，计算百分比
             NSString *  temporaryPath=[filePath stringByAppendingPathComponent: [strHost MD5Hash]];

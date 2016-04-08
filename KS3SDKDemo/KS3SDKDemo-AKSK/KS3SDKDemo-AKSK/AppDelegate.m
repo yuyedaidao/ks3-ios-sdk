@@ -22,6 +22,7 @@ NSString * const strSecretKey = @"1+RBTrWaeT6LaixUV5SGPFpeTa/wZEeZlGzYaZfr";
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     [[KS3Client initialize] connectWithAccessKey:strAccessKey withSecretKey:strSecretKey];
+    [[KS3Client initialize] setBucketDomainWithRegion:KS3BucketBeijing];
     return YES;
 }
 

@@ -10,7 +10,7 @@
 #import "KS3Constants.h"
 #import "KS3AccessControlList.h"
 #import "KS3GrantAccessControlList.h"
-
+#import "KS3Client.h"
 @interface KS3InitiateMultipartUploadRequest ()
 
 //@property (nonatomic, assign) BOOL expiresSet;
@@ -94,7 +94,7 @@
 
 -(NSMutableURLRequest *)configureURLRequest
 {
-    self.host = [NSString stringWithFormat:@"http://%@.ks3-cn-beijing.ksyun.com/%@?uploads", self.bucket, self.key];
+    self.host = [NSString stringWithFormat:@"http://%@.%@/%@?uploads", self.bucket,[[KS3Client initialize]getBucketDomain], self.key];
     
     if (_acl != nil) {
         [self.urlRequest setValue:_acl.accessACL forHTTPHeaderField:@"x-kss-acl"];

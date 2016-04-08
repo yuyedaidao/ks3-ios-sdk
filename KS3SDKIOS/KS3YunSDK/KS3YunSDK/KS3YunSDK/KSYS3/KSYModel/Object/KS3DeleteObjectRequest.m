@@ -8,7 +8,7 @@
 
 #import "KS3DeleteObjectRequest.h"
 #import "KS3Constants.h"
-
+#import "KS3Client.h"
 @implementation KS3DeleteObjectRequest
 - (instancetype)initWithName:(NSString *)bucketName withKeyName:(NSString *)strKey
 {
@@ -21,7 +21,7 @@
         self.contentType = @"";
         self.kSYHeader = @"";
         self.kSYResource =  [NSString stringWithFormat:@"/%@", self.bucket];
-        self.host = [NSString stringWithFormat:@"http://%@.ks3-cn-beijing.ksyun.com", self.bucket];
+        self.host = [NSString stringWithFormat:@"http://%@.%@", self.bucket,[[KS3Client initialize]getBucketDomain]];
         
         //
         self.kSYResource = [NSString stringWithFormat:@"%@/%@",self.kSYResource,_key];
