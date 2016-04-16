@@ -53,7 +53,6 @@
 //Demo下载文件的地址：http://ecloud.kssws.ks-cdn.com/test2/Test.pdf
 
 //上传
-#define kBucketName @"acc"//@"alert1"//@"bucketcors"//@"alert1"
 #define kUploadBucketName @"bjtest"   //上传所用的bucketName
 #define kUploadBucketKey @"7.6M.mov"  //上传时用到的bucket里文件的路径，此为在根目录下7.6M.mov
 
@@ -62,7 +61,7 @@
 #define kDownloadBucketKey @"test2/Test.pdf"   //下载的地址拼接
 #define kDownloadSize 21131496   //Demo下载文件的大小，根据业务需求，显示进度条时用到，需要记录
 
-
+#define kBucketName @"acc"//@"alert1"//@"bucketcors"//@"alert1"
 #define kObjectName @"Count_1.txt"//@"test_download.txt"//@"bug.txt"
 #define kDesBucketName @"blues11"//@"ggg"//
 #define kDesObjectName @"bug_copy.txt"
@@ -71,7 +70,7 @@
 
 #define mScreenWidth          ([UIScreen mainScreen].bounds.size.width)
 #define mScreenHeight         ([UIScreen mainScreen].bounds.size.height)
-#define FileBlockSize 5*1024*1024   //一块大小
+#define FileBlockSize 5*1024*1024   //一块大小,分块最小5M
 #import "ObjectViewController.h"
 #import <KS3YunSDK/KS3YunSDK.h>
 #import "KS3Util.h"
@@ -620,6 +619,10 @@ KS3Client 方法：
             break;
         case 11:
         {
+            if (_muilt == nil) {
+                NSLog(@"清先开启分快上传，再取消");
+                return;
+            }
             KS3AbortMultipartUploadRequest *request = [[KS3AbortMultipartUploadRequest alloc] initWithMultipartUpload:_muilt];
             [request setCompleteRequest];
 //             使用token签名时从Appserver获取token后设置token，使用Ak sk则忽略，不需要调用

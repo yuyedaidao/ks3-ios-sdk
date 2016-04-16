@@ -10,8 +10,11 @@
 #import <KS3YunSDK/KS3YunSDK.h>
 
 // **** 用户的AK/SK
-NSString * const strAccessKey = @"IYh4GQWndtnQvmCJWFL4";
-NSString * const strSecretKey = @"1+RBTrWaeT6LaixUV5SGPFpeTa/wZEeZlGzYaZfr";
+//NSString * const strAccessKey = @"IYh4GQWndtnQvmCJWFL4";
+//NSString * const strSecretKey = @"1+RBTrWaeT6LaixUV5SGPFpeTa/wZEeZlGzYaZfr";
+
+NSString * const strAccessKey = @"S1guCl0KF/r3cvqa5YHG";
+NSString * const strSecretKey = @"CVpFTtt+tMlxwkg1PtzmD9p1rxHxAu0enzNBbk3F";
 @interface AppDelegate ()
 
 @end

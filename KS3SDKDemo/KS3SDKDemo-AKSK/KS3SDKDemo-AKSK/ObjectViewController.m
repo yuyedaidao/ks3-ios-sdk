@@ -9,6 +9,16 @@
 #warning Please set correct bucket and object name
 
 
+//上传
+
+#define kUploadBucketName @"bjtest"   //上传所用的bucketName
+#define kUploadBucketKey @"7.6M.mov"  //上传时用到的bucket里文件的路径，此为在根目录下7.6M.mov
+#define FileBlockSize 5*1024*1024   //一块大小,分块最小5M
+
+//下载
+#define kDownloadBucketName @"ecloud"//下载所用的bucketName
+#define kDownloadBucketKey @"test2/Test.pdf"   //下载的地址拼接
+#define kDownloadSize 21131496   //Demo下载文件的大小，根据业务需求，显示进度条时用到，需要记录
 
 #define kBucketName @"acc"//@"alert1"//@"bucketcors"//@"alert1"
 #define kObjectName @"Count_1.txt"//@"test_download.txt"//@"bug.txt"
@@ -17,22 +27,10 @@
 #define kObjectSpecial1 @"n-----1.text"
 #define kObjectSpecial2 @"+-.txt"
 
-
-//1 a b  + - * ~ ! @  # ^ :中 ～ 文.jpg
-#define kTestSpecial1 @"1 a b  + - * ~ ! @  # ^ & :\"中 ～ 文.jpg"//@"1 a b  + - * ~ ! @  # ^ & :\"中 ～ 文.jpg"
-#define kTestSpecial2 @"a 1 b  + - * ~ ! @  # ^ & :\"中 ～ 文"
-#define kTestSpecial3 @"+ - b  + - * ~ ! @  # ^ & :\"中 ～ 文"
-#define kTestSpecial4 @"  1 a b+ - * ~ ! @  # ^ & :\"中 ～ 文"
-#define kTestSpecial5 @"＋ a b  + - * ~ ! @  # ^ & :\"中 ～ 文"
-#define kTestSpecial6 @"－ a b  + - * ~ ! @  # ^ & :\"中 ～ 文"
-#define kTestSpecial7 @"—— a b  + - * ~ ! @  # ^ & :\"中 ～ 文"
-#define kTestSpecial8 @"¥ 1 a b + - * ~ ! @  # ^ & :\"中 ～ 文"
-#define kTestSpecial9 @"％ 1 a b + - * ~ ! @  # ^ & :\"中 ～ 文"
-#define kTestSpecial10 @"中 ～ 文—— 1 a b  + - * ~ ! @  # ^ & :\"中 ～ 文"
-
 #import "ObjectViewController.h"
 #import <KS3YunSDK/KS3YunSDK.h>
 #import "AppDelegate.h"
+#import <AssetsLibrary/AssetsLibrary.h>
 @interface ObjectViewController () <KingSoftServiceRequestDelegate>
 @property (nonatomic, strong) NSArray *arrItems;
 @property (nonatomic, strong) KS3DownLoad *downloader;
@@ -58,6 +56,225 @@
                  @"Get Object ACL",   @"Set Object ACL", @"Set Object Grant ACL",
                  @"Multipart Upload", @"Pause Download", @"Abort Upload", nil];
 }
+#pragma mark 相册方法
+
+/*
+ 这里，枚举模拟器相册所有的视频，模拟器只有一个只能获得开头传入的7.6M视频，
+ 具体工程使用时根据具体逻辑，获取到Alasset即可
+ KS3Client 方法：
+ - (NSData *)getUploadPartDataWithPartNum:(NSInteger)partNum
+ partLength:(NSInteger)partlength
+ alassetURL:(NSURL *)alassetURL;
+ 
+ - (NSData *)getUploadPartDataWithPartNum:(NSInteger)partNum
+ partLength:(NSInteger)partlength
+ Alasset:(ALAsset *)assets;
+ 
+ - (ALAsset *)getAlassetFromAlassetURL:(NSURL *)alassetURL;
+ 
+ */
+- (ALAsset *)getAlasset
+{
+    ALAssetsLibrary *assetsLibrary = [[ALAssetsLibrary alloc]init];
+    __block ALAsset *assets ;
+    dispatch_semaphore_t sem= dispatch_semaphore_create(0);
+    dispatch_queue_t concurrentQueue = dispatch_queue_create("my.concurrent.queue", DISPATCH_QUEUE_SERIAL);
+    dispatch_async(concurrentQueue, ^{
+        [assetsLibrary enumerateGroupsWithTypes:ALAssetsGroupAll usingBlock:^(ALAssetsGroup *group, BOOL *stop) {
+            if (group) {
+                [group setAssetsFilter:[ALAssetsFilter allVideos]];
+                [group enumerateAssetsUsingBlock:^(ALAsset *result, NSUInteger index, BOOL *stop) {
+                    if (result) {
+                        assets = result;
+                        dispatch_semaphore_signal(sem);
+                        return ;
+                    }
+                }];
+                dispatch_semaphore_signal(sem);
+            }else
+            {
+                //                NSLog(@"group为空，枚举失败");
+            }
+            dispatch_semaphore_signal(sem);
+        } failureBlock:^(NSError *error) {
+            
+            NSLog(@"请到设置->隐私->照片中开启,访问照片库的权限");
+            dispatch_semaphore_signal(sem);
+        }];
+    });
+    
+    dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER);
+    
+    return assets;
+}
+
+#pragma mark 上传方法
+//开始分块上传文件
+- (void)beginUpload
+{
+    NSString *strKey = kUploadBucketKey;   //key 为在bucket下的路径，demo中为根目录下7.6M.mov路径
+    _partSize = 5;    //  文件大于5M为最小5M一块
+    
+    
+    KS3AccessControlList *acl = [[KS3AccessControlList alloc] init];
+    [acl setContronAccess:KingSoftYun_Permission_Private];
+    KS3InitiateMultipartUploadRequest *initMultipartUploadReq = [[KS3InitiateMultipartUploadRequest alloc] initWithKey:strKey inBucket:kUploadBucketName acl:acl grantAcl:nil];
+    [initMultipartUploadReq setCompleteRequest];
+#warning  1.使用token签名时从Appserver获取token后设置token，这里用token方式依然用到AKSK是为了模拟从服务器获取Token 2.使用Ak sk则忽略，不需要调用
+//    [initMultipartUploadReq setStrKS3Token:[KS3Util getAuthorization:initMultipartUploadReq]];
+    _muilt = [[KS3Client initialize] initiateMultipartUploadWithRequest:initMultipartUploadReq];
+    if (_muilt == nil) {
+        NSLog(@"####Init upload failed, please check access key, secret key and bucket name!####");
+        return ;
+    }
+#warning 选择相册还是普通方式
+    _muilt.uploadType = kUploadAlasset;   //从相册读
+    
+    //根据文件路径不一样，有如下两种上传
+    if (_muilt.uploadType == kUploadNormal) { //如果是沙盒或者工程里的文件
+        //工程里，沙盒里，是沙盒路径
+        NSString *strFilePath = [[NSBundle mainBundle] pathForResource:@"7.6M" ofType:@"mov"];
+        _fileHandle = [NSFileHandle fileHandleForReadingAtPath:strFilePath];
+        _fileSize = [_fileHandle availableData].length;
+        if (_fileSize <= 0) {
+            NSLog(@"####This file is not exist!####");
+            return ;
+        }
+        if (!(_partSize > 0 || _partSize != 0)) {
+            _partLength = _fileSize;
+        }else{
+            _partLength = _partSize * 1024.0 * 1024.0;
+        }
+        _totalNum = (ceilf((float)_fileSize / (float)_partLength));
+        [_fileHandle seekToFileOffset:0];
+    }else
+    {
+        //如果是相册里的，从这传
+        ALAssetRepresentation *assetD = [self getAlasset].defaultRepresentation;
+        _fileSize = assetD.size;
+        if (_fileSize <= 0) {
+            NSLog(@"####This file is not exist!####");
+            return ;
+        }
+        if (!(_partSize > 0 || _partSize != 0)) {
+            _partLength = _fileSize;
+        }else{
+            _partLength = _partSize * 1024.0 * 1024.0;
+        }
+        _totalNum = (ceilf((float)_fileSize / (float)_partLength));
+    }
+    
+    _uploadNum = 1;
+    [self uploadWithPartNumber:_uploadNum];
+}
+
+
+- (void)uploadWithPartNumber:(NSInteger)partNumber
+{
+    @autoreleasepool {
+        NSData *data = nil;
+        if (_muilt.uploadType == kUploadAlasset) {
+            //相册信息
+            data = [[KS3Client initialize] getUploadPartDataWithPartNum:partNumber partLength:FileBlockSize Alasset:[self getAlasset]];
+        }else
+        {
+            //沙盒路径
+            
+            if (_uploadNum == _totalNum) {
+                data = [_fileHandle readDataToEndOfFile];
+            }else {
+                data = [_fileHandle readDataOfLength:(NSUInteger)_partLength];
+                [_fileHandle seekToFileOffset:_partLength*(_uploadNum)];
+            }
+        }
+        
+        KS3UploadPartRequest *req = [[KS3UploadPartRequest alloc] initWithMultipartUpload:_muilt partNumber:(int32_t)partNumber  data:data generateMD5:NO];
+        req.delegate = self;
+        req.contentLength = data.length;
+        req.contentMd5 = [KS3SDKUtil base64md5FromData:data];
+        [req setCompleteRequest];
+        //使用token签名时从Appserver获取token后设置token，使用Ak sk则忽略，不需要调用
+//        [req setStrKS3Token:[KS3Util getAuthorization:req]];
+        [[KS3Client initialize] uploadPart:req];
+    }
+}
+//取消上传，调用abort 接口，终止上传，修改进度条即可
+- (void)cancelUpload
+{
+    if (_muilt == nil) {
+        NSLog(@"请先创建上传,再调用Abort");
+        return;
+    }
+    _muilt.isCanceled = YES;
+    
+    KS3AbortMultipartUploadRequest *request = [[KS3AbortMultipartUploadRequest alloc] initWithMultipartUpload:_muilt];
+    [request setCompleteRequest];
+    //             使用token签名时从Appserver获取token后设置token，使用Ak sk则忽略，不需要调用
+//    [request setStrKS3Token:[KS3Util getAuthorization:request]];
+    KS3AbortMultipartUploadResponse *response = [[KS3Client initialize] abortMultipartUpload:request];
+    NSString *str = [[NSString alloc] initWithData:response.body encoding:NSUTF8StringEncoding];
+    if (response.httpStatusCode == 204) {
+        NSLog(@"Abort multipart upload success!");
+    }
+    else {
+        NSLog(@"error: %@", response.error.description);
+    }
+}
+
+
+#pragma mark 下载方法
+
+/*开始下载，
+ 1.如果本地文件已存在，则下载完成
+ 2.本地文件不存在，从0下载
+ 3.本地有临时下载文件，则从原先进度继续下载
+ */
+- (void)beginDownload
+{
+    UIProgressView *progressView = (UIProgressView *)[self.view viewWithTag:99];
+    UIButton *stopBtn = (UIButton *)[self.view viewWithTag:100];
+    /**
+     *  如果是暂停下载，就需要把_downloadConnection的file做为参数传到download方法里面
+     */
+    dispatch_queue_t concurrentQueue = dispatch_queue_create("my.concurrent.queue", DISPATCH_QUEUE_SERIAL);
+    
+    dispatch_async(concurrentQueue, ^(){
+        _downloader = [[KS3Client initialize] downloadObjectWithBucketName:kDownloadBucketName key:kDownloadBucketKey downloadBeginBlock:^(KS3DownLoad *aDownload, NSURLResponse *responseHeaders) {
+            NSLog(@"开始下载,responseHeaders:%@",responseHeaders);
+            
+        } downloadFileCompleteion:^(KS3DownLoad *aDownload, NSString *filePath) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [stopBtn setTitle:@"完成" forState:UIControlStateNormal];
+                NSLog(@"completed, file path: %@", filePath);
+            });
+        } downloadProgressChangeBlock:^(KS3DownLoad *aDownload, double newProgress) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                progressView.progress = newProgress;
+                NSLog(@"progress: %f", newProgress);
+            });
+            
+            
+        } failedBlock:^(KS3DownLoad *aDownload, NSError *error) {
+            NSLog(@"failed: %@", error.description);
+        }];
+        
+        // //使用token签名时从Appserver获取token后设置token，使用Ak sk则忽略，不需要调用
+//        [_downloader setStrKS3Token:[KS3Util KSYAuthorizationWithHTTPVerb:strAccessKey secretKey:strSecretKey httpVerb:_downloader.httpMethod contentMd5:_downloader.contentMd5 contentType:_downloader.contentType date:_downloader.strDate canonicalizedKssHeader:_downloader.kSYHeader canonicalizedResource:_downloader.kSYResource]];
+        
+        [_downloader start];
+        
+        
+    });
+    
+}
+
+//暂停下载，支持断点续传，下次开启程序，进度条的恢复需要计算一下，demo里define kDownloadSize了文件大小
+- (void)stopDownload
+{
+    [_downloader stop];
+}
+
+
 #pragma mark - UITableView datasource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -87,33 +304,7 @@
     switch (indexPath.row) {
         case 0:
         {
-            UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-            UIProgressView *progressView = (UIProgressView *)[cell.contentView viewWithTag:99];
-            /**
-             *  如果是暂停下载，就需要把_downloadConnection的file做为参数传到download方法里面
-             */
-            _downloader = [[KS3Client initialize] downloadObjectWithBucketName:kBucketName key:@"testtoken-11.text" downloadBeginBlock:^(KS3DownLoad *aDownload, NSURLResponse *responseHeaders) {
-                NSLog(@"1212221");
-                
-            } downloadFileCompleteion:^(KS3DownLoad *aDownload, NSString *filePath) {
-                NSLog(@"completed, file path: %@", filePath);
-                
-            } downloadProgressChangeBlock:^(KS3DownLoad *aDownload, double newProgress) {
-                progressView.progress = newProgress;
-                NSLog(@"progress: %f", newProgress);
-                
-            } failedBlock:^(KS3DownLoad *aDownload, NSError *error) {
-                NSLog(@"failed: %@", error.description);
-            }];
-//            _downloader.timeoutInterval = 10;
-   
-            [_downloader start];
-
-
-            
-            
-            
-            
+            [self beginDownload];
         }
             break;
         case 1:
@@ -256,37 +447,8 @@
         }
             break;
         case 9:
-        {
-            NSString *strKey = @"122122nvshengpai111000111.text";//@"+-.txt";
-            NSString *strFilePath = [[NSBundle mainBundle] pathForResource:@"bugDownload" ofType:@"txt"];
-            _partSize = 5;
-            _fileHandle = [NSFileHandle fileHandleForReadingAtPath:strFilePath];
-            _fileSize = [_fileHandle availableData].length;
-            if (_fileSize <= 0) {
-                NSLog(@"####This file is not exist!####");
-                return ;
-            }
-            if (!(_partSize > 0 || _partSize != 0)) {
-                _partLength = _fileSize;
-            }else{
-                _partLength = _partSize * 1024.0 * 1024.0;
-            }
-            _totalNum = (ceilf((float)_fileSize / (float)_partLength));
-            [_fileHandle seekToFileOffset:0];
-            
-            KS3AccessControlList *acl = [[KS3AccessControlList alloc] init];
-            [acl setContronAccess:KingSoftYun_Permission_Private];
-            KS3InitiateMultipartUploadRequest *initMultipartUploadReq = [[KS3InitiateMultipartUploadRequest alloc] initWithKey:strKey inBucket:kBucketName acl:acl grantAcl:nil];
-            [initMultipartUploadReq setCompleteRequest];
-            _muilt = [[KS3Client initialize] initiateMultipartUploadWithRequest:initMultipartUploadReq];
-            if (_muilt == nil) {
-                NSLog(@"####Init upload failed, please check access key, secret key and bucket name!####");
-                return ;
-            }
-            
-            _uploadNum = 1;
-            [self uploadWithPartNumber:_uploadNum];
-        }
+
+            [self beginUpload];
             break;
         case 10:
         {
@@ -295,6 +457,10 @@
             break;
         case 11:
         {
+            if (_muilt == nil) {
+                NSLog(@"清先开启分快上传，再取消");
+                return;
+            }
             KS3AbortMultipartUploadRequest *request = [[KS3AbortMultipartUploadRequest alloc] initWithMultipartUpload:_muilt];
             [request setCompleteRequest];
             KS3AbortMultipartUploadResponse *response = [[KS3Client initialize] abortMultipartUpload:request];
@@ -312,25 +478,25 @@
     }
 }
 
-- (void)uploadWithPartNumber:(NSInteger)partNumber
-{
-    long long partLength = _partSize * 1024.0 * 1024.0;
-    NSData *data = nil;
-    if (_uploadNum == _totalNum) {
-        data = [_fileHandle readDataToEndOfFile];
-    }else {
-        data = [_fileHandle readDataOfLength:(NSUInteger)partLength];
-        [_fileHandle seekToFileOffset:partLength*(_uploadNum)];
-    }
-    
-    KS3UploadPartRequest *req = [[KS3UploadPartRequest alloc] initWithMultipartUpload:_muilt partNumber:(int32_t)partNumber data:data generateMD5:NO];
-    req.delegate = self;
-    req.contentLength = data.length;
-    req.contentMd5 = [KS3SDKUtil base64md5FromData:data];
-    [req setCompleteRequest];
-
-    [[KS3Client initialize] uploadPart:req];
-}
+//- (void)uploadWithPartNumber:(NSInteger)partNumber
+//{
+//    long long partLength = _partSize * 1024.0 * 1024.0;
+//    NSData *data = nil;
+//    if (_uploadNum == _totalNum) {
+//        data = [_fileHandle readDataToEndOfFile];
+//    }else {
+//        data = [_fileHandle readDataOfLength:(NSUInteger)partLength];
+//        [_fileHandle seekToFileOffset:partLength*(_uploadNum)];
+//    }
+//    
+//    KS3UploadPartRequest *req = [[KS3UploadPartRequest alloc] initWithMultipartUpload:_muilt partNumber:(int32_t)partNumber data:data generateMD5:NO];
+//    req.delegate = self;
+//    req.contentLength = data.length;
+//    req.contentMd5 = [KS3SDKUtil base64md5FromData:data];
+//    [req setCompleteRequest];
+//
+//    [[KS3Client initialize] uploadPart:req];
+//}
 
 
 
