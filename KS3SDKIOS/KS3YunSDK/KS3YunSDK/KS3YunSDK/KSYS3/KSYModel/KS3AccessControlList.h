@@ -8,14 +8,14 @@
 
 #import <Foundation/Foundation.h>
 
-typedef enum
+typedef NS_ENUM(NSInteger,KingSoftYun_PermissionACLType)
 {
     KingSoftYun_Permission_Private,
     KingSoftYun_Permission_Public_Read,
     KingSoftYun_Permission_Public_Read_Write,
     KingSoftYun_Permission_Authenticated_Read,
     
-}KingSoftYun_PermissionACLType;
+};
 
 @interface KS3AccessControlList : NSObject
 @property (strong, nonatomic) NSString *accessACL;

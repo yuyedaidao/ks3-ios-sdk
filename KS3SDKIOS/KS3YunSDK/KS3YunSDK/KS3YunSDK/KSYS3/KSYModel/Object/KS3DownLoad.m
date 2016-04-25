@@ -113,6 +113,7 @@
 //        fileName = [urlStr lastPathComponent];
 //        if ([fileName length] > 32) fileName = [fileName substringFromIndex:[fileName length]-32];
 //    }
+    _isStop = NO;
     NSString *deletingPathExtension = [url MD5Hash];
     
     NSString *pathExtension = [url pathExtension];
@@ -221,6 +222,9 @@
     
     while (!_isFinished)
     {
+        if (_isStop == YES) {
+            break;
+        }
         [[NSRunLoop currentRunLoop] runMode:KSYS3DefaultRunLoopMode beforeDate:[NSDate distantFuture]];
     }
 }
@@ -239,6 +243,7 @@
 
 - (void)stop
 {
+    _isStop = YES;
     [connection cancel];
     connection = nil;
     [fileHandle closeFile];

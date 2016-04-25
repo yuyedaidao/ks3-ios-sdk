@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#ifdef  __OBJC__
 
 //! Project version number for KS3YunSDK.
 FOUNDATION_EXPORT double KS3YunSDKVersionNumber;
@@ -98,3 +99,7 @@ FOUNDATION_EXPORT const unsigned char KS3YunSDKVersionString[];
 #import "KS3PutObjectCopyRequest.h"
 #import "KS3PutObjectCopyResponse.h"
 #import "KS3BucketObject.h"
+#import "KS3ClientException.h"
+#import "KS3BucketNameUtilities.h"
+#import "KS3ErrorHandler.h"
+#endif

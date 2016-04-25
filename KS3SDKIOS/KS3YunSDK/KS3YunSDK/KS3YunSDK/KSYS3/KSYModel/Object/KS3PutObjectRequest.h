@@ -20,7 +20,7 @@
 @property (nonatomic, strong) NSString *expect;
 @property (nonatomic, strong) NSData *data;
 @property (nonatomic, strong) NSInputStream *stream;
-@property (nonatomic, assign, readonly) int32_t expires;
+@property (nonatomic, assign, readonly) int64_t expires;
 @property (nonatomic, strong) NSString *filename;
 @property (nonatomic, strong) NSString *redirectLocation;
 @property (nonatomic, strong) NSString *callbackUrl;

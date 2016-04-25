@@ -16,6 +16,7 @@
 {
 
     BOOL        _isFinished;
+    BOOL        _isStop;
     BOOL       overwrite;
 	NSString      *url;
 	NSString   *fileName;

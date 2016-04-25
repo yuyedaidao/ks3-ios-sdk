@@ -1,5 +1,9 @@
 	##KS3 SDK for iOS
 ---
+### v1.4.2 改动日志 2016-04-25
+* 修改加载framework说明，整理并重新打包静态库与动态库
+* 解决暂停下载导致的cpu占用过高
+
 ### v1.4.1 改动日志 2016-04-08
 
 * 将读取相册分块方法写入KS3Client文件
@@ -173,7 +177,7 @@ resource 表示用户访问的资源
 - 申请AccessKeyID、AccessKeySecret
 
 ####SDK配置
-SDK以动态库的形式呈现。请将*KS3YunSDK.framework*添加到项目工程中。如果开发工具是Xcode6+，请在*project->target->General*中的‘Embedded Binaries‘中添加*KS3YunSDK.framework*
+SDK以静态库和动态库的形式呈现。请将*KS3YunSDK.framework*添加到项目工程中。如果开发工具是Xcode6+，请在*project->target->General*中的‘Embedded Binaries‘中添加*KS3YunSDK.framework*
 
 ####运行环境
 支持iOS5及以上版本

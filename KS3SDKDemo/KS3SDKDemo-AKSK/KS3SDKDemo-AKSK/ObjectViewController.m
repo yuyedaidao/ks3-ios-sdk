@@ -26,6 +26,8 @@
 #define kDesObjectName @"bug_copy.txt"
 #define kObjectSpecial1 @"n-----1.text"
 #define kObjectSpecial2 @"+-.txt"
+#define mScreenWidth          ([UIScreen mainScreen].bounds.size.width)
+#define mScreenHeight         ([UIScreen mainScreen].bounds.size.height)
 
 #import "ObjectViewController.h"
 #import <KS3YunSDK/KS3YunSDK.h>
@@ -55,7 +57,53 @@
                  @"Get Object",       @"Delete Object", @"Head Object", @"Put Object", @"Put Object Copy", @"Post Object",
                  @"Get Object ACL",   @"Set Object ACL", @"Set Object Grant ACL",
                  @"Multipart Upload", @"Pause Download", @"Abort Upload", nil];
+    UIButton *rightBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 100, 44)];
+    [rightBtn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+    rightBtn.titleLabel.font = [UIFont systemFontOfSize:14];
+    [rightBtn setTitle:@"删除已下载" forState:UIControlStateNormal];
+    [rightBtn addTarget:self action:@selector(deleteFinishedFile) forControlEvents:UIControlEventTouchUpInside];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithCustomView:rightBtn] ;
+    //向模拟器相册，存储一段测试视频，用于模拟相册分块上传
+    if ( [[NSUserDefaults standardUserDefaults] boolForKey:@"SavedVideo"] == NO) {
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"SavedVideo"];
+        NSString *path = [[NSBundle mainBundle]pathForResource:@"7.6M" ofType:@"mov"];
+        UISaveVideoAtPathToSavedPhotosAlbum(path, self, @selector(video:didFinishSavingWithError:contextInfo:), nil);
+    }
+    //向模拟器相册，存储一段测试视频，用于模拟相册分块上传
+    if ( [[NSUserDefaults standardUserDefaults] boolForKey:@"SavedVideo"] == NO) {
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"SavedVideo"];
+        NSString *path = [[NSBundle mainBundle]pathForResource:@"7.6M" ofType:@"mov"];
+        UISaveVideoAtPathToSavedPhotosAlbum(path, self, @selector(video:didFinishSavingWithError:contextInfo:), nil);
+    }
 }
+
+-(void)video:(NSString *)videoPath didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo{
+    if (error){
+        NSLog(@"本地保存失败");
+    }else {
+        NSLog(@"本地保存成功");
+    }
+}
+- (void)deleteFinishedFile
+{
+    NSString *strHost = [NSString stringWithFormat:@"http://%@.%@/%@", kDownloadBucketName,[[KS3Client initialize]getBucketDomain],kDownloadBucketKey];
+    NSString  *filePath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];;
+    //文件临时文件地址，计算百分比
+    NSString *  temporaryPath = [filePath stringByAppendingPathComponent: [NSString stringWithFormat:@"%@.%@",[strHost MD5Hash],@"pdf"]];
+    if ( [[NSFileManager defaultManager] removeItemAtPath:temporaryPath error:nil]) {
+        UIProgressView *progressView = (UIProgressView *)[self.view viewWithTag:99];
+        UIButton *stopBtn = (UIButton *)[self.view viewWithTag:100];
+        progressView.progress = 0;
+        [stopBtn setTitle:@"开始" forState:UIControlStateNormal];
+        stopBtn.selected = NO;
+    }else
+    {
+        NSLog(@"移除失败");
+    }
+    
+    
+}
+
 #pragma mark 相册方法
 
 /*
@@ -107,7 +155,40 @@
     
     return assets;
 }
+#pragma mark TouchEvents
+- (void)downloadBtnClicked:(UIButton *)btn
+{
+    if ([btn.titleLabel.text isEqualToString:@"完成"]) {
+        NSLog(@"文件下载完成，请删除重试");
+        return;
+    }
+    
+    btn.selected =! btn.selected;
+    if (btn.selected ) {
+        [btn setTitle:@"暂停 " forState:UIControlStateNormal];
+        [self beginDownload];
+        
+    }else
+    {
+        [btn setTitle:@"继续 " forState:UIControlStateNormal];
+        [self stopDownload];
+    }
+}
 
+
+
+- (void)uploadBtnClicked:(UIButton *)btn
+{
+    btn.selected =! btn.selected;
+    if (btn.selected) {
+        [btn setTitle:@"取消" forState:UIControlStateNormal];
+        [self beginUpload];
+    }else
+    {
+        [btn setTitle:@"开始" forState:UIControlStateNormal];
+        [self cancelUpload];
+    }
+}
 #pragma mark 上传方法
 //开始分块上传文件
 - (void)beginUpload
@@ -288,11 +369,44 @@
     if (nil == cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:strIdentifier];
         if (indexPath.row == 0) {
-            UIProgressView *progressView = [[UIProgressView alloc] initWithFrame:CGRectMake(200, 12, 100, 20)];
+            UIProgressView *progressView = [[UIProgressView alloc] initWithFrame:CGRectMake(mScreenWidth * .35 , 20, mScreenWidth * .5, 20)];
             progressView.progressViewStyle = UIProgressViewStyleDefault;
             progressView.tag = 99;
+            
+            //计算下载临时文件的大小,临时文件是经过MD5Hash的文件名
+            NSString *strHost = [NSString stringWithFormat:@"http://%@.%@/%@", kDownloadBucketName, [[KS3Client initialize]getBucketDomain],kDownloadBucketKey];
+            NSString  *filePath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];;
+            //文件临时文件地址，计算百分比
+            NSString *  temporaryPath=[filePath stringByAppendingPathComponent: [strHost MD5Hash]];
+            NSFileHandle * fileHandle = [NSFileHandle fileHandleForWritingAtPath:temporaryPath];
+            unsigned long long   offset = [fileHandle seekToEndOfFile];
+            progressView.progress = offset * 1.0 / kDownloadSize;
             [cell.contentView addSubview:progressView];
+            
+            UIButton *stopBtn = [[UIButton alloc]initWithFrame:CGRectMake(mScreenWidth - 50, 10, 40, 20)];
+            [stopBtn setTitle:@"开始" forState:UIControlStateNormal];
+            stopBtn.titleLabel.font  = [UIFont systemFontOfSize:14];
+            [stopBtn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+            stopBtn .tag = 100;
+            [stopBtn addTarget:self action:@selector(downloadBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+            [cell.contentView addSubview:stopBtn];
+            
         }
+        if (indexPath.row == 9) {
+            UIProgressView *progressView = [[UIProgressView alloc] initWithFrame:CGRectMake(mScreenWidth * .4 , 20, mScreenWidth * .45, 20)];
+            progressView.progressViewStyle = UIProgressViewStyleDefault;
+            progressView.tag = 199;
+            [cell.contentView addSubview:progressView];
+            
+            UIButton *uploadBtn = [[UIButton alloc]initWithFrame:CGRectMake(mScreenWidth - 50, 10, 40, 20)];
+            [uploadBtn setTitle:@"开始" forState:UIControlStateNormal];
+            uploadBtn.titleLabel.font  = [UIFont systemFontOfSize:14];
+            [uploadBtn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+            uploadBtn .tag = 200;
+            [uploadBtn addTarget:self action:@selector(uploadBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+            [cell.contentView addSubview:uploadBtn];
+        }
+
     }
     cell.textLabel.text = _arrItems[indexPath.row];
     return cell;
@@ -555,9 +669,22 @@
 
 -(void)request:(KS3Request *)request didSendData:(long long)bytesWritten totalBytesWritten:(long long)totalBytesWritten totalBytesExpectedToWrite:(long long)totalBytesExpectedToWrite
 {
+    UIProgressView *progressView = (UIProgressView *)[self.view viewWithTag:199];
+    if (_muilt.isCanceled ) {
+        [request cancel];
+        
+        progressView.progress = 0;
+        return;
+    }
+    
     long long alreadyTotalWriten = (_uploadNum - 1) * _partLength + totalBytesWritten;
     double progress = alreadyTotalWriten / (float)_fileSize;
     NSLog(@"upload progress: %f", progress);
+#warning upload progress Callback
+    progressView.progress = progress;
+    if (progress == 1) {
+        [_fileHandle closeFile];
+    }
 }
 
 @end

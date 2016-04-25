@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		04F0D6B01CCE4E6000B6E951 /* KS3YunSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04F0D6AF1CCE4E6000B6E951 /* KS3YunSDK.framework */; };
+		04F0D6B11CCE4E6000B6E951 /* KS3YunSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 04F0D6AF1CCE4E6000B6E951 /* KS3YunSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		0A2105511AEF2BC300A8865C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A2105501AEF2BC300A8865C /* main.m */; };
 		0A2105541AEF2BC300A8865C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A2105531AEF2BC300A8865C /* AppDelegate.m */; };
 		0A2105571AEF2BC300A8865C /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A2105561AEF2BC300A8865C /* ViewController.m */; };
@@ -22,7 +24,6 @@
 		0A2105E01AEF311800A8865C /* +-.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0A2105DD1AEF311800A8865C /* +-.jpg */; };
 		0A2105E11AEF311800A8865C /* bugDownload.txt in Resources */ = {isa = PBXBuildFile; fileRef = 0A2105DE1AEF311800A8865C /* bugDownload.txt */; };
 		0A2105E21AEF311800A8865C /* test.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0A2105DF1AEF311800A8865C /* test.jpg */; };
-		0AF27E581B27DEAD00B38C40 /* KS3YunSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0AF27E551B27DE9B00B38C40 /* KS3YunSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,13 +37,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		0A21058A1AEF2D8C00A8865C /* Embed Frameworks */ = {
+		04F0D6A71CCE430300B6E951 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				0AF27E581B27DEAD00B38C40 /* KS3YunSDK.framework in Embed Frameworks */,
+				04F0D6B11CCE4E6000B6E951 /* KS3YunSDK.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -50,6 +51,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		04F0D6AF1CCE4E6000B6E951 /* KS3YunSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = KS3YunSDK.framework; path = ../../Framework/StaticFramework/KS3YunSDK.framework; sourceTree = "<group>"; };
 		0A21054B1AEF2BC300A8865C /* KS3SDKDemo-AKSK.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "KS3SDKDemo-AKSK.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A21054F1AEF2BC300A8865C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0A2105501AEF2BC300A8865C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -85,6 +87,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04F0D6B01CCE4E6000B6E951 /* KS3YunSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -94,6 +97,7 @@
 		0A2105421AEF2BC300A8865C = {
 			isa = PBXGroup;
 			children = (
+				04F0D6AF1CCE4E6000B6E951 /* KS3YunSDK.framework */,
 				0AF27E4F1B27DE9A00B38C40 /* KS3YunSDK.xcodeproj */,
 				0A21054D1AEF2BC300A8865C /* KS3SDKDemo-AKSK */,
 				0A2105671AEF2BC300A8865C /* KS3SDKDemo-AKSKTests */,
@@ -183,7 +187,7 @@
 				0A2105471AEF2BC300A8865C /* Sources */,
 				0A2105481AEF2BC300A8865C /* Frameworks */,
 				0A2105491AEF2BC300A8865C /* Resources */,
-				0A21058A1AEF2D8C00A8865C /* Embed Frameworks */,
+				04F0D6A71CCE430300B6E951 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -200,7 +204,7 @@
 		0A2105431AEF2BC300A8865C /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0630;
+				LastUpgradeCheck = 0730;
 				ORGANIZATIONNAME = "Jack Wong";
 				TargetAttributes = {
 					0A21054A1AEF2BC300A8865C = {
@@ -320,6 +324,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
