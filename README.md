@@ -177,10 +177,14 @@ resource 表示用户访问的资源
 - 申请AccessKeyID、AccessKeySecret
 
 ####SDK配置
-SDK以静态库和动态库的形式呈现。请将*KS3YunSDK.framework*添加到项目工程中。如果开发工具是Xcode6+，请在*project->target->General*中的‘Embedded Binaries‘中添加*KS3YunSDK.framework*
+SDK以静态库和动态库的形式呈现，支持bitcode。请将*KS3YunSDK.framework*添加到项目工程中。
+1.使用静态库：不必在*project->target->General*中的‘Embedded Binaries‘中添加*KS3YunSDK.framework*，如存在请删除，占用空间较大，6MB+.
+2.使用动态库：如开发工具是Xcode6+，请在*project->target->General*中的‘Embedded Binaries‘中添加*KS3YunSDK.framework*，占用空间较小，2MB+。
+
 
 ####运行环境
-支持iOS5及以上版本
+静态库支持iOS6.0及以上版本
+动态库支持iOS8.0及以上
 
 ###安全性
 ####使用场景

@@ -1,9 +1,10 @@
 加载framework说明
-   1.SDK以静态库或动态库的形式呈现，请将KS3YunSDK.framework添加到项目工程中。如果开发工具是Xcode6+，请在project->target->General中的‘Embedded Binaries‘中添加KS3YunSDK.framework
-   2.动态库位置：Framework/DynamicFramework/KS3YunSDK.framework.
+   1.SDK以静态库或动态库的形式呈现，请将KS3YunSDK.framework添加到项目工程中。
+   2.动态库位置：Framework/DynamicFramework/KS3YunSDK.framework. 最低支持iOS8.0
      静态库位置：Framework/StaticFramework/KS3YunSDK.framework.  最低支持iOS6.0
-     KS3SDKDemo默认为静态库.
-   3. APP兼容IOS8.0以下的需要用静态库。 原有的集成动态库的，如果遇到提交AppStore是因为KS3SDK引起的无法正常提交的，建议下载并更新为静态库，同时在Target->General->Embedded Binaries中删除对应的KS3SDK
+     KS3SDKDemo默认为静态库，动态库与静态库均支持Bitcode.
+   3. APP兼容IOS8.0以下的需要用静态库。 原有的集成动态库的，如果遇到提交AppStore是因为KS3SDK引起的无法正常提交的，建议下载并更新为静态库，同时在Target->General->Embedded Binaries中删除对应的KS3SDK.
+   4.若真机运行出现App installation failed：The application doest not have a valid signature提示,处理办法：project->Target->工程->General->Embedded Binaries 删除KS3YunSDK.framework
 
     
 
