@@ -1,6 +1,12 @@
 	##KS3 SDK for iOS
 ---
+### v1.4.3 改动日志 2016-04-28
+
+* 解决分块上传崩溃问题，静态库请在Builid setting -> Other link lags 加上 -all_load
+* 修改加载framework说明，请详细阅读加载framework说明
+
 ### v1.4.2 改动日志 2016-04-25
+
 * 修改加载framework说明，整理并重新打包静态库与动态库
 * 解决暂停下载导致的cpu占用过高
 
@@ -177,14 +183,26 @@ resource 表示用户访问的资源
 - 申请AccessKeyID、AccessKeySecret
 
 ####SDK配置
-SDK以静态库和动态库的形式呈现，支持bitcode。请将*KS3YunSDK.framework*添加到项目工程中。
-1.使用静态库：不必在*project->target->General*中的‘Embedded Binaries‘中添加*KS3YunSDK.framework*，如存在请删除，占用空间较大，6MB+.
-2.使用动态库：如开发工具是Xcode6+，请在*project->target->General*中的‘Embedded Binaries‘中添加*KS3YunSDK.framework*，占用空间较小，2MB+。
 
+SDK以静态库和动态库的形式呈现，支持bitcode。请将*KS3YunSDK.framework*添加到项目工程中。
+动态库位置：Framework/DynamicFramework/KS3YunSDK.framework. 
+静态库位置：Framework/StaticFramework/KS3YunSDK.framework.  
+KS3SDKDemo默认为静态库。
+静态库配置：最低支持iOS6.0，6MB左右，在app工程的Build Setting -> Other link lags 加入-all_load， 
+动态库配置：最低支持iOS8.0，2MB左右，若Xcode版本6+，请Target->General->Embedded Binaries加上KS3YunSDK.framework。原因是苹果在iOS8.0以后允许使用三方动态库上线，如需兼容iOS8.0以下app上线，请使用静态库，。
+
+####加载SDK常见问题
+
+a.使用静态库，真机运行出现Application install failed.The application does not have a valid signature。
+解决：请在Target->General->Embedded Binaries中删除对应的KS3YunSDK.framework.
+b.使用动态库，运行出现dyld: Library not loaded: XXXXXX Reason:image not found 。
+解决：请在Target->General->Embedded Binaries加上KS3YunSDK.framework
+c.使用静态库，在分块上传出现[KS3Response multipartUpload] 找不到方法
+解决：请在在app工程的Build Setting -> Other link lags 加入-all_load。
 
 ####运行环境
-静态库支持iOS6.0及以上版本
-动态库支持iOS8.0及以上
+静态库支持iOS 6.0+
+动态库支持iOS 8.0+
 
 ###安全性
 ####使用场景

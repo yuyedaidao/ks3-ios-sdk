@@ -452,18 +452,22 @@
         case 3:
         {
             
+            /*
+             单个上传是同步的，不分块一般是小数据，方便控制，如需异步，请开一个线程去做
+             */
+            
             KS3AccessControlList *ControlList = [[KS3AccessControlList alloc] init];
             [ControlList setContronAccess:KingSoftYun_Permission_Public_Read_Write];
             KS3GrantAccessControlList *acl = [[KS3GrantAccessControlList alloc] init];
             acl.identifier = @"4567894346";
             acl.displayName = @"accDisplayName";
             [acl setGrantControlAccess:KingSoftYun_Grant_Permission_Read];
-            KS3PutObjectRequest *putObjRequest = [[KS3PutObjectRequest alloc] initWithName:kBucketName
+            KS3PutObjectRequest *putObjRequest = [[KS3PutObjectRequest alloc] initWithName:kUploadBucketName
                                                                                    withAcl:nil//ControlList//ControlList//ControlList
                                                                                   grantAcl:nil];//@[acl]];//];//@[acl]];
-            NSString *fileName = [[NSBundle mainBundle] pathForResource:@"test" ofType:@"jpg"];
+            NSString *fileName = [[NSBundle mainBundle] pathForResource:@"7.6M" ofType:@"mov"];
             putObjRequest.data = [NSData dataWithContentsOfFile:fileName options:NSDataReadingMappedIfSafe error:nil];
-            putObjRequest.filename = @"cup.jpg";//kTestSpecial10;//[fileName lastPathComponent];
+            putObjRequest.filename = kUploadBucketKey;//kTestSpecial10;//[fileName lastPathComponent];
 //            putObjRequest.callbackUrl = @"http://123.59.36.81/index.php/api/photos/callback";
 //            putObjRequest.callbackBody = @"location=${kss-location}&name=${kss-name}&uid=8888";
 //            putObjRequest.callbackParams = @{@"kss-location": @"china_location", @"kss-name": @"lulu_name"};

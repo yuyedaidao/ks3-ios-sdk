@@ -9,6 +9,13 @@
 #import <Foundation/Foundation.h>
 @class KS3Request;
 @interface KS3Util : NSObject
+/*
+ 此类是客户端用aksk计算签名。
+ 1.若使用token方式，不建议客户端去计算，不安全，应由客户端请求服务端去根据aksk计算签名返回。
+ 2.若使用aksk方式，可计算签名
+ 
+ */
+
 + (NSString *)getAuthorization:(KS3Request *)request;
 
 + (NSString *)KSYAuthorizationWithHTTPVerb:(NSString *)accessKey
