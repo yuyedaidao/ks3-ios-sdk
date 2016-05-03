@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		044B68511CD88E8C00C7EE03 /* KS3YunSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 044B68501CD88E8C00C7EE03 /* KS3YunSDK.framework */; };
+		044B685B1CD8A38500C7EE03 /* KS3YunSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 044B685A1CD8A38500C7EE03 /* KS3YunSDK.framework */; };
 		04C733FF1CD1B5EC00DE5623 /* 7.6M.mov in Resources */ = {isa = PBXBuildFile; fileRef = 04C733FE1CD1B5EC00DE5623 /* 7.6M.mov */; };
 		0A2105511AEF2BC300A8865C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A2105501AEF2BC300A8865C /* main.m */; };
 		0A2105541AEF2BC300A8865C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A2105531AEF2BC300A8865C /* AppDelegate.m */; };
@@ -50,7 +50,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		044B68501CD88E8C00C7EE03 /* KS3YunSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = KS3YunSDK.framework; sourceTree = "<group>"; };
+		044B685A1CD8A38500C7EE03 /* KS3YunSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = KS3YunSDK.framework; sourceTree = "<group>"; };
 		04C733FE1CD1B5EC00DE5623 /* 7.6M.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; name = 7.6M.mov; path = "../../KS3SDKDemo-Token/KS3SDKDemo-Token/7.6M.mov"; sourceTree = "<group>"; };
 		0A21054B1AEF2BC300A8865C /* KS3SDKDemo-AKSK.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "KS3SDKDemo-AKSK.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A21054F1AEF2BC300A8865C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -87,7 +87,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				044B68511CD88E8C00C7EE03 /* KS3YunSDK.framework in Frameworks */,
+				044B685B1CD8A38500C7EE03 /* KS3YunSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -115,7 +115,7 @@
 		0A21054D1AEF2BC300A8865C /* KS3SDKDemo-AKSK */ = {
 			isa = PBXGroup;
 			children = (
-				044B68501CD88E8C00C7EE03 /* KS3YunSDK.framework */,
+				044B685A1CD8A38500C7EE03 /* KS3YunSDK.framework */,
 				04C733FE1CD1B5EC00DE5623 /* 7.6M.mov */,
 				0A2105DD1AEF311800A8865C /* +-.jpg */,
 				0A2105DE1AEF311800A8865C /* bugDownload.txt */,

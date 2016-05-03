@@ -94,7 +94,7 @@
                   moduleName = "KS3SDKDemo-Token"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/mac/Desktop/ks3-ios-sdk/KS3SDKDemo/KS3SDKDemo-Token/KS3SDKDemo-Token/ObjectViewController.m"
-                  timestampString = "483954242.15588"
+                  timestampString = "483959785.184011"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "390"
@@ -109,7 +109,7 @@
                   moduleName = "KS3SDKDemo-Token"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/mac/Desktop/ks3-ios-sdk/KS3SDKDemo/KS3SDKDemo-Token/KS3SDKDemo-Token/ObjectViewController.m"
-                  timestampString = "483954242.156027"
+                  timestampString = "483959785.18424"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "0"
@@ -124,7 +124,7 @@
                   moduleName = "KS3SDKDemo-Token"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/mac/Desktop/ks3-ios-sdk/KS3SDKDemo/KS3SDKDemo-Token/KS3SDKDemo-Token/ObjectViewController.m"
-                  timestampString = "483954242.15614"
+                  timestampString = "483959785.184473"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "0"
@@ -132,6 +132,22 @@
                   offsetFromSymbolStart = "10">
                </Location>
             </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "KS3SDKDemo-AKSK/KS3SDKDemo-AKSK/BucketViewController.m"
+            timestampString = "483955532.467591"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "95"
+            endingLineNumber = "95"
+            landmarkName = "-tableView:didSelectRowAtIndexPath:"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

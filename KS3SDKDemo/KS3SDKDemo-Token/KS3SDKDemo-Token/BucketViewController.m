@@ -97,7 +97,7 @@
             break;
         case 3:
         {
-            KS3GetACLRequest *getBucketAclReq = [[KS3GetACLRequest alloc] initWithName:kBucketName];
+            KS3GetACLRequest *getBucketAclReq = [[KS3GetACLRequest alloc] initWithName:@"bjtest"];
                [getBucketAclReq setCompleteRequest];
              //使用token签名时从Appserver获取token后设置token，使用Ak sk则忽略，不需要调用
             [getBucketAclReq setStrKS3Token:[KS3Util getAuthorization:getBucketAclReq]];
