@@ -56,7 +56,7 @@
     _arrItems = [NSArray arrayWithObjects:
                  @"Get Object",       @"Delete Object", @"Head Object", @"Put Object", @"Put Object Copy", @"Post Object",
                  @"Get Object ACL",   @"Set Object ACL", @"Set Object Grant ACL",
-                 @"Multipart Upload", @"Pause Download", @"Abort Upload", nil];
+                 @"Multipart Upload", @"Pause Download", @"Abort Upload", ,@"重置上传下载状态"nil];
     UIButton *rightBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 100, 44)];
     [rightBtn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
     rightBtn.titleLabel.font = [UIFont systemFontOfSize:14];
@@ -279,6 +279,8 @@
         [[KS3Client initialize] uploadPart:req];
     }
 }
+
+
 //取消上传，调用abort 接口，终止上传，修改进度条即可
 - (void)cancelUpload
 {
@@ -286,7 +288,7 @@
         NSLog(@"请先创建上传,再调用Abort");
         return;
     }
-    _muilt.isCanceled = YES;
+  
     
     KS3AbortMultipartUploadRequest *request = [[KS3AbortMultipartUploadRequest alloc] initWithMultipartUpload:_muilt];
     [request setCompleteRequest];
@@ -296,6 +298,8 @@
     NSString *str = [[NSString alloc] initWithData:response.body encoding:NSUTF8StringEncoding];
     if (response.httpStatusCode == 204) {
         NSLog(@"Abort multipart upload success!");
+          _muilt.isCanceled = YES;
+        
     }
     else {
         NSLog(@"error: %@", response.error.description);
@@ -359,7 +363,7 @@
 #pragma mark - UITableView datasource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return _arrItems.count;
+    return _arrItems.count ;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -575,20 +579,7 @@
             break;
         case 11:
         {
-            if (_muilt == nil) {
-                NSLog(@"清先开启分快上传，再取消");
-                return;
-            }
-            KS3AbortMultipartUploadRequest *request = [[KS3AbortMultipartUploadRequest alloc] initWithMultipartUpload:_muilt];
-            [request setCompleteRequest];
-            KS3AbortMultipartUploadResponse *response = [[KS3Client initialize] abortMultipartUpload:request];
-              NSString *str = [[NSString alloc] initWithData:response.body encoding:NSUTF8StringEncoding];
-            if (response.httpStatusCode == 204) {
-                NSLog(@"Abort multipart upload success!");
-            }
-            else {
-                NSLog(@"error: %@", response.error.description);
-            }
+            [self cancelUpload];
         }
             break;
         default:

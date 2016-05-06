@@ -36,6 +36,18 @@ typedef enum {
 
 @property (nonatomic, strong) NSDate *initiated;
 
-@property (assign, nonatomic) BOOL isCanceled;
+@property (assign, readonly) BOOL isCanceled;
+
+@property (assign, nonatomic,readonly)  BOOL isPaused;
+
 @property (assign,nonatomic) UploadType uploadType;
+
+//暂停
+- (void)pause;
+//继续
+- (void)proceed;
+//取消
+- (void)cancel;
+
+
 @end

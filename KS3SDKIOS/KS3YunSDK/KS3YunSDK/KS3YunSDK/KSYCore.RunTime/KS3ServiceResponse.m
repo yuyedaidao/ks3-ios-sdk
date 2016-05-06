@@ -8,7 +8,9 @@
 
 #import "KS3ServiceResponse.h"
 #import "KS3ServiceRequest.h"
-
+#import "KS3UploadPartRequest.h"
+#import "KS3ListPartsResponse.h"
+#import "KS3Part.h"
 @implementation KS3ServiceResponse
 
 -(NSData *)body
@@ -49,6 +51,13 @@
     NSString *tmpStr = [[NSString alloc] initWithData:body encoding:NSUTF8StringEncoding];
     NSLog(@"Response Body:\n%@", tmpStr);
     [self processBody];
+    if ([self.request isKindOfClass:[KS3ListPartsResponse class]]) {
+        KS3ListPartsResponse *listParts = (KS3ListPartsResponse *)self.request;
+        NSLog(@"%@",listParts.listResult.parts);
+        for (KS3Part *part in listParts.listResult.parts) {
+            NSLog(@"part = %@",part);
+        }
+    }
     if (_request.delegate && [_request.delegate respondsToSelector:@selector(request:didCompleteWithResponse:)]) {
         [_request.delegate request:self.request didCompleteWithResponse:nil];
     }
@@ -71,6 +80,16 @@
 
 -(void)connection:(NSURLConnection *)connection didSendBodyData:(NSInteger)bytesWritten totalBytesWritten:(NSInteger)totalBytesWritten totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite
 {
+    
+    //上传暂停
+    if ( [self.request isKindOfClass:[KS3UploadPartRequest class  ]]  ) {
+        KS3UploadPartRequest *req = (KS3UploadPartRequest *)self.request;
+        if (req.multipartUpload.isPaused) {
+               [self.request cancel];
+        }
+     
+    }
+    
     if ([self.request.delegate respondsToSelector:@selector(request:didSendData:totalBytesWritten:totalBytesExpectedToWrite:)]) {
         [self.request.delegate request:self.request
                            didSendData:(long long)bytesWritten

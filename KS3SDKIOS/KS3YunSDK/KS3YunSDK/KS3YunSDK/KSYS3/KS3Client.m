@@ -466,7 +466,7 @@ static NSTimeInterval const KingSoftYun_RequestTimeout = 60;
 
 + (NSString *)apiVersion
 {
-    return @"1.4.3";
+    return @"1.5.0";
 }
 
 @end

@@ -12,7 +12,7 @@
 #import "KS3Client.h"
 @interface KS3UploadPartRequest ()
 
-@property (strong, nonatomic) KS3MultipartUpload *multipartUpload;
+
 @end
 
 @implementation KS3UploadPartRequest
