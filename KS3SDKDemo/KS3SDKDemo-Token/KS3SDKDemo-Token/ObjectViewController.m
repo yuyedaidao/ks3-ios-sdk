@@ -42,7 +42,6 @@
  * 创建bucket时需要选择Region,如遇到上传卡住或超时，请确认工程中对应的外网域名，SDK默认杭州，设置
  - (void)setBucketDomainWithRegion:(KS3BucketDomainRegion)domainRegion;
      Region中文名称	           外网域名	                                      内网域名
-     中国（杭州）	        kss.ksyun.com	                             kss-internal.ksyun.com
      中国（北京）	        ks3-cn-beijing.ksyun.com	         ks3-cn-beijing-internal.ksyun.com
      美国（圣克拉拉）	ks3-us-west-1.ksyun.com           ks3-us-west-1-internal.ksyun.com
      中国（香港）	        ks3-cn-hk-1.ksyun.com	             ks3-cn-hk-1-internal.ksyun.com

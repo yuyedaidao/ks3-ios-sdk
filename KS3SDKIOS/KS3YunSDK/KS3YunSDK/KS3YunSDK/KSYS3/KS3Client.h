@@ -76,7 +76,6 @@ typedef void(^kSS3DownloadFileCompleteionBlock)(KS3DownLoad *aDownload, NSString
 typedef enum
 {
     KS3BucketBeijing                  =0,
-    KS3BucketHangzhou,
     KS3BucketAmerica,
     KS3BucketHongkong,
 } KS3BucketDomainRegion;  //bucket所在地区
@@ -105,6 +104,13 @@ typedef enum
  *  注释：建议在工程的delegate里面实现
   */
 - (void)setBucketDomainWithRegion:(KS3BucketDomainRegion)domainRegion;
+
+/*
+  设置KS3Bucket 所在的地区 
+ @param 自定义的域名
+ */
+- (void)setBucketDomain:(NSString *)domainRegion;
+
 /**
  *  获取当前bucket所在地区，默认北京
     共有北京，杭州，美国圣克拉拉，香港四个

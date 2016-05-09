@@ -74,6 +74,7 @@ static NSTimeInterval const KingSoftYun_RequestTimeout = 60;
 @property (strong, nonatomic) NSMutableData *tokenData;
 @property (assign, nonatomic) KS3BucketDomainRegion bucketDomainRegion;
 @property (copy, nonatomic) NSString*bucketDomainIp;
+@property (copy, nonatomic) NSString *customBucketDomain ;  //用户自定义的domain
 
 @end
 
@@ -108,12 +109,14 @@ static NSTimeInterval const KingSoftYun_RequestTimeout = 60;
 
 - (NSString *)getBucketDomain
 {
+    if (_customBucketDomain != nil) {
+        return _customBucketDomain;
+    }
+    
     if (_bucketDomainRegion == KS3BucketBeijing) {
         return  @"ks3-cn-beijing.ksyun.com";
     }
-    if (_bucketDomainRegion == KS3BucketHangzhou) {
-         return   @"kss.ksyun.com";
-    }
+
     if (_bucketDomainRegion == KS3BucketAmerica) {
         return   @"ks3-us-west-1.ksyun.com";
     }
@@ -122,6 +125,12 @@ static NSTimeInterval const KingSoftYun_RequestTimeout = 60;
     }
     return  @"ks3-cn-beijing.ksyun.com";
 }
+
+- (void)setBucketDomain:(NSString *)domainRegion
+{
+    _customBucketDomain = domainRegion;
+}
+
 #pragma mark - Buckets
 
 - (NSArray *)listBuckets:(KS3ListBucketsRequest *)listBucketsRequest
@@ -466,7 +475,7 @@ static NSTimeInterval const KingSoftYun_RequestTimeout = 60;
 
 + (NSString *)apiVersion
 {
-    return @"1.5.0";
+    return @"1.5.1";
 }
 
 @end
