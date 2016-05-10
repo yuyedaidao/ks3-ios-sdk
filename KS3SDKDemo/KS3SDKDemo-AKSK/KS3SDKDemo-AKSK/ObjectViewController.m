@@ -13,7 +13,10 @@
 
 #define kUploadBucketName @"bjtest"   //上传所用的bucketName
 #define kUploadBucketKey @"7.6M.mov"  //上传时用到的bucket里文件的路径，此为在根目录下7.6M.mov
-#define FileBlockSize 5*1024*1024   //一块大小,分块最小5M
+
+#define kUploadSize 7630392    //Demo上传文件的大小，根据业务需求，显示进度条时用到，需要记录，app可用数据库等
+#define keyUploadPartNum @"partNum"    //需要app本地存储已经传成功的块号,demo为了演示，用NSUserDefaults存储，app可用数据库等
+#define keyUploadId @"uploadId"      //需要app本地存储已经初始化成功的uploadId，用于断点续传，demo为了演示，用NSUserDefaults存储,app可用数据库等
 
 //下载
 #define kDownloadBucketName @"ecloud"//下载所用的bucketName
@@ -28,7 +31,8 @@
 #define kObjectSpecial2 @"+-.txt"
 #define mScreenWidth          ([UIScreen mainScreen].bounds.size.width)
 #define mScreenHeight         ([UIScreen mainScreen].bounds.size.height)
-
+#define mUserDefaults       [NSUserDefaults standardUserDefaults]
+#define FileBlockSize 5*1024*1024   //一块大小,分块最小5M
 #import "ObjectViewController.h"
 #import <KS3YunSDK/KS3YunSDK.h>
 #import "AppDelegate.h"
@@ -56,7 +60,7 @@
     _arrItems = [NSArray arrayWithObjects:
                  @"Get Object",       @"Delete Object", @"Head Object", @"Put Object", @"Put Object Copy", @"Post Object",
                  @"Get Object ACL",   @"Set Object ACL", @"Set Object Grant ACL",
-                 @"Multipart Upload", @"Pause Download", @"Abort Upload", ,@"重置上传下载状态"nil];
+                 @"Multipart Upload", @"Pause Download", @"Abort Upload", nil];
     UIButton *rightBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 100, 44)];
     [rightBtn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
     rightBtn.titleLabel.font = [UIFont systemFontOfSize:14];
@@ -181,17 +185,39 @@
 {
     btn.selected =! btn.selected;
     if (btn.selected) {
-        [btn setTitle:@"取消" forState:UIControlStateNormal];
-        [self beginUpload];
+        [btn setTitle:@"暂停" forState:UIControlStateNormal];
+        [self beginMultipartUpload];
     }else
     {
-        [btn setTitle:@"开始" forState:UIControlStateNormal];
-        [self cancelUpload];
+        if ([btn.titleLabel.text isEqualToString: @"完成" ]) {
+            UIProgressView *progressView = (UIProgressView *)[self.view viewWithTag:199];
+            progressView.progress = 0;
+            [btn setTitle:@"开始" forState:UIControlStateNormal];
+            return;
+        }
+        [_muilt pause];
+        [btn setTitle:@"继续" forState:UIControlStateNormal];
     }
 }
 #pragma mark 上传方法
-//开始分块上传文件
-- (void)beginUpload
+/*
+ 当文件大于100MB的时候，可以选择分块上传。把大文件进行切割上传到服务器。 分块上传分为三步：
+     Initiate Multipart Upload 初始化分块上传
+     Upload Part 上传文件块
+     Complete Multipart Upload 完成分块上传
+ 上传中，你可以使用Abort Multipart Upload取消上传，或者List Parts查看上传的分块。或者List Multipart Uploads查看当前的bucket下有多少个uploadid。
+ 
+ 分块上传断点续传原理：
+ 上传为了简化流程的复杂度，每次都是从初始化从头开始，依步骤进行：
+     1.初始化上传，发initMultiUpload请求，并记录uploadId，如果已存在uploadID，用已经存在的uploadID，进行第二步
+     2.分块上传数据块，一块一块串行的发uploadPart请求，直至所有块传输成功。若中间断开，从第一步重新开始。
+     3.完成上传，发complete请求，httpCode = 200，成功
+ 
+ Tips:1.基于分块上传的原理，上传暂停继续会有最多一个块的进度回退。
+ 2.分块上传最小为5M一块，小于5M请使用单块上传，Put Object方法
+ 
+ */
+- (void)beginMultipartUpload
 {
     NSString *strKey = kUploadBucketKey;   //key 为在bucket下的路径，demo中为根目录下7.6M.mov路径
     _partSize = 5;    //  文件大于5M为最小5M一块
@@ -245,8 +271,37 @@
         _totalNum = (ceilf((float)_fileSize / (float)_partLength));
     }
     
-    _uploadNum = 1;
-    [self uploadWithPartNumber:_uploadNum];
+#warning 上传的断点续传判断：初始化上传后，开始上传前，此处需要list一下所有的数据块，如果uploadID是新生成的，可以跳过list过程从第一块开始传，如果上传是断点续传，需用初始化用到的uploadId，list一下所有已经传过的数据块，再从暂停块上传即可， 这里用NSUserDefault演示存储过程。
+    //判断uploadId是否存在，进而进行上传的断点续传
+    if ([mUserDefaults objectForKey:keyUploadId] == nil) {
+        [mUserDefaults setObject:_muilt.uploadId forKey:keyUploadId];
+        [mUserDefaults synchronize];
+        _uploadNum = 1;
+        [self uploadWithPartNumber:_uploadNum];
+    }else
+    {
+        _muilt.uploadId = [mUserDefaults objectForKey:keyUploadId];
+        //list一下所有上传过的块
+        KS3ListPartsRequest *req2 = [[KS3ListPartsRequest alloc] initWithMultipartUpload:_muilt];
+        [req2 setCompleteRequest];
+        //使用token签名时从Appserver获取token后设置token，使用Ak sk则忽略，不需要调用
+//        [req2 setStrKS3Token:[KS3Util getAuthorization:req2]];
+        
+        KS3ListPartsResponse *response2 = [[KS3Client initialize] listParts:req2];
+        
+        NSLog(@"response.listResult.parts =%@",((KS3Part *)[response2.listResult.parts firstObject]));
+        
+        //从这块开始上传
+        _uploadNum = ((KS3Part *)[response2.listResult.parts firstObject]).partNumber + 1 ;
+        
+        //进度补齐
+        long long alreadyTotalWriten = (_uploadNum - 1) * _partLength ;
+        double progress = alreadyTotalWriten / (float)_fileSize;
+        UIProgressView *progressView = (UIProgressView *)[self.view viewWithTag:199];
+        progressView.progress = progress;
+        [self uploadWithPartNumber:_uploadNum];
+        
+    }
 }
 
 
@@ -260,8 +315,8 @@
         }else
         {
             //沙盒路径
-            
             if (_uploadNum == _totalNum) {
+                [_fileHandle seekToFileOffset:_partLength *(_uploadNum - 1 )];
                 data = [_fileHandle readDataToEndOfFile];
             }else {
                 data = [_fileHandle readDataOfLength:(NSUInteger)_partLength];
@@ -282,7 +337,7 @@
 
 
 //取消上传，调用abort 接口，终止上传，修改进度条即可
-- (void)cancelUpload
+- (void)cancelMultipartUpload
 {
     if (_muilt == nil) {
         NSLog(@"请先创建上传,再调用Abort");
@@ -298,7 +353,12 @@
     NSString *str = [[NSString alloc] initWithData:response.body encoding:NSUTF8StringEncoding];
     if (response.httpStatusCode == 204) {
         NSLog(@"Abort multipart upload success!");
-          _muilt.isCanceled = YES;
+        [_muilt cancel];
+        [mUserDefaults setObject:nil forKey:keyUploadId];
+        [mUserDefaults setInteger:0 forKey:keyUploadPartNum];
+        [mUserDefaults synchronize];
+        UIProgressView *progressView = (UIProgressView *)[self.view viewWithTag:199];
+        progressView.progress = 0;
         
     }
     else {
@@ -306,7 +366,37 @@
     }
 }
 
-
+//若不选择分块上传，请使用单块上传，
+//最小支持但块上传小于5M，最大支持单块上传为5G
+- (void)beginSingleUpload
+{
+    KS3AccessControlList *ControlList = [[KS3AccessControlList alloc] init];
+    [ControlList setContronAccess:KingSoftYun_Permission_Public_Read_Write];
+    KS3GrantAccessControlList *acl = [[KS3GrantAccessControlList alloc] init];
+    acl.identifier = @"4567894346";
+    acl.displayName = @"accDisplayName";
+    [acl setGrantControlAccess:KingSoftYun_Grant_Permission_Read];
+    KS3PutObjectRequest *putObjRequest = [[KS3PutObjectRequest alloc] initWithName:kUploadBucketName
+                                                                           withAcl:nil//ControlList//ControlList//ControlList
+                                                                          grantAcl:nil];//@[acl]];//];//@[acl]];
+    NSString *fileName = [[NSBundle mainBundle] pathForResource:@"7.6M" ofType:@"mov"];
+    putObjRequest.data = [NSData dataWithContentsOfFile:fileName options:NSDataReadingMappedIfSafe error:nil];
+    putObjRequest.delegate = self;
+    putObjRequest.filename = kUploadBucketKey;//kTestSpecial10;//[fileName lastPathComponent];
+    //            putObjRequest.callbackUrl = @"http://123.59.36.81/index.php/api/photos/callback";
+    //            putObjRequest.callbackBody = @"location=${kss-location}&name=${kss-name}&uid=8888";
+    //            putObjRequest.callbackParams = @{@"kss-location": @"china_location", @"kss-name": @"lulu_name"};
+    putObjRequest.contentMd5 = [KS3SDKUtil base64md5FromData:putObjRequest.data];
+    [putObjRequest setCompleteRequest];
+    KS3PutObjectResponse *response = [[KS3Client initialize] putObject:putObjRequest];
+    NSLog(@"%@",[[NSString alloc] initWithData:response.body encoding:NSUTF8StringEncoding]);
+    if (response.httpStatusCode == 200) {
+        NSLog(@"Put object success");
+    }
+    else {
+        NSLog(@"Put object failed");
+    }
+}
 #pragma mark 下载方法
 
 /*开始下载，
@@ -400,6 +490,8 @@
             UIProgressView *progressView = [[UIProgressView alloc] initWithFrame:CGRectMake(mScreenWidth * .4 , 20, mScreenWidth * .45, 20)];
             progressView.progressViewStyle = UIProgressViewStyleDefault;
             progressView.tag = 199;
+            NSInteger finishCount = [mUserDefaults integerForKey:keyUploadPartNum];
+            progressView.progress = finishCount * FileBlockSize  * 1.0 / kUploadSize;
             [cell.contentView addSubview:progressView];
             
             UIButton *uploadBtn = [[UIButton alloc]initWithFrame:CGRectMake(mScreenWidth - 50, 10, 40, 20)];
@@ -455,36 +547,7 @@
             break;
         case 3:
         {
-            
-            /*
-             单个上传是同步的，不分块一般是小数据，方便控制，如需异步，请开一个线程去做
-             */
-            
-            KS3AccessControlList *ControlList = [[KS3AccessControlList alloc] init];
-            [ControlList setContronAccess:KingSoftYun_Permission_Public_Read_Write];
-            KS3GrantAccessControlList *acl = [[KS3GrantAccessControlList alloc] init];
-            acl.identifier = @"4567894346";
-            acl.displayName = @"accDisplayName";
-            [acl setGrantControlAccess:KingSoftYun_Grant_Permission_Read];
-            KS3PutObjectRequest *putObjRequest = [[KS3PutObjectRequest alloc] initWithName:kUploadBucketName
-                                                                                   withAcl:nil//ControlList//ControlList//ControlList
-                                                                                  grantAcl:nil];//@[acl]];//];//@[acl]];
-            NSString *fileName = [[NSBundle mainBundle] pathForResource:@"7.6M" ofType:@"mov"];
-            putObjRequest.data = [NSData dataWithContentsOfFile:fileName options:NSDataReadingMappedIfSafe error:nil];
-            putObjRequest.filename = kUploadBucketKey;//kTestSpecial10;//[fileName lastPathComponent];
-//            putObjRequest.callbackUrl = @"http://123.59.36.81/index.php/api/photos/callback";
-//            putObjRequest.callbackBody = @"location=${kss-location}&name=${kss-name}&uid=8888";
-//            putObjRequest.callbackParams = @{@"kss-location": @"china_location", @"kss-name": @"lulu_name"};
-            putObjRequest.contentMd5 = [KS3SDKUtil base64md5FromData:putObjRequest.data];
-            [putObjRequest setCompleteRequest];
-            KS3PutObjectResponse *response = [[KS3Client initialize] putObject:putObjRequest];
-            NSLog(@"%@",[[NSString alloc] initWithData:response.body encoding:NSUTF8StringEncoding]);
-            if (response.httpStatusCode == 200) {
-                NSLog(@"Put object success");
-            }
-            else {
-                NSLog(@"Put object failed");
-            }
+            [self beginSingleUpload];
         }
             break;
         case 4:
@@ -570,7 +633,7 @@
             break;
         case 9:
 
-            [self beginUpload];
+            [self beginMultipartUpload];
             break;
         case 10:
         {
@@ -579,7 +642,7 @@
             break;
         case 11:
         {
-            [self cancelUpload];
+            [self cancelMultipartUpload];
         }
             break;
         default:
@@ -587,32 +650,18 @@
     }
 }
 
-//- (void)uploadWithPartNumber:(NSInteger)partNumber
-//{
-//    long long partLength = _partSize * 1024.0 * 1024.0;
-//    NSData *data = nil;
-//    if (_uploadNum == _totalNum) {
-//        data = [_fileHandle readDataToEndOfFile];
-//    }else {
-//        data = [_fileHandle readDataOfLength:(NSUInteger)partLength];
-//        [_fileHandle seekToFileOffset:partLength*(_uploadNum)];
-//    }
-//    
-//    KS3UploadPartRequest *req = [[KS3UploadPartRequest alloc] initWithMultipartUpload:_muilt partNumber:(int32_t)partNumber data:data generateMD5:NO];
-//    req.delegate = self;
-//    req.contentLength = data.length;
-//    req.contentMd5 = [KS3SDKUtil base64md5FromData:data];
-//    [req setCompleteRequest];
-//
-//    [[KS3Client initialize] uploadPart:req];
-//}
 
-
-
-#pragma mark - Delegate
+#pragma mark - 上传回调方法
 
 - (void)request:(KS3Request *)request didCompleteWithResponse:(KS3Response *)response
 {
+    if ([request isKindOfClass:[KS3PutObjectRequest class]]) {
+        NSLog(@"单块上传成功");
+        return;
+    }else if ([request isKindOfClass:[KS3UploadPartRequest class]])
+    {
+    [mUserDefaults setInteger:_uploadNum forKey:keyUploadPartNum];
+    [mUserDefaults synchronize];
     _uploadNum ++;
     if (_totalNum < _uploadNum) {
         KS3ListPartsRequest *req2 = [[KS3ListPartsRequest alloc] initWithMultipartUpload:_muilt];
@@ -635,11 +684,19 @@
         KS3CompleteMultipartUploadResponse *resp = [[KS3Client initialize] completeMultipartUpload:req];
         if (resp.httpStatusCode != 200) {
             NSLog(@"#####complete multipart upload failed!!! code: %d#####", resp.httpStatusCode);
+        }else
+        {
+            NSLog(@"分块上传成功!!");
+            [mUserDefaults setObject:nil forKey:keyUploadId];
+            [mUserDefaults setInteger:0 forKey:keyUploadPartNum];
+            _uploadNum = 0 ;
+            [mUserDefaults synchronize];
         }
         
     }
     else {
         [self uploadWithPartNumber:_uploadNum];
+    }
     }
 }
 
@@ -665,9 +722,20 @@
 -(void)request:(KS3Request *)request didSendData:(long long)bytesWritten totalBytesWritten:(long long)totalBytesWritten totalBytesExpectedToWrite:(long long)totalBytesExpectedToWrite
 {
     UIProgressView *progressView = (UIProgressView *)[self.view viewWithTag:199];
+     UIButton *button = (UIButton *)[self.view viewWithTag:200];
+    if ([request isKindOfClass:[KS3PutObjectRequest class]]) {
+        
+        long long alreadyTotalWriten = totalBytesWritten;
+        double progress = alreadyTotalWriten * 1.0  / kUploadSize;
+        NSLog(@"upload progress: %f", progress);
+        //         progressView.progress = progress;
+    }else if([request isKindOfClass:[KS3UploadPartRequest class]])
+    {
     if (_muilt.isCanceled ) {
         [request cancel];
-        
+        [request cancel];
+        [button setTitle:@"开始" forState:UIControlStateNormal];
+        button.selected = NO;
         progressView.progress = 0;
         return;
     }
@@ -679,6 +747,8 @@
     progressView.progress = progress;
     if (progress == 1) {
         [_fileHandle closeFile];
+        [button setTitle:@"完成" forState:UIControlStateNormal];
+    }
     }
 }
 

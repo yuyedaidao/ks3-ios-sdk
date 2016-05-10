@@ -39,7 +39,7 @@
      对于BUCKET来说，READ是指罗列Bucket中的文件、罗列Bucket中正在进行的分块上传、罗列某个分块上传已经上传的块。WRITE是指可以上传，删除BUCKET中文件的功能。FULL_CONTROL则包含所有操作。可以通过PUT Bucket acl接口设置。
      对于Object来说，READ是指查看或者下载文件的功能。WRITE无意义。FULL_CONTROL则包含所有操作。可以通过PUT Object acl设置。
  
- * 创建bucket时需要选择Region,如遇到上传卡住或超时，请确认工程中对应的外网域名，SDK默认杭州，设置
+ * 创建bucket时需要选择Region,如遇到上传卡住或超时，请确认工程中对应的外网域名，SDK默认北京，设置
  - (void)setBucketDomainWithRegion:(KS3BucketDomainRegion)domainRegion;
      Region中文名称	           外网域名	                                      内网域名
      中国（北京）	        ks3-cn-beijing.ksyun.com	         ks3-cn-beijing-internal.ksyun.com
@@ -175,7 +175,7 @@
     btn.selected =! btn.selected;
     if (btn.selected) {
         [btn setTitle:@"暂停" forState:UIControlStateNormal];
-        [self beginUpload];
+        [self beginMultipartUpload];
     }else
     {
         if ([btn.titleLabel.text isEqualToString: @"完成" ]) {
@@ -243,16 +243,25 @@ KS3Client 方法：
 
 
 #pragma mark 上传方法
+
 /*
+ 当文件大于100MB的时候，可以选择分块上传。把大文件进行切割上传到服务器。 分块上传分为三步：
+     Initiate Multipart Upload 初始化分块上传
+     Upload Part 上传文件块
+     Complete Multipart Upload 完成分块上传
+ 上传中，你可以使用Abort Multipart Upload取消上传，或者List Parts查看上传的分块。或者List Multipart Uploads查看当前的bucket下有多少个uploadid。
+ 
  分块上传断点续传原理：
  上传为了简化流程的复杂度，每次都是从初始化从头开始，依步骤进行：
  1.初始化上传，发initMultiUpload请求，并记录uploadId，如果已存在uploadID，用已经存在的uploadID，进行第二步
  2.分块上传数据块，一块一块串行的发uploadPart请求，直至所有块传输成功。若中间断开，从第一步重新开始。
  3.完成上传，发complete请求，httpCode = 200，成功
 
- Tips:基于分块上传的原理，上传暂停继续会有最多一个块的进度回退。
+ Tips:1.基于分块上传的原理，上传暂停继续会有最多一个块的进度回退。
+ 2.分块上传最小为5M一块，小于5M请使用单块上传，Put Object方法
+ 
  */
-- (void)beginUpload
+- (void)beginMultipartUpload
 {
     NSString *strKey = kUploadBucketKey;   //key 为在bucket下的路径，demo中为根目录下7.6M.mov路径
     _partSize = 5;    //  文件大于5M为最小5M一块
@@ -268,9 +277,6 @@ KS3Client 方法：
         NSLog(@"####Init upload failed, please check access key, secret key and bucket name!####");
         return ;
     }
-
-    
-    
 #warning 选择相册还是普通方式
     _muilt.uploadType = kUploadAlasset;   //从相册读
     
@@ -318,10 +324,8 @@ KS3Client 方法：
     if ([mUserDefaults objectForKey:keyUploadId] == nil) {
         [mUserDefaults setObject:_muilt.uploadId forKey:keyUploadId];
         [mUserDefaults synchronize];
-        
+        _uploadNum = 1;
         [self uploadWithPartNumber:_uploadNum];
-        
-        
     }else
     {
         _muilt.uploadId = [mUserDefaults objectForKey:keyUploadId];
@@ -332,7 +336,8 @@ KS3Client 方法：
         [req2 setStrKS3Token:[KS3Util getAuthorization:req2]];
         
         KS3ListPartsResponse *response2 = [[KS3Client initialize] listParts:req2];
-        NSLog(@"response.listResult.parts.partNumber = %d",((KS3Part *)[response2.listResult.parts firstObject]).partNumber);
+        
+        NSLog(@"response.listResult.parts =%@",((KS3Part *)[response2.listResult.parts firstObject]));
     
         //从这块开始上传
         _uploadNum = ((KS3Part *)[response2.listResult.parts firstObject]).partNumber + 1 ;
@@ -364,6 +369,7 @@ KS3Client 方法：
             //沙盒路径
             
             if (_uploadNum == _totalNum) {
+                [_fileHandle seekToFileOffset:_partLength *(_uploadNum - 1 )];
                 data = [_fileHandle readDataToEndOfFile];
             }else {
                 data = [_fileHandle readDataOfLength:(NSUInteger)_partLength];
@@ -382,7 +388,7 @@ KS3Client 方法：
     }
 }
 //取消上传，调用abort 接口，终止上传，修改进度条即可
-- (void)cancelUpload
+- (void)cancelMultipartUpload
 {
     if (_muilt == nil) {
         NSLog(@"请先创建上传,再调用Abort");
@@ -412,6 +418,39 @@ KS3Client 方法：
     }
 }
 
+//若不选择分块上传，请使用单块上传，
+//最小支持但块上传小于5M，最大支持单块上传为5G
+- (void)beginSingleUpload
+{
+    KS3AccessControlList *ControlList = [[KS3AccessControlList alloc] init];
+    [ControlList setContronAccess:KingSoftYun_Permission_Public_Read_Write];
+    KS3GrantAccessControlList *acl = [[KS3GrantAccessControlList alloc] init];
+    //            acl.identifier = @"4567894346";
+    //            acl.displayName = @"accDisplayName";
+    [acl setGrantControlAccess:KingSoftYun_Grant_Permission_Read];
+    KS3PutObjectRequest *putObjRequest = [[KS3PutObjectRequest alloc] initWithName:kUploadBucketName withAcl:ControlList grantAcl:@[acl]];
+    NSString *fileName = [[NSBundle mainBundle] pathForResource:@"7.6M" ofType:@"mov"];
+    putObjRequest.data = [NSData dataWithContentsOfFile:fileName options:NSDataReadingMappedIfSafe error:nil];
+    putObjRequest.delegate = self;
+    putObjRequest.filename = kUploadBucketKey;//[fileName lastPathComponent];
+    //            putObjRequest.callbackUrl = @"http://123.59.36.81/index.php/api/photos/callback";
+    //            putObjRequest.callbackBody = @"location=${kss-location}&name=${kss-name}&uid=8888";
+    //            putObjRequest.callbackParams = @{@"kss-location": @"china_location", @"kss-name": @"lulu_name"};+
+    putObjRequest.contentMd5 = [KS3SDKUtil base64md5FromData:putObjRequest.data];
+    [putObjRequest setCompleteRequest];
+    
+    //使用token签名时从Appserver获取token后设置token，使用Ak sk则忽略，不需要调用
+    [putObjRequest setStrKS3Token:[KS3Util getAuthorization:putObjRequest]];
+    KS3PutObjectResponse *response = [[KS3Client initialize] putObject:putObjRequest];
+    NSLog(@"%@",[[NSString alloc] initWithData:response.body encoding:NSUTF8StringEncoding]);
+    if (response.httpStatusCode == 200) {
+        NSLog(@"Put object success");
+    }
+    else {
+        NSLog(@"Put object failed");
+    }
+    
+}
 
 #pragma mark 下载方法
 
@@ -565,35 +604,7 @@ KS3Client 方法：
             break;
         case 3:
         {
-            /*
-             单个上传是同步的，不分块一般是小数据，方便控制,如需异步，请开一个线程去做
-             */
-            KS3AccessControlList *ControlList = [[KS3AccessControlList alloc] init];
-            [ControlList setContronAccess:KingSoftYun_Permission_Public_Read_Write];
-            KS3GrantAccessControlList *acl = [[KS3GrantAccessControlList alloc] init];
-//            acl.identifier = @"4567894346";
-//            acl.displayName = @"accDisplayName";
-            [acl setGrantControlAccess:KingSoftYun_Grant_Permission_Read];
-            KS3PutObjectRequest *putObjRequest = [[KS3PutObjectRequest alloc] initWithName:kUploadBucketName withAcl:ControlList grantAcl:@[acl]];
-            NSString *fileName = [[NSBundle mainBundle] pathForResource:@"7.6M" ofType:@"mov"];
-            putObjRequest.data = [NSData dataWithContentsOfFile:fileName options:NSDataReadingMappedIfSafe error:nil];
-            putObjRequest.filename = kUploadBucketKey;//[fileName lastPathComponent];
-            //            putObjRequest.callbackUrl = @"http://123.59.36.81/index.php/api/photos/callback";
-            //            putObjRequest.callbackBody = @"location=${kss-location}&name=${kss-name}&uid=8888";
-            //            putObjRequest.callbackParams = @{@"kss-location": @"china_location", @"kss-name": @"lulu_name"};+
-            putObjRequest.contentMd5 = [KS3SDKUtil base64md5FromData:putObjRequest.data];
-            [putObjRequest setCompleteRequest];
-            
-             //使用token签名时从Appserver获取token后设置token，使用Ak sk则忽略，不需要调用
-            [putObjRequest setStrKS3Token:[KS3Util getAuthorization:putObjRequest]];
-            KS3PutObjectResponse *response = [[KS3Client initialize] putObject:putObjRequest];
-            NSLog(@"%@",[[NSString alloc] initWithData:response.body encoding:NSUTF8StringEncoding]);
-            if (response.httpStatusCode == 200) {
-                NSLog(@"Put object success");
-            }
-            else {
-                NSLog(@"Put object failed");
-            }
+            [self beginSingleUpload];
         }
             break;
         case 4:
@@ -695,7 +706,7 @@ KS3Client 方法：
             break;
         case 11:
         {
-            [self cancelUpload];
+            [self cancelMultipartUpload];
         }
             break;
         default:
@@ -703,46 +714,55 @@ KS3Client 方法：
     }
 }
 
-#pragma mark - Delegate
+#pragma mark - 上传的回调方法
 
 - (void)request:(KS3Request *)request didCompleteWithResponse:(KS3Response *)response
 {
-    [mUserDefaults setInteger:_uploadNum forKey:keyUploadPartNum];
-    [mUserDefaults synchronize];
-    _uploadNum ++;
-    if (_totalNum < _uploadNum) {
-        KS3ListPartsRequest *req2 = [[KS3ListPartsRequest alloc] initWithMultipartUpload:_muilt];
-        [req2 setCompleteRequest];
-         //使用token签名时从Appserver获取token后设置token，使用Ak sk则忽略，不需要调用
-        [req2 setStrKS3Token:[KS3Util getAuthorization:req2]];
+    
+    if ([request isKindOfClass:[KS3PutObjectRequest class]]) {
+        NSLog(@"单块上传成功");
+        return;
+    }else if ([request isKindOfClass:[KS3UploadPartRequest class]])
+    {
+        [mUserDefaults setInteger:_uploadNum forKey:keyUploadPartNum];
+        [mUserDefaults synchronize];
+        _uploadNum ++;
         
-        KS3ListPartsResponse *response2 = [[KS3Client initialize] listParts:req2];
-        KS3CompleteMultipartUploadRequest *req = [[KS3CompleteMultipartUploadRequest alloc] initWithMultipartUpload:_muilt];
-        NSLog(@"%@",response2.listResult.parts);
-        for (KS3Part *part in response2.listResult.parts) {
-            [req addPartWithPartNumber:part.partNumber withETag:part.etag];
+        if (_totalNum < _uploadNum) {
+            KS3ListPartsRequest *req2 = [[KS3ListPartsRequest alloc] initWithMultipartUpload:_muilt];
+            [req2 setCompleteRequest];
+            //使用token签名时从Appserver获取token后设置token，使用Ak sk则忽略，不需要调用
+            [req2 setStrKS3Token:[KS3Util getAuthorization:req2]];
+            
+            KS3ListPartsResponse *response2 = [[KS3Client initialize] listParts:req2];
+            KS3CompleteMultipartUploadRequest *req = [[KS3CompleteMultipartUploadRequest alloc] initWithMultipartUpload:_muilt];
+            NSLog(@"%@",response2.listResult.parts);
+            for (KS3Part *part in response2.listResult.parts) {
+                [req addPartWithPartNumber:part.partNumber withETag:part.etag];
+            }
+            //req参数设置完一定要调这个函数
+            [req setCompleteRequest];
+            //使用token签名时从Appserver获取token后设置token，使用Ak sk则忽略，不需要调用
+            [req setStrKS3Token:[KS3Util getAuthorization:req]];
+            KS3CompleteMultipartUploadResponse *resp = [[KS3Client initialize] completeMultipartUpload:req];
+            NSString *bodyStr = [[NSString alloc]initWithData:resp.body encoding:NSUTF8StringEncoding];
+            if (resp.httpStatusCode != 200) {
+                NSLog(@"#####complete multipart upload failed!!! code: %d#####，body = %@", resp.httpStatusCode,bodyStr);
+            }else if (resp.httpStatusCode == 200)
+            {
+                NSLog(@"分块上传成功!!");
+                [mUserDefaults setObject:nil forKey:keyUploadId];
+                [mUserDefaults setInteger:0 forKey:keyUploadPartNum];
+                _uploadNum = 0 ;
+                [mUserDefaults synchronize];
+            }
+            
         }
-        //req参数设置完一定要调这个函数
-        [req setCompleteRequest];
-         //使用token签名时从Appserver获取token后设置token，使用Ak sk则忽略，不需要调用
-        [req setStrKS3Token:[KS3Util getAuthorization:req]];
-        KS3CompleteMultipartUploadResponse *resp = [[KS3Client initialize] completeMultipartUpload:req];
-        NSString *bodyStr = [[NSString alloc]initWithData:resp.body encoding:NSUTF8StringEncoding];
-        if (resp.httpStatusCode != 200) {
-            NSLog(@"#####complete multipart upload failed!!! code: %d#####，body = %@", resp.httpStatusCode,bodyStr);
-        }else if (resp.httpStatusCode == 200)
-        {
-            NSLog(@"Upload Success!!");
-            [mUserDefaults setObject:nil forKey:keyUploadId];
-            [mUserDefaults setInteger:0 forKey:keyUploadPartNum];
-            _uploadNum = 0 ;
-            [mUserDefaults synchronize];
+        else {
+            [self uploadWithPartNumber:_uploadNum];
         }
-        
     }
-    else {
-        [self uploadWithPartNumber:_uploadNum];
-    }
+   
 }
 
 - (void)request:(KS3Request *)request didFailWithError:(NSError *)error
@@ -766,25 +786,41 @@ KS3Client 方法：
 
 -(void)request:(KS3Request *)request didSendData:(long long)bytesWritten totalBytesWritten:(long long)totalBytesWritten totalBytesExpectedToWrite:(long long)totalBytesExpectedToWrite
 {
+    
+    
     UIProgressView *progressView = (UIProgressView *)[self.view viewWithTag:199];
     UIButton *button = (UIButton *)[self.view viewWithTag:200];
-    if (_muilt.isCanceled ) {
-        [request cancel];
-        [button setTitle:@"开始" forState:UIControlStateNormal];
-        button.selected = NO;
-        progressView.progress = 0;
-        return;
+    
+    if ([request isKindOfClass:[KS3PutObjectRequest class]]) {
+        
+         long long alreadyTotalWriten = totalBytesWritten;
+         double progress = alreadyTotalWriten * 1.0  / kUploadSize;
+          NSLog(@"upload progress: %f", progress);
+//         progressView.progress = progress;
+    }else if([request isKindOfClass:[KS3UploadPartRequest class]])
+    {
+        if (_muilt.isCanceled ) {
+            [request cancel];
+            [button setTitle:@"开始" forState:UIControlStateNormal];
+            button.selected = NO;
+            progressView.progress = 0;
+            return;
+        }
+        
+        long long alreadyTotalWriten = (_uploadNum - 1) * _partLength + totalBytesWritten;
+        double progress = alreadyTotalWriten / (float)_fileSize;
+        NSLog(@"upload progress: %f", progress);
+#warning upload progress Callback
+        progressView.progress = progress;
+        if (progress == 1) {
+            [_fileHandle closeFile];
+            [button setTitle:@"完成" forState:UIControlStateNormal];
+        }
     }
     
-    long long alreadyTotalWriten = (_uploadNum - 1) * _partLength + totalBytesWritten;
-    double progress = alreadyTotalWriten / (float)_fileSize;
-    NSLog(@"upload progress: %f", progress);
-    #warning upload progress Callback
-    progressView.progress = progress;
-    if (progress == 1) {
-        [_fileHandle closeFile];
-        [button setTitle:@"完成" forState:UIControlStateNormal];
-    }
+    
+    
+
 }
 
 @end
