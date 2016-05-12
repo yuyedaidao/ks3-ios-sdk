@@ -219,6 +219,7 @@ KS3Client 方法：
                 [group enumerateAssetsUsingBlock:^(ALAsset *result, NSUInteger index, BOOL *stop) {
                     if (result) {
                         assets = result;
+                        NSLog(@"url = %@",assets.defaultRepresentation.url);
                         dispatch_semaphore_signal(sem);
                         return ;
                     }
