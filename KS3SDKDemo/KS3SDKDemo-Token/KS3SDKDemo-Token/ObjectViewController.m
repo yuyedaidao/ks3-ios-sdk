@@ -340,8 +340,8 @@ KS3Client 方法：
         
         NSLog(@"response.listResult.parts =%@",((KS3Part *)[response2.listResult.parts firstObject]));
     
-        //从这块开始上传
-        _uploadNum = ((KS3Part *)[response2.listResult.parts firstObject]).partNumber + 1 ;
+        //从这块开始上传,list结果的最后一块
+        _uploadNum = ((KS3Part *)[response2.listResult.parts lastObject]).partNumber + 1 ;
         
         //进度补齐
         long long alreadyTotalWriten = (_uploadNum - 1) * _partLength ;
