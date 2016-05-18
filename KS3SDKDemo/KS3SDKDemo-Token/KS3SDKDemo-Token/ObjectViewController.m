@@ -56,7 +56,6 @@
 //上传
 #define kUploadBucketName @"bjtest"   //上传所用的bucketName
 #define kUploadBucketKey @"wz/7.6M.mov"  //上传时用到的bucket里文件的路径，此为在wz目录下7.6M.mov
-#define kUploadSize 7630392    //Demo上传文件的大小，根据业务需求，显示进度条时用到，需要记录，app可用数据库等
 #define keyUploadPartNum @"partNum"    //需要app本地存储已经传成功的块号,demo为了演示，用NSUserDefaults存储，app可用数据库等
 #define keyUploadId @"uploadId"      //需要app本地存储已经初始化成功的uploadId，用于断点续传，demo为了演示，用NSUserDefaults存储,app可用数据库等
 
@@ -114,6 +113,9 @@
     [rightBtn addTarget:self action:@selector(deleteFinishedFile) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithCustomView:rightBtn] ;
     
+    
+    //[mUserDefaults setBool:NO forKey:@"SavedVideo"];
+
     //向模拟器相册，存储一段测试视频，用于模拟相册分块上传
     if ( [mUserDefaults boolForKey:@"SavedVideo"] == NO) {
         [mUserDefaults setBool:YES forKey:@"SavedVideo"];
@@ -337,10 +339,10 @@ KS3Client 方法：
         
         KS3ListPartsResponse *response2 = [[KS3Client initialize] listParts:req2];
         
-        NSLog(@"response.listResult.parts =%@",((KS3Part *)[response2.listResult.parts firstObject]));
+        NSLog(@"response.listResult.parts.count =%lu",(unsigned long)[response2.listResult.parts count]);
     
         //从这块开始上传
-        _uploadNum = ((KS3Part *)[response2.listResult.parts firstObject]).partNumber + 1 ;
+        _uploadNum = ((KS3Part *)[response2.listResult.parts lastObject]).partNumber + 1 ;
         
         //进度补齐
         long long alreadyTotalWriten = (_uploadNum - 1) * _partLength ;
@@ -546,7 +548,8 @@ KS3Client 方法：
             progressView.progressViewStyle = UIProgressViewStyleDefault;
             progressView.tag = 199;
             NSInteger finishCount = [mUserDefaults integerForKey:keyUploadPartNum];
-            progressView.progress = finishCount * FileBlockSize  * 1.0 / kUploadSize;
+         
+            progressView.progress = finishCount * FileBlockSize  * 1.0 / _fileSize;
             [cell.contentView addSubview:progressView];
             
             UIButton *uploadBtn = [[UIButton alloc]initWithFrame:CGRectMake(mScreenWidth - 50, 10, 40, 20)];
@@ -794,7 +797,7 @@ KS3Client 方法：
     if ([request isKindOfClass:[KS3PutObjectRequest class]]) {
         
          long long alreadyTotalWriten = totalBytesWritten;
-         double progress = alreadyTotalWriten * 1.0  / kUploadSize;
+         double progress = alreadyTotalWriten * 1.0  / _fileSize;
           NSLog(@"upload progress: %f", progress);
 //         progressView.progress = progress;
     }else if([request isKindOfClass:[KS3UploadPartRequest class]])

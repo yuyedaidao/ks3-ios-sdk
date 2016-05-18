@@ -73,6 +73,7 @@
     // **** Date
     NSString *strDate = [self strDateWithDate:date andType:@"GMT"];
     strDate = [strDate stringByAppendingString:@"\n"];
+
     
     // **** Header & Resource
 //    strHeaders = [strHeaders stringByAppendingString:@"\n"];

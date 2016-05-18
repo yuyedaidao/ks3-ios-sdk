@@ -23,6 +23,7 @@
         _host = @"";
         _requestDate = [NSDate date];
         _strDate = [KS3AuthUtils strDateWithDate:_requestDate andType:@"GMT"];
+        
         _strKS3Token = nil;
         _urlRequest = [KS3URLRequest new];}
     return self;

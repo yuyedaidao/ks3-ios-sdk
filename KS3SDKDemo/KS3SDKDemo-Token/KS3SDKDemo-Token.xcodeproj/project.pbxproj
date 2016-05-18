@@ -28,6 +28,7 @@
 		0A2105DA1AEF310B00A8865C /* +-.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0A2105D71AEF310B00A8865C /* +-.jpg */; };
 		0A2105DB1AEF310B00A8865C /* Test.txt in Resources */ = {isa = PBXBuildFile; fileRef = 0A2105D81AEF310B00A8865C /* Test.txt */; };
 		0A2105DC1AEF310B00A8865C /* test.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0A2105D91AEF310B00A8865C /* test.jpg */; };
+		373D495B1CEC350A00276D7B /* mengma.mov in Resources */ = {isa = PBXBuildFile; fileRef = 373D495A1CEC350A00276D7B /* mengma.mov */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -83,6 +84,7 @@
 		0A2105D71AEF310B00A8865C /* +-.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "+-.jpg"; sourceTree = SOURCE_ROOT; };
 		0A2105D81AEF310B00A8865C /* Test.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Test.txt; sourceTree = SOURCE_ROOT; };
 		0A2105D91AEF310B00A8865C /* test.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = test.jpg; sourceTree = SOURCE_ROOT; };
+		373D495A1CEC350A00276D7B /* mengma.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = mengma.mov; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -137,6 +139,7 @@
 			children = (
 				044B685C1CD8A3A200C7EE03 /* KS3YunSDK.framework */,
 				043B1C2A1CAB87F400EC7C32 /* 7.6M.mov */,
+				373D495A1CEC350A00276D7B /* mengma.mov */,
 				0A2105D71AEF310B00A8865C /* +-.jpg */,
 				0A2105D81AEF310B00A8865C /* Test.txt */,
 				0465D2FC1CABC25900B13B18 /* Token使用场景.png */,
@@ -294,6 +297,7 @@
 				0A2105A31AEF2E0400A8865C /* Main.storyboard in Resources */,
 				0A2105DC1AEF310B00A8865C /* test.jpg in Resources */,
 				0A2105DA1AEF310B00A8865C /* +-.jpg in Resources */,
+				373D495B1CEC350A00276D7B /* mengma.mov in Resources */,
 				0465D2FD1CABC25900B13B18 /* Token使用场景.png in Resources */,
 				0A2105DB1AEF310B00A8865C /* Test.txt in Resources */,
 				0A2105A81AEF2E0400A8865C /* LaunchScreen.xib in Resources */,

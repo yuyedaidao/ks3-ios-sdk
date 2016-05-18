@@ -289,10 +289,10 @@
         
         KS3ListPartsResponse *response2 = [[KS3Client initialize] listParts:req2];
         
-        NSLog(@"response.listResult.parts =%@",((KS3Part *)[response2.listResult.parts firstObject]));
+        NSLog(@"response.listResult.parts =%@",((KS3Part *)[response2.listResult.parts lastObject]));
         
         //从这块开始上传
-        _uploadNum = ((KS3Part *)[response2.listResult.parts firstObject]).partNumber + 1 ;
+        _uploadNum = ((KS3Part *)[response2.listResult.parts lastObject]).partNumber + 1 ;
         
         //进度补齐
         long long alreadyTotalWriten = (_uploadNum - 1) * _partLength ;
