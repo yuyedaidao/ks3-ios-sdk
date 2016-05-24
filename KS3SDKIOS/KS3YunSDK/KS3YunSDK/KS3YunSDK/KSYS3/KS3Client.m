@@ -65,7 +65,7 @@
 #import "KS3PutObjectCopyRequest.h"
 #import <AssetsLibrary/AssetsLibrary.h>
 static NSString     * const KingSoftYun_Host_Name      = @"http://ks3-cn-beijing.ksyun.com";
-static NSTimeInterval const KingSoftYun_RequestTimeout = 600; // in seconds
+static NSTimeInterval const KingSoftYun_RequestTimeout = 300; // in seconds
 
 @interface KS3Client () <NSURLConnectionDataDelegate>
 
@@ -122,6 +122,9 @@ static NSTimeInterval const KingSoftYun_RequestTimeout = 600; // in seconds
     }
     if (_bucketDomainRegion == KS3BucketHongkong) {
         return   @"ks3-cn-hk-1.ksyun.com";
+    }
+    if(_bucketDomainRegion == KS3BucketHangzhou) {
+        return @"kss.ksyun.com";
     }
     return  @"ks3-cn-beijing.ksyun.com";
 }

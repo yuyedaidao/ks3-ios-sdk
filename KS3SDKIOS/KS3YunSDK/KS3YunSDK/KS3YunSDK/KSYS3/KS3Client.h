@@ -78,6 +78,7 @@ typedef enum
     KS3BucketBeijing                  =0,
     KS3BucketAmerica,
     KS3BucketHongkong,
+    KS3BucketHangzhou,
 } KS3BucketDomainRegion;  //bucket所在地区
 
 

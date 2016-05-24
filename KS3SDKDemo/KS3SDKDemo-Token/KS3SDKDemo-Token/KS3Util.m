@@ -11,10 +11,14 @@
 #import <CommonCrypto/CommonDigest.h>
 #import <KS3YunSDK/KS3Request.h>
 #import "AppDelegate.h"
+
+NSString * const AccessKey = @"S1guCl0KF/r3cvqa5YHG";
+NSString * const SecretKey = @"CVpFTtt+tMlxwkg1PtzmD9p1rxHxAu0enzNBbk3F";
+
 @implementation KS3Util
 + (NSString *)getAuthorization:(KS3Request *)request
 {
-    return [KS3Util KSYAuthorizationWithHTTPVerb:@"S1guCl0KF/r3cvqa5YHG" secretKey:@"CVpFTtt+tMlxwkg1PtzmD9p1rxHxAu0enzNBbk3F" httpVerb:request.httpMethod contentMd5:request.contentMd5 contentType:request.contentType date:request.strDate canonicalizedKssHeader:request.kSYHeader canonicalizedResource:request.kSYResource];
+    return [KS3Util KSYAuthorizationWithHTTPVerb:AccessKey secretKey:SecretKey httpVerb:request.httpMethod contentMd5:request.contentMd5 contentType:request.contentType date:request.strDate canonicalizedKssHeader:request.kSYHeader canonicalizedResource:request.kSYResource];
 }
 
 + (NSString *)KSYAuthorizationWithHTTPVerb:(NSString *)accessKey

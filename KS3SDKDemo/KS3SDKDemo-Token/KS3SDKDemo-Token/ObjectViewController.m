@@ -447,13 +447,7 @@ KS3Client 方法：
     [putObjRequest setStrKS3Token:[KS3Util getAuthorization:putObjRequest]];
     KS3PutObjectResponse *response = [[KS3Client initialize] putObject:putObjRequest];
     
-//    NSLog(@"%@",[[NSString alloc] initWithData:response.body encoding:NSUTF8StringEncoding]);
-//    if (response.httpStatusCode == 200) {
-//        NSLog(@"Put object success");
-//    }
-//    else {
-//        NSLog(@"Put object failed");
-//    }
+
     
 }
 
@@ -778,7 +772,14 @@ KS3Client 方法：
 
 - (void)request:(KS3Request *)request didReceiveResponse:(NSURLResponse *)response
 {
-    // **** TODO:
+    NSInteger statusCode = ((NSHTTPURLResponse*) response).statusCode;
+        if ( (statusCode>= 200 && statusCode <300) || statusCode == 304) {
+            NSLog(@"Put object success");
+        }
+        else {
+            NSLog(@"Put object failed");
+        }
+    
 }
 
 - (void)request:(KS3Request *)request didReceiveData:(NSData *)data
