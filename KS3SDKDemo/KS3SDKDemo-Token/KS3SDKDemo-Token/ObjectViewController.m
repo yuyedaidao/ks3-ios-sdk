@@ -54,7 +54,7 @@
 //Demo下载文件的地址：http://ecloud.kssws.ks-cdn.com/test2/Test.pdf
 
 //上传
-#define kUploadBucketName @"bjtest"   //上传所用的bucketName
+#define kUploadBucketName @"gzz-beijing"   //上传所用的bucketName
 #define kUploadBucketKey @"wz/7.6M.mov"  //上传时用到的bucket里文件的路径，此为在wz目录下7.6M.mov
 #define keyUploadPartNum @"partNum"    //需要app本地存储已经传成功的块号,demo为了演示，用NSUserDefaults存储，app可用数据库等
 #define keyUploadId @"uploadId"      //需要app本地存储已经初始化成功的uploadId，用于断点续传，demo为了演示，用NSUserDefaults存储,app可用数据库等
@@ -433,6 +433,8 @@ KS3Client 方法：
     KS3PutObjectRequest *putObjRequest = [[KS3PutObjectRequest alloc] initWithName:kUploadBucketName withAcl:ControlList grantAcl:@[acl]];
     NSString *fileName = [[NSBundle mainBundle] pathForResource:@"7.6M" ofType:@"mov"];
     putObjRequest.data = [NSData dataWithContentsOfFile:fileName options:NSDataReadingMappedIfSafe error:nil];
+    _fileSize = putObjRequest.data.length;
+    
     putObjRequest.delegate = self;
     putObjRequest.filename = kUploadBucketKey;//[fileName lastPathComponent];
     //            putObjRequest.callbackUrl = @"http://123.59.36.81/index.php/api/photos/callback";
@@ -444,13 +446,14 @@ KS3Client 方法：
     //使用token签名时从Appserver获取token后设置token，使用Ak sk则忽略，不需要调用
     [putObjRequest setStrKS3Token:[KS3Util getAuthorization:putObjRequest]];
     KS3PutObjectResponse *response = [[KS3Client initialize] putObject:putObjRequest];
-    NSLog(@"%@",[[NSString alloc] initWithData:response.body encoding:NSUTF8StringEncoding]);
-    if (response.httpStatusCode == 200) {
-        NSLog(@"Put object success");
-    }
-    else {
-        NSLog(@"Put object failed");
-    }
+    
+//    NSLog(@"%@",[[NSString alloc] initWithData:response.body encoding:NSUTF8StringEncoding]);
+//    if (response.httpStatusCode == 200) {
+//        NSLog(@"Put object success");
+//    }
+//    else {
+//        NSLog(@"Put object failed");
+//    }
     
 }
 
