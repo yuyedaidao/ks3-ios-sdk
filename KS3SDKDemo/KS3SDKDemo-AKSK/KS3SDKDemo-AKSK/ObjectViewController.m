@@ -372,12 +372,12 @@
 {
     KS3AccessControlList *ControlList = [[KS3AccessControlList alloc] init];
     [ControlList setContronAccess:KingSoftYun_Permission_Public_Read_Write];
-    KS3GrantAccessControlList *acl = [[KS3GrantAccessControlList alloc] init];
-    acl.identifier = @"4567894346";
-    acl.displayName = @"accDisplayName";
-    [acl setGrantControlAccess:KingSoftYun_Grant_Permission_Read];
+//    KS3GrantAccessControlList *acl = [[KS3GrantAccessControlList alloc] init];
+//    acl.identifier = @"4567894346";
+//    acl.displayName = @"accDisplayName";
+//    [acl setGrantControlAccess:KingSoftYun_Grant_Permission_Read];
     KS3PutObjectRequest *putObjRequest = [[KS3PutObjectRequest alloc] initWithName:kUploadBucketName
-                                                                           withAcl:nil//ControlList//ControlList//ControlList
+                                                                           withAcl:ControlList//ControlList//ControlList//ControlList
                                                                           grantAcl:nil];//@[acl]];//];//@[acl]];
     NSString *fileName = [[NSBundle mainBundle] pathForResource:@"7.6M" ofType:@"mov"];
     putObjRequest.data = [NSData dataWithContentsOfFile:fileName options:NSDataReadingMappedIfSafe error:nil];
@@ -389,14 +389,20 @@
     putObjRequest.contentMd5 = [KS3SDKUtil base64md5FromData:putObjRequest.data];
     [putObjRequest setCompleteRequest];
     KS3PutObjectResponse *response = [[KS3Client initialize] putObject:putObjRequest];
-    NSLog(@"%@",[[NSString alloc] initWithData:response.body encoding:NSUTF8StringEncoding]);
-    if (response.httpStatusCode == 200) {
-        NSLog(@"Put object success");
-    }
-    else {
-        NSLog(@"Put object failed");
-    }
-}
+    
+    
+    
+    //putObjRequest若没设置代理，则是同步的下方判断，
+    //putObjRequest若设置了代理，则走上传代理回调,
+    if (putObjRequest.delegate == nil) {
+        NSLog(@"%@",[[NSString alloc] initWithData:response.body encoding:NSUTF8StringEncoding]);
+        if (response.httpStatusCode == 200) {
+            NSLog(@"Put object success");
+        }
+        else {
+            NSLog(@"Put object failed");
+        }
+    }}
 #pragma mark 下载方法
 
 /*开始下载，
@@ -656,7 +662,13 @@
 - (void)request:(KS3Request *)request didCompleteWithResponse:(KS3Response *)response
 {
     if ([request isKindOfClass:[KS3PutObjectRequest class]]) {
-        NSLog(@"单块上传成功");
+        
+        if (response.httpStatusCode == 200) {
+            NSLog(@"单块上传成功");
+        }else
+        {
+            NSLog(@"单块上传失败");
+        }
         return;
     }else if ([request isKindOfClass:[KS3UploadPartRequest class]])
     {
