@@ -342,7 +342,7 @@ KS3Client 方法：
         
         NSLog(@"response.listResult.parts.count =%lu",(unsigned long)[response2.listResult.parts count]);
     
-        //从这块开始上传
+        //从这块开始上传,list结果的最后一块
         _uploadNum = ((KS3Part *)[response2.listResult.parts lastObject]).partNumber + 1 ;
         
         //进度补齐
@@ -447,6 +447,19 @@ KS3Client 方法：
     //使用token签名时从Appserver获取token后设置token，使用Ak sk则忽略，不需要调用
     [putObjRequest setStrKS3Token:[KS3Util getAuthorization:putObjRequest]];
     KS3PutObjectResponse *response = [[KS3Client initialize] putObject:putObjRequest];
+    
+    
+    //putObjRequest若没设置代理，则是同步的下方判断，
+    //putObjRequest若设置了代理，则走上传代理回调,
+    if (putObjRequest.delegate == nil) {
+        NSLog(@"%@",[[NSString alloc] initWithData:response.body encoding:NSUTF8StringEncoding]);
+        if (response.httpStatusCode == 200) {
+            NSLog(@"Put object success");
+        }
+        else {
+            NSLog(@"Put object failed");
+        }
+    }
     
 
     
