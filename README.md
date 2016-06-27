@@ -1,6 +1,13 @@
 	##KS3 SDK for iOS
 ---
 
+### v1.6.0 改动日志 2016.6.27
+* 默认为北京region，杭州region老用户仍可以使用
+* 增加put object上传查看response回调的示例
+* 修正分块上传恢复时的块号问题
+* 不再维护AK/SK Demo，只维护KS3SDKDemo-Token
+* 增加视频转码异步处理请求示例
+
 ### v1.5.1 改动日志 2016-05-09
 * SDK取消杭州域名,默认为北京
 * 增加设置自定义域名，详情请看KS3Client.h，
@@ -1330,3 +1337,5 @@ KS3CompleteMultipartUploadResponse响应包括以下内容
 
 ####  版权所有 （C）金山云科技有限公司  
 ####  Copyright (C) Kingsoft Cloud All rights reserved.
+
+

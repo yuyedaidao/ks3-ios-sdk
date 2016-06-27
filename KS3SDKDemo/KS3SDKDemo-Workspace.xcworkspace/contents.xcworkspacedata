@@ -4,7 +4,4 @@
    <FileRef
       location = "group:KS3SDKDemo-Token/KS3SDKDemo-Token.xcodeproj">
    </FileRef>
-   <FileRef
-      location = "group:KS3SDKDemo-AKSK/KS3SDKDemo-AKSK.xcodeproj">
-   </FileRef>
 </Workspace>
