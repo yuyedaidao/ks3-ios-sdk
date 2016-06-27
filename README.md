@@ -1333,7 +1333,7 @@ KS3CompleteMultipartUploadResponse响应包括以下内容
 ````
 
 ##其它
->完整示例，请见 [KS3-iOS-SDK-Demo](https://github.com/ks3sdk/ks3-ios-sdk/tree/master/Demo) 
+>完整示例，请见 [KS3-iOS-SDK-Demo](https://github.com/ks3sdk/ks3-ios-sdk/tree/master/KS3SDKDemo/KS3SDKDemo-Token) 
 
 ####  版权所有 （C）金山云科技有限公司  
 ####  Copyright (C) Kingsoft Cloud All rights reserved.

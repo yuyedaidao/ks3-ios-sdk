@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="13F1134" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="wFT-hm-9Q3">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="wFT-hm-9Q3">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
     <scenes>
         <!--Navigation Controller-->
@@ -56,11 +56,12 @@
                         <segue destination="Q5u-Bp-ij9" kind="show" identifier="Service Identifier" id="0hx-FE-e5g"/>
                         <segue destination="6Xe-Tq-ihM" kind="show" identifier="Bucket Identifier" id="KXD-E3-zK9"/>
                         <segue destination="ueD-Uw-l9O" kind="show" identifier="Object Identifier" id="mAl-Su-1jo"/>
+                        <segue destination="pAz-8E-add" kind="show" identifier="Video Identifier" id="woA-O6-add"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zCV-xv-RiG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="832" y="432"/>
+            <point key="canvasLocation" x="863" y="384"/>
         </scene>
         <!--List Bucket View Controller-->
         <scene sceneID="OBL-3a-0co">
@@ -125,6 +126,42 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aR8-xQ-42N" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1352" y="-80"/>
+        </scene>
+        <!--Video View Controller-->
+        <scene sceneID="Rhz-4j-yOH">
+            <objects>
+                <viewController id="pAz-8E-add" customClass="VideoViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Ydn-zs-ghC"/>
+                        <viewControllerLayoutGuide type="bottom" id="ZD1-EN-kVP"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="JHG-BN-xbh">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Ha8-bS-qU9">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <sections/>
+                                <connections>
+                                    <outlet property="dataSource" destination="pAz-8E-add" id="wXo-zL-kct"/>
+                                    <outlet property="delegate" destination="pAz-8E-add" id="u3n-YB-voN"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="Ha8-bS-qU9" secondAttribute="trailing" id="TDp-bs-wHP"/>
+                            <constraint firstItem="Ha8-bS-qU9" firstAttribute="bottom" secondItem="ZD1-EN-kVP" secondAttribute="top" id="ag1-RV-G55"/>
+                            <constraint firstItem="Ha8-bS-qU9" firstAttribute="top" secondItem="JHG-BN-xbh" secondAttribute="top" id="dbW-0e-k4g"/>
+                            <constraint firstItem="Ha8-bS-qU9" firstAttribute="leading" secondItem="JHG-BN-xbh" secondAttribute="leading" id="jnK-4e-BGL"/>
+                        </constraints>
+                    </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="rBG-Uc-1aY" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="805" y="1190"/>
         </scene>
         <!--Object View Controller-->
         <scene sceneID="dxD-mh-JFF">
@@ -261,6 +298,15 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gxf-Ud-fLO" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="hZN-v3-9aC">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <connections>
+                        <outlet property="dataSource" destination="ueD-Uw-l9O" id="0nV-mq-8vJ"/>
+                        <outlet property="delegate" destination="ueD-Uw-l9O" id="KKi-T1-5SW"/>
+                    </connections>
+                </tableView>
             </objects>
             <point key="canvasLocation" x="1786" y="533"/>
         </scene>

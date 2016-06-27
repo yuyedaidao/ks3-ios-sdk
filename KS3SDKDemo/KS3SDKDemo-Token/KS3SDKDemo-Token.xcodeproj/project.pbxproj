@@ -28,6 +28,7 @@
 		0A2105DA1AEF310B00A8865C /* +-.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0A2105D71AEF310B00A8865C /* +-.jpg */; };
 		0A2105DB1AEF310B00A8865C /* Test.txt in Resources */ = {isa = PBXBuildFile; fileRef = 0A2105D81AEF310B00A8865C /* Test.txt */; };
 		0A2105DC1AEF310B00A8865C /* test.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0A2105D91AEF310B00A8865C /* test.jpg */; };
+		3732C3381D21184C00778B04 /* VideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3732C3371D21184C00778B04 /* VideoViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -83,6 +84,8 @@
 		0A2105D71AEF310B00A8865C /* +-.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "+-.jpg"; sourceTree = SOURCE_ROOT; };
 		0A2105D81AEF310B00A8865C /* Test.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Test.txt; sourceTree = SOURCE_ROOT; };
 		0A2105D91AEF310B00A8865C /* test.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = test.jpg; sourceTree = SOURCE_ROOT; };
+		3732C3361D21184C00778B04 /* VideoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoViewController.h; sourceTree = "<group>"; };
+		3732C3371D21184C00778B04 /* VideoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -159,6 +162,8 @@
 				0A21059C1AEF2E0400A8865C /* AppDelegate.m */,
 				0A21059E1AEF2E0400A8865C /* ViewController.h */,
 				0A21059F1AEF2E0400A8865C /* ViewController.m */,
+				3732C3361D21184C00778B04 /* VideoViewController.h */,
+				3732C3371D21184C00778B04 /* VideoViewController.m */,
 				0A2105A11AEF2E0400A8865C /* Main.storyboard */,
 				0A2105A41AEF2E0400A8865C /* Images.xcassets */,
 				0A2105A61AEF2E0400A8865C /* LaunchScreen.xib */,
@@ -317,6 +322,7 @@
 			files = (
 				0A2105A01AEF2E0400A8865C /* ViewController.m in Sources */,
 				0A2105D11AEF2F1E00A8865C /* CreateBucketViewController.m in Sources */,
+				3732C3381D21184C00778B04 /* VideoViewController.m in Sources */,
 				0A21059D1AEF2E0400A8865C /* AppDelegate.m in Sources */,
 				0A2105D01AEF2F1E00A8865C /* BucketViewController.m in Sources */,
 				0A2105D31AEF2F1E00A8865C /* KS3Util.m in Sources */,
