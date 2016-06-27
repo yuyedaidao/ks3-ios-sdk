@@ -65,7 +65,7 @@
 #import "KS3PutObjectCopyRequest.h"
 #import <AssetsLibrary/AssetsLibrary.h>
 static NSString     * const KingSoftYun_Host_Name      = @"http://ks3-cn-beijing.ksyun.com";
-static NSTimeInterval const KingSoftYun_RequestTimeout = 300; // in seconds
+static NSTimeInterval const KingSoftYun_RequestTimeout = 600; // in seconds
 
 @interface KS3Client () <NSURLConnectionDataDelegate>
 
