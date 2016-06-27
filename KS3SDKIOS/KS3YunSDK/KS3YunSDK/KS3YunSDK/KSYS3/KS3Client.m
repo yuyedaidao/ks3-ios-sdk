@@ -75,6 +75,7 @@ static NSTimeInterval const KingSoftYun_RequestTimeout = 300; // in seconds
 @property (assign, nonatomic) KS3BucketDomainRegion bucketDomainRegion;
 @property (copy, nonatomic) NSString*bucketDomainIp;
 @property (copy, nonatomic) NSString *customBucketDomain ;  //用户自定义的domain
+@property (strong, nonatomic) ALAssetsLibrary *assetsLibrary ;
 
 @end
 
@@ -88,6 +89,7 @@ static NSTimeInterval const KingSoftYun_RequestTimeout = 300; // in seconds
         shareObj = [[self alloc] init];
         shareObj.bucketDomainRegion = KS3BucketBeijing;
         shareObj.bucketDomainIp = @"ks3-cn-beijing.ksyun.com";
+        shareObj.assetsLibrary = [[ALAssetsLibrary alloc]init];
     });
     return shareObj;
 }
@@ -266,7 +268,7 @@ static NSTimeInterval const KingSoftYun_RequestTimeout = 300; // in seconds
         return nil;
     }
         
-    ALAsset *alasset = [self getAlassetFromAlassetURL:alassetURL];
+    ALAsset *alasset = [[KS3Client initialize] getAlassetFromAlassetURL:alassetURL];
     return  [self getUploadPartDataWithPartNum:partNum partLength:partlength Alasset:alasset];
 }
 
@@ -317,13 +319,13 @@ static NSTimeInterval const KingSoftYun_RequestTimeout = 300; // in seconds
 
 - (ALAsset *)getAlassetFromAlassetURL:(NSURL *)alassetURL
 {
-    ALAssetsLibrary *assetsLibrary = [[ALAssetsLibrary alloc]init];
+    
     __block ALAsset *assets ;
     dispatch_semaphore_t sem= dispatch_semaphore_create(0);
     dispatch_queue_t concurrentQueue = dispatch_queue_create("my.concurrent.queue", DISPATCH_QUEUE_SERIAL);
     dispatch_async(concurrentQueue, ^{
         
-        [assetsLibrary assetForURL:alassetURL resultBlock:^(ALAsset *asset) {
+        [self.assetsLibrary assetForURL:alassetURL resultBlock:^(ALAsset *asset) {
             //本地存储的上传文件
             assets = asset;
             dispatch_semaphore_signal(sem);

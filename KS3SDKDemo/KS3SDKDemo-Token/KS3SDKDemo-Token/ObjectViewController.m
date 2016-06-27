@@ -221,6 +221,7 @@ KS3Client 方法：
                 [group enumerateAssetsUsingBlock:^(ALAsset *result, NSUInteger index, BOOL *stop) {
                     if (result) {
                         assets = result;
+                        NSLog(@"url = %@",assets.defaultRepresentation.url);
                         dispatch_semaphore_signal(sem);
                         return ;
                     }
@@ -426,11 +427,11 @@ KS3Client 方法：
 {
     KS3AccessControlList *ControlList = [[KS3AccessControlList alloc] init];
     [ControlList setContronAccess:KingSoftYun_Permission_Public_Read_Write];
-    KS3GrantAccessControlList *acl = [[KS3GrantAccessControlList alloc] init];
-    //            acl.identifier = @"4567894346";
-    //            acl.displayName = @"accDisplayName";
-    [acl setGrantControlAccess:KingSoftYun_Grant_Permission_Read];
-    KS3PutObjectRequest *putObjRequest = [[KS3PutObjectRequest alloc] initWithName:kUploadBucketName withAcl:ControlList grantAcl:@[acl]];
+//    KS3GrantAccessControlList *acl = [[KS3GrantAccessControlList alloc] init];
+//    //            acl.identifier = @"4567894346";
+//    //            acl.displayName = @"accDisplayName";
+//    [acl setGrantControlAccess:KingSoftYun_Grant_Permission_Read];
+    KS3PutObjectRequest *putObjRequest = [[KS3PutObjectRequest alloc] initWithName:kUploadBucketName withAcl:ControlList grantAcl:nil];
     NSString *fileName = [[NSBundle mainBundle] pathForResource:@"7.6M" ofType:@"mov"];
     putObjRequest.data = [NSData dataWithContentsOfFile:fileName options:NSDataReadingMappedIfSafe error:nil];
     _fileSize = putObjRequest.data.length;
@@ -720,7 +721,13 @@ KS3Client 方法：
 {
     
     if ([request isKindOfClass:[KS3PutObjectRequest class]]) {
-        NSLog(@"单块上传成功");
+        if (response.httpStatusCode == 200) {
+            NSLog(@"单块上传成功");
+        }else
+        {
+            NSLog(@"单块上传失败");
+        }
+        
         return;
     }else if ([request isKindOfClass:[KS3UploadPartRequest class]])
     {

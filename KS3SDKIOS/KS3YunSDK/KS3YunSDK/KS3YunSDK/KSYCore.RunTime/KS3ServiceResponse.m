@@ -59,7 +59,7 @@
         }
     }
     if (_request.delegate && [_request.delegate respondsToSelector:@selector(request:didCompleteWithResponse:)]) {
-        [_request.delegate request:self.request didCompleteWithResponse:nil];
+        [_request.delegate request:self.request didCompleteWithResponse:self];
     }
 }
 
