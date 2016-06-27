@@ -219,3 +219,5 @@ KS3SDKDemo/KS3SDKDemo-AKSK/KS3SDKDemo-AKSK.xcodeproj/project.xcworkspace/
 KS3SDKIOS/KS3YunSDK/build/KS3YunSDK.build/Debug-iphonesimulator/KS3YunSDK.build/Objects-normal/i386/*
 KS3SDKIOS/KS3YunSDK/build/KS3YunSDK.build/Debug-iphonesimulator/KS3YunSDK.build/*
 KS3SDKIOS/KS3YunSDK/build/KS3YunSDK.build/Debug-iphoneos/KS3YunSDK.build/*
+Framework/Release-iphonesimulator/*
+Framework/Debug-iphoneos/*
