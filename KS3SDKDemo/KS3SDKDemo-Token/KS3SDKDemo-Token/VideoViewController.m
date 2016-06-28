@@ -9,7 +9,7 @@
 #define mUserDefaults       [NSUserDefaults standardUserDefaults]
 //上传
 #define kUploadBucketName @"gzz-beijing"   //上传所用的bucketName
-#define kUploadBucketKey @"wz/7.6M.mov"  //上传时用到的bucket里文件的路径，此为在wz目录下7.6M.mov
+#define kUploadObjectKey @"wz/7.6M.mov"  //上传时用到的bucket里文件的路径，此为在wz目录下7.6M.mov
 
 
 #import "VideoViewController.h"
@@ -36,7 +36,7 @@
 }
 
 
-- (void)beginSingleUpload
+- (void)beginUploadTriggerProcessing
 {
     KS3AccessControlList *ControlList = [[KS3AccessControlList alloc] init];
     [ControlList setContronAccess:KingSoftYun_Permission_Public_Read_Write];
@@ -46,19 +46,14 @@
     _fileSize = putObjRequest.data.length;
     
     putObjRequest.delegate = self;
-    putObjRequest.filename = kUploadBucketKey;
-    //            putObjRequest.callbackUrl = @"http://123.59.36.81/index.php/api/photos/callback";
-    //            putObjRequest.callbackBody = @"location=${kss-location}&name=${kss-name}&uid=8888";
-    //            putObjRequest.callbackParams = @{@"kss-location": @"china_location", @"kss-name": @"lulu_name"};+
+    putObjRequest.filename = kUploadObjectKey;
     putObjRequest.contentMd5 = [KS3SDKUtil base64md5FromData:putObjRequest.data];
     
     //视频转码命令
-    NSString* utpCommand =[NSString stringWithFormat:@"tag=avop&f=flv&res=x480&as=1&vbr=128k|tag=saveas&bucket=%@&object=%@",kUploadBucketName, [[@"result.flv" dataUsingEncoding:NSUTF8StringEncoding] base64Encoding]] ;
-    putObjRequest.kSYHeader = [putObjRequest.kSYHeader stringByAppendingString:[@"kss-async-process:" stringByAppendingString:utpCommand]];
-    putObjRequest.kSYHeader = [NSString stringWithFormat:@"%@\n",putObjRequest.kSYHeader];
-    putObjRequest.kSYHeader = [@"kss-notifyurl:" stringByAppendingString: @"http://10.4.2.38:19090/"];
-    putObjRequest.kSYHeader = [NSString stringWithFormat:@"%@\n",putObjRequest.kSYHeader];
-
+    NSString* utpCommand =[NSString stringWithFormat:@"tag=avop&f=mp4|tag=saveas&bucket=%@&object=%@",kUploadBucketName, [[@"wz/result.mp4" dataUsingEncoding:NSUTF8StringEncoding] base64Encoding]];
+    [putObjRequest.urlRequest setValue:utpCommand forHTTPHeaderField:@"kss-async-process"];
+    [putObjRequest.urlRequest setValue:@"http://10.4.2.38:19090/" forHTTPHeaderField:@"kss-notifyurl"];
+    
     [putObjRequest setCompleteRequest];
     
     //生产环境应从Appserver获取token后设置token，此处使用Ak sk计算token模拟
@@ -80,6 +75,42 @@
     
 }
 
+- (void)beginAsynchronousDataProcessing
+{
+
+    KS3AccessControlList *ControlList = [[KS3AccessControlList alloc] init];
+    [ControlList setContronAccess:KingSoftYun_Permission_Public_Read_Write];
+
+    KS3PutObjectRequest *putObjRequest = [[KS3PutObjectRequest alloc] initWithName:kUploadBucketName withAcl:ControlList grantAcl:nil];
+    putObjRequest.delegate = self;
+    putObjRequest.filename = [kUploadObjectKey stringByAppendingString:@"?adp"];
+    
+    //视频截图命令
+    NSString* adpCommand =[NSString stringWithFormat:@"tag=avscrnshot&ss=1&res=640x360&&rotate=90|tag=saveas&bucket=%@&object=%@",kUploadBucketName, [[@"wz/screenshot_iossdk.png" dataUsingEncoding:NSUTF8StringEncoding] base64Encoding]];
+    [putObjRequest.urlRequest setValue:adpCommand forHTTPHeaderField:@"kss-async-process"];
+    [putObjRequest.urlRequest setValue:@"http://10.4.2.38:19090/" forHTTPHeaderField:@"kss-notifyurl"];
+    
+    [putObjRequest setCompleteRequest];
+    //putObjRequest.kSYResource =  [NSString stringWithFormat:@"/%@/%@?%@",kUploadBucketName,kUploadObjectKey, @"adp"];
+    
+    //生产环境应从Appserver获取token后设置token，此处使用Ak sk计算token模拟
+    [putObjRequest setStrKS3Token:[KS3Util getAuthorization:putObjRequest]];
+    KS3PutObjectResponse *response = [[KS3Client initialize] putObject:putObjRequest];
+    
+    
+    //putObjRequest若没设置代理，则是同步的下方判断，
+    //putObjRequest若设置了代理，则走上传代理回调,
+    if (putObjRequest.delegate == nil) {
+        NSLog(@"%@",[[NSString alloc] initWithData:response.body encoding:NSUTF8StringEncoding]);
+        if (response.httpStatusCode == 200) {
+            NSLog(@"Put object success");
+        }
+        else {
+            NSLog(@"Put object failed");
+        }
+    }
+    
+}
 
 
 #pragma mark - UITableView delegate
@@ -88,13 +119,13 @@
     switch (indexPath.row) {
         case 0: //utp
         {
-            [self beginSingleUpload];
+            [self beginUploadTriggerProcessing];
             
         }
             break;
         case 1: //adp
         {
-            
+            [self beginAsynchronousDataProcessing];
         }
             break;
         default:
@@ -120,8 +151,7 @@
     return cell;
 }
 
-
-#pragma mark - request delegate
+#pragma mark - 上传的回调方法
 
 - (void)request:(KS3Request *)request didCompleteWithResponse:(KS3Response *)response
 {
@@ -146,6 +176,10 @@
 - (void)request:(KS3Request *)request didReceiveResponse:(NSURLResponse *)response
 {
     NSInteger statusCode = ((NSHTTPURLResponse*) response).statusCode;
+    
+    //for debug
+    NSLog(@"response: %@", response);
+    
     if ( (statusCode>= 200 && statusCode <300) || statusCode == 304) {
         NSLog(@"Put object success");
     }

@@ -67,11 +67,24 @@
     //    strHeaders = [strHeaders stringByAppendingString:@"\n"];
     
     // **** Signature
-    NSString *strToSig = [strHttpVerb stringByAppendingString:strContentMd5];
-    strToSig = [strToSig stringByAppendingString:strContentType];
+     NSString *strToSig = @"";
+    if(strContentMd5) {
+        strToSig = [strHttpVerb stringByAppendingString:strContentMd5];
+    }else{
+        strToSig = [strHttpVerb stringByAppendingString:@"\n"];
+    }
+    if(strContentType) {
+        strToSig = [strToSig stringByAppendingString:strContentType];
+    }else {
+         strToSig = [strToSig stringByAppendingString:@"\n"];
+    }
     strToSig = [strToSig stringByAppendingString:strDate];
     strToSig = [strToSig stringByAppendingString:strHeaders];
     strToSig = [strToSig stringByAppendingString:strResource];
+
+    //for debugging
+    NSLog(@"strToSign: %@", strToSig);
+
     strToSig = [self hexEncode:secretKey text:strToSig];
     return strToSig;
 }

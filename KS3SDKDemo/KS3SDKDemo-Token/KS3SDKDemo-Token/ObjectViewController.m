@@ -446,6 +446,8 @@ KS3Client 方法：
     
     //使用token签名时从Appserver获取token后设置token，使用Ak sk则忽略，不需要调用
     [putObjRequest setStrKS3Token:[KS3Util getAuthorization:putObjRequest]];
+    
+    
     KS3PutObjectResponse *response = [[KS3Client initialize] putObject:putObjRequest];
     
     
