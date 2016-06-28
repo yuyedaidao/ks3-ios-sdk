@@ -1,4 +1,4 @@
-	##KS3 SDK for iOS
+## KS3 SDK for iOS
 ---
 
 ### v1.6.0 改动日志 2016.6.27
