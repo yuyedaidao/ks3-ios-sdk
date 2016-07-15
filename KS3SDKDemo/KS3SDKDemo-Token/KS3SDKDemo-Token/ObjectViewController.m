@@ -432,6 +432,7 @@ KS3Client 方法：
 //    //            acl.displayName = @"accDisplayName";
 //    [acl setGrantControlAccess:KingSoftYun_Grant_Permission_Read];
     KS3PutObjectRequest *putObjRequest = [[KS3PutObjectRequest alloc] initWithName:kUploadBucketName withAcl:ControlList grantAcl:nil];
+    
     NSString *fileName = [[NSBundle mainBundle] pathForResource:@"7.6M" ofType:@"mov"];
     putObjRequest.data = [NSData dataWithContentsOfFile:fileName options:NSDataReadingMappedIfSafe error:nil];
     _fileSize = putObjRequest.data.length;
@@ -447,6 +448,9 @@ KS3Client 方法：
     //使用token签名时从Appserver获取token后设置token，使用Ak sk则忽略，不需要调用
     [putObjRequest setStrKS3Token:[KS3Util getAuthorization:putObjRequest]];
     
+    
+    putObjRequest.host = [NSString stringWithFormat:@"http://www.abc.com/%@", [putObjRequest URLEncodedString:kUploadBucketKey]];
+
     
     KS3PutObjectResponse *response = [[KS3Client initialize] putObject:putObjRequest];
     
