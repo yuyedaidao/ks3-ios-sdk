@@ -86,6 +86,10 @@
         }
         
     }
+    output = [output stringByReplacingOccurrencesOfString:@"%2F" withString:@"/"];
+    output = [output stringByReplacingOccurrencesOfString:@"+" withString:@"%20"];
+    output = [output stringByReplacingOccurrencesOfString:@"*" withString:@"%2A"];
+    output = [output stringByReplacingOccurrencesOfString:@"%7E" withString:@"~"];
     
     return output;
     
