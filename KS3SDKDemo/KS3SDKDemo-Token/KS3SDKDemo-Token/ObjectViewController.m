@@ -270,11 +270,17 @@ KS3Client 方法：
     _partSize = 5;    //  文件大于5M为最小5M一块
 
     KS3AccessControlList *acl = [[KS3AccessControlList alloc] init];
-    [acl setContronAccess:KingSoftYun_Permission_Private];
+    [acl setContronAccess:KingSoftYun_Permission_Public_Read];
+    
     KS3InitiateMultipartUploadRequest *initMultipartUploadReq = [[KS3InitiateMultipartUploadRequest alloc] initWithKey:strKey inBucket:kUploadBucketName acl:acl grantAcl:nil];
     [initMultipartUploadReq setCompleteRequest];
+   
 #warning  1.使用token签名时从Appserver获取token后设置token，这里用token方式依然用到AKSK是为了模拟从服务器获取Token 2.使用Ak sk则忽略，不需要调用
     [initMultipartUploadReq setStrKS3Token:[KS3Util getAuthorization:initMultipartUploadReq]];
+    
+     //initMultipartUploadReq.strDate = @"Fri, 15 Jul 2016 09:21:30 GMT";
+    //initMultipartUploadReq.strKS3Token = @"KSS JYWSSnN5qY/hFiWg/Y1V:s1ICTedN7C+QqGFMD1FQYj6/bYA=";
+    
     _muilt = [[KS3Client initialize] initiateMultipartUploadWithRequest:initMultipartUploadReq];
     if (_muilt == nil) {
         NSLog(@"####Init upload failed, please check access key, secret key and bucket name!####");
