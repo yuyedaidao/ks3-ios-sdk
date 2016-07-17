@@ -455,7 +455,10 @@ KS3Client 方法：
     [putObjRequest setStrKS3Token:[KS3Util getAuthorization:putObjRequest]];
     
     
-    putObjRequest.host = [NSString stringWithFormat:@"http://www.abc.com/%@", [putObjRequest URLEncodedString:kUploadBucketKey]];
+    /**
+     * 如果希望向绑定bucket的域名（绑定域名和bucket请在控制台设置）上传文件，请设置请求的host属性如下
+     */
+    //putObjRequest.host = [NSString stringWithFormat:@"http://www.abc.com/%@", [putObjRequest URLEncodedString:kUploadBucketKey]];
 
     
     KS3PutObjectResponse *response = [[KS3Client initialize] putObject:putObjRequest];

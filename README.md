@@ -1,7 +1,12 @@
 ## KS3 SDK for iOS
 ---
 
-### v1.6.0 改动日志 2016.6.27
+### v1.7.0 改动日志 2016.07.18
+* 增加向用户绑定的域名上传文件的示例（参见beginSingleUpload方法中注释）
+* encode函数增加特殊字符的替换操作（和API统一）
+* 删除测试AK/SK,运行Demo前请先在AppDelegate.m中设置您账号的AK/SK，在相应的ViewController.m文件的头部指定您的bucket（即kUploadBucketName宏定义）
+
+### v1.6.0 改动日志 2016.06.27
 * 默认为北京region，杭州region老用户仍可以使用
 * 增加put object上传查看response回调的示例
 * 修正分块上传恢复时的块号问题
