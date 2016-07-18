@@ -788,7 +788,7 @@
 				TargetAttributes = {
 					0A6390811A42AF2200BA3A99 = {
 						CreatedOnToolsVersion = 6.1.1;
-						DevelopmentTeam = 36PUU93BJ2;
+						DevelopmentTeam = 9CT48VXQ3W;
 					};
 				};
 			};
@@ -1023,7 +1023,7 @@
 					"$(inherited)",
 					"$(SDKROOT)/usr/lib/system",
 				);
-				MACH_O_TYPE = staticlib;
+				MACH_O_TYPE = mh_dylib;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.kingsoft.-KS3SDK.KS3YunSDK";
@@ -1053,7 +1053,7 @@
 					"$(inherited)",
 					"$(SDKROOT)/usr/lib/system",
 				);
-				MACH_O_TYPE = staticlib;
+				MACH_O_TYPE = mh_dylib;
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.kingsoft.-KS3SDK.KS3YunSDK";
 				PRODUCT_NAME = "$(TARGET_NAME)";
