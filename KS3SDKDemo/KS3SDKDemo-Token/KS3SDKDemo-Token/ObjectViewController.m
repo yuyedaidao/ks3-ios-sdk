@@ -456,14 +456,6 @@ KS3Client 方法：
     
     //使用token签名时从Appserver获取token后设置token，使用Ak sk则忽略，不需要调用
     [putObjRequest setStrKS3Token:[KS3Util getAuthorization:putObjRequest]];
-    
-    
-    /**
-     * 如果希望向绑定bucket的域名（绑定域名和bucket请在控制台设置）上传文件，请设置请求的host属性如下
-     */
-    //putObjRequest.host = [NSString stringWithFormat:@"http://www.abc.com/%@", [putObjRequest URLEncodedString:kUploadBucketKey]];
-
-    
     KS3PutObjectResponse *response = [[KS3Client initialize] putObject:putObjRequest];
     
     

@@ -27,11 +27,16 @@
         self.acl = acl;
         self.arrGrantAcl = arrGrantAcl;
         self.kSYResource =  [NSString stringWithFormat:@"/%@", self.bucket];
-        self.host = [NSString stringWithFormat:@"http://%@.%@", self.bucket,[[KS3Client initialize]getBucketDomain]]; // **** 线上版本，无callback
-//        self.host = [NSString stringWithFormat:@"http://115.231.96.27:8080/%@", bucketName]; // **** 线上测试callback
-//        self.host = [NSString stringWithFormat:@"http://192.168.135.79/%@", bucketName];// **** 旷余健主机
         
-        //
+        KS3Client * ks3Client = [KS3Client initialize];
+        NSString * customBucketDomain = [ks3Client getCustomBucketDomain];
+        
+        if ( customBucketDomain!= nil) {
+            self.host = [NSString stringWithFormat:@"http://%@", customBucketDomain];
+        }else{
+           self.host = [NSString stringWithFormat:@"http://%@.%@", self.bucket,[ks3Client getBucketDomain]]; // **** 线上版本，无callback
+        }
+//        self.host = [NSString stringWithFormat:@"http://115.231.96.27:8080/%@", bucketName]; // **** 线上测试callback
         
         if (_acl != nil) {
             self.kSYHeader = [@"x-kss-acl:" stringByAppendingString:_acl.accessACL];
@@ -121,6 +126,7 @@
     
     _filename = [self URLEncodedString:_filename];
     self.kSYResource = [NSString stringWithFormat:@"%@/%@",self.kSYResource,_filename];
+    
     self.host = [NSString stringWithFormat:@"%@/%@",self.host,_filename];
     
     if (![self.kSYHeader isEqualToString:@""]) {
