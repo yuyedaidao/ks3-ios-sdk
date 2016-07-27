@@ -32,7 +32,15 @@
 
 - (NSMutableURLRequest *)configureURLRequest
 {
-    self.host = [NSString stringWithFormat:@"http://%@.%@/%@?uploadId=%@", self.bucket,[[KS3Client initialize]getBucketDomain], self.key, self.uploadId];
+    KS3Client * ks3Client = [KS3Client initialize];
+    NSString * customBucketDomain = [ks3Client getCustomBucketDomain];
+    if ( customBucketDomain!= nil) {
+        self.host = [NSString stringWithFormat:@"http://%@/%@?uploadId=%@", customBucketDomain, self.key,self.uploadId];
+    }else{
+        self.host = [NSString stringWithFormat:@"http://%@.%@/%@?uploadId=%@", self.bucket,[[KS3Client initialize]getBucketDomain], self.key, self.uploadId];
+        
+    }
+
 
     NSMutableString *subresource = [NSMutableString stringWithCapacity:512];
     if (self.maxParts != 1000) { // **** default is 1000

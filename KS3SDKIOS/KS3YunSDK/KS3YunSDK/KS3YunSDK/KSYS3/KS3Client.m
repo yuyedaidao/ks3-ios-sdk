@@ -74,7 +74,7 @@ static NSTimeInterval const KingSoftYun_RequestTimeout = 600; // in seconds
 @property (strong, nonatomic) NSMutableData *tokenData;
 @property (assign, nonatomic) KS3BucketDomainRegion bucketDomainRegion;
 @property (copy, nonatomic) NSString*bucketDomainIp;
-@property (copy, nonatomic) NSString *customBucketDomain ;  //用户自定义的domain
+@property (strong, nonatomic) NSString *customBucketDomain;  //用户自定义的domain
 @property (strong, nonatomic) ALAssetsLibrary *assetsLibrary ;
 
 @end
@@ -129,6 +129,14 @@ static NSTimeInterval const KingSoftYun_RequestTimeout = 600; // in seconds
         return @"kss.ksyun.com";
     }
     return  @"ks3-cn-beijing.ksyun.com";
+}
+
+- (NSString*) getCustomBucketDomain{
+    if(_customBucketDomain) {
+        return _customBucketDomain;
+    }else {
+        return nil;
+    }
 }
 
 - (void)setBucketDomain:(NSString *)domainRegion

@@ -173,8 +173,17 @@
     fileHandle = [NSFileHandle fileHandleForWritingAtPath:temporaryPath];
     offset = [fileHandle seekToEndOfFile];
     NSString *range = [NSString stringWithFormat:@"bytes=%llu-",offset];
-    NSString *strHost = [NSString stringWithFormat:@"http://%@.%@/%@", _bucketName,[[KS3Client initialize]getBucketDomain], _key];
-  
+    
+    KS3Client * ks3Client = [KS3Client initialize];
+    NSString * customBucketDomain = [ks3Client getCustomBucketDomain];
+    
+    NSString *strHost;
+    if ( customBucketDomain!= nil) {
+        strHost = [NSString stringWithFormat:@"http://%@/%@", customBucketDomain, _key];
+    }else{
+        strHost = [NSString stringWithFormat:@"http://%@.%@/%@", _bucketName,[ks3Client getBucketDomain], _key];
+    }
+    
     
     NSString *strAuthorization = @"";
     if (_credentials.accessKey != nil && _credentials.secretKey != nil) {
