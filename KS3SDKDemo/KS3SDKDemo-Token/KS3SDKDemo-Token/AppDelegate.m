@@ -24,6 +24,8 @@ NSString * const strSecretKey = @"your secret key";
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
         [[KS3Client initialize] setBucketDomainWithRegion:KS3BucketBeijing];
+    
+    //使用绑定bucket的自定义域名可以通过下面这行设置endpoint
     //[[KS3Client initialize] setBucketDomain:@"www.abc.com"];
     return YES;
 }
