@@ -23,7 +23,8 @@ NSString * const strSecretKey = @"CVpFTtt+tMlxwkg1PtzmD9p1rxHxAu0enzNBbk3F";
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-        [[KS3Client initialize] setBucketDomainWithRegion:KS3BucketBeijing];
+    //[[KS3Client initialize] setBucketDomainWithRegion:KS3BucketBeijing];
+    [[KS3Client initialize] setBucketDomain:@"jsdn.fotoplace.cc"];
     return YES;
 }
 

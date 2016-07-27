@@ -54,14 +54,14 @@
 //Demo下载文件的地址：http://ecloud.kssws.ks-cdn.com/test2/Test.pdf
 
 //上传
-#define kUploadBucketName @"gzz-beijing"   //上传所用的bucketName
+#define kUploadBucketName @"fpvideo"//@"gzz-beijing"   //上传所用的bucketName
 #define kUploadBucketKey @"wz/7.6M.mov"  //上传时用到的bucket里文件的路径，此为在wz目录下7.6M.mov
 #define keyUploadPartNum @"partNum"    //需要app本地存储已经传成功的块号,demo为了演示，用NSUserDefaults存储，app可用数据库等
 #define keyUploadId @"uploadId"      //需要app本地存储已经初始化成功的uploadId，用于断点续传，demo为了演示，用NSUserDefaults存储,app可用数据库等
 
 //下载
-#define kDownloadBucketName @"ecloud"//下载所用的bucketName
-#define kDownloadBucketKey @"test2/Test.pdf"   //下载的文件所在bucket的路径
+#define kDownloadBucketName @"fpvideo"//@"ecloud"//下载所用的bucketName
+#define kDownloadBucketKey @"10.pic_hd.jpg"//@"test2/Test.pdf"   //下载的文件所在bucket的路径
 #define kDownloadSize 21131496   //Demo下载文件的大小，根据业务需求，显示进度条时用到，需要记录，app可用数据库等
 
 #define kBucketName @"acc"//@"alert1"//@"bucketcors"//@"alert1"
@@ -274,6 +274,7 @@ KS3Client 方法：
     
     KS3InitiateMultipartUploadRequest *initMultipartUploadReq = [[KS3InitiateMultipartUploadRequest alloc] initWithKey:strKey inBucket:kUploadBucketName acl:acl grantAcl:nil];
     [initMultipartUploadReq setCompleteRequest];
+    
    
 #warning  1.使用token签名时从Appserver获取token后设置token，这里用token方式依然用到AKSK是为了模拟从服务器获取Token 2.使用Ak sk则忽略，不需要调用
     [initMultipartUploadReq setStrKS3Token:[KS3Util getAuthorization:initMultipartUploadReq]];
@@ -282,6 +283,8 @@ KS3Client 方法：
     //initMultipartUploadReq.strKS3Token = @"KSS JYWSSnN5qY/hFiWg/Y1V:s1ICTedN7C+QqGFMD1FQYj6/bYA=";
     
     _muilt = [[KS3Client initialize] initiateMultipartUploadWithRequest:initMultipartUploadReq];
+    
+    
     if (_muilt == nil) {
         NSLog(@"####Init upload failed, please check access key, secret key and bucket name!####");
         return ;
@@ -536,7 +539,7 @@ KS3Client 方法：
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:strIdentifier];
     if (nil == cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:strIdentifier];
-        if (indexPath.row == 0) {
+        if (indexPath.row == 0) {  //Get Object下载
             UIProgressView *progressView = [[UIProgressView alloc] initWithFrame:CGRectMake(mScreenWidth * .35 , 20, mScreenWidth * .5, 20)];
             progressView.progressViewStyle = UIProgressViewStyleDefault;
             progressView.tag = 99;
@@ -560,7 +563,7 @@ KS3Client 方法：
             [cell.contentView addSubview:stopBtn];
             
         }
-        if (indexPath.row == 9) {
+        if (indexPath.row == 9) {  //分块上传
             UIProgressView *progressView = [[UIProgressView alloc] initWithFrame:CGRectMake(mScreenWidth * .4 , 20, mScreenWidth * .45, 20)];
             progressView.progressViewStyle = UIProgressViewStyleDefault;
             progressView.tag = 199;

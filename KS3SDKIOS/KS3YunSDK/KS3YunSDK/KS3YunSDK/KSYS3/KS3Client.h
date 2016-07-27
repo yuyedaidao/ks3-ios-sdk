@@ -117,6 +117,13 @@ typedef enum
     共有北京，杭州，美国圣克拉拉，香港四个
  */
 - (NSString *)getBucketDomain;
+
+/**
+ *  获取用户自定义的域名
+ *  如果没有设置，返回nil
+ */
+- (NSString*) getCustomBucketDomain;
+
 /**
  *  列出客户所有的Bucket信息
  *
