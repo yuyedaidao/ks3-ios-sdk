@@ -21,7 +21,7 @@
         self.contentType = @"";
         self.kSYHeader = @"";
         self.kSYResource =  [NSString stringWithFormat:@"/%@/?acl", self.bucket];
-        self.host = [NSString stringWithFormat:@"http://%@.%@/?acl", self.bucket,[[KS3Client initialize]getBucketDomain]];
+        self.host = [NSString stringWithFormat:@"%@://%@.%@/?acl", [[KS3Client initialize] requestProtocol], self.bucket,[[KS3Client initialize]getBucketDomain]];
      
         if (accessACL) {
             _acl = accessACL;

@@ -179,9 +179,9 @@
     
     NSString *strHost;
     if ( customBucketDomain!= nil) {
-        strHost = [NSString stringWithFormat:@"http://%@/%@", customBucketDomain, _key];
+        strHost = [NSString stringWithFormat:@"%@://%@/%@", [ks3Client requestProtocol], customBucketDomain, _key];
     }else{
-        strHost = [NSString stringWithFormat:@"http://%@.%@/%@", _bucketName,[ks3Client getBucketDomain], _key];
+        strHost = [NSString stringWithFormat:@"%@://%@.%@/%@", [ks3Client requestProtocol], _bucketName,[ks3Client getBucketDomain], _key];
     }
     
     

@@ -90,8 +90,14 @@ static NSTimeInterval const KingSoftYun_RequestTimeout = 600; // in seconds
         shareObj.bucketDomainRegion = KS3BucketBeijing;
         shareObj.bucketDomainIp = @"ks3-cn-beijing.ksyun.com";
         shareObj.assetsLibrary = [[ALAssetsLibrary alloc]init];
+        shareObj.enableHTTPS = false;
     });
     return shareObj;
+}
+
+#pragma mark - Request Protocol
+- (NSString *)requestProtocol {
+    return self.enableHTTPS ? @"https" : @"http";
 }
 
 #pragma mark - Init credentials
@@ -476,7 +482,7 @@ static NSTimeInterval const KingSoftYun_RequestTimeout = 600; // in seconds
         return nil;
     }
     NSLog(@"====== downloadObjectWithBucketName ======");
-    NSString *strHost = [NSString stringWithFormat:@"http://%@.%@/%@", bucketName,[[KS3Client initialize]getBucketDomain], key];
+    NSString *strHost = [NSString stringWithFormat:@"%@://%@.%@/%@", [[KS3Client initialize] requestProtocol], bucketName,[[KS3Client initialize]getBucketDomain], key];
     KS3DownLoad *downLoad = [[KS3DownLoad alloc] initWithUrl:strHost credentials:_credentials :bucketName :key];
     downLoad.downloadBeginBlock = downloadBeginBlock;
     downLoad.downloadFileCompleteionBlock = downloadFileCompleteion;

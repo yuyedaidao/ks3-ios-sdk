@@ -20,7 +20,7 @@
         self.contentType = @"";
         self.kSYHeader = @"";
         self.kSYResource =  [NSString stringWithFormat:@"/%@/?logging", self.bucket];
-        self.host = [NSString stringWithFormat:@"http://%@.%@/?logging", self.bucket,[[KS3Client initialize]getBucketDomain]];
+        self.host = [NSString stringWithFormat:@"%@://%@.%@/?logging", [[KS3Client initialize] requestProtocol], self.bucket,[[KS3Client initialize]getBucketDomain]];
     }
     return self;
 }

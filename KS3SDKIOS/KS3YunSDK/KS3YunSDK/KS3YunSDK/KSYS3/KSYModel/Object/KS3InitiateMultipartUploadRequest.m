@@ -98,9 +98,9 @@
     NSString * customBucketDomain = [ks3Client getCustomBucketDomain];
     
     if ( customBucketDomain!= nil) {
-         self.host = [NSString stringWithFormat:@"http://%@/%@?uploads", customBucketDomain, self.key];
+         self.host = [NSString stringWithFormat:@"%@://%@/%@?uploads", [[KS3Client initialize] requestProtocol], customBucketDomain, self.key];
     }else{
-        self.host = [NSString stringWithFormat:@"http://%@.%@/%@?uploads", self.bucket,[ks3Client getBucketDomain], self.key];
+        self.host = [NSString stringWithFormat:@"%@://%@.%@/%@?uploads", [[KS3Client initialize] requestProtocol], self.bucket,[ks3Client getBucketDomain], self.key];
 
     }
 

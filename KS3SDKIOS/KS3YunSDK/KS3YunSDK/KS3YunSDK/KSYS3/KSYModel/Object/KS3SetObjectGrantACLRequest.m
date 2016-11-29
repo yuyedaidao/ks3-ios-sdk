@@ -34,7 +34,7 @@
         self.kSYHeader = [_acl.accessGrantACL stringByAppendingString:@":"];
         self.kSYHeader = [self.kSYHeader stringByAppendingString:strValue];
         self.kSYHeader = [self.kSYHeader stringByAppendingString:@"\n"];
-        self.host = [NSString stringWithFormat:@"http://%@.%@/%@?acl", self.bucket,[[KS3Client initialize]getBucketDomain], _key];
+        self.host = [NSString stringWithFormat:@"%@://%@.%@/%@?acl", [[KS3Client initialize] requestProtocol], self.bucket,[[KS3Client initialize]getBucketDomain], _key];
     }
     return self;
 }

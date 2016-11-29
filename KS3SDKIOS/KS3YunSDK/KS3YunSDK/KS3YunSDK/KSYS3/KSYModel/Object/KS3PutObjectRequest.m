@@ -32,9 +32,9 @@
         NSString * customBucketDomain = [ks3Client getCustomBucketDomain];
         
         if ( customBucketDomain!= nil) {
-            self.host = [NSString stringWithFormat:@"http://%@", customBucketDomain];
+            self.host = [NSString stringWithFormat:@"%@://%@", [[KS3Client initialize] requestProtocol], customBucketDomain];
         }else{
-           self.host = [NSString stringWithFormat:@"http://%@.%@", self.bucket,[ks3Client getBucketDomain]]; // **** 线上版本，无callback
+           self.host = [NSString stringWithFormat:@"%@://%@.%@", [[KS3Client initialize] requestProtocol], self.bucket,[ks3Client getBucketDomain]]; // **** 线上版本，无callback
         }
 //        self.host = [NSString stringWithFormat:@"http://115.231.96.27:8080/%@", bucketName]; // **** 线上测试callback
         
