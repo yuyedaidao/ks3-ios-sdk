@@ -84,12 +84,21 @@ typedef enum
 
 @interface KS3Client : KS3WebServiceClient
 
+@property (assign, nonatomic) BOOL enableHTTPS;
+
 /**
  *  初始化
  *
  *  @return Client对象
  */
 + (KS3Client *)initialize;
+
+/**
+ * 返回请求协议：http/https
+ * 目前由enableHTTPS决定
+ */
+- (NSString *)requestProtocol;
+
 /**
  *  设置AccessKey和SecretKey
  *
@@ -358,7 +367,6 @@ typedef enum
                       downloadFileCompleteion:(kSS3DownloadFileCompleteionBlock)downloadFileCompleteion
                   downloadProgressChangeBlock:(KSS3DownloadProgressChangeBlock)downloadProgressChangeBlock
                                   failedBlock:(KSS3DownloadFailedBlock)failedBlock;
-
 
 /**
  *  返回版本信息
