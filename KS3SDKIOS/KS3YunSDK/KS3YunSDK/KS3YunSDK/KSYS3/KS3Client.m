@@ -90,7 +90,7 @@ static NSTimeInterval const KingSoftYun_RequestTimeout = 600; // in seconds
         shareObj.bucketDomainRegion = KS3BucketBeijing;
         shareObj.bucketDomainIp = @"ks3-cn-beijing.ksyun.com";
         shareObj.assetsLibrary = [[ALAssetsLibrary alloc]init];
-        shareObj.enableHTTPS = false;
+        shareObj.enableHTTPS = YES;
     });
     return shareObj;
 }
