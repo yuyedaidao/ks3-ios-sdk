@@ -10,8 +10,8 @@
 #import <XCTest/XCTest.h>
 #import <KS3YunSDK.h>
 
-NSString *const strAccessKey = @"IYh4GQWndtnQvmCJWFL4";
-NSString *const strSecretKey = @"1+RBTrWaeT6LaixUV5SGPFpeTa/wZEeZlGzYaZfr";
+NSString *const strAccessKey = @"your access key";
+NSString *const strSecretKey = @"your secret key";
 
 @interface KS3YunSDKTests : XCTestCase
 
