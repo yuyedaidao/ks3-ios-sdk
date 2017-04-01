@@ -86,10 +86,10 @@
         }
         
     }
-    output = [output stringByReplacingOccurrencesOfString:@"%2F" withString:@"/"];
-    output = [output stringByReplacingOccurrencesOfString:@"+" withString:@"%20"];
-    output = [output stringByReplacingOccurrencesOfString:@"*" withString:@"%2A"];
-    output = [output stringByReplacingOccurrencesOfString:@"%7E" withString:@"~"];
+    output = [[output stringByReplacingOccurrencesOfString:@"%2F" withString:@"/"] mutableCopy];
+    output = [[output stringByReplacingOccurrencesOfString:@"+" withString:@"%20"] mutableCopy];
+    output = [[output stringByReplacingOccurrencesOfString:@"*" withString:@"%2A"] mutableCopy];
+    output = [[output stringByReplacingOccurrencesOfString:@"%7E" withString:@"~"] mutableCopy];
     
     return output;
     
