@@ -438,10 +438,9 @@ static NSTimeInterval const KingSoftYun_RequestTimeout = 600; // in seconds
     KS3Response *response = [KS3Client constructResponseFromRequest:request];
     [response setRequest:request];
     if ([request delegate] != nil) {
-        NSURLConnection *urlConnection =
-        [[NSURLConnection alloc] initWithRequest:urlRequest
-                                        delegate:response
-                                startImmediately:NO];
+        NSURLConnection *urlConnection = [[NSURLConnection alloc] initWithRequest:urlRequest
+                                                                         delegate:response
+                                                                 startImmediately:NO];
         request.urlConnection = urlConnection;
 
         [NSTimer scheduledTimerWithTimeInterval:[self getRequestTimeOut:request]
