@@ -1,0 +1,448 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		459B691BDD20A82061BBF8DD /* libPods-KS3SDKDemo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F6DF70FD7F09025DFF977919 /* libPods-KS3SDKDemo.a */; };
+		DFAA99E01EB048380099FD13 /* BucketViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFAA99D11EB048380099FD13 /* BucketViewController.m */; };
+		DFAA99E11EB048380099FD13 /* CreateBucketViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFAA99D31EB048380099FD13 /* CreateBucketViewController.m */; };
+		DFAA99E21EB048380099FD13 /* GetAllObjectsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFAA99D51EB048380099FD13 /* GetAllObjectsViewController.m */; };
+		DFAA99E31EB048380099FD13 /* KS3Util.m in Sources */ = {isa = PBXBuildFile; fileRef = DFAA99D71EB048380099FD13 /* KS3Util.m */; };
+		DFAA99E41EB048380099FD13 /* ListBucketViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFAA99D91EB048380099FD13 /* ListBucketViewController.m */; };
+		DFAA99E51EB048380099FD13 /* ObjectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFAA99DB1EB048380099FD13 /* ObjectViewController.m */; };
+		DFAA99E61EB048380099FD13 /* ServiceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFAA99DD1EB048380099FD13 /* ServiceViewController.m */; };
+		DFAA99E71EB048380099FD13 /* VideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFAA99DF1EB048380099FD13 /* VideoViewController.m */; };
+		DFAA99E91EB048400099FD13 /* 7.6M.mov in Resources */ = {isa = PBXBuildFile; fileRef = DFAA99E81EB048400099FD13 /* 7.6M.mov */; };
+		DFAFC6201EB0459800932063 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DFAFC61F1EB0459800932063 /* main.m */; };
+		DFAFC6231EB0459800932063 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DFAFC6221EB0459800932063 /* AppDelegate.m */; };
+		DFAFC6261EB0459800932063 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFAFC6251EB0459800932063 /* ViewController.m */; };
+		DFAFC6291EB0459800932063 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DFAFC6271EB0459800932063 /* Main.storyboard */; };
+		DFAFC62B1EB0459800932063 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DFAFC62A1EB0459800932063 /* Assets.xcassets */; };
+		DFAFC62E1EB0459800932063 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DFAFC62C1EB0459800932063 /* LaunchScreen.storyboard */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		CF4E71A5C6DD3ADE8C97EC8F /* Pods-KS3SDKDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KS3SDKDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-KS3SDKDemo/Pods-KS3SDKDemo.release.xcconfig"; sourceTree = "<group>"; };
+		DFAA99D01EB048380099FD13 /* BucketViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BucketViewController.h; sourceTree = "<group>"; };
+		DFAA99D11EB048380099FD13 /* BucketViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BucketViewController.m; sourceTree = "<group>"; };
+		DFAA99D21EB048380099FD13 /* CreateBucketViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateBucketViewController.h; sourceTree = "<group>"; };
+		DFAA99D31EB048380099FD13 /* CreateBucketViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateBucketViewController.m; sourceTree = "<group>"; };
+		DFAA99D41EB048380099FD13 /* GetAllObjectsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GetAllObjectsViewController.h; sourceTree = "<group>"; };
+		DFAA99D51EB048380099FD13 /* GetAllObjectsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GetAllObjectsViewController.m; sourceTree = "<group>"; };
+		DFAA99D61EB048380099FD13 /* KS3Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KS3Util.h; sourceTree = "<group>"; };
+		DFAA99D71EB048380099FD13 /* KS3Util.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KS3Util.m; sourceTree = "<group>"; };
+		DFAA99D81EB048380099FD13 /* ListBucketViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListBucketViewController.h; sourceTree = "<group>"; };
+		DFAA99D91EB048380099FD13 /* ListBucketViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListBucketViewController.m; sourceTree = "<group>"; };
+		DFAA99DA1EB048380099FD13 /* ObjectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjectViewController.h; sourceTree = "<group>"; };
+		DFAA99DB1EB048380099FD13 /* ObjectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ObjectViewController.m; sourceTree = "<group>"; };
+		DFAA99DC1EB048380099FD13 /* ServiceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServiceViewController.h; sourceTree = "<group>"; };
+		DFAA99DD1EB048380099FD13 /* ServiceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServiceViewController.m; sourceTree = "<group>"; };
+		DFAA99DE1EB048380099FD13 /* VideoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoViewController.h; sourceTree = "<group>"; };
+		DFAA99DF1EB048380099FD13 /* VideoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoViewController.m; sourceTree = "<group>"; };
+		DFAA99E81EB048400099FD13 /* 7.6M.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = 7.6M.mov; sourceTree = "<group>"; };
+		DFAFC61B1EB0459800932063 /* KS3SDKDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KS3SDKDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		DFAFC61F1EB0459800932063 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		DFAFC6211EB0459800932063 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		DFAFC6221EB0459800932063 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		DFAFC6241EB0459800932063 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		DFAFC6251EB0459800932063 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		DFAFC6281EB0459800932063 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		DFAFC62A1EB0459800932063 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		DFAFC62D1EB0459800932063 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		DFAFC62F1EB0459800932063 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E20DA10A7DC7D91E7962A1F7 /* Pods-KS3SDKDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KS3SDKDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-KS3SDKDemo/Pods-KS3SDKDemo.debug.xcconfig"; sourceTree = "<group>"; };
+		F6DF70FD7F09025DFF977919 /* libPods-KS3SDKDemo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-KS3SDKDemo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		DFAFC6181EB0459800932063 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				459B691BDD20A82061BBF8DD /* libPods-KS3SDKDemo.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		423125D015674C8441662692 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F6DF70FD7F09025DFF977919 /* libPods-KS3SDKDemo.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A220EE01B3913B8B8E62EA07 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				E20DA10A7DC7D91E7962A1F7 /* Pods-KS3SDKDemo.debug.xcconfig */,
+				CF4E71A5C6DD3ADE8C97EC8F /* Pods-KS3SDKDemo.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		DFAFC6121EB0459800932063 = {
+			isa = PBXGroup;
+			children = (
+				DFAFC61D1EB0459800932063 /* KS3SDKDemo */,
+				DFAFC61C1EB0459800932063 /* Products */,
+				A220EE01B3913B8B8E62EA07 /* Pods */,
+				423125D015674C8441662692 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		DFAFC61C1EB0459800932063 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				DFAFC61B1EB0459800932063 /* KS3SDKDemo.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		DFAFC61D1EB0459800932063 /* KS3SDKDemo */ = {
+			isa = PBXGroup;
+			children = (
+				DFAA99E81EB048400099FD13 /* 7.6M.mov */,
+				DFAA99D01EB048380099FD13 /* BucketViewController.h */,
+				DFAA99D11EB048380099FD13 /* BucketViewController.m */,
+				DFAA99D21EB048380099FD13 /* CreateBucketViewController.h */,
+				DFAA99D31EB048380099FD13 /* CreateBucketViewController.m */,
+				DFAA99D41EB048380099FD13 /* GetAllObjectsViewController.h */,
+				DFAA99D51EB048380099FD13 /* GetAllObjectsViewController.m */,
+				DFAA99D61EB048380099FD13 /* KS3Util.h */,
+				DFAA99D71EB048380099FD13 /* KS3Util.m */,
+				DFAA99D81EB048380099FD13 /* ListBucketViewController.h */,
+				DFAA99D91EB048380099FD13 /* ListBucketViewController.m */,
+				DFAA99DA1EB048380099FD13 /* ObjectViewController.h */,
+				DFAA99DB1EB048380099FD13 /* ObjectViewController.m */,
+				DFAA99DC1EB048380099FD13 /* ServiceViewController.h */,
+				DFAA99DD1EB048380099FD13 /* ServiceViewController.m */,
+				DFAA99DE1EB048380099FD13 /* VideoViewController.h */,
+				DFAA99DF1EB048380099FD13 /* VideoViewController.m */,
+				DFAFC6211EB0459800932063 /* AppDelegate.h */,
+				DFAFC6221EB0459800932063 /* AppDelegate.m */,
+				DFAFC6241EB0459800932063 /* ViewController.h */,
+				DFAFC6251EB0459800932063 /* ViewController.m */,
+				DFAFC6271EB0459800932063 /* Main.storyboard */,
+				DFAFC62A1EB0459800932063 /* Assets.xcassets */,
+				DFAFC62C1EB0459800932063 /* LaunchScreen.storyboard */,
+				DFAFC62F1EB0459800932063 /* Info.plist */,
+				DFAFC61E1EB0459800932063 /* Supporting Files */,
+			);
+			path = KS3SDKDemo;
+			sourceTree = "<group>";
+		};
+		DFAFC61E1EB0459800932063 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				DFAFC61F1EB0459800932063 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		DFAFC61A1EB0459800932063 /* KS3SDKDemo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DFAFC6321EB0459800932063 /* Build configuration list for PBXNativeTarget "KS3SDKDemo" */;
+			buildPhases = (
+				C47CC09B8DDC379C7B32AB02 /* [CP] Check Pods Manifest.lock */,
+				DFAFC6171EB0459800932063 /* Sources */,
+				DFAFC6181EB0459800932063 /* Frameworks */,
+				DFAFC6191EB0459800932063 /* Resources */,
+				B3F463B20F3E072DD7B629DF /* [CP] Embed Pods Frameworks */,
+				D8F05DAD7125117C9A41A2AE /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = KS3SDKDemo;
+			productName = KS3SDKDemo;
+			productReference = DFAFC61B1EB0459800932063 /* KS3SDKDemo.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		DFAFC6131EB0459800932063 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0810;
+				ORGANIZATIONNAME = Kingsoft;
+				TargetAttributes = {
+					DFAFC61A1EB0459800932063 = {
+						CreatedOnToolsVersion = 8.1;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = DFAFC6161EB0459800932063 /* Build configuration list for PBXProject "KS3SDKDemo" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = DFAFC6121EB0459800932063;
+			productRefGroup = DFAFC61C1EB0459800932063 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				DFAFC61A1EB0459800932063 /* KS3SDKDemo */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		DFAFC6191EB0459800932063 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DFAA99E91EB048400099FD13 /* 7.6M.mov in Resources */,
+				DFAFC62E1EB0459800932063 /* LaunchScreen.storyboard in Resources */,
+				DFAFC62B1EB0459800932063 /* Assets.xcassets in Resources */,
+				DFAFC6291EB0459800932063 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		B3F463B20F3E072DD7B629DF /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-KS3SDKDemo/Pods-KS3SDKDemo-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C47CC09B8DDC379C7B32AB02 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		D8F05DAD7125117C9A41A2AE /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-KS3SDKDemo/Pods-KS3SDKDemo-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		DFAFC6171EB0459800932063 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DFAFC6261EB0459800932063 /* ViewController.m in Sources */,
+				DFAA99E11EB048380099FD13 /* CreateBucketViewController.m in Sources */,
+				DFAA99E71EB048380099FD13 /* VideoViewController.m in Sources */,
+				DFAFC6231EB0459800932063 /* AppDelegate.m in Sources */,
+				DFAA99E01EB048380099FD13 /* BucketViewController.m in Sources */,
+				DFAA99E31EB048380099FD13 /* KS3Util.m in Sources */,
+				DFAA99E21EB048380099FD13 /* GetAllObjectsViewController.m in Sources */,
+				DFAA99E51EB048380099FD13 /* ObjectViewController.m in Sources */,
+				DFAA99E41EB048380099FD13 /* ListBucketViewController.m in Sources */,
+				DFAA99E61EB048380099FD13 /* ServiceViewController.m in Sources */,
+				DFAFC6201EB0459800932063 /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		DFAFC6271EB0459800932063 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DFAFC6281EB0459800932063 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		DFAFC62C1EB0459800932063 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DFAFC62D1EB0459800932063 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		DFAFC6301EB0459800932063 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		DFAFC6311EB0459800932063 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		DFAFC6331EB0459800932063 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = E20DA10A7DC7D91E7962A1F7 /* Pods-KS3SDKDemo.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = KS3SDKDemo/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ksyun.ks3.KS3SDKDemo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		DFAFC6341EB0459800932063 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = CF4E71A5C6DD3ADE8C97EC8F /* Pods-KS3SDKDemo.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = KS3SDKDemo/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ksyun.ks3.KS3SDKDemo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		DFAFC6161EB0459800932063 /* Build configuration list for PBXProject "KS3SDKDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DFAFC6301EB0459800932063 /* Debug */,
+				DFAFC6311EB0459800932063 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DFAFC6321EB0459800932063 /* Build configuration list for PBXNativeTarget "KS3SDKDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DFAFC6331EB0459800932063 /* Debug */,
+				DFAFC6341EB0459800932063 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = DFAFC6131EB0459800932063 /* Project object */;
+}

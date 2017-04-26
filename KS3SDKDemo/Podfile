@@ -1,0 +1,6 @@
+source 'https://github.com/CocoaPods/Specs.git'
+
+target "KS3SDKDemo" do
+  platform :ios, "7.0"
+  pod 'Ks3SDK',:path => '../'
+end
