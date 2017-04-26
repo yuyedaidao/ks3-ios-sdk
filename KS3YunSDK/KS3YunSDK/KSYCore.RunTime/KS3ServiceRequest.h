@@ -21,7 +21,6 @@
 @property(strong, nonatomic) NSString *host;
 @property(strong, nonatomic) NSString *contentMd5;
 @property(strong, nonatomic) NSString *contentType;
-@property(strong, nonatomic) NSString *kSYHeader;
 @property(strong, nonatomic) NSString *kSYResource;
 @property(strong, nonatomic) NSDate *requestDate;
 @property(strong, nonatomic) NSString *strDate;
@@ -35,6 +34,8 @@
 - (void)cancel;
 - (NSString *)URLEncodedString:(NSString *)str;
 - (void)setCompleteRequest;
+
+- (NSString *)kSYHeader;
 @end
 
 @protocol KingSoftServiceRequestDelegate <NSObject>

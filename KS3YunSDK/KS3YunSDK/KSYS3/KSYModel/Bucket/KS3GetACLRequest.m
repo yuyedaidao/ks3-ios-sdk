@@ -17,8 +17,6 @@
     self.bucket = [self URLEncodedString:bucketName];
     self.httpMethod = kHttpMethodGet;
     self.contentMd5 = @"";
-    self.contentType = @"";
-    self.kSYHeader = @"";
     self.kSYResource = [NSString stringWithFormat:@"/%@/?acl", self.bucket];
     self.host = [NSString
         stringWithFormat:@"%@://%@.%@/?acl",

@@ -31,7 +31,6 @@
     _generateMD5 = YES;
     _multipartUpload = multipartUpload;
     self.contentType = @"binary/octet-stream";
-    self.kSYHeader = @"";
     self.httpMethod = kHttpMethodPut;
 
     KS3Client *ks3Client = [KS3Client initialize];

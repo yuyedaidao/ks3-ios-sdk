@@ -9,11 +9,11 @@
 #import "KS3AuthUtils.h"
 #import <Foundation/Foundation.h>
 typedef enum {
-  KSS3_HTTPVerbGet,
-  KSS3_HTTPVerbPost,
-  KSS3_HTTPVerbPut,
-  KSS3_HTTPVerbDelete,
-  KSS3_HTTPVerbHead,
+    KSS3_HTTPVerbGet,
+    KSS3_HTTPVerbPost,
+    KSS3_HTTPVerbPut,
+    KSS3_HTTPVerbDelete,
+    KSS3_HTTPVerbHead,
 } KSS3_HTTPVerbType;
 
 @class KS3ServiceRequest;
@@ -22,14 +22,21 @@ typedef enum {
 
 @interface KS3AuthUtils : NSObject
 
-+ (NSString *)strAuthorizationWithHTTPVerb:(NSString *)accessKey
-                                 secretKey:(NSString *)secretKey
-                                  httpVerb:(KSS3_HTTPVerbType)httpVerb
-                                contentMd5:(NSString *)strContentMd5
-                               contentType:(NSString *)strContentType
-                                      date:(NSDate *)date
-                    canonicalizedKssHeader:(NSString *)strHeaders
-                     canonicalizedResource:(NSString *)strResource;
++ (NSString *)KSYSignatureWithSecretKey:(NSString *)secretKey
+                               httpVerb:(NSString *)httpVerb
+                             contentMd5:(NSString *)strContentMd5
+                            contentType:(NSString *)strContentType
+                                   date:(NSDate *)date
+                 canonicalizedKssHeader:(NSString *)strHeaders
+                  canonicalizedResource:(NSString *)strResource;
+
++ (NSString *)KSYSignatureWithSecretKey:(NSString *)secretKey
+                               httpVerb:(NSString *)httpVerb
+                             contentMd5:(NSString *)strContentMd5
+                            contentType:(NSString *)strContentType
+                                strDate:(NSString *)strDate
+                 canonicalizedKssHeader:(NSString *)strHeaders
+                  canonicalizedResource:(NSString *)strResource;
 
 + (NSString *)strDateWithDate:(NSDate *)date andType:(NSString *)strType;
 
@@ -38,5 +45,23 @@ typedef enum {
               headers:(NSMutableDictionary *)headers
               payload:(NSString *)payload
           credentials:(KS3Credentials *)credentials;
+
++ (NSString *)KSYAuthorizationWithAccessKey:(NSString *)accessKey
+                                  secretKey:(NSString *)secretKey
+                                   httpVerb:(NSString *)httpVerb
+                                 contentMd5:(NSString *)strContentMd5
+                                contentType:(NSString *)strContentType
+                                       date:(NSDate *)date
+                     canonicalizedKssHeader:(NSString *)strHeaders
+                      canonicalizedResource:(NSString *)strResource;
+
++ (NSString *)KSYAuthorizationWithAccessKey:(NSString *)accessKey
+                                  secretKey:(NSString *)secretKey
+                                   httpVerb:(NSString *)httpVerb
+                                 contentMd5:(NSString *)strContentMd5
+                                contentType:(NSString *)strContentType
+                                    strDate:(NSString *)strDate
+                     canonicalizedKssHeader:(NSString *)strHeaders
+                      canonicalizedResource:(NSString *)strResource;
 
 @end

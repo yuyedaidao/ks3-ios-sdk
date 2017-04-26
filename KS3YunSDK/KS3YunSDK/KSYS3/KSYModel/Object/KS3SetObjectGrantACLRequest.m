@@ -24,20 +24,12 @@
     self.httpMethod = kHttpMethodPut;
     self.contentMd5 = @"";
     self.contentType = @"";
-    self.kSYHeader = @"";
     self.kSYResource = [NSString stringWithFormat:@"/%@", self.bucket];
     self.host = @"";
 
     //
     self.kSYResource =
         [NSString stringWithFormat:@"%@/%@?acl", self.kSYResource, _key];
-    NSString *strValue =
-        [NSString stringWithFormat:@"id=\"%@\", ", _acl.identifier];
-    strValue = [strValue
-        stringByAppendingFormat:@"displayName=\"%@\"", _acl.displayName];
-    self.kSYHeader = [_acl.accessGrantACL stringByAppendingString:@":"];
-    self.kSYHeader = [self.kSYHeader stringByAppendingString:strValue];
-    self.kSYHeader = [self.kSYHeader stringByAppendingString:@"\n"];
     self.host = [NSString
         stringWithFormat:@"%@://%@.%@/%@?acl",
                          [[KS3Client initialize] requestProtocol], self.bucket,

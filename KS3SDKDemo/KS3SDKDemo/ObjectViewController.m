@@ -413,7 +413,6 @@ KS3Client 方法：
     //             使用token签名时从Appserver获取token后设置token，使用Ak sk则忽略，不需要调用
     [request setStrKS3Token:[KS3Util getAuthorization:request]];
     KS3AbortMultipartUploadResponse *response = [[KS3Client initialize] abortMultipartUpload:request];
-    NSString *str = [[NSString alloc] initWithData:response.body encoding:NSUTF8StringEncoding];
     
     if (response.httpStatusCode == 204) {
         NSLog(@"Abort multipart upload success!");
@@ -457,8 +456,6 @@ KS3Client 方法：
     //使用token签名时从Appserver获取token后设置token，使用Ak sk则忽略，不需要调用
     [putObjRequest setStrKS3Token:[KS3Util getAuthorization:putObjRequest]];
     KS3PutObjectResponse *response = [[KS3Client initialize] putObject:putObjRequest];
-
-    NSString *reqId = response.responseHeader[@"x-kss-request-id"];
     
     
     //putObjRequest若没设置代理，则是同步的下方判断，
@@ -512,7 +509,7 @@ KS3Client 方法：
         }];
         
         // //使用token签名时从Appserver获取token后设置token，使用Ak sk则忽略，不需要调用
-        [_downloader setStrKS3Token:[KS3Util KSYAuthorizationWithHTTPVerb:strAccessKey secretKey:strSecretKey httpVerb:_downloader.httpMethod contentMd5:_downloader.contentMd5 contentType:_downloader.contentType date:_downloader.strDate canonicalizedKssHeader:_downloader.kSYHeader canonicalizedResource:_downloader.kSYResource]];
+        [_downloader setStrKS3Token:[KS3AuthUtils KSYAuthorizationWithAccessKey:strAccessKey secretKey:strSecretKey httpVerb:_downloader.httpMethod contentMd5:_downloader.contentMd5 contentType:_downloader.contentType strDate:_downloader.strDate canonicalizedKssHeader:_downloader.kSYHeader canonicalizedResource:_downloader.kSYResource]];
         
         [_downloader start];
         
@@ -617,7 +614,6 @@ KS3Client 方法：
              //使用token签名时从Appserver获取token后设置token，使用Ak sk则忽略，不需要调用
             [headObjRequest setStrKS3Token:[KS3Util getAuthorization:headObjRequest]];
             KS3HeadObjectResponse *response = [[KS3Client initialize] headObject:headObjRequest];
-            NSString *str = [[NSString alloc] initWithData:response.body encoding:NSUTF8StringEncoding];
             if (response.httpStatusCode == 200) {
                 NSLog(@"Head object success!");
             }
@@ -640,7 +636,6 @@ KS3Client 方法：
              //使用token签名时从Appserver获取token后设置token，使用Ak sk则忽略，不需要调用
             [request setStrKS3Token:[KS3Util getAuthorization:request]];
             KS3PutObjectCopyResponse *response = [[KS3Client initialize] putObjectCopy:request];
-            NSString *str = [[NSString alloc] initWithData:response.body encoding:NSUTF8StringEncoding];
             if (response.httpStatusCode == 200) {
                 NSLog(@"Put object copy success!");
             }
@@ -662,7 +657,6 @@ KS3Client 方法：
             [getObjectACLRequest setStrKS3Token:[KS3Util getAuthorization:getObjectACLRequest]];
             KS3GetObjectACLResponse *response = [[KS3Client initialize] getObjectACL:getObjectACLRequest];
             KS3BucketACLResult *result = response.listBucketsResult;
-              NSString *str = [[NSString alloc] initWithData:response.body encoding:NSUTF8StringEncoding];
             
             if (response.httpStatusCode == 200) {
                 NSLog(@"Get object acl success!");
@@ -690,7 +684,6 @@ KS3Client 方法：
              //使用token签名时从Appserver获取token后设置token，使用Ak sk则忽略，不需要调用
             [setObjectACLRequest setStrKS3Token:[KS3Util getAuthorization:setObjectACLRequest]];
             KS3SetObjectACLResponse *response = [[KS3Client initialize] setObjectACL:setObjectACLRequest];
-              NSString *str = [[NSString alloc] initWithData:response.body encoding:NSUTF8StringEncoding];
             if (response.httpStatusCode == 200) {
                 NSLog(@"Set object acl success!");
             }

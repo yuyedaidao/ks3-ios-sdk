@@ -8,10 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		459B691BDD20A82061BBF8DD /* libPods-KS3SDKDemo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F6DF70FD7F09025DFF977919 /* libPods-KS3SDKDemo.a */; };
+		DF7644461EB076920009D366 /* KS3Util.m in Sources */ = {isa = PBXBuildFile; fileRef = DF7644451EB076920009D366 /* KS3Util.m */; };
 		DFAA99E01EB048380099FD13 /* BucketViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFAA99D11EB048380099FD13 /* BucketViewController.m */; };
 		DFAA99E11EB048380099FD13 /* CreateBucketViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFAA99D31EB048380099FD13 /* CreateBucketViewController.m */; };
 		DFAA99E21EB048380099FD13 /* GetAllObjectsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFAA99D51EB048380099FD13 /* GetAllObjectsViewController.m */; };
-		DFAA99E31EB048380099FD13 /* KS3Util.m in Sources */ = {isa = PBXBuildFile; fileRef = DFAA99D71EB048380099FD13 /* KS3Util.m */; };
 		DFAA99E41EB048380099FD13 /* ListBucketViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFAA99D91EB048380099FD13 /* ListBucketViewController.m */; };
 		DFAA99E51EB048380099FD13 /* ObjectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFAA99DB1EB048380099FD13 /* ObjectViewController.m */; };
 		DFAA99E61EB048380099FD13 /* ServiceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFAA99DD1EB048380099FD13 /* ServiceViewController.m */; };
@@ -27,14 +27,14 @@
 
 /* Begin PBXFileReference section */
 		CF4E71A5C6DD3ADE8C97EC8F /* Pods-KS3SDKDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KS3SDKDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-KS3SDKDemo/Pods-KS3SDKDemo.release.xcconfig"; sourceTree = "<group>"; };
+		DF7644441EB076920009D366 /* KS3Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KS3Util.h; sourceTree = "<group>"; };
+		DF7644451EB076920009D366 /* KS3Util.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KS3Util.m; sourceTree = "<group>"; };
 		DFAA99D01EB048380099FD13 /* BucketViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BucketViewController.h; sourceTree = "<group>"; };
 		DFAA99D11EB048380099FD13 /* BucketViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BucketViewController.m; sourceTree = "<group>"; };
 		DFAA99D21EB048380099FD13 /* CreateBucketViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateBucketViewController.h; sourceTree = "<group>"; };
 		DFAA99D31EB048380099FD13 /* CreateBucketViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateBucketViewController.m; sourceTree = "<group>"; };
 		DFAA99D41EB048380099FD13 /* GetAllObjectsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GetAllObjectsViewController.h; sourceTree = "<group>"; };
 		DFAA99D51EB048380099FD13 /* GetAllObjectsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GetAllObjectsViewController.m; sourceTree = "<group>"; };
-		DFAA99D61EB048380099FD13 /* KS3Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KS3Util.h; sourceTree = "<group>"; };
-		DFAA99D71EB048380099FD13 /* KS3Util.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KS3Util.m; sourceTree = "<group>"; };
 		DFAA99D81EB048380099FD13 /* ListBucketViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListBucketViewController.h; sourceTree = "<group>"; };
 		DFAA99D91EB048380099FD13 /* ListBucketViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListBucketViewController.m; sourceTree = "<group>"; };
 		DFAA99DA1EB048380099FD13 /* ObjectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjectViewController.h; sourceTree = "<group>"; };
@@ -108,6 +108,8 @@
 		DFAFC61D1EB0459800932063 /* KS3SDKDemo */ = {
 			isa = PBXGroup;
 			children = (
+				DF7644441EB076920009D366 /* KS3Util.h */,
+				DF7644451EB076920009D366 /* KS3Util.m */,
 				DFAA99E81EB048400099FD13 /* 7.6M.mov */,
 				DFAA99D01EB048380099FD13 /* BucketViewController.h */,
 				DFAA99D11EB048380099FD13 /* BucketViewController.m */,
@@ -115,8 +117,6 @@
 				DFAA99D31EB048380099FD13 /* CreateBucketViewController.m */,
 				DFAA99D41EB048380099FD13 /* GetAllObjectsViewController.h */,
 				DFAA99D51EB048380099FD13 /* GetAllObjectsViewController.m */,
-				DFAA99D61EB048380099FD13 /* KS3Util.h */,
-				DFAA99D71EB048380099FD13 /* KS3Util.m */,
 				DFAA99D81EB048380099FD13 /* ListBucketViewController.h */,
 				DFAA99D91EB048380099FD13 /* ListBucketViewController.m */,
 				DFAA99DA1EB048380099FD13 /* ObjectViewController.h */,
@@ -274,7 +274,7 @@
 				DFAA99E71EB048380099FD13 /* VideoViewController.m in Sources */,
 				DFAFC6231EB0459800932063 /* AppDelegate.m in Sources */,
 				DFAA99E01EB048380099FD13 /* BucketViewController.m in Sources */,
-				DFAA99E31EB048380099FD13 /* KS3Util.m in Sources */,
+				DF7644461EB076920009D366 /* KS3Util.m in Sources */,
 				DFAA99E21EB048380099FD13 /* GetAllObjectsViewController.m in Sources */,
 				DFAA99E51EB048380099FD13 /* ObjectViewController.m in Sources */,
 				DFAA99E41EB048380099FD13 /* ListBucketViewController.m in Sources */,

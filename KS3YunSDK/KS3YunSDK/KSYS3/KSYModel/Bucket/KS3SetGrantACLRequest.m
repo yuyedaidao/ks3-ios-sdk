@@ -19,7 +19,6 @@
     self.httpMethod = kHttpMethodPut;
     self.contentMd5 = @"";
     self.contentType = @"";
-    self.kSYHeader = @"";
     self.kSYResource = [NSString stringWithFormat:@"/%@/?acl", self.bucket];
     self.host = [NSString
         stringWithFormat:@"%@://%@.%@/?acl",
@@ -32,9 +31,6 @@
           [NSString stringWithFormat:@"id=\"%@\", ", _acl.identifier];
       strValue = [strValue
           stringByAppendingFormat:@"displayName=\"%@\"", _acl.displayName];
-      self.kSYHeader = [_acl.accessGrantACL stringByAppendingString:@":"];
-      self.kSYHeader = [self.kSYHeader stringByAppendingString:strValue];
-      self.kSYHeader = [self.kSYHeader stringByAppendingString:@"\n"];
       [self.urlRequest setValue:strValue
              forHTTPHeaderField:_acl.accessGrantACL];
     }

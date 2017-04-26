@@ -17,7 +17,6 @@
   if (self) {
     _contentMd5 = @"";
     _contentType = @"";
-    _kSYHeader = @"";
     _kSYResource = @"";
     _host = @"";
     _requestDate = [NSDate date];
@@ -91,6 +90,22 @@
       mutableCopy];
 
   return output;
+}
+
+- (NSString *)kSYHeader {
+    NSDictionary *httpHeaders = self.urlRequest.allHTTPHeaderFields;
+    NSMutableArray *headerArray = [[NSMutableArray alloc] init];
+    for (NSString *headerStr in httpHeaders) {
+        if ([headerStr hasPrefix:@"x-kss-"]) {
+            [headerArray addObject:[NSString stringWithFormat:@"%@:%@", headerStr, httpHeaders[headerStr]]];
+        }
+    }
+
+    headerArray = [headerArray sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+        return [obj1 compare:obj2];
+    }];
+
+    return [headerArray componentsJoinedByString:@"\n"];
 }
 
 @end

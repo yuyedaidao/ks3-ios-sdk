@@ -17,7 +17,6 @@
     self.httpMethod = kHttpMethodGet;
     self.contentMd5 = @"";
     self.contentType = @"";
-    self.kSYHeader = @"";
     self.kSYResource = @"/";
     self.host = [NSString
         stringWithFormat:@"%@://%@", [[KS3Client initialize] requestProtocol],

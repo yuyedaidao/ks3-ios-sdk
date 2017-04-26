@@ -23,7 +23,6 @@
     self.contentType = @"text/xml";
     self.httpMethod = kHttpMethodPost;
     self.kSYResource = [NSString stringWithFormat:@"/%@", self.bucket];
-    self.kSYHeader = @"";
   }
   return self;
 }
@@ -31,17 +30,9 @@
 - (void)setCompleteRequest {
   // **** 一定要先设置callbackbody，再设置callbackurl才可以签名成功
   if (nil != _callbackBody && nil != _callbackUrl) {
-    self.kSYHeader = [self.kSYHeader
-        stringByAppendingString:[@"x-kss-callbackbody:"
-                                    stringByAppendingString:_callbackBody]];
-    self.kSYHeader = [self.kSYHeader stringByAppendingFormat:@"\n"];
     [self.urlRequest setValue:_callbackBody
            forHTTPHeaderField:@"x-kss-callbackbody"];
 
-    NSString *callbackUrl =
-        [@"x-kss-callbackurl:" stringByAppendingString:_callbackUrl];
-    self.kSYHeader =
-        [self.kSYHeader stringByAppendingFormat:@"%@\n", callbackUrl];
     [self.urlRequest setValue:_callbackUrl
            forHTTPHeaderField:@"x-kss-callbackurl"];
 
@@ -78,23 +69,6 @@
         stringWithFormat:@"%@://%@.%@/%@?uploadId=%@",
                          [[KS3Client initialize] requestProtocol], self.bucket,
                          [ks3Client getBucketDomain], self.key, self.uploadId];
-  }
-
-  if (![self.kSYHeader isEqualToString:@""]) {
-
-    NSArray *componentsArray =
-        [self.kSYHeader componentsSeparatedByString:@"\n"];
-    NSMutableArray *componentsArray1 =
-        [[NSMutableArray alloc] initWithArray:componentsArray];
-    if (componentsArray1.count) {
-      [componentsArray1 removeLastObject];
-    }
-    NSArray *headerArray = [componentsArray1
-        sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
-          return [obj1 compare:obj2];
-        }];
-    self.kSYHeader = [headerArray componentsJoinedByString:@"\n"];
-    self.kSYHeader = [self.kSYHeader stringByAppendingString:@"\n"];
   }
 }
 

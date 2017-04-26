@@ -37,7 +37,6 @@
     self.httpMethod = kHttpMethodPost;
     self.contentMd5 = @"";
     self.contentType = @"";
-    self.kSYHeader = @"";
     self.acl = acl;
     self.arrGrantAcl = arrGrantAcl;
     self.kSYResource = [NSString stringWithFormat:@"/%@", self.bucket];
@@ -46,11 +45,6 @@
     //
     self.kSYResource =
         [NSString stringWithFormat:@"%@/%@?uploads", self.kSYResource, _key];
-    if (_acl != nil) {
-
-      self.kSYHeader = [@"x-kss-acl:" stringByAppendingString:_acl.accessACL];
-      self.kSYHeader = [NSString stringWithFormat:@"%@\n", self.kSYHeader];
-    }
     if (_arrGrantAcl != nil) {
       [self sortGrantAcl]; // **** ACL的 x-kss 需要先排序
       for (NSInteger i = 0; i < _arrGrantAcl.count; i++) {
@@ -59,11 +53,6 @@
             [NSString stringWithFormat:@"id=\"%@\", ", grantAcl.identifier];
         strValue = [strValue stringByAppendingFormat:@"displayName=\"%@\"",
                                                      grantAcl.displayName];
-        self.kSYHeader = [self.kSYHeader
-            stringByAppendingString:[grantAcl.accessGrantACL
-                                        stringByAppendingString:@":"]];
-        self.kSYHeader = [self.kSYHeader stringByAppendingString:strValue];
-        self.kSYHeader = [self.kSYHeader stringByAppendingString:@"\n"];
       }
     }
   }

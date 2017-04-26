@@ -20,17 +20,12 @@
     self.httpMethod = kHttpMethodPut;
     self.contentMd5 = @"";
     self.contentType = @"";
-    self.kSYHeader = @"";
     self.kSYResource = [NSString stringWithFormat:@"/%@/?acl", self.bucket];
     self.host = [NSString
         stringWithFormat:@"%@://%@.%@/?acl",
                          [[KS3Client initialize] requestProtocol], self.bucket,
                          [[KS3Client initialize] getBucketDomain]];
     _acl = accessACL;
-    if (accessACL) {
-      self.kSYHeader = [@"x-kss-acl:" stringByAppendingString:_acl.accessACL];
-    }
-    self.kSYHeader = [NSString stringWithFormat:@"%@\n", self.kSYHeader];
   }
   return self;
 }

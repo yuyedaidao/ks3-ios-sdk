@@ -19,7 +19,6 @@
     self.httpMethod = kHttpMethodDelete;
     self.contentMd5 = @"";
     self.contentType = @"";
-    self.kSYHeader = @"";
     self.kSYResource = [NSString stringWithFormat:@"/%@/", self.bucket];
     self.host = [NSString
         stringWithFormat:@"%@://%@.%@",

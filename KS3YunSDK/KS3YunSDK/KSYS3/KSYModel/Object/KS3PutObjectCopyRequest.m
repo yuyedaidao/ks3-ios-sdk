@@ -20,7 +20,6 @@
     self.httpMethod = kHttpMethodPut;
     self.contentMd5 = @"";
     self.contentType = @"";
-    self.kSYHeader = @"";
     self.kSYResource = [NSString stringWithFormat:@"/%@", self.bucket];
     self.host = [NSString
         stringWithFormat:@"%@://%@.%@",
@@ -32,8 +31,6 @@
     self.strSourceObject = [self URLEncodedString:sourBucketObj.objKey];
     NSString *strValue = [NSString
         stringWithFormat:@"/%@/%@", _strSourceBucket, _strSourceObject];
-    self.kSYHeader = [@"x-kss-copy-source:" stringByAppendingString:strValue];
-    self.kSYHeader = [self.kSYHeader stringByAppendingString:@"\n"];
     self.host = [NSString stringWithFormat:@"%@/%@", self.host, _key];
     self.kSYResource =
         [NSString stringWithFormat:@"%@/%@", self.kSYResource, _key];

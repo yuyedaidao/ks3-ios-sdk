@@ -22,13 +22,9 @@
     self.httpMethod = kHttpMethodPut;
     self.contentMd5 = @"";
     self.contentType = @"";
-    self.kSYHeader = @"";
     self.kSYResource = [NSString stringWithFormat:@"/%@", self.bucket];
     self.host = @"";
 
-    //
-    self.kSYHeader = [@"x-kss-acl:" stringByAppendingString:_acl.accessACL];
-    self.kSYHeader = [NSString stringWithFormat:@"%@\n", self.kSYHeader];
     self.kSYResource =
         [NSString stringWithFormat:@"%@/%@?acl", self.kSYResource, _key];
     self.host = [NSString

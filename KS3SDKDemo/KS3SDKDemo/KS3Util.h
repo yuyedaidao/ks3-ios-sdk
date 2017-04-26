@@ -18,13 +18,4 @@
 
 + (NSString *)getAuthorization:(KS3Request *)request;
 
-+ (NSString *)KSYAuthorizationWithHTTPVerb:(NSString *)accessKey
-                                 secretKey:(NSString *)secretKey
-                                  httpVerb:(NSString *)httpVerb
-                                contentMd5:(NSString *)strContentMd5
-                               contentType:(NSString *)strContentType
-                                      date:(NSString   *)date
-                    canonicalizedKssHeader:(NSString *)strHeaders
-                     canonicalizedResource:(NSString *)strResource;
-
 @end
