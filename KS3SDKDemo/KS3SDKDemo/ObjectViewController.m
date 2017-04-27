@@ -290,7 +290,7 @@ KS3Client 方法：
         return ;
     }
 #warning 选择相册还是普通方式
-    _muilt.uploadType = kUploadAlasset;   //从相册读
+    _muilt.uploadType = kUploadNormal;
     
     //根据文件路径不一样，有如下两种上传
     if (_muilt.uploadType == kUploadNormal) { //如果是沙盒或者工程里的文件
