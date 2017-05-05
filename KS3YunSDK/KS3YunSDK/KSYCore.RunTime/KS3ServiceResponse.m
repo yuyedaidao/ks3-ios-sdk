@@ -29,6 +29,7 @@ didReceiveResponse:(NSURLResponse *)response {
           [[httpResponse allHeaderFields] valueForKey:header]);
   }
   self.httpStatusCode = (int32_t)[httpResponse statusCode];
+    NSLog(@"httpStatus: %d", self.httpStatusCode);
   [body setLength:0];
   if ([self.request.delegate
           respondsToSelector:@selector(request:didReceiveResponse:)]) {

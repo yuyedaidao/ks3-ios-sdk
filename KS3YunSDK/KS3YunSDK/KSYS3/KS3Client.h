@@ -73,7 +73,9 @@ typedef void (^kSS3DownloadFileCompleteionBlock)(KS3DownLoad *aDownload,
 @class KS3Response;
 @class KS3Request;
 @class KS3InitiateMultipartUploadRequest;
+@class KS3InitiateMultipartUploadResponse;
 @class KS3GetBucketLoggingRequest;
+@class KS3Credentials;
 
 typedef enum {
   KS3BucketBeijing = 0,
@@ -85,6 +87,7 @@ typedef enum {
 @interface KS3Client : KS3WebServiceClient
 
 @property(assign, nonatomic) BOOL enableHTTPS;
+@property(strong, nonatomic) KS3Credentials *credentials;
 
 /**
  *  初始化
@@ -295,6 +298,8 @@ typedef enum {
  */
 - (KS3MultipartUpload *)initiateMultipartUploadWithRequest:
     (KS3InitiateMultipartUploadRequest *)request;
+
+- (KS3InitiateMultipartUploadResponse *)initiateMultipartUploadWithRequestAndResponse:(KS3InitiateMultipartUploadRequest *)request;
 
 /**
  *  上传分块

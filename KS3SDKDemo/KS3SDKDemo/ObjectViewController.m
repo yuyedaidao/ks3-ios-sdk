@@ -93,6 +93,8 @@
 @property (nonatomic, strong) NSString *bucketName;
 @property (strong, nonatomic)  KS3MultipartUpload *muilt;
 
+@property (nonatomic, strong) KS3UploadManager *uploadManager;
+
 @end
 
 @implementation ObjectViewController
@@ -100,12 +102,14 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
+    [[KS3Client initialize] setCredentials:[[KS3Credentials alloc] initWithAccessKey:strAccessKey withSecretKey:strSecretKey]];
     
     self.navigationItem.title = @"Object";
     _arrItems = [NSArray arrayWithObjects:
                  @"Get Object",       @"Delete Object", @"Head Object", @"Put Object", @"Put Object Copy", @"Post Object",
                  @"Get Object ACL",   @"Set Object ACL", @"Set Object Grant ACL",
-                 @"Multipart Upload", @"Pause Download", @"Abort Upload", nil];
+                 @"Multipart Upload", @"Pause Download", @"Abort Upload", @"Upload Manager", nil];
     UIButton *rightBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 100, 44)];
     [rightBtn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
     rightBtn.titleLabel.font = [UIFont systemFontOfSize:14];
@@ -122,6 +126,9 @@
         NSString *path = [[NSBundle mainBundle]pathForResource:@"7.6M" ofType:@"mov"];
         UISaveVideoAtPathToSavedPhotosAlbum(path, self, @selector(video:didFinishSavingWithError:contextInfo:), nil);
     }
+
+    // Demo使用本地AK、SK，真实环境这里需要实现http请求
+    self.uploadManager = [KS3UploadManager sharedInstanceWithClient:[KS3Client initialize] authHandler:nil];
 }
 
 -(void)video:(NSString *)videoPath didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo{
@@ -524,6 +531,31 @@ KS3Client 方法：
     [_downloader stop];
 }
 
+- (void)uploadWithUploadManager {
+    NSString *strFilePath = [[NSBundle mainBundle] pathForResource:@"7.6M" ofType:@"mov"];
+    NSData *data = [NSData dataWithContentsOfFile:strFilePath];
+
+    KS3AccessControlList *acl = [[KS3AccessControlList alloc] init];
+    [acl setContronAccess:KingSoftYun_Permission_Public_Read];
+
+    KS3UploadRequest *uploadRequest = [[KS3UploadRequest alloc] initWithKey:@"uploadmanager/sample.mov" inBucket:kUploadBucketName acl:acl grantAcl:nil];
+    [uploadRequest setCompleteRequest];
+    [uploadRequest setStrKS3Token:[KS3Util getAuthorization:uploadRequest]];
+
+    [self.uploadManager putData:data
+                        request:uploadRequest
+                      blockSize:1 * kMB
+                       progress:^(NSString *key, double percent) {
+                           NSLog(@"objectKey: %@, progress %lf", key, percent);
+                       } cancelSignal:^BOOL(NSString *key) {
+                           return false; // 修改这里进行取消
+                       } complete:^(KS3Upload *upload, KS3Response *response) {
+                           NSLog(@"uploadId: %@, response %@", upload.uploadId, response);
+                       } error:^(KS3Upload *upload, NSError *error) {
+                           NSLog(@"uploadId: %@, error: %@", upload.uploadId, error);
+                       }];
+}
+
 
 #pragma mark - UITableView datasource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -578,6 +610,23 @@ KS3Client 方法：
             [uploadBtn addTarget:self action:@selector(uploadBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
             [cell.contentView addSubview:uploadBtn];
         }
+
+//        if (indexPath.row == 12) {  // UploadManager上传
+//            UIProgressView *progressView = [[UIProgressView alloc] initWithFrame:CGRectMake(mScreenWidth * .4 , 20, mScreenWidth * .45, 20)];
+//            progressView.progressViewStyle = UIProgressViewStyleDefault;
+//            progressView.tag = 299;
+//
+//            progressView.progress = 0;
+//            [cell.contentView addSubview:progressView];
+//
+//            UIButton *uploadBtn = [[UIButton alloc]initWithFrame:CGRectMake(mScreenWidth - 50, 10, 40, 20)];
+//            [uploadBtn setTitle:@"开始" forState:UIControlStateNormal];
+//            uploadBtn.titleLabel.font  = [UIFont systemFontOfSize:14];
+//            [uploadBtn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+//            uploadBtn .tag = 200;
+//            [uploadBtn addTarget:self action:@selector(uploadBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+//            [cell.contentView addSubview:uploadBtn];
+//        }
     }
     cell.textLabel.text = _arrItems[indexPath.row];
     return cell;
@@ -724,6 +773,11 @@ KS3Client 方法：
         case 11:
         {
             [self cancelMultipartUpload];
+        }
+            break;
+        case 12:
+        {
+            [self uploadWithUploadManager];
         }
             break;
         default:

@@ -70,7 +70,6 @@ static NSTimeInterval const KingSoftYun_RequestTimeout = 600; // in seconds
 
 @interface KS3Client () <NSURLConnectionDataDelegate>
 
-@property(strong, nonatomic) KS3Credentials *credentials;
 @property(strong, nonatomic) KSS3GetTokenSuccessBlock tokenBlock;
 @property(strong, nonatomic) NSMutableData *tokenData;
 @property(assign, nonatomic) KS3BucketDomainRegion bucketDomainRegion;
@@ -254,6 +253,13 @@ static NSTimeInterval const KingSoftYun_RequestTimeout = 600; // in seconds
     return response.multipartUpload;
 }
 
+- (KS3InitiateMultipartUploadResponse *)initiateMultipartUploadWithRequestAndResponse:
+(KS3InitiateMultipartUploadRequest *)request {
+    KS3InitiateMultipartUploadResponse *response =
+    (KS3InitiateMultipartUploadResponse *)[self invoke:request];
+    return response;
+}
+
 - (KS3UploadPartResponse *)uploadPart:
 (KS3UploadPartRequest *)uploadPartRequest {
     return (KS3UploadPartResponse *)[self invoke:uploadPartRequest];
@@ -372,7 +378,11 @@ static NSTimeInterval const KingSoftYun_RequestTimeout = 600; // in seconds
      stringByAppendingFormat:@"Response"];
     id response = [[NSClassFromString(responseClassName) alloc] init];
     if (nil == response) {
-        response = [[KS3Response alloc] init];
+        if ([requestClassName isEqualToString:@"KS3UploadRequest"]) {
+            response = [[KS3InitiateMultipartUploadResponse alloc] init];
+        } else {
+            response = [[KS3Response alloc] init];
+        }
     }
     return response;
 }

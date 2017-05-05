@@ -180,6 +180,8 @@
 		13B9A7DF1A5CDC25001E55BC /* KS3DownLoad.h in Headers */ = {isa = PBXBuildFile; fileRef = 13B9A7DD1A5CDC25001E55BC /* KS3DownLoad.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		13B9A7E01A5CDC25001E55BC /* KS3DownLoad.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B9A7DE1A5CDC25001E55BC /* KS3DownLoad.m */; };
 		DFB51FD71E8F9B53009362A8 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFB51FD61E8F9B53009362A8 /* XCTest.framework */; };
+		DFD3BFE71EBCA61700BBCCB9 /* KS3Upload.h in Headers */ = {isa = PBXBuildFile; fileRef = DFD3BFE61EBCA61700BBCCB9 /* KS3Upload.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DFD3BFE91EBCA62000BBCCB9 /* KS3UploadRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = DFD3BFE81EBCA62000BBCCB9 /* KS3UploadRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -222,7 +224,6 @@
 		0A6391221A42AFA800BA3A99 /* KS3ResponseHeaderOverrides.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KS3ResponseHeaderOverrides.m; sourceTree = "<group>"; };
 		0A6C29471A493C270056A43C /* KS3ErrorHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KS3ErrorHandler.h; sourceTree = "<group>"; };
 		0A6C29481A493C270056A43C /* KS3ErrorHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KS3ErrorHandler.m; sourceTree = "<group>"; };
-		0A6C295C1A498B9A0056A43C /* Test.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Test.jpg; sourceTree = "<group>"; };
 		0A8727221A47FB7400A3AAC5 /* KS3Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = KS3Constants.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		0A8727261A48184800A3AAC5 /* KS3ClientException.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KS3ClientException.h; sourceTree = "<group>"; };
 		0A8727271A48184800A3AAC5 /* KS3ClientException.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KS3ClientException.m; sourceTree = "<group>"; };
@@ -359,6 +360,8 @@
 		13B9A7DD1A5CDC25001E55BC /* KS3DownLoad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KS3DownLoad.h; sourceTree = "<group>"; };
 		13B9A7DE1A5CDC25001E55BC /* KS3DownLoad.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KS3DownLoad.m; sourceTree = "<group>"; };
 		DFB51FD61E8F9B53009362A8 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/iPhoneOS.platform/Developer/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		DFD3BFE61EBCA61700BBCCB9 /* KS3Upload.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = KS3Upload.h; path = KS3YunSDK/KS3YunSDK/KSYS3/KSYModel/Object/KS3Upload.h; sourceTree = "<group>"; };
+		DFD3BFE81EBCA62000BBCCB9 /* KS3UploadRequest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = KS3UploadRequest.h; path = KS3YunSDK/KS3YunSDK/KSYS3/KSYModel/Object/KS3UploadRequest.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -376,7 +379,8 @@
 		0A6390781A42AF2200BA3A99 = {
 			isa = PBXGroup;
 			children = (
-				0A6C295C1A498B9A0056A43C /* Test.jpg */,
+				DFD3BFE81EBCA62000BBCCB9 /* KS3UploadRequest.h */,
+				DFD3BFE61EBCA61700BBCCB9 /* KS3Upload.h */,
 				0A6390841A42AF2200BA3A99 /* KS3YunSDK */,
 				0A6390831A42AF2200BA3A99 /* Products */,
 				DFB51FD51E8F9B53009362A8 /* Frameworks */,
@@ -737,6 +741,8 @@
 				0A6391331A42AFA800BA3A99 /* KS3AbstractWebServiceClient.h in Headers */,
 				13A689521ADF51D000CE8CF7 /* KS3BucketObject.h in Headers */,
 				0A6391411A42AFA800BA3A99 /* KS3URLRequest.h in Headers */,
+				DFD3BFE71EBCA61700BBCCB9 /* KS3Upload.h in Headers */,
+				DFD3BFE91EBCA62000BBCCB9 /* KS3UploadRequest.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

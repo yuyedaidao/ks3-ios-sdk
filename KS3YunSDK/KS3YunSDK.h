@@ -103,4 +103,7 @@ FOUNDATION_EXPORT const unsigned char KS3YunSDKVersionString[];
 #import "KS3UploadPartRequest.h"
 #import "KS3UploadPartResponse.h"
 #import "KS3WebServiceClient.h"
+#import "KS3UploadManager.h"
+#import "KS3Upload.h"
+#import "KS3UploadRequest.h"
 #endif

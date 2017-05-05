@@ -106,7 +106,7 @@
                                           httpVerb:httpVerb
                                         contentMd5:strContentMd5
                                        contentType:strContentType
-                                              date:[self strDateWithDate:date andType:@"GMT"]
+                                           strDate:[self strDateWithDate:date andType:@"GMT"]
                             canonicalizedKssHeader:strHeaders
                              canonicalizedResource:strResource];
 }
