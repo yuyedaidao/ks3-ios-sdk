@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "Ks3SDK"
-  s.version      = "2.0.0"
+  s.version      = "2.1.0"
   s.summary      = "iOS SDK for Kingsoft Standard Storage Service"
 
   s.description  = <<-DESC
