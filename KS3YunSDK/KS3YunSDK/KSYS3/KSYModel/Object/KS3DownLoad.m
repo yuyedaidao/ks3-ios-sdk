@@ -206,7 +206,7 @@
         strAuthorization =
         [KS3AuthUtils KSYAuthorizationWithAccessKey:_credentials.accessKey
                                           secretKey:_credentials.secretKey
-                                           httpVerb:KSS3_HTTPVerbGet
+                                       httpVerbType:KSS3_HTTPVerbGet
                                          contentMd5:@""
                                         contentType:@""
                                                date:_requestDate

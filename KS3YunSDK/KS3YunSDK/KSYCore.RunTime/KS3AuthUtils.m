@@ -150,6 +150,42 @@
 
 + (NSString *)KSYAuthorizationWithAccessKey:(NSString *)accessKey
                                   secretKey:(NSString *)secretKey
+                               httpVerbType:(KSS3_HTTPVerbType)httpVerb
+                                 contentMd5:(NSString *)strContentMd5
+                                contentType:(NSString *)strContentType
+                                       date:(NSDate *)date
+                     canonicalizedKssHeader:(NSString *)strHeaders
+                      canonicalizedResource:(NSString *)strResource {
+    NSString *strHttpVerb = @"GET";
+    switch (httpVerb) {
+        case KSS3_HTTPVerbGet:
+            strHttpVerb = @"GET";
+            break;
+        case KSS3_HTTPVerbPost:
+            strHttpVerb = @"POST";
+            break;
+        case KSS3_HTTPVerbPut:
+            strHttpVerb = @"PUT";
+            break;
+        case KSS3_HTTPVerbDelete:
+            strHttpVerb = @"DELETE";
+            break;
+        default:
+            break;
+    }
+
+    return [self KSYAuthorizationWithAccessKey:accessKey
+                                     secretKey:secretKey
+                                      httpVerb:strHttpVerb
+                                    contentMd5:strContentMd5
+                                   contentType:strContentType
+                                          date:date
+                        canonicalizedKssHeader:strHeaders
+                         canonicalizedResource:strResource];
+}
+
++ (NSString *)KSYAuthorizationWithAccessKey:(NSString *)accessKey
+                                  secretKey:(NSString *)secretKey
                                    httpVerb:(NSString *)httpVerb
                                  contentMd5:(NSString *)strContentMd5
                                 contentType:(NSString *)strContentType

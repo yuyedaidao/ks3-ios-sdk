@@ -38,6 +38,15 @@ typedef enum {
                  canonicalizedKssHeader:(NSString *)strHeaders
                   canonicalizedResource:(NSString *)strResource;
 
++ (NSString *)KSYAuthorizationWithAccessKey:(NSString *)accessKey
+                                  secretKey:(NSString *)secretKey
+                               httpVerbType:(KSS3_HTTPVerbType)httpVerb
+                                 contentMd5:(NSString *)strContentMd5
+                                contentType:(NSString *)strContentType
+                                       date:(NSDate *)date
+                     canonicalizedKssHeader:(NSString *)strHeaders
+                      canonicalizedResource:(NSString *)strResource;
+
 + (NSString *)strDateWithDate:(NSDate *)date andType:(NSString *)strType;
 
 + (void)signRequestV4:(KS3ServiceRequest *)serviceRequest

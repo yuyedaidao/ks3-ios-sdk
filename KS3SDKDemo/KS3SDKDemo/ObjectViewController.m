@@ -60,8 +60,8 @@
 #define keyUploadId @"uploadId"      //需要app本地存储已经初始化成功的uploadId，用于断点续传，demo为了演示，用NSUserDefaults存储,app可用数据库等
 
 //下载
-#define kDownloadBucketName @"ecloud"//下载所用的bucketName
-#define kDownloadBucketKey @"test2/Test.pdf"   //下载的文件所在bucket的路径
+#define kDownloadBucketName @"test-voidmain-hz-2"//下载所用的bucketName
+#define kDownloadBucketKey @"wz/7.6M.mov"   //下载的文件所在bucket的路径
 #define kDownloadSize 21131496   //Demo下载文件的大小，根据业务需求，显示进度条时用到，需要记录，app可用数据库等
 
 #define kBucketName @"acc"//@"alert1"//@"bucketcors"//@"alert1"
@@ -109,7 +109,7 @@
     _arrItems = [NSArray arrayWithObjects:
                  @"Get Object",       @"Delete Object", @"Head Object", @"Put Object", @"Put Object Copy", @"Post Object",
                  @"Get Object ACL",   @"Set Object ACL", @"Set Object Grant ACL",
-                 @"Multipart Upload", @"Pause Download", @"Abort Upload", @"Upload Manager", nil];
+                 @"Multipart Upload", @"Pause Download", @"Abort Upload", @"Upload Manager", @"Put Object 1M", @"Put Object 5M", @"Put Object 10M", @"Put Object 50M", nil];
     UIButton *rightBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 100, 44)];
     [rightBtn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
     rightBtn.titleLabel.font = [UIFont systemFontOfSize:14];
@@ -162,11 +162,11 @@
 #pragma mark TouchEvents
 - (void)downloadBtnClicked:(UIButton *)btn
 {
-    if ([btn.titleLabel.text isEqualToString:@"完成"]) {
-        NSLog(@"文件下载完成，请删除重试");
-        return;
-    }
-    
+//    if ([btn.titleLabel.text isEqualToString:@"完成"]) {
+//        NSLog(@"文件下载完成，请删除重试");
+//        return;
+//    }
+
     btn.selected =! btn.selected;
     if (btn.selected ) {
         [btn setTitle:@"暂停 " forState:UIControlStateNormal];
@@ -438,7 +438,7 @@ KS3Client 方法：
 
 //若不选择分块上传，请使用单块上传，
 //最小支持但块上传小于5M，最大支持单块上传为5G
-- (void)beginSingleUpload
+- (void)beginSingleUpload:(NSInteger) row
 {
     KS3AccessControlList *ControlList = [[KS3AccessControlList alloc] init];
     [ControlList setContronAccess:KingSoftYun_Permission_Public_Read_Write];
@@ -447,9 +447,25 @@ KS3Client 方法：
 //    //            acl.displayName = @"accDisplayName";
 //    [acl setGrantControlAccess:KingSoftYun_Grant_Permission_Read];
     KS3PutObjectRequest *putObjRequest = [[KS3PutObjectRequest alloc] initWithName:kUploadBucketName withAcl:ControlList grantAcl:nil];
-    
-    NSString *fileName = [[NSBundle mainBundle] pathForResource:@"7.6M" ofType:@"mov"];
-    putObjRequest.data = [NSData dataWithContentsOfFile:fileName options:NSDataReadingMappedIfSafe error:nil];
+
+    if (row == 3) {
+        NSString *fileName = [[NSBundle mainBundle] pathForResource:@"7.6M" ofType:@"mov"];
+        putObjRequest.data = [NSData dataWithContentsOfFile:fileName options:NSDataReadingMappedIfSafe error:nil];
+    } else {
+        NSInteger size = 1;
+        if (row == 13) {
+            size = 1;
+        } else if (row == 14) {
+            size = 5;
+        } else if (row == 15) {
+            size = 10;
+        } else {
+            size = 50;
+        }
+
+        putObjRequest.data = [[NSMutableData dataWithLength:size * 1024 * 1024] copy];
+    }
+
     _fileSize = putObjRequest.data.length;
     
     putObjRequest.delegate = self;
@@ -517,6 +533,7 @@ KS3Client 方法：
         
         // //使用token签名时从Appserver获取token后设置token，使用Ak sk则忽略，不需要调用
         [_downloader setStrKS3Token:[KS3AuthUtils KSYAuthorizationWithAccessKey:strAccessKey secretKey:strSecretKey httpVerb:_downloader.httpMethod contentMd5:_downloader.contentMd5 contentType:_downloader.contentType strDate:_downloader.strDate canonicalizedKssHeader:_downloader.kSYHeader canonicalizedResource:_downloader.kSYResource]];
+        _downloader.overwrite = YES;
         
         [_downloader start];
         
@@ -672,8 +689,12 @@ KS3Client 方法：
         }
             break;
         case 3:
+        case 13:
+        case 14:
+        case 15:
+        case 16:
         {
-            [self beginSingleUpload];
+            [self beginSingleUpload: indexPath.row];
         }
             break;
         case 4:
