@@ -25,6 +25,8 @@
 
 @property (nonatomic, strong) KS3UploadManager *uploadManager;
 
+@property (assign) UIBackgroundTaskIdentifier taskId;
+
 @end
 
 @implementation PerfViewController
@@ -59,6 +61,8 @@
 }
 
 - (IBAction)startUpload:(id)sender {
+    _taskId = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:NULL];
+
     [self resetProgressAndResult];
 
     [self resetCount];
@@ -83,6 +87,8 @@
         [self.startUploadButton setEnabled:YES];
 
         self.result.text = [NSString stringWithFormat:@"文件总大小：%ld B\n上传成功率：%.2lf\n上传总耗时：%.2lf秒", _totalSize, (_successCount * 1.0 / _totalCount), _totalTime];
+
+        [[UIApplication sharedApplication] endBackgroundTask:_taskId];
         // end
         return;
     }
@@ -122,5 +128,8 @@
                        }];
 }
 
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    [self.uploadTimes endEditing:YES];
+}
 
 @end
