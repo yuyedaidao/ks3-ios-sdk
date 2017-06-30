@@ -17,5 +17,6 @@
  */
 
 + (NSString *)getAuthorization:(KS3Request *)request;
++ (NSData *)dataWithSize:(NSUInteger)size;
 
 @end

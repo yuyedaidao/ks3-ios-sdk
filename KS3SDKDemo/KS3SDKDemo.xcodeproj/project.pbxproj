@@ -23,6 +23,7 @@
 		DFAFC6291EB0459800932063 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DFAFC6271EB0459800932063 /* Main.storyboard */; };
 		DFAFC62B1EB0459800932063 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DFAFC62A1EB0459800932063 /* Assets.xcassets */; };
 		DFAFC62E1EB0459800932063 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DFAFC62C1EB0459800932063 /* LaunchScreen.storyboard */; };
+		DFEC392C1F05056400A10A2E /* PerfViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFEC392B1F05056400A10A2E /* PerfViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,6 +55,8 @@
 		DFAFC62A1EB0459800932063 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DFAFC62D1EB0459800932063 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DFAFC62F1EB0459800932063 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DFEC392A1F05056400A10A2E /* PerfViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerfViewController.h; sourceTree = "<group>"; };
+		DFEC392B1F05056400A10A2E /* PerfViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PerfViewController.m; sourceTree = "<group>"; };
 		E20DA10A7DC7D91E7962A1F7 /* Pods-KS3SDKDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KS3SDKDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-KS3SDKDemo/Pods-KS3SDKDemo.debug.xcconfig"; sourceTree = "<group>"; };
 		F6DF70FD7F09025DFF977919 /* libPods-KS3SDKDemo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-KS3SDKDemo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -125,6 +128,8 @@
 				DFAA99DD1EB048380099FD13 /* ServiceViewController.m */,
 				DFAA99DE1EB048380099FD13 /* VideoViewController.h */,
 				DFAA99DF1EB048380099FD13 /* VideoViewController.m */,
+				DFEC392A1F05056400A10A2E /* PerfViewController.h */,
+				DFEC392B1F05056400A10A2E /* PerfViewController.m */,
 				DFAFC6211EB0459800932063 /* AppDelegate.h */,
 				DFAFC6221EB0459800932063 /* AppDelegate.m */,
 				DFAFC6241EB0459800932063 /* ViewController.h */,
@@ -272,6 +277,7 @@
 				DFAFC6261EB0459800932063 /* ViewController.m in Sources */,
 				DFAA99E11EB048380099FD13 /* CreateBucketViewController.m in Sources */,
 				DFAA99E71EB048380099FD13 /* VideoViewController.m in Sources */,
+				DFEC392C1F05056400A10A2E /* PerfViewController.m in Sources */,
 				DFAFC6231EB0459800932063 /* AppDelegate.m in Sources */,
 				DFAA99E01EB048380099FD13 /* BucketViewController.m in Sources */,
 				DF7644461EB076920009D366 /* KS3Util.m in Sources */,

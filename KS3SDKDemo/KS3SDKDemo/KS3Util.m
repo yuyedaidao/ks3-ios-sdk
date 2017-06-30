@@ -13,7 +13,6 @@
 #import <KS3AuthUtils.h>
 #import "AppDelegate.h"
 
-
 @implementation KS3Util
 + (NSString *)getAuthorization:(KS3Request *)request
 {
@@ -25,6 +24,10 @@
                                                strDate:request.strDate
                                 canonicalizedKssHeader:request.kSYHeader
                                  canonicalizedResource:request.kSYResource];
+}
+
++ (NSData *)dataWithSize:(NSUInteger)size {
+    return [[NSMutableData dataWithLength:size] copy];
 }
 
 @end

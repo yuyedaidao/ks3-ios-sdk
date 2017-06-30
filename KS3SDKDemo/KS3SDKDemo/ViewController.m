@@ -22,7 +22,7 @@
     [super viewDidLoad];
     
     self.navigationItem.title = @"KS3 SDK for iOS Demo";
-    self.arrItems = [NSArray arrayWithObjects:@"Service", @"Bucket", @"Object", @"Video",nil];
+    self.arrItems = [NSArray arrayWithObjects:@"Service", @"Bucket", @"Object", @"Perf Test",nil];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -63,13 +63,8 @@
             strIdentifier = @"Object Identifier";
             break;
         case 3:
-//        {
-            strIdentifier = @"Video Identifier";
-            
-//            VideoViewController *v= [[VideoViewController alloc]init];
-//            [self.navigationController pushViewController:v animated:YES];
-//            break;
-//        }
+            strIdentifier = @"Perf Identifier";
+            break;
         default:
             break;
     }
