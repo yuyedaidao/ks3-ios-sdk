@@ -531,7 +531,7 @@ failedBlock:(KSS3DownloadFailedBlock)failedBlock {
 }
 
 + (NSString *)apiVersion {
-    return @"2.1.1";
+    return @"2.1.2";
 }
 
 @end
