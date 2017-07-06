@@ -82,6 +82,7 @@ typedef enum {
   KS3BucketAmerica,
   KS3BucketHongkong,
   KS3BucketHangzhou,
+  KS3BucketShanghai,
 } KS3BucketDomainRegion; // bucket所在地区
 
 @interface KS3Client : KS3WebServiceClient
