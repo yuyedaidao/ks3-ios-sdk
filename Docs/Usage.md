@@ -36,7 +36,7 @@ Bucket是存放Object的容器，所有的Object都必须存放在特定的Bucke
 当使用更改指定资源访问权限的API时（如：setACL、setObjectACL），可以以下任意一种方式指明该资源的访问权限:
 
 **AccessControlList形式:**
- \`\`\`
+ ```
 
 	    KS3SetGrantACLRequest *request = [[KS3SetGrantACLRequest alloc] initWithName:@"your-bucket-name"];
 	        KS3GrantAccessControlList *acl = [[KS3GrantAccessControlList alloc] init];
@@ -52,21 +52,21 @@ Bucket是存放Object的容器，所有的Object都必须存放在特定的Bucke
 	        else {
 	            NSLog(@"Set grant acl error: %@", response.error.description);
 	        }
- \`\`\`
+ ```
 
 **CannedAccessControlList:**
- \`\`\`
+ ```
 
 	    KS3AccessControlList *acl = [[KS3AccessControlList alloc] init];
 	        [acl setContronAccess:KingSoftYun_Permission_Private];
- \`\`\`
+ ```
 
 ##### 请求签名
 方法: 在请求中加入名为 Authorization 的 Header，值为签名值。形如：
 Authorization: KSS P3UPCMORAFON76Q6RTNQ:vU9XqPLcXd3nWdlfLWIhruZrLAM=
 
 *签名生成规则*
-\`\`\`
+```
 
 	    Authorization = “KSS YourAccessKeyID:Signature”
 
@@ -78,14 +78,14 @@ Authorization: KSS P3UPCMORAFON76Q6RTNQ:vU9XqPLcXd3nWdlfLWIhruZrLAM=
 	           Date + "\n" +
 	           CanonicalizedKssHeaders +
 	           CanonicalizedResource;
-\`\`\`
+```
 
 ##### 必要的说明
 对于使用token方式初始化SDK的用户，需要使用另外一种方式去调用API。做法如下：
 >
 因为token是用户自己去获取，所以要在用户获取到token之后，用它初始化KS3Request的strKS3Token属性设置，那么在获取token之前就需要先把要请求的API的KS3Request初始化一个对应的实例，然后再用这个获得了token的实例去调用相应的API即可。以获取账号下所有bucket为例（listBuckets:）：
 
-\`\`\`
+```
 [listBucketRequest setCompleteRequest];
 NSDictionary \*dicParams = [self dicParamsWithReq:listBucketRequest];
 NSURL \*tokenUrl = [NSURL URLWithString:@"http://0.0.0.0:11911"];
@@ -120,7 +120,7 @@ NSData \*dataParams = [NSJSONSerialization dataWithJSONObject:dicParams options:
 	return dicParams;
 }
 
-\`\`\`
+```
 
 用户向自己的app server请求token需要提供httpMethod，contentMd5，contentType，strDate，header，resource这6个字段给app server，然后app server根据上述签名规则，利用AccessKeyID及AccessKeySecret计算出签名并正确返回给SDK。上述方法中的contentMd5, contentType, header参数可为空。若为空，则SDK会使用空字符串("")替代, 但strDate和resource不能为空。
 
@@ -224,7 +224,7 @@ c.使用静态库，在分块上传出现[KS3Response multipartUpload] 找不到
 
 **Callback使用范例**：
 
-\`\`\`
+```
 
 	    KS3PutObjectRequest *putObjRequest = [[KS3PutObjectRequest alloc] initWithName:kBucketName];
 	    NSString *fileName = [[NSBundle mainBundle] pathForResource:@"test" ofType:@"jpg"];
@@ -239,24 +239,24 @@ c.使用静态库，在分块上传出现[KS3Response multipartUpload] 找不到
 	    [putObjRequest setCompleteRequest];                      
 	    KS3PutObjectResponse *response = [[KS3Client initialize] putObject:putObjRequest];
 
-\`\`\`
+```
 
 #### KS3Client初始化
 - 利用AccessKeyID、AccessKeySecret初始化（不安全，仅建议测试时使用）
 
 对应的初始化代码如下：
 
-\`\`\`
+```
 
 	    [[KS3Client initialize] connectWithAccessKey:strAccessKey withSecretKey:strSecretKey];
 
-\`\`\`
+```
 
 - 利用token进行请求，每次需要调用SDK的API时都需要使用请求一次token，然后用这个token初始化KS3Request的strKS3Token，再进行API请求（推荐使用）
 
 对应的代码如下：
 
-\`\`\`
+```
 	[listBucketRequest setCompleteRequest];
 	NSDictionary *dicParams = [self dicParamsWithReq:listBucketRequest];
 	NSURL *tokenUrl = [NSURL URLWithString:@"http://0.0.0.0:11911"];
@@ -279,7 +279,7 @@ c.使用静态库，在分块上传出现[KS3Response multipartUpload] 找不到
 	        NSLog(@"#### 获取token失败，error: %@", connectionError);
 	    }
 	}];
-\`\`\`
+```
 
 
 ### SDK介绍及使用
@@ -311,6 +311,7 @@ c.使用静态库，在分块上传出现[KS3Response multipartUpload] 找不到
 * [Complete Multipart Upload][21] 组装所有分块上传的文件
 * [Multipart Upload Example Code 1][22] 分片上传代码示例1
 * [Multipart Upload Example Code 2][23] 分片上传代码示例2
+* [Upload Manager][25] 基于分块上传的简单上传接口
 
 #### Service操作
 
@@ -331,10 +332,10 @@ c.使用静态库，在分块上传出现[KS3Response multipartUpload] 找不到
 * 客户所有的bucket列表，列表中每个元素是KS3Bucket对象
 
 **代码示例：**
-\`\`\`
+```
 
 	NSArray *arrBuckets = [[KS3Client initialize] listBuckets:listBucketRequest];
-\`\`\`
+```
 
 #### Bucket操作
 
@@ -365,7 +366,7 @@ c.使用静态库，在分块上传出现[KS3Response multipartUpload] 找不到
 4. body：响应正文
 
 **代码示例：**
-\`\`\`
+```
 
 	    KS3CreateBucketRequest *createBucketReq = [[KS3CreateBucketRequest alloc] initWithName:strBucketName];
 	    [createBucketReq setCompleteRequest];
@@ -376,7 +377,7 @@ c.使用静态库，在分块上传出现[KS3Response multipartUpload] 找不到
 	    else {
 	        NSLog(@"error: %@", response.error.localizedDescription);
 	    }
-\`\`\`
+```
 
 ##### Delete Bucket:
 
@@ -406,7 +407,7 @@ c.使用静态库，在分块上传出现[KS3Response multipartUpload] 找不到
 4. body：响应正文
 
 **代码示例：**
-\`\`\`
+```
 	    KS3DeleteBucketRequest *deleteBucketReq = [[KS3DeleteBucketRequest alloc] initWithName:@"uuu"];
 	    [deleteBucketReq setCompleteRequest];
 	    KS3DeleteBucketResponse *response = [[KS3Client initialize] deleteBucket:deleteBucketReq];
@@ -416,7 +417,7 @@ c.使用静态库，在分块上传出现[KS3Response multipartUpload] 找不到
 	    else {
 	        NSLog(@"Delete bucket error: %@", response.error.description);
 	    }
-\`\`\`
+```
 
 ##### Get Bucket ACL:
 
@@ -445,7 +446,7 @@ c.使用静态库，在分块上传出现[KS3Response multipartUpload] 找不到
 4. body：响应正文
 
 **代码示例：**
-\`\`\`
+```
 
 	    KS3GetACLRequest *getACLRequest = [[KS3GetACLRequest alloc] initWithName:@"your-bucket-name"];
 	    [getACLRequest setCompleteRequest];
@@ -467,7 +468,7 @@ c.使用静态库，在分块上传出现[KS3Response multipartUpload] 找不到
 	    else {
 	        NSLog(@"Get bucket acl error: %@", response.error.description);
 	    }
-\`\`\`
+```
 
 ##### Put Bucket ACL:
 
@@ -496,7 +497,7 @@ c.使用静态库，在分块上传出现[KS3Response multipartUpload] 找不到
 4. body：响应正文
 
 **代码示例：**
-\`\`\`
+```
 
 	    KS3SetGrantACLRequest *setGrantACLRequest = [[KS3SetGrantACLRequest alloc] initWithName:kBucketName];
 	    KS3GrantAccessControlList *acl = [[KS3GrantAccessControlList alloc] init];
@@ -513,7 +514,7 @@ c.使用静态库，在分块上传出现[KS3Response multipartUpload] 找不到
 	        NSLog(@"Set bucket grant acl error: %@", response.error.description);
 	    }
 
-\`\`\`
+```
 
 *设置Bucket的ACL，以CannedAccessControlList形式*
 
@@ -540,7 +541,7 @@ c.使用静态库，在分块上传出现[KS3Response multipartUpload] 找不到
 4. body：响应正文
 
 **代码示例：**
-\`\`\`
+```
 
 	    KS3SetACLRequest *setBucketACLReq = [[KS3SetACLRequest alloc] initWithName:kBucketName];
 	    KS3AccessControlList *acl = [[KS3AccessControlList alloc] init];
@@ -555,7 +556,7 @@ c.使用静态库，在分块上传出现[KS3Response multipartUpload] 找不到
 	        NSLog(@"Set bucket acl error: %@", response.error.description);
 	    }
 
-\`\`\`
+```
 
 ##### Head Bucket：
 
@@ -584,7 +585,7 @@ c.使用静态库，在分块上传出现[KS3Response multipartUpload] 找不到
 4. body：响应正文
 
 **代码示例：**
-\`\`\`
+```
 
 	    KS3HeadBucketRequest *request = [[KS3HeadBucketRequest alloc] initWithName:kBucketName];
 	    [request setCompleteRequest];
@@ -596,7 +597,7 @@ c.使用静态库，在分块上传出现[KS3Response multipartUpload] 找不到
 	        NSLog(@"Head bucket error: %@", response.error.description);
 	    }
 
-\`\`\`
+```
 
 #### Object操作
 
@@ -629,7 +630,7 @@ c.使用静态库，在分块上传出现[KS3Response multipartUpload] 找不到
 * 下载Object的KS3DownLoad对象
 
 **代码示例：**
-\`\`\`
+```
 
 	    _downloader = [[KS3Client initialize] downloadObjectWithBucketName:kBucketName key:kObjectName tokenDelegate:self downloadBeginBlock:^(KS3DownLoad *aDownload, NSURLResponse *responseHeaders) {
 	            NSLog(@"1212221");
@@ -646,7 +647,7 @@ c.使用静态库，在分块上传出现[KS3Response multipartUpload] 找不到
 	        }];
 	        [_downloader start];
 
-\`\`\`
+```
 
 ##### Head Object：
 
@@ -676,7 +677,7 @@ c.使用静态库，在分块上传出现[KS3Response multipartUpload] 找不到
 
 
 **代码示例：**
-\`\`\`
+```
 	        KS3HeadObjectRequest *headObjRequest = [[KS3HeadObjectRequest alloc] initWithName:kBucketName withKeyName:kObjectName];
 	        [headObjRequest setCompleteRequest];
 	        KS3HeadObjectResponse *response = [[KS3Client initialize] headObject:headObjRequest];
@@ -686,7 +687,7 @@ c.使用静态库，在分块上传出现[KS3Response multipartUpload] 找不到
 	        else {
 	            NSLog(@"Head object error: %@", response.error.description);
 	        }
-\`\`\`
+```
 
 ##### Delete Object：
 
@@ -715,7 +716,7 @@ c.使用静态库，在分块上传出现[KS3Response multipartUpload] 找不到
 4. body：响应正文
 
 **代码示例：**
-\`\`\`
+```
 	        KS3DeleteObjectRequest *deleteObjRequest = [[KS3DeleteObjectRequest alloc] initWithName:kBucketName withKeyName:kObjectName];
 	        [deleteObjRequest setCompleteRequest];
 	        KS3DeleteObjectResponse *response = [[KS3Client initialize] deleteObject:deleteObjRequest];
@@ -725,7 +726,7 @@ c.使用静态库，在分块上传出现[KS3Response multipartUpload] 找不到
 	        else {
 	            NSLog(@"Delete object error: %@", response.error.description);
 	        }
-\`\`\`
+```
 
 ##### Get Object ACL：
 
@@ -754,7 +755,7 @@ c.使用静态库，在分块上传出现[KS3Response multipartUpload] 找不到
 4. body：响应正文
 
 **代码示例：**
-\`\`\`
+```
 	        KS3GetObjectACLRequest  *getObjectACLRequest = [[KS3GetObjectACLRequest alloc] initWithName:kBucketName withKeyName:kObjectName];
 	        [getObjectACLRequest setCompleteRequest];
 	        KS3GetObjectACLResponse *response = [[KS3Client initialize] getObjectACL:getObjectACLRequest];
@@ -775,7 +776,7 @@ c.使用静态库，在分块上传出现[KS3Response multipartUpload] 找不到
 	            NSLog(@"Get object acl error: %@", response.error.description);
 	        }
 
-\`\`\`
+```
 
 ##### Put Object ACL:
 
@@ -804,7 +805,7 @@ c.使用静态库，在分块上传出现[KS3Response multipartUpload] 找不到
 4. body：响应正文
 
 **代码示例：**
-\`\`\`
+```
 
 	        KS3AccessControlList *acl = [[KS3AccessControlList alloc] init];
 	        [acl setContronAccess:KingSoftYun_Permission_Public_Read_Write];
@@ -817,7 +818,7 @@ c.使用静态库，在分块上传出现[KS3Response multipartUpload] 找不到
 	        else {
 	            NSLog(@"Set object acl error: %@", response.error.description);
 	        }
-\`\`\`
+```
 
 *上传object的acl，以AccessControlList形式*
 
@@ -844,7 +845,7 @@ c.使用静态库，在分块上传出现[KS3Response multipartUpload] 找不到
 4. body：响应正文
 
 **代码示例：**
-\`\`\`
+```
 
 	    KS3GrantAccessControlList *acl = [[KS3GrantAccessControlList alloc] init];
 	    acl.identifier = kObjectName;
@@ -859,7 +860,7 @@ c.使用静态库，在分块上传出现[KS3Response multipartUpload] 找不到
 	    else {
 	        NSLog(@"Set object grant acl error: %@", response.error.description);
 	    }
-\`\`\`
+```
 
 ##### List Objects：
 
@@ -890,7 +891,7 @@ c.使用静态库，在分块上传出现[KS3Response multipartUpload] 找不到
 5. listBucketsResult：成功时返回的指定Bucket下所有的Object ummary信息实体类，包含一个Ks3ObjectSummary的容器及其他信息
 
 **代码示例：**
-\`\`\`\`
+````
 
 	    KS3ListObjectsRequest *listObjectRequest = [[KS3ListObjectsRequest alloc] initWithName:kBucketName];
 	    [listObjectRequest setCompleteRequest];
@@ -907,7 +908,7 @@ c.使用静态库，在分块上传出现[KS3Response multipartUpload] 找不到
 	    NSLog(@"%ld",_result.commonPrefixes.count);
 
 	    NSLog(@"KS3ListObjectsResponse %d",response.httpStatusCode);
-\`\`\`\`
+````
 
 ##### Put Object：
 
@@ -937,7 +938,7 @@ c.使用静态库，在分块上传出现[KS3Response multipartUpload] 找不到
 4. body：响应正文
 
 **代码示例：**
-\`\`\`
+```
 
 	        KS3PutObjectRequest *putObjRequest = [[KS3PutObjectRequest alloc] initWithName:kBucketName];
 	        NSString *fileName = [[NSBundle mainBundle] pathForResource:@"test" ofType:@"jpg"];
@@ -953,7 +954,7 @@ c.使用静态库，在分块上传出现[KS3Response multipartUpload] 找不到
 	            NSLog(@"Put object failed");
 	        }
 
-\`\`\`
+```
 
 ##### Put Object Copy：
 
@@ -983,7 +984,7 @@ KS3PutObjectResponse响应包括以下内容
 4. body：响应正文
 
 **代码示例：**
-\`\`\`
+```
 
 	        KS3BucketObject *destBucketObj = [[KS3BucketObject alloc] initWithBucketName:kDesBucketName keyName:kDesObjectName];
 	        KS3BucketObject *sourceBucketObj = [[KS3BucketObject alloc] initWithBucketName:kBucketName keyName:kObjectName];
@@ -997,7 +998,7 @@ KS3PutObjectResponse响应包括以下内容
 	            NSLog(@"Put object copy error: %@", response.error.description);
 	        }
 
-\`\`\`
+```
 
 ##### Initiate Multipart Upload：
 
@@ -1018,12 +1019,12 @@ KS3PutObjectResponse响应包括以下内容
 
 
 **代码示例：**
-\`\`\`
+```
 	KS3InitiateMultipartUploadRequest *initMultipartUploadReq = [[KS3InitiateMultipartUploadRequest alloc] initWithKey:strKey inBucket:kBucketName];
 	[initMultipartUploadReq setCompleteRequest];
 	KS3MultipartUpload *muilt = [[KS3Client initialize] initiateMultipartUploadWithRequest:initMultipartUploadReq];
 
-\`\`\`
+```
 
 ##### Upload Part：
 
@@ -1052,7 +1053,7 @@ KS3UploadPartResponse响应包括以下内容
 4. body：响应正文
 
 **代码示例：**
-\`\`\`
+```
 
 	    KS3UploadPartRequest *req = [[KS3UploadPartRequest alloc] initWithMultipartUpload:_muilt];
 	    req.delegate = self;
@@ -1063,7 +1064,7 @@ KS3UploadPartResponse响应包括以下内容
 	    [req setCompleteRequest];
 	    KS3UploadPartResponse *response = [[KS3Client initialize] uploadPart:req];
 
-\`\`\`
+```
 
 ##### List Parts:
 
@@ -1092,13 +1093,13 @@ KS3ListPartsResponse响应包括以下内容
 4. body：响应正文
 
 **代码示例：**
-\`\`\`
+```
 
 	    KS3ListPartsRequest *req2 = [[KS3ListPartsRequest alloc] initWithMultipartUpload:_muilt];
 	    [req2 setCompleteRequest];
 	    KS3ListPartsResponse *response2 = [[KS3Client initialize] listParts:req2];
 
-\`\`\`
+```
 
 ##### Abort Multipart Upload:
 
@@ -1127,7 +1128,7 @@ KS3AbortMultipartUploadResponse响应包括以下内容
 4. body：响应正文
 
 **代码示例：**
-\`\`\`
+```
 
 	        KS3AbortMultipartUploadRequest *request = [[KS3AbortMultipartUploadRequest alloc] initWithMultipartUpload:_muilt];
 	        [request setCompleteRequest];
@@ -1139,7 +1140,7 @@ KS3AbortMultipartUploadResponse响应包括以下内容
 	            NSLog(@"error: %@", response.error.description);
 	        }
 
-\`\`\`
+```
 
 ##### Complete Multipart Upload:
 
@@ -1168,7 +1169,7 @@ KS3CompleteMultipartUploadResponse响应包括以下内容
 4. body：响应正文
 
 **代码示例：**
-\`\`\`
+```
 
 	    KS3ListPartsResponse *response2 = [[KS3Client initialize] listParts:req2];
 	    KS3CompleteMultipartUploadRequest *req = [[KS3CompleteMultipartUploadRequest alloc] initWithMultipartUpload:_muilt];
@@ -1181,13 +1182,13 @@ KS3CompleteMultipartUploadResponse响应包括以下内容
 	        NSLog(@"#####complete multipart upload failed!!! code: %d#####", resp.httpStatusCode);
 	    }
 
-\`\`\`
+```
 
 ##### Multipart Upload Example Code：
 
 *分片上传代码示例*
 
-\`\`\`\`
+````
 
 	    NSString *strKey = @"upload_release.txt";
 	    NSString *strFilePath = [[NSBundle mainBundle] pathForResource:@"bugDownload" ofType:@"txt"];
@@ -1264,7 +1265,55 @@ KS3CompleteMultipartUploadResponse响应包括以下内容
 	        NSLog(@"error: %@", error.description);
 	    }
 
-\`\`\`\`
+````
+
+
+##### Upload Manager
+分块上传接口可以实现断点续传等功能，但是由于使用比较复杂，SDK提供了一个封装后的接口——Ks3UploadManager。
+
+使用本接口首先需要初始化一个KS3UploadManager实例。
+
+
+```
+    self.uploadManager = [KS3UploadManager sharedInstanceWithClient:[KS3Client initialize] authHandler:nil];
+```
+
+KS3UploadManager接受唯一参数是`authHandler`，此handler用于处理鉴权串签名，每次请求都会用本次请求的信息调用`authHandler`，handler方法内，请求鉴权服务器拿到签名串返回即可。
+
+authHandler如果为`nil`，则需要在客户端设置AK、SK（这种方式不推荐）。设置方法为：`[[KS3Client initialize] setCredentials:[[KS3Credentials alloc] initWithAccessKey:"YOUR_KS3_ACCESS_KEY" withSecretKey:"YOUR_KS3_SECRET_KEY"]];`。
+
+实例创建好后，可以调用上传方法：
+
+```
+    // 读取文件信息
+    NSString *strFilePath = [[NSBundle mainBundle] pathForResource:@"7.6M" ofType:@"mov"];
+    NSData *data = [NSData dataWithContentsOfFile:strFilePath];
+
+    KS3AccessControlList *acl = [[KS3AccessControlList alloc] init];
+    [acl setContronAccess:KingSoftYun_Permission_Public_Read];
+
+    // 创建一次开始分块的请求
+    KS3UploadRequest *uploadRequest = [[KS3UploadRequest alloc] initWithKey:@"uploadmanager/sample.mov" inBucket:kUploadBucketName acl:acl grantAcl:nil];
+    [uploadRequest setCompleteRequest];
+    [uploadRequest setStrKS3Token:[KS3Util getAuthorization:uploadRequest]];
+
+    // 开始上传
+    [self.uploadManager putData:data
+                        request:uploadRequest
+                      blockSize:1 * kMB
+                       progress:^(NSString *key, double percent) {
+                           NSLog(@"objectKey: %@, progress %lf", key, percent);
+                       } cancelSignal:^BOOL(NSString *key) {
+                           return false; // 修改这里进行取消
+                       } complete:^(KS3Upload *upload, KS3Response *response) {
+                           NSLog(@"uploadId: %@, response %@", upload.uploadId, response);
+                       } error:^(KS3Upload *upload, NSError *error) {
+                           NSLog(@"uploadId: %@, error: %@", upload.uploadId, error);
+                       }];
+```
+
+目前此接口只支持使用NSData作为参数进行上传。
+
 
 ## 其它
 > 完整示例，请见 [KS3-iOS-SDK-Demo][24]
@@ -1297,6 +1346,7 @@ KS3CompleteMultipartUploadResponse响应包括以下内容
 [22]:	#multipart-upload-example-code-1
 [23]:	#multipart-upload-example-code-2
 [24]:	https://github.com/ks3sdk/ks3-ios-sdk/tree/master/KS3SDKDemo/KS3SDKDemo-Token
+[25]:	#upload-manager
 
 [image-1]:	http://androidsdktest21.kssws.ks-cdn.com/ks3-android-sdk-authlistener.png
 [image-2]:	http://990aa.kssws.ks-cdn.com/calllback.png
