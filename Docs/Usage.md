@@ -165,13 +165,9 @@ c.使用静态库，在分块上传出现[KS3Response multipartUpload] 找不到
 #### 使用场景
 由于在App端明文存储AccessKeyID、AccessKeySecret是极不安全的，因此推荐的使用场景如下图所示：
 
-![][image-1]
+![][image-1.png]
 
 如开发者需要在SDK请求完成后，向特定的URL发起一个回调请求，请参考以下使用**Callback**的场景：
-
-![][image-2]
-
-使用Callback回调功能，开发者必须在对应的request中传入**callBackUrl**以及**callBackBody**。 如需自定义参数，要以键值对形式将其传入，并且自定义参数的Key必须以前缀"kss-"开始。目前使用到回调请求的接口只有**putObject:**和**completeMultipartUpload:**
 
 **使用方式**
 设置对应接口所需的request中相应的**callbackUrl**，**callbackBody**和**callbackParams**即可。
