@@ -165,9 +165,7 @@ c.使用静态库，在分块上传出现[KS3Response multipartUpload] 找不到
 #### 使用场景
 由于在App端明文存储AccessKeyID、AccessKeySecret是极不安全的，因此推荐的使用场景如下图所示：
 
-![][image-1.png]
-
-如开发者需要在SDK请求完成后，向特定的URL发起一个回调请求，请参考以下使用**Callback**的场景：
+![][image-1]
 
 **使用方式**
 设置对应接口所需的request中相应的**callbackUrl**，**callbackBody**和**callbackParams**即可。
@@ -1344,5 +1342,4 @@ authHandler如果为`nil`，则需要在客户端设置AK、SK（这种方式不
 [24]:	https://github.com/ks3sdk/ks3-ios-sdk/tree/master/KS3SDKDemo/KS3SDKDemo-Token
 [25]:	#upload-manager
 
-[image-1]:	http://androidsdktest21.kssws.ks-cdn.com/ks3-android-sdk-authlistener.png
-[image-2]:	http://990aa.kssws.ks-cdn.com/calllback.png
+[image-1]:	http://androidsdktest21.kss.ksyun.com/ks3-android-sdk-authlistener.png
