@@ -179,6 +179,10 @@
 		13B9A7DC1A5CD3C0001E55BC /* KS3ObjectACLXMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B9A7DA1A5CD3C0001E55BC /* KS3ObjectACLXMLParser.m */; };
 		13B9A7DF1A5CDC25001E55BC /* KS3DownLoad.h in Headers */ = {isa = PBXBuildFile; fileRef = 13B9A7DD1A5CDC25001E55BC /* KS3DownLoad.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		13B9A7E01A5CDC25001E55BC /* KS3DownLoad.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B9A7DE1A5CDC25001E55BC /* KS3DownLoad.m */; };
+		DF67809320EB708E00AAAE78 /* KS3UploadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DF67809120EB708E00AAAE78 /* KS3UploadManager.m */; };
+		DF67809420EB708E00AAAE78 /* KS3UploadManager.h in Headers */ = {isa = PBXBuildFile; fileRef = DF67809220EB708E00AAAE78 /* KS3UploadManager.h */; };
+		DF67809920EB711700AAAE78 /* KS3Upload.m in Sources */ = {isa = PBXBuildFile; fileRef = DF67809720EB711700AAAE78 /* KS3Upload.m */; };
+		DF67809A20EB711700AAAE78 /* KS3UploadRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = DF67809820EB711700AAAE78 /* KS3UploadRequest.m */; };
 		DFB51FD71E8F9B53009362A8 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFB51FD61E8F9B53009362A8 /* XCTest.framework */; };
 		DFD3BFE71EBCA61700BBCCB9 /* KS3Upload.h in Headers */ = {isa = PBXBuildFile; fileRef = DFD3BFE61EBCA61700BBCCB9 /* KS3Upload.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DFD3BFE91EBCA62000BBCCB9 /* KS3UploadRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = DFD3BFE81EBCA62000BBCCB9 /* KS3UploadRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -359,9 +363,13 @@
 		13B9A7DA1A5CD3C0001E55BC /* KS3ObjectACLXMLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KS3ObjectACLXMLParser.m; sourceTree = "<group>"; };
 		13B9A7DD1A5CDC25001E55BC /* KS3DownLoad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KS3DownLoad.h; sourceTree = "<group>"; };
 		13B9A7DE1A5CDC25001E55BC /* KS3DownLoad.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KS3DownLoad.m; sourceTree = "<group>"; };
+		DF67809120EB708E00AAAE78 /* KS3UploadManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KS3UploadManager.m; sourceTree = "<group>"; };
+		DF67809220EB708E00AAAE78 /* KS3UploadManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KS3UploadManager.h; sourceTree = "<group>"; };
+		DF67809720EB711700AAAE78 /* KS3Upload.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KS3Upload.m; sourceTree = "<group>"; };
+		DF67809820EB711700AAAE78 /* KS3UploadRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KS3UploadRequest.m; sourceTree = "<group>"; };
 		DFB51FD61E8F9B53009362A8 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/iPhoneOS.platform/Developer/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		DFD3BFE61EBCA61700BBCCB9 /* KS3Upload.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = KS3Upload.h; path = KS3YunSDK/KS3YunSDK/KSYS3/KSYModel/Object/KS3Upload.h; sourceTree = "<group>"; };
-		DFD3BFE81EBCA62000BBCCB9 /* KS3UploadRequest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = KS3UploadRequest.h; path = KS3YunSDK/KS3YunSDK/KSYS3/KSYModel/Object/KS3UploadRequest.h; sourceTree = "<group>"; };
+		DFD3BFE61EBCA61700BBCCB9 /* KS3Upload.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KS3Upload.h; sourceTree = "<group>"; };
+		DFD3BFE81EBCA62000BBCCB9 /* KS3UploadRequest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KS3UploadRequest.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -379,8 +387,6 @@
 		0A6390781A42AF2200BA3A99 = {
 			isa = PBXGroup;
 			children = (
-				DFD3BFE81EBCA62000BBCCB9 /* KS3UploadRequest.h */,
-				DFD3BFE61EBCA61700BBCCB9 /* KS3Upload.h */,
 				0A6390841A42AF2200BA3A99 /* KS3YunSDK */,
 				0A6390831A42AF2200BA3A99 /* Products */,
 				DFB51FD51E8F9B53009362A8 /* Frameworks */,
@@ -461,6 +467,7 @@
 		0A6390BB1A42AFA800BA3A99 /* KSYS3 */ = {
 			isa = PBXGroup;
 			children = (
+				DF67809520EB709300AAAE78 /* Advanced */,
 				0A6390BC1A42AFA800BA3A99 /* KS3Client.h */,
 				0A6390BD1A42AFA800BA3A99 /* KS3Client.m */,
 				0A6390BE1A42AFA800BA3A99 /* KSYModel */,
@@ -565,6 +572,10 @@
 		13B9A7381A5CCF9D001E55BC /* Object */ = {
 			isa = PBXGroup;
 			children = (
+				DF67809720EB711700AAAE78 /* KS3Upload.m */,
+				DF67809820EB711700AAAE78 /* KS3UploadRequest.m */,
+				DFD3BFE81EBCA62000BBCCB9 /* KS3UploadRequest.h */,
+				DFD3BFE61EBCA61700BBCCB9 /* KS3Upload.h */,
 				13B9A7C51A5CD2BA001E55BC /* KS3DeleteObjectRequest.h */,
 				13B9A7C61A5CD2BA001E55BC /* KS3DeleteObjectRequest.m */,
 				13B9A7C71A5CD2BA001E55BC /* KS3DeleteObjectResponse.h */,
@@ -639,6 +650,23 @@
 			path = Object;
 			sourceTree = "<group>";
 		};
+		DF67809520EB709300AAAE78 /* Advanced */ = {
+			isa = PBXGroup;
+			children = (
+				DF67809620EB709E00AAAE78 /* Upload */,
+			);
+			path = Advanced;
+			sourceTree = "<group>";
+		};
+		DF67809620EB709E00AAAE78 /* Upload */ = {
+			isa = PBXGroup;
+			children = (
+				DF67809220EB708E00AAAE78 /* KS3UploadManager.h */,
+				DF67809120EB708E00AAAE78 /* KS3UploadManager.m */,
+			);
+			path = Upload;
+			sourceTree = "<group>";
+		};
 		DFB51FD51E8F9B53009362A8 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -703,6 +731,7 @@
 				0A8727281A48184800A3AAC5 /* KS3ClientException.h in Headers */,
 				13B9A6E91A5CCE94001E55BC /* KS3ListBucketsXMLParser.h in Headers */,
 				13B9A7871A5CCF9D001E55BC /* KS3PutObjectCopyResponse.h in Headers */,
+				DF67809420EB708E00AAAE78 /* KS3UploadManager.h in Headers */,
 				13B9A7A71A5CD110001E55BC /* KS3InitiateMultipartUploadXMLParser.h in Headers */,
 				13B9A7D11A5CD303001E55BC /* KS3CompleteMultipartUploadResult.h in Headers */,
 				13B9A72C1A5CCEDD001E55BC /* KS3SetACLRequest.h in Headers */,
@@ -821,6 +850,7 @@
 				13B9A7131A5CCEDD001E55BC /* KS3CreateBucketRequest.m in Sources */,
 				13B9A7701A5CCF9D001E55BC /* KS3CompleteMultipartUploadResponse.m in Sources */,
 				0A6391421A42AFA800BA3A99 /* KS3URLRequest.m in Sources */,
+				DF67809320EB708E00AAAE78 /* KS3UploadManager.m in Sources */,
 				13B9A7B21A5CD180001E55BC /* KS3ListPartsResult.m in Sources */,
 				0A6391441A42AFA800BA3A99 /* KS3WebServiceClient.m in Sources */,
 				13B9A7821A5CCF9D001E55BC /* KS3ListPartsRequest.m in Sources */,
@@ -859,6 +889,7 @@
 				13B9A7271A5CCEDD001E55BC /* KS3ListObjectsRequest.m in Sources */,
 				13B9A7C41A5CD28C001E55BC /* KS3ObjectSummary.m in Sources */,
 				13B9A7351A5CCEDD001E55BC /* KS3SetGrantACLRequest.m in Sources */,
+				DF67809920EB711700AAAE78 /* KS3Upload.m in Sources */,
 				13B9A7901A5CCF9D001E55BC /* KS3SetObjectACLResponse.m in Sources */,
 				13A689531ADF51D000CE8CF7 /* KS3BucketObject.m in Sources */,
 				13B9A7841A5CCF9D001E55BC /* KS3ListPartsResponse.m in Sources */,
@@ -879,6 +910,7 @@
 				13B9A7CC1A5CD2BA001E55BC /* KS3DeleteObjectResponse.m in Sources */,
 				13B9A72F1A5CCEDD001E55BC /* KS3SetACLResponse.m in Sources */,
 				13B9A7961A5CCF9D001E55BC /* KS3UploadPartRequest.m in Sources */,
+				DF67809A20EB711700AAAE78 /* KS3UploadRequest.m in Sources */,
 				13B9A7721A5CCF9D001E55BC /* KS3GetObjectACLRequest.m in Sources */,
 				13B9A7171A5CCEDD001E55BC /* KS3DeleteBucketRequest.m in Sources */,
 				13B9A6E81A5CCE94001E55BC /* KS3ListBucketsResult.m in Sources */,
