@@ -138,7 +138,7 @@ static NSTimeInterval const KingSoftYun_RequestTimeout = 600; // in seconds
 }
 
 - (NSString *)getCustomBucketDomain {
-    if (_customBucketDomain) {
+    if (_customBucketDomain && _bucketDomainRegion != KS3BucketPrivate) {
         return _customBucketDomain;
     } else {
         return nil;
@@ -531,7 +531,7 @@ failedBlock:(KSS3DownloadFailedBlock)failedBlock {
 }
 
 + (NSString *)apiVersion {
-    return @"2.1.2";
+    return @"2.1.3";
 }
 
 @end
