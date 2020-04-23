@@ -193,8 +193,8 @@
     NSString *strHost;
     if (customBucketDomain != nil) {
         strHost =
-        [NSString stringWithFormat:@"%@://%@/%@", [ks3Client requestProtocol],
-         customBucketDomain, _key];
+        [NSString stringWithFormat:@"%@://%@/%@/%@", [ks3Client requestProtocol],
+         customBucketDomain, _bucketName, _key];
     } else {
         strHost = [NSString
                    stringWithFormat:@"%@://%@.%@/%@", [ks3Client requestProtocol],

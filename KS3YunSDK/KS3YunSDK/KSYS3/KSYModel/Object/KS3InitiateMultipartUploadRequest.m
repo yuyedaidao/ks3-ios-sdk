@@ -92,9 +92,9 @@
 
     if (customBucketDomain != nil) {
         self.host =
-        [NSString stringWithFormat:@"%@://%@/%@?uploads",
+        [NSString stringWithFormat:@"%@://%@/%@/%@?uploads",
          [[KS3Client initialize] requestProtocol],
-         customBucketDomain, self.key];
+         customBucketDomain, self.bucket, self.key];
     } else {
         self.host = [NSString
                      stringWithFormat:@"%@://%@.%@/%@?uploads",

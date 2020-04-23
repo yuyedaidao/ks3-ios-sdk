@@ -33,8 +33,8 @@
 
         if (customBucketDomain != nil) {
             self.host = [NSString
-                         stringWithFormat:@"%@://%@", [[KS3Client initialize] requestProtocol],
-                         customBucketDomain];
+                         stringWithFormat:@"%@://%@/%@", [[KS3Client initialize] requestProtocol],
+                         customBucketDomain, self.bucket];
         } else {
             self.host = [NSString
                          stringWithFormat:@"%@://%@.%@",
